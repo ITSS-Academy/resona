@@ -1,1 +1,12 @@
-<p>queue works!</p>
+<div class="queue">
+  <div class="now-playing">
+    <p>Now playing</p>
+    <app-queue-song-detail></app-queue-song-detail>
+  </div>
+  <div class="next-song">
+    <p>Next song:</p>
+    @for (item of [1,2,3,4,5];track $index){
+      <app-queue-song-detail></app-queue-song-detail>
+    }
+  </div>
+</div>
