@@ -10,7 +10,6 @@
   justify-content: flex-start;
   align-items: flex-start;
   box-sizing: border-box;
-  border: 1px solid white;
   .album-card-image{
     width: 100%;
     img{
@@ -37,6 +36,7 @@
       display: -webkit-box;
       overflow: hidden;
       p{
+        font-size: 16px;
         margin: 0;
         line-height: 1.5;
       }
@@ -46,6 +46,7 @@
       color: var(--mat-sys-on-surface);
       margin: 12px 0;
       p{
+        font-size: 16px;
         margin: 0;
       }
     }
@@ -54,4 +55,8 @@
 
 .album-card:hover {
   background-color: var(--mat-sys-surface-container-highest);
+}
+
+.album-card-song-name p:hover{
+  text-decoration: underline;
 }
