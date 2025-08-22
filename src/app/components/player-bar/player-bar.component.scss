@@ -1,0 +1,207 @@
+footer {
+  background-color: #1b1b1b;
+  border-top: 1px solid #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+@media (min-width: 768px) {
+  footer {
+    font-size: 14px;
+  }
+}
+
+/* Left */
+.player-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 180px;
+  width: 33.33%;
+}
+.player-left img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+.player-song-info {
+  overflow: hidden;
+}
+.player-song-title {
+  font-weight: 600;
+  color: #d1d5db;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.player-song-artist {
+  font-size: 8px;
+  color: #6b7280;
+}
+@media (min-width: 768px) {
+  .player-song-artist {
+    font-size: 12px;
+  }
+}
+
+/* Center */
+.player-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33.33%;
+  max-width: 400px;
+}
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 18px;
+  color: #9ca3af;
+}
+.player-controls button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.player-controls button:hover {
+  color: #e11d74;
+}
+.player-controls .play-pause {
+  color: #e11d74;
+  font-size: 36px;
+}
+.player-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+  font-size: 8px;
+  color: #6b7280;
+}
+@media (min-width: 768px) {
+  .player-progress {
+    font-size: 12px;
+  }
+}
+
+/* 🎵 PLAY PROGRESS */
+.player-progress input[type="range"] {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #ff2d55, #9b5de5, #00bbf9) no-repeat;
+  background-size: 0% 100%; /* fill = 0% lúc đầu */
+  background-color: #333; /* phần chưa fill = xám */
+  cursor: pointer;
+  /* transition: background-size 0.1s linear, box-shadow 0.3s ease-in-out; */
+  /* box-shadow: 0 0 6px rgba(255, 45, 85, 0.6); */
+}
+
+/* Phát sáng khi hover */
+/* .player-progress input[type="range"]:hover {
+  box-shadow: 0 0 10px rgba(155, 93, 229, 0.9), 0 0 20px rgba(0, 187, 249, 0.7);
+} */
+.player-progress input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #e11d74;
+  cursor: pointer;
+  /* trỏ chuột vào sáng  */
+  /* box-shadow: 0 0 10px #e11d74, 0 0 20px rgba(225, 29, 116, 0.7);
+  transition: transform 0.2s; */
+}
+/* .player-progress input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+} */
+.player-progress input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #e11d74;
+  cursor: pointer;
+  box-shadow: 0 0 10px #e11d74, 0 0 20px rgba(225, 29, 116, 0.7);
+}
+
+/* Right */
+.player-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 33.33%;
+  min-width: 180px;
+  justify-content: flex-end;
+}
+.player-right button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.player-right button:hover {
+  color: #e11d74;
+}
+
+/* 🔊 VOLUME SLIDER - fix hoàn toàn */
+.player-right input[type="range"] {
+  width: 80px;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #00ff87, #60efff, #ffdd00) no-repeat;
+  background-size: 0% 100%; /* fill = 0% lúc đầu */
+  background-color: #333; /* phần chưa fill = xám */
+  cursor: pointer;
+  /* transition: background-fsize 0.1s linear; */
+}
+
+.player-right input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #00ff87;
+  cursor: pointer;
+}
+
+.player-right input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #00ff87;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  aside {
+    width: 80px;
+  }
+  .logo-text,
+  .profile-info,
+  nav.sidebar-nav a span,
+  .add-playlist-btn span {
+    display: none !important;
+  }
+}
