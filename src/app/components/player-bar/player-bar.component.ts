@@ -1,8 +1,12 @@
 import { Component, AfterViewInit } from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-player-bar',
   templateUrl: './player-bar.component.html',
+  imports: [
+    MatIconModule
+  ],
   styleUrls: ['./player-bar.component.scss']
 })
 export class PlayerBarComponent implements AfterViewInit {
