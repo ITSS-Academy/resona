@@ -5,6 +5,8 @@ import {MatDivider, MatList, MatListItem} from '@angular/material/list';
 import {FullAlbumDetailComponent} from '../../components/full-album-detail/full-album-detail.component';
 import {QueueComponent} from '../../components/queue/queue.component';
 import {PlaybarSongDetailComponent} from '../../components/queue-song-detail/playbar-song-detail.component';
+import {SongDetailButtonComponent} from '../../components/song-detail-button/song-detail-button.component';
+import {ThreeOptionsButtonComponent} from '../../components/three-options-button/three-options-button.component';
 
 @Component({
   selector: 'app-song-detail',
@@ -16,7 +18,9 @@ import {PlaybarSongDetailComponent} from '../../components/queue-song-detail/pla
     MatDivider,
     FullAlbumDetailComponent,
     QueueComponent,
-    PlaybarSongDetailComponent
+    PlaybarSongDetailComponent,
+    SongDetailButtonComponent,
+    ThreeOptionsButtonComponent
   ],
   templateUrl: './song-detail.component.html',
   styleUrl: './song-detail.component.scss'
