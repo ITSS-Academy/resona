@@ -1,15 +1,29 @@
 import { Component, AfterViewInit } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
+import {LyricComponent} from '../lyric/lyric.component';
+import {MatDrawer, MatDrawerContainer} from '@angular/material/sidenav';
+import {MatIconButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-player-bar',
   templateUrl: './player-bar.component.html',
   imports: [
-    MatIconModule
+    MatIconModule,
+    LyricComponent,
+    MatDrawerContainer,
+    MatIconButton,
+    MatDrawer
   ],
   styleUrls: ['./player-bar.component.scss']
 })
 export class PlayerBarComponent implements AfterViewInit {
+
+  showLyric = false;
+
+  toggleLyric() {
+    this.showLyric = !this.showLyric;
+  }
+
   ngAfterViewInit() {
     // Play progress
     const playRange = document.querySelector('.player-progress input[type="range"]') as HTMLInputElement;

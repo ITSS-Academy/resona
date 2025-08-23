@@ -169,6 +169,16 @@ footer {
     align-items: center;
     gap: 16px;
     margin-right: 20px;
+    .lyric-container{
+      position: relative;
+    }
+    .lyric-frame {
+      position: fixed;
+      right: 0;
+      top: 72px;
+      max-height: 703px;
+      z-index: 1;
+    }
   }
   .player-right-below{
     width: 100%;
@@ -194,7 +204,7 @@ footer {
 }
 
 .icon:hover {
-  color: #e11d74;
+  color: var(--mat-sys-primary);
 }
 
 /* 🔊 VOLUME SLIDER - fix hoàn toàn */

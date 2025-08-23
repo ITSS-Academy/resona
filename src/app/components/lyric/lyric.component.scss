@@ -4,11 +4,13 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 8px;
+  padding: 8px 15px;
   gap: 4px;
   border-radius: 12px;
-  border: 1px solid white;
+  z-index: -100;
+  scroll-behavior: smooth;
   p{
+    color: var(--mat-sys-on-surface);
     margin: 0;
     line-height: 1.5;
     font-size: 16px;

@@ -55,14 +55,24 @@
 
   <div class="player-right">
     <div class="player-right-above">
-      <button aria-label="Lyric" >
-        <mat-icon class="icon">music_note</mat-icon>
-      </button>
-      <button aria-label="Queue">
-        <mat-icon class="icon">playlist_play</mat-icon>
-      </button>
       <button aria-label="Fullscreen">
         <mat-icon class="icon" fontSet="material-icons-outlined">image</mat-icon>
+      </button>
+
+      <div class="lyric">
+        <button mat-icon-button (click)="drawer.toggle()" aria-label="lyric-frame">
+          <mat-icon class="icon">music_note</mat-icon>
+        </button>
+
+        <mat-drawer-container class="lyric-container" autosize>
+          <mat-drawer #drawer mode="over" position="end" class="lyric-frame">
+            <app-lyric></app-lyric>
+          </mat-drawer>
+        </mat-drawer-container>
+      </div>
+
+      <button aria-label="Queue">
+        <mat-icon class="icon">playlist_play</mat-icon>
       </button>
     </div>
     <div class="player-right-below">
