@@ -8,6 +8,7 @@ import {PlaybarSongDetailComponent} from '../../components/queue-song-detail/pla
 import {SongDetailButtonComponent} from '../../components/song-detail-button/song-detail-button.component';
 import {ThreeOptionsButtonComponent} from '../../components/three-options-button/three-options-button.component';
 import {LyricComponent} from '../../components/lyric/lyric.component';
+import {OverviewComponent} from '../../components/overview/overview.component';
 
 @Component({
   selector: 'app-song-detail',
@@ -22,7 +23,8 @@ import {LyricComponent} from '../../components/lyric/lyric.component';
     PlaybarSongDetailComponent,
     SongDetailButtonComponent,
     ThreeOptionsButtonComponent,
-    LyricComponent
+    LyricComponent,
+    OverviewComponent
   ],
   templateUrl: './song-detail.component.html',
   styleUrl: './song-detail.component.scss'
