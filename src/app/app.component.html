@@ -1,10 +1,66 @@
-<div class="main">
-  <div class="container">
-    <app-sidebar></app-sidebar>
-    <div class="content">
-      <app-header></app-header>
-      <router-outlet></router-outlet>
+<!--<div class="main">-->
+<!--  <div class="container">-->
+<!--    <app-sidebar></app-sidebar>-->
+<!--    <div class="content">-->
+<!--      <app-header></app-header>-->
+<!--      <router-outlet></router-outlet>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <app-player-bar></app-player-bar>-->
+<!--</div>-->
+
+<div class="body">
+  <mat-drawer-container class="example-container">
+    <!-- Sidebar -->
+    <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+      <div class="logo">
+        <img class="logo-img" src="./assets/images/logo.png" alt="">
+        <span>Resona</span>
+      </div>
+      <mat-nav-list class="nav-list">
+        @for (item of menuItems; track $index) {
+          <a
+            mat-list-item
+            (click)="onMenuClick(item.route)"
+            [routerLink]="item.route"
+            routerLinkActive="active"
+          >
+            <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
+            <span class="menu-title">{{ item.title }}</span>
+          </a>
+
+        }
+      </mat-nav-list>
+
+      <p class="section-title">Your Playlists</p>
+      <mat-nav-list class="nav-list">
+          @for (item of playlists; track $index) {
+          <a
+            mat-list-item
+          >
+            <img
+              [src]="item.cover"
+              alt=""
+              class="background">
+            <span class="menu-title">{{ item.title }}</span>
+          </a>
+
+        }
+          @if (playlists.length > 4) {
+            <p class="see-more-btn">See more...</p>
+          }
+      </mat-nav-list>
+    </mat-drawer>
+
+    <!-- Main content -->
+    <div class="example-sidenav-content">
+      <app-header (toggleSidebar)="drawer.toggle()"></app-header>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
     </div>
-  </div>
+  </mat-drawer-container>
   <app-player-bar></app-player-bar>
 </div>
+
+
