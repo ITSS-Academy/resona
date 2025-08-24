@@ -2,10 +2,11 @@ import {Component, AfterViewInit, ViewChild} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {LyricComponent} from '../lyric/lyric.component';
 import {MatDrawer, MatDrawerContainer} from '@angular/material/sidenav';
-import {MatIconButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {QueueComponent} from '../queue/queue.component';
 import {AlbumCardComponent} from '../album-card/album-card.component';
 import {QueueSongDetailComponent} from '../queue-song-detail/queue-song-detail.component';
+import {SmallAlbumComponent} from '../small-album/small-album.component';
 
 @Component({
   selector: 'app-player-bar',
@@ -17,6 +18,7 @@ import {QueueSongDetailComponent} from '../queue-song-detail/queue-song-detail.c
     MatIconButton,
     MatDrawer,
     QueueComponent,
+    SmallAlbumComponent,
   ],
   styleUrls: ['./player-bar.component.scss']
 })
@@ -24,10 +26,14 @@ export class PlayerBarComponent implements AfterViewInit {
 
   @ViewChild('lyric') lyricDrawer!: MatDrawer;
   @ViewChild('queue') queueDrawer!: MatDrawer;
+  @ViewChild('smallAlbum') smallAlbumDrawer!: MatDrawer;
 
   toggleLyric() {
     if (this.queueDrawer.opened) {
       this.queueDrawer.close().then();
+    }
+    if (this.smallAlbumDrawer.opened) {
+      this.smallAlbumDrawer.close().then();
     }
     this.lyricDrawer.toggle().then();
   }
@@ -36,8 +42,22 @@ export class PlayerBarComponent implements AfterViewInit {
     if (this.lyricDrawer.opened) {
       this.lyricDrawer.close().then();
     }
+    if (this.smallAlbumDrawer.opened) {
+      this.smallAlbumDrawer.close().then();
+    }
     this.queueDrawer.toggle().then();
   }
+
+  toggleSmallAlbum() {
+    if (this.lyricDrawer.opened) {
+      this.lyricDrawer.close().then();
+    }
+    if (this.queueDrawer.opened) {
+      this.queueDrawer.close().then();
+    }
+    this.smallAlbumDrawer.toggle().then();
+  }
+
 
   ngAfterViewInit() {
     // Play progress

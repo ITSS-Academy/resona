@@ -55,9 +55,19 @@
 
   <div class="player-right">
     <div class="player-right-above">
-      <button aria-label="Fullscreen">
-        <mat-icon class="icon" fontSet="material-icons-outlined">image</mat-icon>
-      </button>
+
+      <div class="smallAlbum">
+        <button mat-icon-button aria-label="Fullscreen" (click)="toggleSmallAlbum()">
+          <mat-icon class="icon" fontSet="material-icons-outlined">image</mat-icon>
+        </button>
+
+        <mat-drawer-container>
+          <mat-drawer #smallAlbum mode="over" position="end" class="small-album-frame">
+            <app-small-album></app-small-album>
+          </mat-drawer>
+        </mat-drawer-container>
+
+      </div>
 
       <div class="lyric">
         <button mat-icon-button (click)="toggleLyric()" aria-label="lyric-frame">
