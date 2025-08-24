@@ -4,7 +4,6 @@ import {PlayerBarComponent} from '../../components/player-bar/player-bar.compone
 @Component({
   selector: 'app-home',
   imports: [
-    PlayerBarComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

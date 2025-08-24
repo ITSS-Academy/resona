@@ -1,8 +1,11 @@
-import { Component, AfterViewInit } from '@angular/core';
+import {Component, AfterViewInit, ViewChild} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {LyricComponent} from '../lyric/lyric.component';
 import {MatDrawer, MatDrawerContainer} from '@angular/material/sidenav';
 import {MatIconButton} from '@angular/material/button';
+import {QueueComponent} from '../queue/queue.component';
+import {AlbumCardComponent} from '../album-card/album-card.component';
+import {QueueSongDetailComponent} from '../queue-song-detail/queue-song-detail.component';
 
 @Component({
   selector: 'app-player-bar',
@@ -12,16 +15,28 @@ import {MatIconButton} from '@angular/material/button';
     LyricComponent,
     MatDrawerContainer,
     MatIconButton,
-    MatDrawer
+    MatDrawer,
+    QueueComponent,
   ],
   styleUrls: ['./player-bar.component.scss']
 })
 export class PlayerBarComponent implements AfterViewInit {
 
-  showLyric = false;
+  @ViewChild('lyric') lyricDrawer!: MatDrawer;
+  @ViewChild('queue') queueDrawer!: MatDrawer;
 
   toggleLyric() {
-    this.showLyric = !this.showLyric;
+    if (this.queueDrawer.opened) {
+      this.queueDrawer.close().then();
+    }
+    this.lyricDrawer.toggle().then();
+  }
+
+  toggleQueue() {
+    if (this.lyricDrawer.opened) {
+      this.lyricDrawer.close().then();
+    }
+    this.queueDrawer.toggle().then();
   }
 
   ngAfterViewInit() {
