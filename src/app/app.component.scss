@@ -1,41 +1,298 @@
-.main-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.container {
+.body {
   width: 100%;
   display: flex;
   height: 100vh;
-  //background-color: #f0f0f0;
+  flex-direction: column;
+}
 
-  .content {
-    width: calc(100% - 300px);
-    margin-top: 72px;
-    margin-left: 260px;
-    overflow-y: auto;
-    position: relative;
-    padding: 16px 32px;
-    z-index: 1;
-  }
+.logo {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 500;
+  gap: 4px;
+  padding-bottom: 16px;
+  background: linear-gradient(90deg, #9d01ec, var(--mat-sys-primary)); /* tím → hồng */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
 
-  app-sidebar {
-    width: 260px;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 999;
+  .logo-img {
+    width: 70px;
+    height: auto;
+    object-fit: cover;
   }
+}
 
-  app-header {
-    width: calc(100% - 260px);
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 1000;
+.mat-list-item {
+  display: flex;
+  flex-direction: column; /* Căn theo chiều dọc */
+  align-items: center; /* Căn giữa theo chiều ngang */
+  justify-content: center; /* Căn giữa theo chiều dọc */
+  padding: 16px 0;
+  border-radius: 8px;
+  transition:
+    background-color 0.3s ease,
+    padding 0.3s ease-in-out;
+  gap: 8px;
+}
+
+.mdc-list {
+  padding: 0;
+}
+
+.mat-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.material-symbols-rounded {
+  font-size: 24px;
+  transition: transform 0.3s ease-in-out; /* Thêm hiệu ứng transform */
+}
+
+.menu-title {
+  margin-left: 12px;
+  opacity: 1;
+  transform: translateX(0); /* Chữ ở vị trí bình thường */
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out; /* Thêm transform */
+}
+
+/* Khi Sidebar thu nhỏ */
+.sidenav.mat-drawer-closed .menu-title {
+  opacity: 0; /* Ẩn chữ khi thu nhỏ */
+  transform: translateX(-10px); /* Trượt chữ ra ngoài khung */
+}
+
+/* Khi Sidebar thu nhỏ, căn giữa icon */
+.sidenav.mat-drawer-closed .mat-list-item {
+  justify-content: center; /* Căn giữa icon khi Sidebar thu nhỏ */
+}
+
+.sidenav-container {
+  width: 100%;
+  height: 100%;
+}
+
+.mdc-list-item {
+  padding: 14px 18px;
+}
+.mdc-list-item.mdc-list-item--with-one-line {
+  height: fit-content;
+}
+
+.sidenav {
+  background-color: var(--surface);
+  color: var(--onSurfaceVariant);
+  transition: width 0.3s ease-in-out; /* Hiệu ứng thay đổi kích thước */
+  overflow-x: hidden;
+  padding: 8px;
+  border-radius: 16px;
+}
+
+.sidenav-header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Logo căn giữa theo chiều ngang */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-menu-text {
+  margin: 0 0 0 16px;
+}
+
+.sidenav-title {
+  margin-left: 16px;
+  font-size: 18px;
+  opacity: 1;
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out; /* Hiệu ứng opacity và transform */
+}
+
+/* Khi Sidebar thu nhỏ, ẩn logo chữ */
+.sidenav.mat-drawer-closed .sidenav-title {
+  opacity: 0;
+  transform: translateX(-10px); /* Trượt nhẹ chữ ra ngoài */
+}
+
+.content {
+  transition: margin-left 0.3s ease-in-out;
+  padding-left: 23px;
+  //height: 100%;
+  border-radius: 16px;
+  //overflow: auto;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  //align-items: center;
+  user-select: none;
+  gap: 8px
+}
+
+.main-content {
+  //padding-left: 16px;
+  border-radius: 16px;
+  //padding: 24px;
+  height: 100%;
+  overflow: auto;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;
+}
+
+.mat-drawer-content {
+  overflow: hidden;
+}
+
+/* Animation không cần thiết ở đây, thay bằng transition */
+
+@keyframes expand {
+  0% {
+    justify-content: center;
   }
+  100% {
+    justify-content: flex-start;
+  }
+}
+
+@keyframes collapse {
+  0% {
+    justify-content: flex-start;
+  }
+  100% {
+    justify-content: center;
+  }
+}
+
+/* Khi Sidebar mở rộng */
+.center-flex-expanded {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  animation: expand 0s ease-in-out forwards;
+}
+
+/* Khi Sidebar thu nhỏ */
+.center-flex-collapsed {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  animation: collapse 0s ease-in-out forwards;
+  border-radius: 1000px;
+}
+
+.active {
+  background-color: var(--mat-sys-secondary-container) !important;
+  color: var(--mat-sys-on-primary) !important;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 24px 0 12px 0;
+  color: var(--mat-sys-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.background {
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  //margin-right: 4px;
+  object-fit: cover;
+}
+
+mat-sidenav {
+  width: 100%;
+  padding: 24px 12px !important;
+}
+
+::ng-deep.mat-mdc-list-item-unscoped-content.mdc-list-item__primary-text {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: var(--mat-sys-background) !important;
+}
+
+
+mat-drawer {
+  border-radius: unset;
+  width: 300px;
+  background-color: var(--mat-sys-background) !important;
 
 }
 
+.example-container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: unset !important;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+::ng-deep.mat-drawer-container {
+  background-color: unset !important;
+}
+
+.see-more-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--mat-sys-primary);
+  cursor: pointer;
+  padding: 0 18px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+app-header {
+  width: calc(100% - 300px);
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+app-player-bar {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+/* Ẩn scrollbar trên Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ẩn scrollbar trên Firefox */
+* {
+  scrollbar-width: none; /* tắt scrollbar */
+  -ms-overflow-style: none; /* IE, Edge cũ */
+}

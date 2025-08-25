@@ -1,1 +1,35 @@
-<p>create-playlist-dialog works!</p>
+  <h2 mat-dialog-title>Edit Detail</h2>
+  <div class="dialog-detail">
+  <div mat-dialog-content class="dialog-container">
+    <div class="image-box">
+      <mat-icon>image</mat-icon>
+      <input type="file" id="pictureFile" hidden />
+      <label for="pictureFile" class="upload-btn">Choose Picture</label>
+    </div>
+
+    <div class="input-box">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Playlist Name:</mat-label>
+        <input
+          matInput
+          placeholder="Add playlist name"
+          [formControl]="playlistName"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description Content:</mat-label>
+        <textarea
+          matInput
+          placeholder="Add description (optional)"
+          [formControl]="description"
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-flat-button class="save-btn">Save</button>
+  </div>
+

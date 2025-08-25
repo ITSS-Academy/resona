@@ -1,0 +1,36 @@
+.queue{
+  width: 325px;
+  height: 703px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 4px;
+  border-radius: 12px 0 0 12px;
+  scroll-behavior: smooth;
+  overflow: auto;
+  background-color: var(--mat-sys-background);
+  box-sizing: border-box;
+  .now-playing{
+    p{
+      margin-top: 24px;
+      margin-left: 7px;
+    }
+  }
+  .next-song{
+    p{
+      margin-left: 7px;
+    }
+  }
+}
+
+.heading{
+  font-size: 24px;
+  margin: 12px 0;
+  color: var(--mat-sys-on-primary);
+}
+
+.queue::-webkit-scrollbar{
+  display: none;
+}

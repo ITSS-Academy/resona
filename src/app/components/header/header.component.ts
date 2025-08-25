@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {MaterialModule} from '../../shared/modules/material.module';
 
 @Component({
@@ -8,5 +8,9 @@ import {MaterialModule} from '../../shared/modules/material.module';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  @Output() toggleSidebar = new EventEmitter<void>();
 
+  onToggleSidebar() {
+    this.toggleSidebar.emit();
+  }
 }

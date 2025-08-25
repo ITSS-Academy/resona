@@ -1,0 +1,28 @@
+.container{
+  width: 325px;
+  height: 703px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 4px;
+  border-radius: 12px 0 0 12px;
+  scroll-behavior: smooth;
+  overflow: auto;
+  background-color: var(--mat-sys-background);
+  box-sizing: border-box;
+  h2{
+    color: var(--mat-sys-on-primary);
+  }
+  p{
+    color: var(--mat-sys-on-surface);
+    margin: 0;
+    line-height: 1.5;
+    font-size: 16px;
+  }
+}
+
+.container::-webkit-scrollbar{
+  display: none;
+}
