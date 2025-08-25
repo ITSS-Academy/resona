@@ -10,11 +10,11 @@ footer {
   height: 65px;
 }
 
-//@media (min-width: 768px) {
-//  footer {
-//    //font-size: 14px;
-//  }
-//}
+@media (min-width: 768px) {
+  footer {
+    //font-size: 14px;
+  }
+}
 
 /* Left */
 .player-left {
@@ -170,6 +170,7 @@ footer {
     gap: 16px;
     margin-right: 20px;
     .lyric-frame, .queue-frame, .small-album-frame {
+      width: fit-content;
       position: fixed;
       right: 0;
       top: 72px;

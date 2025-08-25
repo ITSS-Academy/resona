@@ -1,5 +1,6 @@
 .container{
   width: 318px;
+  height: 703px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -8,6 +9,7 @@
   gap: 4px;
   border-radius: 12px;
   scroll-behavior: smooth;
+  overflow: auto;
   h2{
     color: var(--mat-sys-on-primary);
   }
@@ -17,4 +19,8 @@
     line-height: 1.5;
     font-size: 16px;
   }
+}
+
+.container::-webkit-scrollbar{
+  display: none;
 }
