@@ -7,9 +7,6 @@ import {MaterialModule} from '../../shared/modules/material.module';
 @Component({
   selector: 'app-upload',
   imports: [
-    SidebarComponent,
-    HeaderComponent,
-    PlayerBarComponent,
     MaterialModule
   ],
   templateUrl: './upload.component.html',
