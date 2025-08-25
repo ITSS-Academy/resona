@@ -1,2 +1,12 @@
-<p>category works!</p>
-
+<div class="category-container">
+  <div
+    class="category-card"
+    *ngFor="let c of categories"
+    [style.background]="c.color"
+  >
+    <div class="category-content">
+      <h3>{{ c.name }}</h3>
+    </div>
+    <img [src]="c.image" alt="{{ c.name }}" />
+  </div>
+</div>

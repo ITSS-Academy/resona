@@ -19,3 +19,14 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Ẩn scrollbar cho Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ẩn scrollbar cho Firefox */
+* {
+  scrollbar-width: none; /* tắt thanh cuộn */
+  -ms-overflow-style: none; /* dành cho IE, Edge cũ */
+}

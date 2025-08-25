@@ -9,9 +9,6 @@ import {CreatePlaylistDialogComponent} from '../../components/create-playlist-di
 @Component({
   selector: 'app-playlist-detail',
     imports: [
-        HeaderComponent,
-        PlayerBarComponent,
-        SidebarComponent,
       MaterialModule
     ],
   templateUrl: './playlist-detail.component.html',
