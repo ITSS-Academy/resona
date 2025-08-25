@@ -60,9 +60,10 @@
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
-      border: 1px solid white;
+      border: 1px solid var(--mat-sys-on-surface);
       padding: 16px;
       box-sizing: border-box;
+      border-radius: 16px;
       .statistics-tabs{
         width: 100%;
         display: flex;

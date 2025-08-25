@@ -6,7 +6,7 @@ import {PlayerBarComponent} from '../player-bar/player-bar.component';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [MaterialModule, NgClass],
+  imports: [MaterialModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })

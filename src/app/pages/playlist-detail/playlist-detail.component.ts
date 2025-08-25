@@ -7,9 +7,6 @@ import {MaterialModule} from '../../shared/modules/material.module';
 @Component({
   selector: 'app-playlist-detail',
     imports: [
-        HeaderComponent,
-        PlayerBarComponent,
-        SidebarComponent,
       MaterialModule
     ],
   templateUrl: './playlist-detail.component.html',
