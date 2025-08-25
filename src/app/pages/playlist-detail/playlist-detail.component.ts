@@ -12,7 +12,7 @@ import {CreatePlaylistDialogComponent} from '../../components/create-playlist-di
       MaterialModule
     ],
   templateUrl: './playlist-detail.component.html',
-  styleUrl: './playlist-detail.component.scss'
+  styleUrls: ['./playlist-detail.component.scss']
 })
 export class PlaylistDetailComponent {
   constructor(private dialog: MatDialog) {}
