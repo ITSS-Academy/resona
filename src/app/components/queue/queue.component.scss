@@ -1,5 +1,5 @@
 .queue{
-  width: 318px;
+  width: 325px;
   height: 703px;
   display: flex;
   flex-direction: column;
@@ -26,6 +26,8 @@
 }
 
 .heading{
+  font-size: 24px;
+  margin: 12px 0;
   color: var(--mat-sys-on-primary);
 }
 

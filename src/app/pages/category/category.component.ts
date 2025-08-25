@@ -7,7 +7,6 @@ import {SmallAlbumComponent} from '../../components/small-album/small-album.comp
   selector: 'app-category',
   imports: [
     SmallAlbumComponent,
-    LyricComponent
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
