@@ -1,0 +1,36 @@
+.container{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 24px;
+  margin:12px 0;
+  .play-button{
+    width: 56px;
+    height: 56px;
+    border-radius: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--mat-sys-primary);
+  }
+  .like-button, .download-button, .add-to-playlist-button, .add-to-playlist-button, .add-to-queue-button, .share-button, .more-option-button{
+    width: 56px;
+    height: 56px;
+    border-radius: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.play-button:hover{
+  background-color: var(--mat-sys-inverse-primary);
+}
+
+.like-button:hover, .download-button:hover, .add-to-playlist-button:hover, .add-to-playlist-button:hover, .add-to-queue-button:hover, .share-button:hover, .more-option-button:hover{
+  background-color: var(--mat-sys-neutral10);
+}

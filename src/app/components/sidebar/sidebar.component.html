@@ -1,20 +1,22 @@
-<mat-sidenav-container class="sidenav-container">
-  <!-- Sidebar -->
-  <mat-sidenav #drawer class="sidenav" opened>
-      <div class="logo">
-        <span>LOGO</span>
-      </div>
-    <mat-nav-list class="nav-list">
-      @for (item of menuItems; track $index) {
-        <a
-          mat-list-item
-          (click)="onMenuClick(item.route)"
-          [ngClass]="{ active: item.route === activeLink }"
-        >
-          <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>
-          <span class="menu-title">{{ item.title }}</span>
-        </a>
-      }
-    </mat-nav-list>
-  </mat-sidenav>
-</mat-sidenav-container>
+<!--<mat-drawer-container class="sidenav-container">-->
+<!--  &lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--  <mat-drawer #drawer class="sidenav" opened>-->
+<!--      <div class="logo">-->
+<!--        <span>LOGO</span>-->
+<!--      </div>-->
+<!--    <mat-nav-list class="nav-list">-->
+<!--      @for (item of menuItems; track $index) {-->
+<!--        <a-->
+<!--          mat-list-item-->
+<!--          (click)="onMenuClick(item.route)"-->
+<!--          [ngClass]="{ active: item.route === activeLink }"-->
+<!--        >-->
+<!--          <mat-icon class="material-symbols-rounded">{{ item.icon }}</mat-icon>-->
+<!--          <span class="menu-title">{{ item.title }}</span>-->
+<!--        </a>-->
+<!--      }-->
+<!--    </mat-nav-list>-->
+<!--  </mat-drawer>-->
+<!--</mat-drawer-container>-->
+
+

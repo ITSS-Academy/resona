@@ -1,11 +1,16 @@
 <mat-toolbar  color="primary" class="toolbar">
-  <div class="outline-search">
-    <input type="text" placeholder="Search some song" class="search-input" />
-    <mat-icon  class="material-symbols-rounded">search</mat-icon>
+  <div class="left">
+    <button mat-icon-button (click)="onToggleSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="outline-search">
+      <input type="text" placeholder="Search some song" class="search-input" />
+      <mat-icon  class="material-symbols-rounded">search</mat-icon>
+    </div>
   </div>
 
-    <button mat-icon-button class="user-none-login" aria-label="Example icon-button with share icon">
-      <mat-icon class="material-symbols-rounded">person</mat-icon>
-    </button>
+  <button mat-icon-button class="user-none-login" aria-label="Example icon-button with share icon">
+    <mat-icon class="material-symbols-rounded">person</mat-icon>
+  </button>
 
 </mat-toolbar>
