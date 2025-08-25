@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MaterialModule} from '../../shared/modules/material.module';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-create-playlist-dialog',
@@ -14,5 +14,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 })
 export class CreatePlaylistDialogComponent {
+
+  playlistName = new FormControl('');
+  description = new FormControl('');
+
 
 }

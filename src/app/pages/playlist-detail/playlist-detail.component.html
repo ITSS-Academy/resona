@@ -9,13 +9,22 @@
 
       <div class="playlist-text">
         <div class="name-and-time">
-        <h2 class="playlist-title">Playlist 4<mat-icon>edit</mat-icon></h2>
+        <h2 class="playlist-title">Playlist 4
+          <button mat-icon-button (click)="openEditDialog()">
+          <mat-icon>edit</mat-icon>
+          </button>
+        </h2>
+
         <p class="playlist-meta">23 songs • 1 hour 30 minutes</p>
         </div>
 
         <div class="playlist-actions">
-          <button mat-mini-fab class="play-btn"><mat-icon>play_arrow</mat-icon></button>
-          <button mat-mini-fab class="other-btn"><mat-icon>favorite_outline</mat-icon></button>
+          <button mat-mini-fab class="play-btn" (click)="togglePlay()">
+            <mat-icon>{{ isPlay ? 'pause' : 'play_arrow' }}</mat-icon>
+          </button>
+          <button mat-mini-fab class="other-btn" (click)="toggleFavorite()">
+            <mat-icon>{{ isFavorite ? 'favorite' : 'favorite_outline' }}</mat-icon>
+          </button>
           <button mat-mini-fab class="other-btn"><mat-icon>add_circle_outline</mat-icon></button>
           <button mat-mini-fab class="other-btn"><mat-icon>download_2</mat-icon></button>
           <button mat-mini-fab class="other-btn"><mat-icon>delete</mat-icon></button>
