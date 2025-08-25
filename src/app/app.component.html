@@ -1,14 +1,3 @@
-<!--<div class="main">-->
-<!--  <div class="container">-->
-<!--    <app-sidebar></app-sidebar>-->
-<!--    <div class="content">-->
-<!--      <app-header></app-header>-->
-<!--      <router-outlet></router-outlet>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <app-player-bar></app-player-bar>-->
-<!--</div>-->
-
 <div class="body">
   <mat-drawer-container class="example-container">
     <!-- Sidebar -->
@@ -54,7 +43,8 @@
 
     <!-- Main content -->
     <div class="example-sidenav-content">
-      <app-header (toggleSidebar)="drawer.toggle()"></app-header>
+      <app-header (toggleSidebar)="drawer.toggle()" [ngStyle]="{ width: drawer.opened ? 'calc(100% - 300px)' : '100%' }"
+      ></app-header>
       <div class="content">
         <router-outlet></router-outlet>
       </div>

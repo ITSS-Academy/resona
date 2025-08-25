@@ -122,8 +122,10 @@
 .content {
   transition: margin-left 0.3s ease-in-out;
   padding-left: 23px;
-  height: 100%;
+  height: fit-content;
   border-radius: 16px;
+  margin-top: 75px;
+  padding-bottom: 82px;
   //overflow: auto;
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none;
@@ -271,11 +273,11 @@ mat-drawer {
 }
 
 app-header {
-  width: calc(100% - 300px);
   position: fixed;
   top: 0;
   right: 0;
   z-index: 9999;
+  transition: width 0.3s ease;
 }
 
 app-player-bar {

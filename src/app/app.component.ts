@@ -4,12 +4,12 @@ import {MaterialModule} from './shared/modules/material.module';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {HeaderComponent} from './components/header/header.component';
 import {PlayerBarComponent} from './components/player-bar/player-bar.component';
-import {NgClass} from '@angular/common';
+import {NgClass, NgStyle} from '@angular/common';
 import {writeErrorToLogFile} from '@angular/cli/src/utilities/log-file';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MaterialModule, SidebarComponent, HeaderComponent, PlayerBarComponent, NgClass, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, MaterialModule, SidebarComponent, HeaderComponent, PlayerBarComponent, NgClass, RouterLink, RouterLinkActive, NgStyle],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   title = 'resona';
   showFiller = false;
   activeLink = '';
+
   constructor(private router: Router) {
   }
 
