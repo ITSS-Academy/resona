@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
+import {RouterLink} from '@angular/router';
+
 
 @Component({
-  selector: 'app-playlist-detail',
   imports: [],
   templateUrl: './playlist-detail.component.html',
-  styleUrl: './playlist-detail.component.scss'
+  styleUrls: ['./playlist-detail.component.scss']
 })
-export class PlaylistDetailComponent {
+export class HomeComponent {
 
+}
+
+export class PlaylistDetailComponent {
 }
