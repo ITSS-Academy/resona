@@ -1,12 +1,17 @@
 .queue{
   width: 318px;
+  height: 703px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 8px;
+  padding: 16px;
   gap: 4px;
-  border-radius: 12px;
+  border-radius: 12px 0 0 12px;
+  scroll-behavior: smooth;
+  overflow: auto;
+  background-color: var(--mat-sys-background);
+  box-sizing: border-box;
   .now-playing{
     p{
       margin-top: 24px;
@@ -22,4 +27,8 @@
 
 .heading{
   color: var(--mat-sys-on-primary);
+}
+
+.queue::-webkit-scrollbar{
+  display: none;
 }

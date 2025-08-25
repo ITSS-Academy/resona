@@ -10,11 +10,11 @@ footer {
   height: 65px;
 }
 
-//@media (min-width: 768px) {
-//  footer {
-//    //font-size: 14px;
-//  }
-//}
+@media (min-width: 768px) {
+  footer {
+    //font-size: 14px;
+  }
+}
 
 /* Left */
 .player-left {
@@ -170,6 +170,7 @@ footer {
     gap: 16px;
     margin-right: 20px;
     .lyric-frame, .queue-frame, .small-album-frame {
+      width: fit-content;
       position: fixed;
       right: 0;
       top: 72px;
@@ -262,4 +263,11 @@ footer {
   .play-button button{
     padding: 0;
   }
+}
+
+::ng-deep mat-drawer {
+  height: 703px !important;
+  overflow: visible !important; // Let inner container handle scrolling
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
 }
