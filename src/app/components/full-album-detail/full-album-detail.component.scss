@@ -1,0 +1,95 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.album-container{
+  width: 100%;
+  height: 250px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 16px;
+  background-color: white;
+  background-image: url("https://photo-resize-zmp3.zmdcdn.me/w600_r300x169_jpeg/thumb_video/d/9/5/9/d9596f1082e736d59d716010bd2d2fb5.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  gap:4px;
+  //&::before {
+  //  content: "";
+  //  position: absolute;
+  //  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  //  background: rgba(0, 0, 0, 0.5); /* chỉnh độ tối (0.3 = hơi tối, 0.5 = tối vừa) */
+  //  z-index: 0;
+  //}
+  ///* 👇 nội dung nằm trên overlay */
+  //> * {
+  //  position: relative;
+  //  z-index: 1;
+  //}
+
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: darken;
+
+  .album-image{
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img{
+      border-radius: 12px;
+      width: auto;
+      height: 100%;
+      object-fit: contain;
+      box-sizing: border-box;
+      box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    }
+  }
+  .album-detail{
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 8px;
+    .song-title{
+      font-size: 52px;
+      font-weight: bold;
+      p{
+      }
+    }
+    .co-author{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 4px;
+      .dot{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        width: 4px;
+        height: 4px;
+        border-radius: 100%;
+      }
+    }
+  }
+}
+
+.album-image img:hover{
+  transform: scale(1.025);
+  transition: .3s;
+}
+
+.author:hover{
+  text-decoration: underline;
+}

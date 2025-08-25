@@ -269,3 +269,30 @@ mat-drawer {
     text-decoration: underline;
   }
 }
+
+app-header {
+  width: calc(100% - 300px);
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+app-player-bar {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+/* Ẩn scrollbar trên Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ẩn scrollbar trên Firefox */
+* {
+  scrollbar-width: none; /* tắt scrollbar */
+  -ms-overflow-style: none; /* IE, Edge cũ */
+}
