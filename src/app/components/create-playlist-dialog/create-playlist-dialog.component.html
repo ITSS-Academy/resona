@@ -1,48 +1,35 @@
-<!--<div class="edit-dialog">-->
-<!--  &lt;!&ndash; Header &ndash;&gt;-->
-<!--  <div class="dialog-header">-->
-<!--    <h2>Edit Detail</h2>-->
-<!--    <button mat-icon-button (click)="closeDialog()">-->
-<!--      <mat-icon>close</mat-icon>-->
-<!--    </button>-->
-<!--  </div>-->
+  <h2 mat-dialog-title>Edit Detail</h2>
+  <div class="dialog-detail">
+  <div mat-dialog-content class="dialog-container">
+    <div class="image-box">
+      <mat-icon>image</mat-icon>
+      <input type="file" id="pictureFile" hidden />
+      <label for="pictureFile" class="upload-btn">Choose Picture</label>
+    </div>
 
-<!--  &lt;!&ndash; Body &ndash;&gt;-->
-<!--  <div class="dialog-body">-->
-<!--    &lt;!&ndash; Ảnh &ndash;&gt;-->
-<!--    <div class="cover-upload">-->
-<!--      <div class="cover-placeholder">-->
-<!--        <mat-icon>image</mat-icon>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class="input-box">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Playlist Name:</mat-label>
+        <input
+          matInput
+          placeholder="Add playlist name"
+          [formControl]="playlistName"
+        />
+      </mat-form-field>
 
-<!--    &lt;!&ndash; Form &ndash;&gt;-->
-<!--    <form [formGroup]="editForm" class="form-fields">-->
-<!--      <mat-form-field appearance="fill" class="full-width">-->
-<!--        <input matInput placeholder="Playlist name" formControlName="name" />-->
-<!--      </mat-form-field>-->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description Content:</mat-label>
+        <textarea
+          matInput
+          placeholder="Add description (optional)"
+          [formControl]="description"
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  </div>
 
-<!--      <mat-form-field appearance="fill" class="full-width">-->
-<!--        <textarea-->
-<!--          matInput-->
-<!--          placeholder="Add description (optional)"-->
-<!--          formControlName="description"-->
-<!--        ></textarea>-->
-<!--      </mat-form-field>-->
-<!--    </form>-->
-<!--  </div>-->
-
-<!--  &lt;!&ndash; Footer &ndash;&gt;-->
-<!--  <div class="dialog-actions">-->
-<!--    <button-->
-<!--      mat-flat-button-->
-<!--      color="primary"-->
-<!--      class="save-btn"-->
-<!--      (click)="save()"-->
-<!--      [disabled]="editForm.invalid"-->
-<!--    >-->
-<!--      Save-->
-<!--    </button>-->
-<!--  </div>-->
-<!--</div>-->
+  <div mat-dialog-actions align="end">
+    <button mat-flat-button class="save-btn">Save</button>
+  </div>
 
