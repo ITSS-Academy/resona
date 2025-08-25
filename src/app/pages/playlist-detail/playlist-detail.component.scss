@@ -1,0 +1,158 @@
+.playlist-detail-container {
+  padding: 0 40px;
+}
+
+.playlist-header {
+  position: relative;
+  height: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.playlist-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.playlist-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(25%);
+}
+
+.playlist-info {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 20px;
+  color: white;
+}
+
+.playlist-cover {
+  width: 290px;
+  height: 280px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.playlist-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 30px;
+}
+
+.name-and-time p{
+  font-size: 18px;
+}
+
+.playlist-title {
+  font-size: 28px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.playlist-meta {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.playlist-actions {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-top: 70px;
+}
+
+.playlist-actions button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.playlist-actions button.play-btn {
+  background: #d4008f;
+  color: white;
+}
+
+.playlist-actions button.other-btn {
+  color: white;
+  width: 50px;
+  height: 50px;
+}
+
+
+.playlist-table-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-top: 1px solid #666;
+  border-bottom: 1px solid #666;
+  color: #e0e0e0;
+  font-size: 16px;
+  gap: 20px;
+}
+
+.col-name {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  font-size: 19px;
+}
+.col-artist {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: 19px;
+}
+.col-time {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.col-actions {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.col-list {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 19px;
+}
+
+.playlist-table-header mat-icon {
+  font-size: 22px;
+  color: #d8a9b0;
+}
+.playlist-table-header mat-icon:hover {
+  color: #ee10b0;
+}
+
+.playlist-table-header mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  color: #d8a9b0;
+}
+
+.playlist-table-header mat-icon:hover {
+  color: #ee10b0;
+}
+
+
