@@ -264,3 +264,10 @@ footer {
     padding: 0;
   }
 }
+
+::ng-deep mat-drawer {
+  height: 703px !important;
+  overflow: visible !important; // Let inner container handle scrolling
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+}

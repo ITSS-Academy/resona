@@ -62,7 +62,7 @@
         </button>
 
         <mat-drawer-container>
-          <mat-drawer #smallAlbum mode="over" position="end" class="small-album-frame">
+          <mat-drawer #smallAlbum mode="over" position="end" class="small-album-frame" autoFocus="false">
             <app-small-album></app-small-album>
           </mat-drawer>
         </mat-drawer-container>
@@ -75,7 +75,7 @@
         </button>
 
         <mat-drawer-container class="lyric-container" autosize>
-          <mat-drawer #lyric mode="over" position="end" class="lyric-frame">
+          <mat-drawer #lyric mode="over" position="end" class="lyric-frame" autoFocus="false">
             <app-lyric></app-lyric>
           </mat-drawer>
         </mat-drawer-container>
@@ -87,7 +87,7 @@
         </button>
 
         <mat-drawer-container>
-          <mat-drawer #queue mode="over" position="end" class="queue-frame">
+          <mat-drawer #queue mode="over" position="end" class="queue-frame" autoFocus="false">
             <app-queue></app-queue>
           </mat-drawer>
         </mat-drawer-container>
