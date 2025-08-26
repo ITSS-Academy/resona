@@ -3,34 +3,19 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   margin:12px 0;
-  .play-button{
-    width: 56px;
-    height: 56px;
-    border-radius: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--mat-sys-primary);
+  #play-button{
+    background-color: var(--mdc-fab-container-color, var(--mat-sys-primary));
+    border-radius:100%;
+    color: var(--mat-sys-on-primary);
+    box-shadow: var(--mdc-fab-container-elevation-shadow, var(--mat-sys-level3));
   }
-  .like-button, .download-button, .add-to-playlist-button, .add-to-playlist-button, .add-to-queue-button, .share-button, .more-option-button{
-    width: 56px;
-    height: 56px;
-    border-radius: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  .buttons{
+    background-color: transparent;
+    border-radius:100%;
+    //color: var(--mat-sys-on-primary);
+    box-shadow: var(--mdc-fab-container-elevation-shadow, var(--mat-sys-level3));
   }
-}
-
-.play-button:hover{
-  background-color: var(--mat-sys-inverse-primary);
-}
-
-.like-button:hover, .download-button:hover, .add-to-playlist-button:hover, .add-to-playlist-button:hover, .add-to-queue-button:hover, .share-button:hover, .more-option-button:hover{
-  background-color: var(--mat-sys-neutral10);
 }
