@@ -20,18 +20,35 @@
     background-color: rgba(0, 0, 0, 0.7);
     background-blend-mode: darken;
     border-radius: 12px;
-    h2,p{
+    h1git,p{
       margin-left: 16px;
       color: var(--mat-sys-on-surface);
     }
   }
-  .list-of-music{
+  .music-display{
     width: 100%;
-    margin-top: 24px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 16px;
+    .title{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      span{
+        color: var(--mat-sys-primary)
+      }
+    }
+    .list-of-music{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      flex-wrap: nowrap;
+      overflow: auto;
+    }
   }
 }

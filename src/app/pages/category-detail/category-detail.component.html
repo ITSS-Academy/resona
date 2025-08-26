@@ -1,11 +1,50 @@
 <div class="container">
   <div class="music-header" [ngStyle]="{'background-image': 'url(' + musicGenre.image + ')'}">
-    <h2>{{musicGenre.name}}</h2>
+    <h1>{{musicGenre.name}}</h1>
     <p>{{musicGenre.description}}</p>
   </div>
-  <div class="list-of-music">
-    @for(index of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]; track index){
-      <app-album-card></app-album-card>
-    }
+  <div class="music-display">
+    <div class="title">
+      <h2>Most listened <span>music</span></h2>
+      <p>See all</p>
+    </div>
+    <div class="list-of-music">
+      @for(index of [1,2,3,4,5,6,7,8,9,10]; track index){
+        <app-album-card></app-album-card>
+      }
+    </div>
+  </div>
+  <div class="music-display">
+    <div class="title">
+      <h2>New <span>release</span></h2>
+      <p>See all</p>
+    </div>
+    <div class="list-of-music">
+      @for(index of [1,2,3,4,5,6,7,8,9,10]; track index){
+        <app-album-card></app-album-card>
+      }
+    </div>
+  </div>
+  <div class="music-display">
+    <div class="title">
+      <h2>Recommended for <span>today</span></h2>
+      <p>See all</p>
+    </div>
+    <div class="list-of-music">
+      @for(index of [1,2,3,4,5,6,7,8,9,10]; track index){
+        <app-album-card></app-album-card>
+      }
+    </div>
+  </div>
+  <div class="music-display">
+    <div class="title">
+      <h2>You may <span>know</span></h2>
+      <p>See all</p>
+    </div>
+    <div class="list-of-music">
+      @for(index of [1,2,3,4,5,6,7,8,9,10]; track index){
+        <app-album-card></app-album-card>
+      }
+    </div>
   </div>
 </div>
