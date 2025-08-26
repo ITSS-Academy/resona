@@ -1,2 +1,13 @@
-<p>category works!</p>
-
+<div class="category-container">
+  @for (category of categories; track $index) {
+    <div
+      class="category-card"
+      [style.background]="category.color"
+    >
+      <div class="category-content">
+        <h3>{{ category.name }}</h3>
+      </div>
+      <img [src]="category.image" alt="{{ category.name }}" />
+    </div>
+  }
+</div>

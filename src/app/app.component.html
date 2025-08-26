@@ -23,9 +23,11 @@
 
       <p class="section-title">Your Playlists</p>
       <mat-nav-list class="nav-list">
-          @for (item of playlists; track $index) {
+        @for (item of playlists; track $index) {
           <a
             mat-list-item
+            [routerLink]="['/playlist-detail']"
+            routerLinkActive="active"
           >
             <img
               [src]="item.cover"
@@ -35,9 +37,9 @@
           </a>
 
         }
-          @if (playlists.length > 4) {
-            <p class="see-more-btn">See more...</p>
-          }
+        @if (playlists.length > 4) {
+          <p class="see-more-btn">See more...</p>
+        }
       </mat-nav-list>
     </mat-drawer>
 
@@ -49,7 +51,7 @@
         <router-outlet></router-outlet>
       </div>
     </div>
-<!--  <app-player-bar></app-player-bar>-->
+    <!--  <app-player-bar></app-player-bar>-->
   </mat-drawer-container>
   <app-player-bar></app-player-bar>
 </div>

@@ -1,1 +1,101 @@
-<p>profile works!</p>
+
+<div class="background" >
+  <div class = "avatar">
+  </div>
+  <div class = "right">
+  <div class = "name">
+    <p>Username</p>
+    <p>information</p>
+    <button class = follow>Follow</button>
+  </div>
+  <div class = "infomation">
+
+  </div></div>
+</div>
+<h1>Profile</h1>
+
+<div class="tabs">
+  <button class="tab-button" (click)="openTab('upload')">
+    <span class="material-icons">cloud_upload</span>
+    Upload
+  </button>
+  <button class="tab-button" (click)="openTab('your-playlist')">
+    <span class="material-icons">playlist_play</span>
+    Your Playlist
+  </button>
+  <button class="tab-button" (click)="openTab('your-favorite')">
+    <span class="material-icons">favorite</span>
+    Your Favorite
+  </button>
+</div>
+
+<div id="upload" class="tab-content" [ngClass]="{active: activeTab === 'upload'}">
+  <h2>Upload Section</h2>
+  <form>
+    <input type="file" />
+    <button type="submit">Upload</button>
+    <span class="material-icons">cloud_upload</span>
+  </form>
+  <table>
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Filename</th>
+      <th>Size</th>
+      <th>Date Uploaded</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let file of uploadFiles; let i = index">
+      <td>{{i+1}}</td>
+      <td>{{file.name}}</td>
+      <td>{{file.size}}</td>
+      <td>{{file.date}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="your-playlist" class="tab-content" [ngClass]="{active: activeTab === 'your-playlist'}">
+  <h2>Your Playlist</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Playlist Name</th>
+      <th>Song Count</th>
+      <th>Created At</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let playlist of playlists; let i = index">
+      <td>{{i+1}}</td>
+      <td>{{playlist.name}}</td>
+      <td>{{playlist.count}}</td>
+      <td>{{playlist.created}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="your-favorite" class="tab-content" [ngClass]="{active: activeTab === 'your-favorite'}">
+  <h2>Your Favorite</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Song</th>
+      <th>Artist</th>
+      <th>Added Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let fav of favorites; let i = index">
+      <td>{{i+1}}</td>
+      <td>{{fav.song}}</td>
+      <td>{{fav.artist}}</td>
+      <td>{{fav.added}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

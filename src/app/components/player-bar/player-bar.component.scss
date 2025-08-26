@@ -4,17 +4,17 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 28px;
-  color: #9ca3af;
+  padding: 8px 26px;
+  //color: #9ca3af;
   z-index: 1000;
   height: 65px;
 }
 
-//@media (min-width: 768px) {
-//  footer {
-//    //font-size: 14px;
-//  }
-//}
+@media (min-width: 768px) {
+  footer {
+    //font-size: 14px;
+  }
+}
 
 /* Left */
 .player-left {
@@ -26,32 +26,32 @@ footer {
   height: 100%;
 }
 .player-left img {
-  width: auto;
-  height: 100%;
-  border-radius: 6px;
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
   object-fit: cover;
 }
 .player-song-info {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap:4px;
+  gap: 4px;
 }
 .player-song-title {
   font-weight: 600;
-  color: #d1d5db;
+  //color: #d1d5db;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  p{
+  p {
     font-size: 14px;
     margin: 0;
   }
 }
 .player-song-artist {
-  p{
+  p {
     font-size: 14px;
-    color: #6b7280;
+    //color: #6b7280;
     margin: 0;
   }
 }
@@ -76,7 +76,7 @@ footer {
   align-items: center;
   gap: 28px;
   font-size: 18px;
-  color: #9ca3af;
+  //color: #9ca3af;
 }
 .player-controls button {
   background: none;
@@ -133,8 +133,8 @@ footer {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid #e11d74;
+  background: var(--mat-sys-primary);
+  border: 2px solid var(--mat-sys-primary);
   cursor: pointer;
   /* trỏ chuột vào sáng  */
   /* box-shadow: 0 0 10px #e11d74, 0 0 20px rgba(225, 29, 116, 0.7);
@@ -147,8 +147,8 @@ footer {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid #e11d74;
+  background: var(--mat-sys-primary);
+  border: 2px solid var(--mat-sys-primary);
   cursor: pointer;
   box-shadow: 0 0 10px #e11d74, 0 0 20px rgba(225, 29, 116, 0.7);
 }
@@ -158,37 +158,13 @@ footer {
   width: 33.33%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: flex-end;
-  .player-right-above{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 16px;
-    margin-right: 20px;
-    .lyric-frame, .queue-frame, .small-album-frame {
-      position: fixed;
-      right: 0;
-      top: 72px;
-      max-height: 703px;
-      z-index: 1;
-    }
-  }
-  .player-right-below{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-  }
+  justify-content: end;
+  align-items: center;
 }
 .player-right button {
   background: none;
   border: none;
-  color: inherit;
+  //color: inherit;
   cursor: pointer;
   font-size: 14px;
   display: flex;
@@ -196,21 +172,26 @@ footer {
   gap: 4px;
 }
 
-.icon{
-  color: var(--mat-sys-on-primary);
-}
-
+//.icon {
+//  color: var(--mat-sys-on-primary);
+//}
+//
 .icon:hover {
   color: var(--mat-sys-primary);
 }
 
 /* 🔊 VOLUME SLIDER - fix hoàn toàn */
 .player-right input[type="range"] {
-  width: 160px;
+  width: 120px;
   -webkit-appearance: none;
   height: 6px;
   border-radius: 9999px;
-  background: linear-gradient(90deg, #00ff87, #60efff, #ffdd00) no-repeat;
+  background: linear-gradient(
+      90deg,
+      var(--mat-sys-primary),
+      var(--mat-sys-primary)
+    )
+    no-repeat;
   background-size: 0% 100%; /* fill = 0% lúc đầu */
   background-color: #333; /* phần chưa fill = xám */
   cursor: pointer;
@@ -223,8 +204,8 @@ footer {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid #00ff87;
+  background: var(--mat-sys-primary);
+  border: 2px solid var(--mat-sys-primary);
   cursor: pointer;
 }
 
@@ -232,9 +213,9 @@ footer {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid #00ff87;
-  cursor: pointer;;
+  background: var(--mat-sys-primary);
+  border: 2px solid var(--mat-sys-primary);
+  cursor: pointer;
 }
 
 /* Responsive adjustments */
@@ -250,16 +231,23 @@ footer {
   }
 }
 
-.play-button{
-  width: 32px;
-  height: 32px;
+.play-button {
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   background-color: var(--mat-sys-primary);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  .play-button button{
+  .play-button button {
     padding: 0;
   }
+}
+
+::ng-deep mat-drawer {
+  //height: 703px !important;
+  overflow: visible !important; // Let inner container handle scrolling
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
 }

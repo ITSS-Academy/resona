@@ -1,33 +1,33 @@
 <div class="upload-container">
   <div class="left-col">
-  <div class="upload-music">
-    <div class="upload-music-box">
-      <img mat-card-image src="https://cdn.discordapp.com/attachments/1395957064957825165/1408359463286734879/cloud-upload_icon-icons.com_54314.png?ex=68a97476&is=68a822f6&hm=7c506ca430581e8f184e38a03f4797f0a2d6682f50433da7b94dd3b082aa2550&" alt="">
-      <p>Drag music here or click to select file</p>
-        <input type="file" id="musicFile" hidden />
-        <label for="musicFile" class="upload-btn"> <mat-icon>music_note</mat-icon>Choose File</label>
-    </div>
-  </div>
+<!--    <div class="upload-music">-->
+      <div class="upload-music-box">
+        <img mat-card-image src="./assets/images/cloud-upload_icon-icons.com_54314.png" alt="">
+        <p>Drag music here or click to select file</p>
+          <input type="file" id="musicFile" hidden />
+          <label for="musicFile" class="upload-btn"> <mat-icon>music_note</mat-icon>Choose File</label>
+      </div>
+<!--    </div>-->
 
-  <div class="upload-picture">
-      <p class="picture-label">Picture:</p>
-    <div class="picture-content">
-      <img mat-card-image src="https://cdn.discordapp.com/attachments/1395957064957825165/1408378635483742268/add_image.png?ex=68a98651&is=68a834d1&hm=1d174c49b9f44b52d739bcc2c043aa6d113ed19a995f33e59bcade7648e5f6f0&" alt="">
+    <div class="upload-picture">
+      <div class="picture-content">
+        <img mat-card-image src="./assets/images/add_image.png" alt="">
+        <p>Drag music here or click to select file</p>
         <input type="file" id="pictureFile" hidden />
         <label for="pictureFile" class="upload-btn"> <mat-icon>image</mat-icon>Choose Picture</label>
-    </div>
+      </div>
     </div>
   </div>
 
   <div class="song-info">
     <h3>Song Information</h3>
     <mat-form-field appearance="outline">
-      <mat-label>Song title:</mat-label>
+      <mat-label>Song title</mat-label>
       <input matInput placeholder="Enter song title">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Artist:</mat-label>
+      <mat-label>Artist</mat-label>
       <input matInput placeholder="Enter artist name">
     </mat-form-field>
 
@@ -35,8 +35,7 @@
       <mat-tab-group>
         <mat-tab label="Enter Lyrics">
           <div class="lyrics-tab">
-            <mat-form-field appearance="fill" class="full-width no-border">
-              <mat-label>Import lyrics</mat-label>
+            <mat-form-field class="full-width no-border">
               <textarea
                 matInput
                 rows="8"
@@ -61,7 +60,7 @@
     </div>
 
     <mat-form-field appearance="outline">
-      <mat-label>Category:</mat-label>
+      <mat-label>Category</mat-label>
       <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
       <mat-select>
         <mat-option value="pop">Pop</mat-option>
