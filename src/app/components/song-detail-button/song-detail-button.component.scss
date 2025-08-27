@@ -6,31 +6,140 @@
   align-items: center;
   gap: 12px;
   margin:12px 0;
-  .play-button{
-    width: 56px;
-    height: 56px;
-    border-radius: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--mat-sys-primary);
+  #play-button{
+    background-color: var(--mdc-fab-container-color, var(--mat-sys-primary));
+    border-radius:100%;
+    color: var(--mat-sys-on-primary);
+    box-shadow: var(--mdc-fab-container-elevation-shadow, var(--mat-sys-level3));
   }
-  .like-button, .download-button, .add-to-playlist-button, .add-to-playlist-button, .add-to-queue-button, .share-button, .more-option-button{
-    width: 56px;
-    height: 56px;
-    border-radius: 100%;
+  .buttons{
+    background-color: transparent;
+    border-radius:100%;
+    //color: var(--mat-sys-on-primary);
+    box-shadow: var(--mdc-fab-container-elevation-shadow, var(--mat-sys-level3));
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
   }
-}
 
-.play-button:hover{
-  background-color: var(--mat-sys-inverse-primary);
-}
+  // Laptop
+  //@media (max-width: 1024px) {
+  //  gap: 12px;
+  //  button {
+  //    width: 44px;
+  //    height: 44px;
+  //    mat-icon {
+  //      font-size: 24px;
+  //    }
+  //  }
+  //}
 
-.like-button:hover, .download-button:hover, .add-to-playlist-button:hover, .add-to-playlist-button:hover, .add-to-queue-button:hover, .share-button:hover, .more-option-button:hover{
-  background-color: var(--mat-sys-neutral10);
+   //Tablet
+  @media (max-width: 768px) {
+    //gap: 14px;
+    //#play-button{
+    //  width: 52px;
+    //  height: 52px;
+    //  mat-icon {
+    //    font-size: 28px;
+    //    display: flex;
+    //    justify-content: center;
+    //    align-items: center;
+    //  }
+    //}
+    //.buttons {
+    //  width: 44px;
+    //  height: 44px;
+    //  mat-icon {
+    //    font-size: 20px;
+    //    display: flex;
+    //    justify-content: center;
+    //    align-items: center;
+    //  }
+    //}
+    width: 75%;
+    flex-wrap: wrap;
+  }
+
+  // Mobile L
+  @media (max-width: 425px){
+    //gap: 12px;
+    //#play-button{
+    //  width: 44px;
+    //  height: 44px;
+    //  mat-icon {
+    //    font-size: 24px;
+    //    display: flex;
+    //    justify-content: center;
+    //    align-items: center;
+    //  }
+    //}
+    //.buttons {
+    //  width: 40px;
+    //  height: 40px;
+    //  mat-icon {
+    //    font-size: 20px;
+    //    display: flex;
+    //    justify-content: center;
+    //    align-items: center;
+    //  }
+    //}
+    width: 75%;
+    flex-wrap: wrap;
+  }
+
+  // Mobile M
+  @media (max-width: 375px) {
+    //gap: 8px;
+    //#play-button{
+    //  width: 40px;
+    //  height: 40px;
+    //  mat-icon {
+    //    font-size: 20px;
+    //    display: flex;
+    //    justify-content: center;
+    //    align-items: center;
+    //  }
+    //}
+    //.buttons {
+    //  width: 36px;
+    //  height: 36px;
+    //  mat-icon {
+    //    font-size: 16px;
+    //    display: flex;
+    //    justify-content: center;
+    //    align-items: center;
+    //  }
+    //}
+    width: 85%;
+    flex-wrap: wrap;
+  }
+
+  // Mobile S
+  @media (max-width: 320px) {
+    gap: 10px;
+    //#play-button{
+    //  width: 52px;
+    //  height: 52px;
+    //  mat-icon {
+    //    font-size: 28px;
+    //    display: flex;
+    //    justify-content: center;
+    //    align-items: center;
+    //  }
+    //}
+    //.buttons {
+    //  width: 44px;
+    //  height: 44px;
+    //  mat-icon {
+    //    font-size: 20px;
+    //    display: flex;
+    //    justify-content: center;
+    //    align-items: center;
+    //  }
+    //}
+    width: 100%;
+    flex-wrap: wrap;
+  }
 }

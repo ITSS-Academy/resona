@@ -1,0 +1,54 @@
+.container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  //border:1px solid white;
+  .music-header{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-blend-mode: darken;
+    border-radius: 12px;
+    h1,p{
+      margin-left: 16px;
+      color: var(--mat-sys-on-surface);
+    }
+  }
+  .music-display{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 16px;
+    .title{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      span{
+        color: var(--mat-sys-primary)
+      }
+    }
+    .list-of-music{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      flex-wrap: nowrap;
+      overflow: auto;
+    }
+  }
+}
