@@ -2,7 +2,7 @@
   @for (category of categories; track $index) {
     <div
       class="category-card"
-      [style.background]="category.color"
+      [style.background]="category.gradient || category.color"
     >
       <div class="category-content">
         <h3>{{ category.name }}</h3>

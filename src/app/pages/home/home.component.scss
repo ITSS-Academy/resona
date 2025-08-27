@@ -47,6 +47,12 @@ h2.section-title span {
   align-items: center;
   padding: 8px;
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .card img {
@@ -55,76 +61,37 @@ h2.section-title span {
   border-radius: 16px;
   object-fit: cover;
   margin-bottom: 8px;
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
+
+.card:hover img {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
 .card .label {
   font-size: 16px;
   color: #ffffff;
   margin: 0;
 }
+
 .card .tracks {
   font-size: 14px;
   color: #6b7280;
   margin: 0;
 }
 
-/* New Release Songs list */
-/* Demo new songs 1st */
-/* .new-release-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.card .label,
+.card .tracks {
+  transition: color 0.3s ease;
 }
-.new-release-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.card:hover .label {
+  color: var(--mat-sys-primary);
 }
-.new-release-item img {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  object-fit: cover;
-  flex-shrink: 0;
+.card:hover .tracks {
+  color: #ffffff;
 }
-.new-release-info {
-  flex: 1;
-  min-width: 0;
-}
-.new-release-info .title {
-  font-weight: 600;
-  font-size: 14px;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.new-release-info .artist {
-  font-size: 12px;
-  color: #9ca3af;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.new-release-date,
-.new-release-duration {
-  font-size: 12px;
-  color: #9ca3af;
-  white-space: nowrap;
-}
-.new-release-actions {
-  display: flex;
-  gap: 12px;
-  color: #9ca3af;
-}
-.new-release-actions i {
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-.new-release-actions i:hover {
-  color: #e11d74;
-} */
-/* demo 2nd */
+/* New Releases Section */
 #release-title{
   font-size: 32px;
   margin-top: 0;
@@ -253,8 +220,19 @@ h2#release-title span {
   cursor: pointer;
 }
 .song-actions button:hover {
-  color: #e11d74;
+  color: var(--mat-sys-primary);
 }
+
+.song-actions button mat-icon {
+  font-size: 20px; // Match Font Awesome size
+  vertical-align: middle;
+  transition: color 0.2s ease;
+}
+
+.song-actions button:hover mat-icon {
+  color: var(--mat-sys-primary);
+}
+
 
 /* Popular Artists */
 .popular-artists {

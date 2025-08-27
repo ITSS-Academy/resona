@@ -108,7 +108,7 @@ footer {
   }
 }
 
-/* 🎵 PLAY PROGRESS */
+/* PLAY PROGRESS */
 .player-progress input[type="range"] {
   flex: 1;
   -webkit-appearance: none;
@@ -172,6 +172,10 @@ footer {
   gap: 4px;
 }
 
+.player-right button:hover {
+  color: var(--mat-sys-primary);
+}
+
 //.icon {
 //  color: var(--mat-sys-on-primary);
 //}
@@ -180,7 +184,7 @@ footer {
   color: var(--mat-sys-primary);
 }
 
-/* 🔊 VOLUME SLIDER - fix hoàn toàn */
+/* VOLUME SLIDER  */
 .player-right input[type="range"] {
   width: 120px;
   -webkit-appearance: none;
