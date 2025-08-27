@@ -12,25 +12,25 @@
       margin: 12px 12px 0 0;
     }
   }
-  .comment-input, .comments{
+  .comment-input{
     width: 100%;
+    height: 75px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
-    gap: 12px;
     .image{
-      width: 5%;
+      height: 100%;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       justify-content: center;
       align-items: center;
       img{
-        width: 52px;
-        height: 52px;
-        border-radius: 100%;
+        height: 62px;
+        width: 62px;
         object-fit: cover;
+        border-radius: 50%;
       }
     }
     .comment-info{
@@ -39,25 +39,34 @@
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
+      margin-left: 12px;
       gap: 8px;
       .comment-info-above{
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
-        gap:8px;
+        gap: 12px;
+        padding-top: 4px;
         p{
           margin: 0;
         }
+        .user{
+          font-size: 20px;
+          font-weight: 700;
+        }
       }
       .comment-info-below{
+        padding-bottom: 4px;
         p{
+          line-height: 1.5;
           margin: 0;
         }
       }
     }
     .form-fill {
-      width: 95%;
+      width: 100%;
+      margin-left: 12px;
       p {
         margin: 0;
       }
@@ -67,6 +76,80 @@
       }
     }
   }
+  .comments{
+    width: 100%;
+    height: 75px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    .image{
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      img{
+        height: 62px;
+        width: 62px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+    .comment-info{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-left: 12px;
+      gap: 8px;
+      .comment-info-above{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 12px;
+        padding-top: 4px;
+        p{
+          margin: 0;
+        }
+        .user{
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+      .comment-info-below{
+        padding-bottom: 4px;
+        p{
+          line-height: 1.5;
+          margin: 0;
+        }
+      }
+    }
+    .form-fill {
+      width: 100%;
+      margin-left: 12px;
+      p {
+        margin: 0;
+      }
+      mat-form-field {
+        width: 100%;
+        outline: none;
+      }
+    }
+  }
+
+ @media (max-width: 425px){
+   .image{
+      img{
+        min-width: 50px !important;
+        height: 50px !important;
+      }
+   }
+ }
+
 }
 
 ::ng-deep.mdc-text-field--filled:not(.mdc-text-field--disabled) {

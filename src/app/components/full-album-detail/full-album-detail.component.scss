@@ -49,6 +49,7 @@
       color: var(--mat-sys-on-surface);
     }
     p{
+      font-size: 24px;
       color: var(--mat-sys-on-surface);
     }
     .song-title{
@@ -56,33 +57,14 @@
       font-weight: bold;
       color: var(--mat-sys-on-surface);
     }
-    //.co-author{
-    //  display: flex;
-    //  flex-direction: row;
-    //  justify-content: flex-start;
-    //  align-items: center;
-    //  gap: 4px;
-    //  color: var(--mat-sys-on-surface);
-    //  .dot{
-    //    display: flex;
-    //    flex-direction: row;
-    //    justify-content: center;
-    //    align-items: center;
-    //    background-color: white;
-    //    width: 4px;
-    //    height: 4px;
-    //    border-radius: 100%;
-    //  }
-    //}
   }
-  //@media (max-width: 1024px) { // Laptop: 1024px
-  //  height: 200px;
-  //  .album-detail .song-title {
-  //    font-size: 36px;
-  //  }
-  //}
+  @media (max-width: 894px){
+    .album-detail .song-title{
+      font-size: 40px;
+    }
+  }
 
-  @media (max-width: 768px) { // Tablet
+  @media (max-width: 833px){
     flex-direction: column;
     height: auto;
     align-items: flex-start;
@@ -98,32 +80,20 @@
         height: auto;
       }
     }
+    .album-detail{
+      p{
+        font-size: 20px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) { // Tablet
     .album-detail .song-title{
       font-size: 36px;
     }
   }
 
   @media (max-width: 425px) {// Mobile L
-    //flex-direction: column;
-    //height: auto;
-    //padding: 12px;
-    //justify-content: center;
-    //align-items: flex-start;
-    //.album-image {
-    //  width: 100%;
-    //  display: flex;
-    //  justify-content: center;
-    //  align-items: center;
-    //}
-    //.song-title{
-    //  font-size: 28px;
-    //}
-    //.album-detail{
-    //  font-size: 20px;
-    //}
-    //.detail{
-    //  font-size: 14px;
-    //}
     .album-image {
       img{
         max-width: 180px;
@@ -136,21 +106,6 @@
       font-size: 32px;
     }
   }
-
-  //@media (max-width: 375px) { // Mobile M
-  //  .album-image img {
-  //    max-width: 180px;
-  //    max-height: 180px;
-  //    width: 100%;
-  //    height: auto;
-  //  }
-  //}
-  ////
-  //@media (max-width: 320px) { // Mobile S
-  //  .song-title{
-  //    font-size: 20px;
-  //  }
-  //}
 }
 
 .album-image img:hover{
