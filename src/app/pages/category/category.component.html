@@ -1,7 +1,8 @@
 <div class="category-container">
-  @for (item of categories; track $index) {
+  @for (item of musicGenres; track item.id) {
   <div
     class="category-card"
+    (click)="navigateToCategoryDetail(item.id)"
     [style.background]="item.gradient || item.color"
   >
     <div class="category-content">

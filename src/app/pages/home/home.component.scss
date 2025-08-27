@@ -51,7 +51,7 @@ h2.section-title span {
 }
 
 .card:hover {
-  transform: translateY(-6px) scale(1.05);
+  transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
@@ -61,11 +61,10 @@ h2.section-title span {
   border-radius: 16px;
   object-fit: cover;
   margin-bottom: 8px;
-  transition: transform 0.4s ease, filter 0.4s ease;
+  transition: filter 0.4s ease;
 }
 
 .card:hover img {
-  transform: scale(1.1);
   filter: brightness(1.2);
 }
 
@@ -233,7 +232,6 @@ h2#release-title span {
   color: var(--mat-sys-primary);
 }
 
-
 /* Popular Artists */
 .popular-artists {
   display: flex;
@@ -251,18 +249,27 @@ h2#release-title span {
 }
 .artist {
   min-width: 120px;
+  margin-top: 8px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.artist:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
 .artist img {
   width: 120px;
   height: 120px;
   border-radius: 9999px;
   object-fit: cover;
 }
+
 .artist-name {
   font-size: 16px;
   color: #fff;

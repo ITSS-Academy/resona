@@ -8,7 +8,6 @@ h3 {
   gap: 24px;
   color: #fff;
   border-radius: 12px;
-  //height: 100%;
 }
 
 .left-col {
@@ -18,10 +17,6 @@ h3 {
   flex: 1;
   height: 100%;
 }
-
-//.upload-music{
-//  height: 70%;
-//}
 
 .upload-picture{
   height: 30%;
@@ -270,3 +265,77 @@ mat-tab-group {
     display: none !important;
   }
 }
+
+@media screen and (min-width: 1800px) {
+  ::ng-deep .cdk-overlay-pane {
+    transform: translateY(-120%) !important;
+  }
+}
+
+::ng-deep .mat-mdc-select-panel-above .mat-mdc-select-panel,
+::ng-deep .mat-mdc-select-panel {
+  border-radius: 8px !important;
+  transform-origin: bottom center !important;
+}
+
+
+@media screen and (max-width: 1200px) {
+  .upload-container {
+    grid-template-columns: 1fr; /* xếp dọc thay vì 2 cột */
+  }
+
+  .upload-submit button {
+    width: 50%; /* nút to hơn */
+  }
+}
+
+/* Mobile lớn (dưới 768px) */
+@media screen and (max-width: 768px) {
+  .upload-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .upload-music-box{
+    margin-bottom: 10px;
+  }
+
+  .upload-music-box img,
+  .upload-picture img {
+    max-width: 120px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  .upload-btn {
+    justify-content: center;
+  }
+
+}
+
+/* Mobile nhỏ (dưới 480px) */
+@media screen and (max-width: 480px) {
+
+  .left-col{
+    margin-right: 5px;
+  }
+  .song-info {
+    padding: 16px;
+
+  }
+
+  .song-info h3 {
+    font-size: 18px;
+  }
+
+
+  .upload-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+}
+
+

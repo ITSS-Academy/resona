@@ -124,7 +124,7 @@ footer {
 }
 
 /* Phát sáng khi hover */
-/* .player-progress input[type="range"]:hover {
+/* .mini-player-progress input[type="range"]:hover {
   box-shadow: 0 0 10px rgba(155, 93, 229, 0.9), 0 0 20px rgba(0, 187, 249, 0.7);
 } */
 .player-progress input[type="range"]::-webkit-slider-thumb {
@@ -140,7 +140,7 @@ footer {
   /* box-shadow: 0 0 10px #e11d74, 0 0 20px rgba(225, 29, 116, 0.7);
   transition: transform 0.2s; */
 }
-/* .player-progress input[type="range"]::-webkit-slider-thumb:hover {
+/* .mini-player-progress input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
 } */
 .player-progress input[type="range"]::-moz-range-thumb {
@@ -184,16 +184,9 @@ footer {
   gap: 4px;
 }
 
-.player-right button:hover {
-  color: var(--mat-sys-primary);
-}
-
-//.icon {
-//  color: var(--mat-sys-on-primary);
-//}
-//
-.icon:hover {
-  color: var(--mat-sys-primary);
+.icon,
+mat-icon.icon {
+  color: #fff !important;
 }
 
 /* VOLUME SLIDER  */
