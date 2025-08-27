@@ -25,6 +25,6 @@ export class CategoryDetailComponent {
     let {id} = this.activatedRoute.snapshot.params;
     console.log(id);
     this.musicGenre = this.musicGenresService.getMusicGenreType(id);
-    console.log(this.musicGenre);
+    console.log(this.musicGenre.name);
   }
 }
