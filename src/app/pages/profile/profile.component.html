@@ -1,101 +1,280 @@
 
 <div class="background" >
-  <div class = "avatar">
-  </div>
+<div class = "profile">
+    <img class nona1 src="https://imgs.search.brave.com/XEp6p4OwoRAySBzTPLPGiem0V-p3gXU7JUC9XDIbBww/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS50ZW5vci5jb20v/dWF2SHZwTXdXU0VB/QUFBTS9jYXQtY2F0/LW1lbWUuZ2lm.gif" alt="avatar">
+</div>
   <div class = "right">
   <div class = "name">
-    <p>Username</p>
-    <p>information</p>
-    <button class = follow>Follow</button>
+    <h3>Zuzzy cat</h3>
+    <p>Profile song meow meow</p>
+    <button mat-flat-button>Follow</button>
   </div>
-  <div class = "infomation">
+  <div class = "information">
 
   </div></div>
 </div>
-<h1>Profile</h1>
 
-<div class="tabs">
-  <button class="tab-button" (click)="openTab('upload')">
-    <span class="material-icons">cloud_upload</span>
-    Upload
-  </button>
-  <button class="tab-button" (click)="openTab('your-playlist')">
-    <span class="material-icons">playlist_play</span>
-    Your Playlist
-  </button>
-  <button class="tab-button" (click)="openTab('your-favorite')">
-    <span class="material-icons">favorite</span>
-    Your Favorite
-  </button>
-</div>
+<mat-tab-group>
+  <mat-tab label="Uploaded">
+    <mat-list role="list">
+    <mat-list-item role="listitem">
+      <mat-selection-list #shoes>
 
-<div id="upload" class="tab-content" [ngClass]="{active: activeTab === 'upload'}">
-  <h2>Upload Section</h2>
-  <form>
-    <input type="file" />
-    <button type="submit">Upload</button>
-    <span class="material-icons">cloud_upload</span>
-  </form>
-  <table>
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>Filename</th>
-      <th>Size</th>
-      <th>Date Uploaded</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let file of uploadFiles; let i = index">
-      <td>{{i+1}}</td>
-      <td>{{file.name}}</td>
-      <td>{{file.size}}</td>
-      <td>{{file.date}}</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+        <mat-list-option><div class="song-info">
+          <img class ="song-cover"
+               src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+               alt="Song cover art for Name music 1"
+          />
+        </div>
+          <div class="song-text">
+            <div class="song-title">Name music 1</div>
+            <div class="song-artist">Saint Tame MP</div>
+          </div>
+          <div class="song-date">Aug 16, 25</div>
+          <div class="song-duration">3:20</div>
+          <div class="song-actions">
+          </div></mat-list-option>
 
-<div id="your-playlist" class="tab-content" [ngClass]="{active: activeTab === 'your-playlist'}">
-  <h2>Your Playlist</h2>
-  <table>
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>Playlist Name</th>
-      <th>Song Count</th>
-      <th>Created At</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let playlist of playlists; let i = index">
-      <td>{{i+1}}</td>
-      <td>{{playlist.name}}</td>
-      <td>{{playlist.count}}</td>
-      <td>{{playlist.created}}</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+    </mat-selection-list>
+    </mat-list-item>
+  </mat-list>
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <mat-selection-list #shoes>
 
-<div id="your-favorite" class="tab-content" [ngClass]="{active: activeTab === 'your-favorite'}">
-  <h2>Your Favorite</h2>
-  <table>
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>Song</th>
-      <th>Artist</th>
-      <th>Added Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let fav of favorites; let i = index">
-      <td>{{i+1}}</td>
-      <td>{{fav.song}}</td>
-      <td>{{fav.artist}}</td>
-      <td>{{fav.added}}</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+          <mat-list-option><div class="song-info">
+            <img class ="song-cover"
+                 src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                 alt="Song cover art for Name music 1"
+            />
+          </div>
+            <div class="song-text">
+              <div class="song-title">Name music 1</div>
+              <div class="song-artist">Saint Tame MP</div>
+            </div>
+            <div class="song-date">Aug 16, 25</div>
+            <div class="song-duration">3:20</div>
+            <div class="song-actions">
+            </div></mat-list-option>
+
+      </mat-selection-list>
+      </mat-list-item>
+    </mat-list> <mat-list role="list">
+      <mat-list-item role="listitem">
+        <mat-selection-list #shoes>
+          <mat-list-option><div class="song-info">
+            <img class ="song-cover"
+                 src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                 alt="Song cover art for Name music 1"
+            />
+          </div>
+            <div class="song-text">
+              <div class="song-title">Name music 1</div>
+              <div class="song-artist">Saint Tame MP</div>
+            </div>
+            <div class="song-date">Aug 16, 25</div>
+            <div class="song-duration">3:20</div>
+            <div class="song-actions">
+            </div></mat-list-option>
+      </mat-selection-list>
+      </mat-list-item>
+    </mat-list> <mat-list role="list">
+      <mat-list-item role="listitem"><mat-selection-list #shoes>
+          <mat-list-option><div class="song-info">
+            <img class ="song-cover"
+                 src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                 alt="Song cover art for Name music 1"
+            />
+          </div>
+            <div class="song-text">
+              <div class="song-title">Name music 1</div>
+              <div class="song-artist">Saint Tame MP</div>
+            </div>
+            <div class="song-date">Aug 16, 25</div>
+            <div class="song-duration">3:20</div>
+            <div class="song-actions">
+            </div></mat-list-option>
+      </mat-selection-list>
+      </mat-list-item>
+    </mat-list></mat-tab>
+  <mat-tab label="Your Playlist">
+    <mat-list role="list">
+    <mat-list-item role="listitem">
+      <mat-list role="list">
+      <mat-list-item role="listitem">
+        <mat-selection-list #shoes>
+          <mat-list-option><div class="song-info">
+            <img class ="song-cover"
+                 src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                 alt="Song cover art for Name music 1"
+            />
+          </div>
+            <div class="song-text">
+              <div class="song-title">Name music 1</div>
+              <div class="song-artist">Saint Tame MP</div>
+            </div>
+            <div class="song-date">Aug 16, 25</div>
+            <div class="song-duration">3:20</div>
+            <div class="song-actions">
+            </div></mat-list-option>
+      </mat-selection-list>
+      </mat-list-item>
+    </mat-list></mat-list-item>
+  </mat-list> <mat-list role="list">
+    <mat-list-item role="listitem">
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <mat-selection-list #shoes>
+              <mat-list-option><div class="song-info">
+                <img class ="song-cover"
+                     src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                     alt="Song cover art for Name music 1"
+                />
+              </div>
+                <div class="song-text">
+                  <div class="song-title">Name music 1</div>
+                  <div class="song-artist">Saint Tame MP</div>
+                </div>
+                <div class="song-date">Aug 16, 25</div>
+                <div class="song-duration">3:20</div>
+                <div class="song-actions">
+                </div></mat-list-option>
+          </mat-selection-list>
+        </mat-list-item>
+      </mat-list></mat-list-item>
+  </mat-list> <mat-list role="list">
+    <mat-list-item role="listitem">
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <mat-selection-list #shoes>
+              <mat-list-option><div class="song-info">
+                <img class ="song-cover"
+                     src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                     alt="Song cover art for Name music 1"
+                />
+              </div>
+                <div class="song-text">
+                  <div class="song-title">Name music 1</div>
+                  <div class="song-artist">Saint Tame MP</div>
+                </div>
+                <div class="song-date">Aug 16, 25</div>
+                <div class="song-duration">3:20</div>
+                <div class="song-actions">
+                </div></mat-list-option>
+          </mat-selection-list>
+        </mat-list-item>
+      </mat-list></mat-list-item>
+  </mat-list> <mat-list role="list">
+    <mat-list-item role="listitem">
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <mat-selection-list #shoes>
+              <mat-list-option><div class="song-info">
+                <img class ="song-cover"
+                     src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                     alt="Song cover art for Name music 1"
+                />
+              </div>
+                <div class="song-text">
+                  <div class="song-title">Name music 1</div>
+                  <div class="song-artist">Saint Tame MP</div>
+                </div>
+                <div class="song-date">Aug 16, 25</div>
+                <div class="song-duration">3:20</div>
+                <div class="song-actions">
+                </div></mat-list-option>
+          </mat-selection-list>
+        </mat-list-item>
+      </mat-list></mat-list-item>
+  </mat-list></mat-tab>
+  <mat-tab label="Favourite">
+    <mat-list role="list">
+    <mat-list-item role="listitem">
+      <mat-list role="list">
+      <mat-list-item role="listitem">
+        <mat-selection-list #shoes>
+          <mat-list-option><div class="song-info">
+            <img class ="song-cover"
+                 src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                 alt="Song cover art for Name music 1"
+            />
+          </div>
+            <div class="song-text">
+              <div class="song-title">Name music 1</div>
+              <div class="song-artist">Saint Tame MP</div>
+            </div>
+            <div class="song-date">Aug 16, 25</div>
+            <div class="song-duration">3:20</div>
+            <div class="song-actions">
+            </div></mat-list-option>
+      </mat-selection-list>
+      </mat-list-item>
+    </mat-list></mat-list-item>
+  </mat-list> <mat-list role="list">
+    <mat-list-item role="listitem">
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <mat-selection-list #shoes>
+              <mat-list-option><div class="song-info">
+                <img class ="song-cover"
+                     src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                     alt="Song cover art for Name music 1"
+                />
+              </div>
+                <div class="song-text">
+                  <div class="song-title">Name music 1</div>
+                  <div class="song-artist">Saint Tame MP</div>
+                </div>
+                <div class="song-date">Aug 16, 25</div>
+                <div class="song-duration">3:20</div>
+                <div class="song-actions">
+                </div></mat-list-option>
+          </mat-selection-list>
+        </mat-list-item>
+      </mat-list></mat-list-item>
+  </mat-list> <mat-list role="list">
+    <mat-list-item role="listitem">
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <mat-selection-list #shoes>
+              <mat-list-option><div class="song-info">
+                <img class ="song-cover"
+                     src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                     alt="Song cover art for Name music 1"
+                />
+              </div>
+                <div class="song-text">
+                  <div class="song-title">Name music 1</div>
+                  <div class="song-artist">Saint Tame MP</div>
+                </div>
+                <div class="song-date">Aug 16, 25</div>
+                <div class="song-duration">3:20</div>
+                <div class="song-actions">
+                </div></mat-list-option>
+          </mat-selection-list>
+        </mat-list-item>
+      </mat-list></mat-list-item>
+  </mat-list> <mat-list role="list">
+    <mat-list-item role="listitem">
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <mat-selection-list #shoes>
+              <mat-list-option><div class="song-info">
+                <img class ="song-cover"
+                     src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg"
+                     alt="Song cover art for Name music 1"
+                />
+              </div>
+                <div class="song-text">
+                <div class="song-title">Name music 1</div>
+                <div class="song-artist">Saint Tame MP</div>
+              </div>
+                <div class="song-date">Aug 16, 25</div>
+                <div class="song-duration">3:20</div>
+                <div class="song-actions">
+                </div></mat-list-option>
+          </mat-selection-list>
+        </mat-list-item>
+      </mat-list></mat-list-item>
+  </mat-list></mat-tab>
+</mat-tab-group>
