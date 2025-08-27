@@ -1,23 +1,21 @@
+h3 {
+  margin: 0;
+}
+
 .upload-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
-  padding: 24px;
   color: #fff;
   border-radius: 12px;
-  height: 100%;
 }
 
 .left-col {
   display: flex;
   flex-direction: column;
-  gap: 15px;
   justify-content: space-between;
   flex: 1;
-}
-
-.upload-music{
-  height: 70%;
+  height: 100%;
 }
 
 .upload-picture{
@@ -28,7 +26,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 88%;
+  justify-content: center;
+  height: 50%;
 }
 
 .upload-music-box,
@@ -43,17 +42,16 @@
 
 .upload-music-box:hover,
 .upload-picture:hover {
-  border-color: #ffaed9;
+  border-color: var(--mat-sys-secondary);
   background: #333;
 }
 
 .upload-music-box img,
 .upload-picture img {
   max-width: 170px;
-  margin-bottom: 12px;
 }
 
-.upload-music-box p {
+p {
   margin: 10px 0;
   font-size: 18px;
   color: #bbb;
@@ -73,7 +71,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1;
+  height: 80%;
 }
 
 .picture-content img {
@@ -88,16 +86,15 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
-  gap: 10px;
   background: #2a2a2a;
   padding: 24px;
   border-radius: 12px;
 }
 
 .song-info h3 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 14px;
   color: #fff;
 }
 
@@ -112,14 +109,14 @@ mat-form-field {
   color: #fff;
   border-radius: 12px;
   border: 2px solid #555;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
+  height: 260px;
 }
 
 mat-tab-group {
   width: 100%;
   display: flex;
 }
-
 
 .no-border textarea {
   background: transparent !important;
@@ -132,11 +129,16 @@ mat-tab-group {
 .lyrics-tab {
   width: 100%;
   height: 100%;
+
+ ::ng-deep.mdc-line-ripple::after,
+ ::ng-deep.mdc-line-ripple::before {
+    border-bottom-style: unset !important;
+ }
 }
 
 .lyrics-upload:hover {
-  background: rgba(238, 16, 176, 0.1);
-  border-color: #fff;
+  background: #333;
+  border-color: var(--mat-sys-secondary);
 }
 
 .lyrics-upload mat-icon {
@@ -158,8 +160,7 @@ mat-tab-group {
   color: #fff;
   border: none !important;
   outline: none !important;
-  resize: vertical;
-  padding: 10px;
+  resize: none;
 }
 
 .upload-lyrics .mat-form-field-appearance-outline .mat-form-field-outline {
@@ -177,17 +178,21 @@ mat-tab-group {
 
 
 .upload-tab .lyrics-upload {
-  border: 2px dashed #ccc;
+  border: 2px dashed #555;
   border-radius: 12px;
-  padding: 73px;
   text-align: center;
-  background-color: #1e1e1e;
+  //background-color: #1e1e1e;
+  height: 208px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   cursor: pointer;
   transition: border-color 0.3s;
 }
 
 .upload-tab .lyrics-upload:hover {
-  border-color: #ee10b0;
+  border-color: var(--mat-sys-secondary);
 }
 
 .upload-tab .lyrics-upload p {
@@ -220,13 +225,12 @@ mat-tab-group {
 }
 
 .upload-btn:hover {
-  background: #890064;
+  background: var(--mat-sys-primary-container);
 }
 
 .upload-submit {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
 }
 
 .upload-submit button {
@@ -241,7 +245,7 @@ mat-tab-group {
 }
 
 .upload-submit button:hover {
-  background: #890064;
+  background: var(--mat-sys-primary-container);
 }
 
 ::ng-deep .mat-mdc-select-arrow {
@@ -261,3 +265,77 @@ mat-tab-group {
     display: none !important;
   }
 }
+
+@media screen and (min-width: 1800px) {
+  ::ng-deep .cdk-overlay-pane {
+    transform: translateY(-120%) !important;
+  }
+}
+
+::ng-deep .mat-mdc-select-panel-above .mat-mdc-select-panel,
+::ng-deep .mat-mdc-select-panel {
+  border-radius: 8px !important;
+  transform-origin: bottom center !important;
+}
+
+
+@media screen and (max-width: 1200px) {
+  .upload-container {
+    grid-template-columns: 1fr; /* xếp dọc thay vì 2 cột */
+  }
+
+  .upload-submit button {
+    width: 50%; /* nút to hơn */
+  }
+}
+
+/* Mobile lớn (dưới 768px) */
+@media screen and (max-width: 768px) {
+  .upload-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .upload-music-box{
+    margin-bottom: 10px;
+  }
+
+  .upload-music-box img,
+  .upload-picture img {
+    max-width: 120px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  .upload-btn {
+    justify-content: center;
+  }
+
+}
+
+/* Mobile nhỏ (dưới 480px) */
+@media screen and (max-width: 480px) {
+
+  .left-col{
+    margin-right: 5px;
+  }
+  .song-info {
+    padding: 16px;
+
+  }
+
+  .song-info h3 {
+    font-size: 18px;
+  }
+
+
+  .upload-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+}
+
+

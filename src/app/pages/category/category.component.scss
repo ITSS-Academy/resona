@@ -4,14 +4,11 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   padding: 10px;
-  //nho xoa de fix tam
-  margin-top: 64px;
-  margin-bottom: 64px;
 }
 
 @media (max-width: 1200px) {
   .category-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -45,7 +42,7 @@
   }
 
   h3 {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     z-index: 2;
     align-self: flex-start;

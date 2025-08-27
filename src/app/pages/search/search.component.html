@@ -1,6 +1,18 @@
 <mat-tab-group class="search-tabs" >
   <mat-tab label="All">
     <h2>Genres</h2>
+    <div class="category-container">
+      @for (category of topCategories; track $index) {
+        <div class="category-card" [style.background]="category.color">
+          <div class="category-content">
+            <h3>{{ category.name }}</h3>
+          </div>
+          <img [src]="category.image" alt="{{ category.name }}" />
+        </div>
+      }
+    </div>
+
+    <button mat-button>See more...</button>
     <h2>Songs</h2>
     <div class="song-info">
       <div class="song-title">
@@ -127,7 +139,7 @@
   </mat-tab>
 
   <mat-tab label="Genres">
-    <h2>Kết quả album</h2>
+    <app-category></app-category>
   </mat-tab>
 
   <mat-tab label="Playlist">

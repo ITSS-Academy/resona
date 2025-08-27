@@ -1,22 +1,21 @@
 <div class="upload-container">
   <div class="left-col">
-  <div class="upload-music">
-    <div class="upload-music-box">
-      <img mat-card-image src="./assets/images/cloud-upload_icon-icons.com_54314.png" alt="">
-      <p>Drag music here or click to select file</p>
-        <input type="file" id="musicFile" hidden />
-        <label for="musicFile" class="upload-btn"> <mat-icon>music_note</mat-icon>Choose File</label>
-    </div>
-  </div>
+<!--    <div class="upload-music">-->
+      <div class="upload-music-box">
+        <img mat-card-image src="./assets/images/cloud-upload_icon-icons.com_54314.png" alt="">
+        <p>Drag music here or click to select file</p>
+          <input type="file" id="musicFile" hidden />
+          <label for="musicFile" class="upload-btn"> <mat-icon>music_note</mat-icon>Choose File</label>
+      </div>
+<!--    </div>-->
 
-  <div class="upload-picture">
-      <p class="picture-label">Picture:</p>
-    <div class="picture-content">
-      <img mat-card-image src="./assets/images/add_image.png" alt="">
-      <p>Drag music here or click to select file</p>
+    <div class="upload-picture">
+      <div class="picture-content">
+        <img mat-card-image src="./assets/images/add_image.png" alt="">
+        <p>Drag music here or click to select file</p>
         <input type="file" id="pictureFile" hidden />
         <label for="pictureFile" class="upload-btn"> <mat-icon>image</mat-icon>Choose Picture</label>
-    </div>
+      </div>
     </div>
   </div>
 
@@ -36,7 +35,7 @@
       <mat-tab-group>
         <mat-tab label="Enter Lyrics">
           <div class="lyrics-tab">
-            <mat-form-field appearance="outline" class="full-width no-border">
+            <mat-form-field class="full-width no-border">
               <textarea
                 matInput
                 rows="8"
@@ -63,7 +62,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Category</mat-label>
       <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
-      <mat-select>
+      <mat-select panelClass="custom-select-panel" >
         <mat-option value="pop">Pop</mat-option>
         <mat-option value="bolero">Bolero</mat-option>
         <mat-option value="rock">Rock</mat-option>

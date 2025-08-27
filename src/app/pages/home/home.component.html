@@ -1,65 +1,67 @@
-<!-- Add this to your index.html head section -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <main>
   <section class="content-scroll" tabindex="0" aria-label="Main content">
     <!-- Music Genres -->
     <div>
       <h2 class="section-title">Music <span>Genres</span></h2>
       <div class="horizontal-scroll" aria-label="Music genres">
-        <div class="card">
+        @for (genre of musicGenres; track genre.id) {
+          <div class="card">
           <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+            src="{{genre.image}}"
             alt="Young woman singing on stage with microphone and purple lighting"
             width="100"
             height="96"
           />
-          <p class="label">Label</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-        </div>
+          <p class="label">{{genre.name}}</p>
+          </div>
+        }
+
+
+<!--        <div class="card">-->
+<!--          <img-->
+<!--            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"-->
+<!--            alt="Young woman singing on stage with microphone and purple lighting"-->
+<!--            width="100"-->
+<!--            height="96"-->
+<!--          />-->
+<!--          <p class="label">Label</p>-->
+<!--        </div>-->
+<!--        <div class="card">-->
+<!--          <img-->
+<!--            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"-->
+<!--            alt="Young woman singing on stage with microphone and purple lighting"-->
+<!--            width="100"-->
+<!--            height="96"-->
+<!--          />-->
+<!--          <p class="label">Label</p>-->
+<!--        </div>-->
+<!--        <div class="card">-->
+<!--          <img-->
+<!--            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"-->
+<!--            alt="Young woman singing on stage with microphone and purple lighting"-->
+<!--            width="100"-->
+<!--            height="96"-->
+<!--          />-->
+<!--          <p class="label">Label</p>-->
+<!--        </div>-->
+<!--        <div class="card">-->
+<!--          <img-->
+<!--            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"-->
+<!--            alt="Young woman singing on stage with microphone and purple lighting"-->
+<!--            width="100"-->
+<!--            height="96"-->
+<!--          />-->
+<!--          <p class="label">Label</p>-->
+<!--        </div>-->
+<!--        <div class="card">-->
+<!--          <img-->
+<!--            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"-->
+<!--            alt="Young woman singing on stage with microphone and purple lighting"-->
+<!--            width="100"-->
+<!--            height="96"-->
+<!--          />-->
+<!--          <p class="label">Label</p>-->
+<!--        </div>-->
       </div>
     </div>
     <!-- Mood Playlist -->
@@ -118,126 +120,8 @@
         </div>
       </div>
     </div>
-    <!-- New Release Songs -->
-    <!-- <div>
+    <section aria-labelledby="release-title">
       <h2 class="section-title">New Release <span>Songs</span></h2>
-      <div class="new-release-list" aria-label="New release songs">
-        <div class="new-release-item">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/85313881-6d2d-4d8d-6da3-a81764e3db92.jpg"
-            alt="Album cover showing a young woman singing on stage with microphone and purple lighting"
-            width="40"
-            height="40"
-          />
-          <div class="new-release-info">
-            <p class="title">Name music 1</p>
-            <p class="artist">Saint Tone MVP</p>
-          </div>
-          <p class="new-release-date">Aug 16, 2025</p>
-          <p class="new-release-duration">3:20</p>
-          <div class="new-release-actions" aria-label="Song actions">
-            <i
-              class="fas fa-ellipsis-v"
-              tabindex="0"
-              role="button"
-              aria-label="More options"
-            ></i>
-            <i
-              class="far fa-heart"
-              tabindex="0"
-              role="button"
-              aria-label="Like"
-            ></i>
-          </div>
-        </div>
-        <div class="new-release-item">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/85313881-6d2d-4d8d-6da3-a81764e3db92.jpg"
-            alt="Album cover showing a young woman singing on stage with microphone and purple lighting"
-            width="40"
-            height="40"
-          />
-          <div class="new-release-info">
-            <p class="title">Name music 1</p>
-            <p class="artist">Saint Tone MVP</p>
-          </div>
-          <p class="new-release-date">Aug 16, 2025</p>
-          <p class="new-release-duration">3:20</p>
-          <div class="new-release-actions" aria-label="Song actions">
-            <i
-              class="fas fa-ellipsis-v"
-              tabindex="0"
-              role="button"
-              aria-label="More options"
-            ></i>
-            <i
-              class="far fa-heart"
-              tabindex="0"
-              role="button"
-              aria-label="Like"
-            ></i>
-          </div>
-        </div>
-        <div class="new-release-item">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/85313881-6d2d-4d8d-6da3-a81764e3db92.jpg"
-            alt="Album cover showing a young woman singing on stage with microphone and purple lighting"
-            width="40"
-            height="40"
-          />
-          <div class="new-release-info">
-            <p class="title">Name music 1</p>
-            <p class="artist">Saint Tone MVP</p>
-          </div>
-          <p class="new-release-date">Aug 16, 2025</p>
-          <p class="new-release-duration">3:20</p>
-          <div class="new-release-actions" aria-label="Song actions">
-            <i
-              class="fas fa-ellipsis-v"
-              tabindex="0"
-              role="button"
-              aria-label="More options"
-            ></i>
-            <i
-              class="far fa-heart"
-              tabindex="0"
-              role="button"
-              aria-label="Like"
-            ></i>
-          </div>
-        </div>
-        <div class="new-release-item">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/85313881-6d2d-4d8d-6da3-a81764e3db92.jpg"
-            alt="Album cover showing a young woman singing on stage with microphone and purple lighting"
-            width="40"
-            height="40"
-          />
-          <div class="new-release-info">
-            <p class="title">Name music 1</p>
-            <p class="artist">Saint Tone MVP</p>
-          </div>
-          <p class="new-release-date">Aug 16, 2025</p>
-          <p class="new-release-duration">3:20</p>
-          <div class="new-release-actions" aria-label="Song actions">
-            <i
-              class="fas fa-ellipsis-v"
-              tabindex="0"
-              role="button"
-              aria-label="More options"
-            ></i>
-            <i
-              class="far fa-heart"
-              tabindex="0"
-              role="button"
-              aria-label="Like"
-            ></i>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <section aria-labelledby="newrelease-title">
-      <h2 id="release-title">New Release <span>Songs</span></h2>
       <div class="songs-list">
         <div class="song-item" tabindex="0">
           <div class="song-info">
@@ -254,10 +138,10 @@
           <div class="song-duration">3:20</div>
           <div class="song-actions">
             <button aria-label="Like song">
-              <i class="far fa-heart"></i>
+              <mat-icon>favorite_border</mat-icon>
             </button>
             <button aria-label="vertical ellipsis">
-              <i class="fa-solid fa-ellipsis-vertical"></i>
+              <mat-icon>more_vert</mat-icon>
             </button>
           </div>
         </div>
@@ -276,10 +160,10 @@
           <div class="song-duration">3:20</div>
           <div class="song-actions">
             <button aria-label="Like song">
-              <i class="far fa-heart"></i>
+              <mat-icon>favorite_border</mat-icon>
             </button>
             <button aria-label="vertical ellipsis">
-              <i class="fa-solid fa-ellipsis-vertical"></i>
+              <mat-icon>more_vert</mat-icon>
             </button>
           </div>
         </div>
@@ -298,10 +182,10 @@
           <div class="song-duration">3:20</div>
           <div class="song-actions">
             <button aria-label="Like song">
-              <i class="far fa-heart"></i>
+              <mat-icon>favorite_border</mat-icon>
             </button>
             <button aria-label="vertical ellipsis">
-              <i class="fa-solid fa-ellipsis-vertical"></i>
+              <mat-icon>more_vert</mat-icon>
             </button>
           </div>
         </div>
@@ -320,10 +204,10 @@
           <div class="song-duration">3:20</div>
           <div class="song-actions">
             <button aria-label="Like song">
-              <i class="far fa-heart"></i>
+              <mat-icon>favorite_border</mat-icon>
             </button>
             <button aria-label="vertical ellipsis">
-              <i class="fa-solid fa-ellipsis-vertical"></i>
+              <mat-icon>more_vert</mat-icon>
             </button>
           </div>
         </div>

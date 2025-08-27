@@ -4,8 +4,8 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 28px;
-  color: #9ca3af;
+  padding: 8px 26px;
+  //color: #9ca3af;
   z-index: 1000;
   height: 65px;
 }
@@ -26,9 +26,9 @@ footer {
   height: 100%;
 }
 .player-left img {
-  width: auto;
-  height: 100%;
-  border-radius: 6px;
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
   object-fit: cover;
 }
 .player-song-info {
@@ -39,7 +39,7 @@ footer {
 }
 .player-song-title {
   font-weight: 600;
-  color: #d1d5db;
+  //color: #d1d5db;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -51,7 +51,7 @@ footer {
 .player-song-artist {
   p {
     font-size: 14px;
-    color: #6b7280;
+    //color: #6b7280;
     margin: 0;
   }
 }
@@ -76,7 +76,7 @@ footer {
   align-items: center;
   gap: 28px;
   font-size: 18px;
-  color: #9ca3af;
+  //color: #9ca3af;
 }
 .player-controls button {
   background: none;
@@ -108,7 +108,7 @@ footer {
   }
 }
 
-/* 🎵 PLAY PROGRESS */
+/* PLAY PROGRESS */
 .player-progress input[type="range"] {
   flex: 1;
   -webkit-appearance: none;
@@ -124,7 +124,7 @@ footer {
 }
 
 /* Phát sáng khi hover */
-/* .player-progress input[type="range"]:hover {
+/* .mini-player-progress input[type="range"]:hover {
   box-shadow: 0 0 10px rgba(155, 93, 229, 0.9), 0 0 20px rgba(0, 187, 249, 0.7);
 } */
 .player-progress input[type="range"]::-webkit-slider-thumb {
@@ -140,7 +140,7 @@ footer {
   /* box-shadow: 0 0 10px #e11d74, 0 0 20px rgba(225, 29, 116, 0.7);
   transition: transform 0.2s; */
 }
-/* .player-progress input[type="range"]::-webkit-slider-thumb:hover {
+/* .mini-player-progress input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
 } */
 .player-progress input[type="range"]::-moz-range-thumb {
@@ -161,10 +161,20 @@ footer {
   justify-content: end;
   align-items: center;
 }
+
+.drawer{
+  width: fit-content;
+  position: fixed;
+  right: 0;
+  top: 72px;
+  max-height: 703px;
+  z-index: 1;
+}
+
 .player-right button {
   background: none;
   border: none;
-  color: inherit;
+  //color: inherit;
   cursor: pointer;
   font-size: 14px;
   display: flex;
@@ -172,15 +182,12 @@ footer {
   gap: 4px;
 }
 
-.icon {
-  color: var(--mat-sys-on-primary);
+.icon,
+mat-icon.icon {
+  color: #fff !important;
 }
 
-.icon:hover {
-  color: var(--mat-sys-primary);
-}
-
-/* 🔊 VOLUME SLIDER - fix hoàn toàn */
+/* VOLUME SLIDER  */
 .player-right input[type="range"] {
   width: 120px;
   -webkit-appearance: none;
@@ -232,8 +239,8 @@ footer {
 }
 
 .play-button {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   background-color: var(--mat-sys-primary);
   display: flex;
@@ -246,7 +253,7 @@ footer {
 }
 
 ::ng-deep mat-drawer {
-  height: 703px !important;
+  //height: 703px !important;
   overflow: visible !important; // Let inner container handle scrolling
   align-items: flex-start !important;
   justify-content: flex-start !important;

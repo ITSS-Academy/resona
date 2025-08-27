@@ -1,22 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, computed, OnInit, signal} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {MaterialModule} from './shared/modules/material.module';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {HeaderComponent} from './components/header/header.component';
 import {PlayerBarComponent} from './components/player-bar/player-bar.component';
-import {NgClass} from '@angular/common';
-import {writeErrorToLogFile} from '@angular/cli/src/utilities/log-file';
+import {NgClass, NgStyle} from '@angular/common';
+import {MatDrawerMode} from '@angular/material/sidenav';
+import {BreakpointObserver} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MaterialModule, SidebarComponent, HeaderComponent, PlayerBarComponent, NgClass, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, MaterialModule, SidebarComponent, HeaderComponent, PlayerBarComponent, NgClass, RouterLink, RouterLinkActive, NgStyle],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   title = 'resona';
-  showFiller = false;
   activeLink = '';
+
   constructor(private router: Router) {
   }
 
@@ -42,6 +43,8 @@ export class AppComponent implements OnInit {
       title: 'My Playlist #5',
     }
   ]
+
+  isCollapsed = false;
 
   menuItems = [
     { icon: 'home', title: 'Home', route: 'home' },
@@ -76,4 +79,6 @@ export class AppComponent implements OnInit {
       this.activeLink = '';
     }
   }
+
+
 }

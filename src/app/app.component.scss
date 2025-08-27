@@ -121,13 +121,19 @@
 
 .content {
   transition: margin-left 0.3s ease-in-out;
-  padding-left: 23px;
+  padding: 12px 32px 90px 32px;
   //height: 100%;
   border-radius: 16px;
+  margin-top: 75px;
+  //padding-bottom: 82px;
   //overflow: auto;
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none;
 }
+
+//mat-drawer.mat-drawer-closed ~ .mat-drawer-content .content {
+//  margin-left: 80px; /* khi sidebar thu nhỏ thì content tự dịch trái */
+//}
 
 .nav-list {
   display: flex;
@@ -191,7 +197,7 @@
 }
 
 .active {
-  background-color: var(--mat-sys-secondary-container) !important;
+  background-color: var(--mat-sys-surface-container-high) !important;
   color: var(--mat-sys-on-primary) !important;
 }
 
@@ -232,7 +238,11 @@ mat-drawer {
   border-radius: unset;
   width: 300px;
   background-color: var(--mat-sys-background) !important;
+  transition: width 0.3s ease-in-out; /* Sidebar mượt */
+}
 
+mat-drawer.mat-drawer-closed {
+  width: 100px !important; /* Sidebar thu nhỏ */
 }
 
 .example-container {
@@ -271,11 +281,15 @@ mat-drawer {
 }
 
 app-header {
-  width: calc(100% - 300px);
   position: fixed;
   top: 0;
   right: 0;
   z-index: 9999;
+  transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+mat-drawer.mat-drawer-closed ~ .mat-drawer-content app-header {
+  left: 100px;
 }
 
 app-player-bar {
