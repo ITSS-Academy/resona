@@ -80,7 +80,7 @@ export class PlayerBarComponent implements AfterViewInit {
   }
   // ngAfterViewInit() {
   //   const sliders = document.querySelectorAll<HTMLInputElement>(
-  //     '.player-progress input[type="range"], .player-right input[type="range"]'
+  //     '.mini-player-progress input[type="range"], .mini-player-right input[type="range"]'
   //   );
   //   sliders.forEach((slider) => {
   //     this.updateSliderBackground(slider);
