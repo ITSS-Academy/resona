@@ -67,7 +67,7 @@
 .search-playlist{
   display: flex;
   flex-wrap: wrap;
-  gap: 13px;
+  gap: 40px;
   padding-top: 10px;
 }
 
@@ -171,6 +171,76 @@
   color: #b3b3b3;
 }
 
+
+
+
+//Category_component
+.category-container {
+  display: grid;
+  //grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 10px;
+}
+
+@media (max-width: 1200px) {
+  .category-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .category-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .category-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.category-card {
+  position: relative;
+  height: 90px;
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 16px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 2;
+    align-self: flex-start;
+    margin-top: 0;
+    position: relative;
+    top: -2px; // Move up by 8px, adjust as needed
+  }
+
+  img {
+    position: absolute;
+    right: -11px; // đẩy ra ngoài nhiều hơn
+    bottom: -8px; // đẩy xuống nhiều hơn
+    width: 100px; // to hơn để tràn card
+    height: 100px;
+    transform: rotate(25deg) scale(1.1); // nghiêng + phóng nhẹ
+    border-radius: 4px;
+    object-fit: cover;
+    z-index: 1;
+    opacity: 0.7; // làm mờ nhẹ để text nổi hơn
+  }
+}
 
 
 

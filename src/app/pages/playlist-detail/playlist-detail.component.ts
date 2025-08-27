@@ -17,8 +17,16 @@ import {CreatePlaylistDialogComponent} from '../../components/create-playlist-di
 export class PlaylistDetailComponent {
   constructor(private dialog: MatDialog) {}
 
-  isFavorite: boolean = false;
+  isFavoritePlaylist: boolean = false;
   isPlay: boolean = false;
+
+  favoriteSongs: { [index: number]: boolean } = {
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+  };
 
   openEditDialog() {
     this.dialog.open(CreatePlaylistDialogComponent, {
@@ -27,9 +35,14 @@ export class PlaylistDetailComponent {
     });
   }
 
-  toggleFavorite() {
-    this.isFavorite = !this.isFavorite;
+  toggleFavoritePlaylist() {
+    this.isFavoritePlaylist = !this.isFavoritePlaylist;
   }
+
+  toggleFavoriteSong(index: number) {
+    this.favoriteSongs[index] = !this.favoriteSongs[index];
+  }
+
   togglePlay() {
     this.isPlay = !this.isPlay;
   }
