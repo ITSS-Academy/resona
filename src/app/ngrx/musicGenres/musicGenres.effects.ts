@@ -23,3 +23,22 @@ export const musicGenresEffects = createEffect(
   },
   { functional: true }
 );
+
+export const musicGenreByIdEffects = createEffect(
+  (action$ = inject(Actions), musicGenresService = inject(MusicGenresService)) => {
+    return action$.pipe(
+      ofType(MusicGenresActions.getSpecificMusicGenre),
+      switchMap((action) =>
+        of(musicGenresService.getSpecificMusicGenre(action.id)).pipe(
+          map((musicGenre) =>
+            MusicGenresActions.getSpecificMusicGenreSuccess({ specificMusicGenre:  musicGenre })
+          ),
+          catchError((error: any) =>
+            of(MusicGenresActions.getSpecificMusicGenreFailure({ error }))
+          )
+        )
+      )
+    );
+  },
+  { functional: true }
+);

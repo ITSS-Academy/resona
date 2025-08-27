@@ -5,6 +5,7 @@ import * as MusicGenresActions from '../musicGenres/musicGenres.actions';
 
 export const initialMusicGenres: MusicGenresState = {
   musicGenres:<MusicGenresModel[]>[],
+  specificMusicGenre: <MusicGenresModel>{},
   isLoading: false,
   error: null
 }
@@ -37,5 +38,33 @@ export const musicGenresReducer = createReducer(
       isLoading: false,
       error: null,
     }
-  })
+  }),
+
+  on(MusicGenresActions.getSpecificMusicGenre, (state, {type,id})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+    }
+  }),
+
+  on(MusicGenresActions.getSpecificMusicGenreSuccess, (state, {type,specificMusicGenre})=>{
+    console.log(type);
+    return {
+      ...state,
+      specificMusicGenre: specificMusicGenre,
+      isLoading: false,
+      error: null,
+    }
+  }),
+
+  on(MusicGenresActions.getSpecificMusicGenreFailure, (state, {type,error})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
 )

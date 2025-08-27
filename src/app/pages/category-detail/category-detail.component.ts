@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MusicGenresService} from '../../service/music-genres.service';
 import {MusicGenresModel} from '../../models/musicGenres.model';
 import {NgStyle} from '@angular/common';
 import {AlbumCardComponent} from '../../components/album-card/album-card.component';
+import {MusicGenresState} from '../../ngrx/musicGenres/musicGenres.state';
+import {Store} from '@ngrx/store';
+import {Observable, Subscription} from 'rxjs';
+import * as MusicGenreActions from '../../ngrx/musicGenres/musicGenres.actions';
 
 @Component({
   selector: 'app-category-detail',
@@ -14,17 +18,35 @@ import {AlbumCardComponent} from '../../components/album-card/album-card.compone
   templateUrl: './category-detail.component.html',
   styleUrl: './category-detail.component.scss'
 })
-export class CategoryDetailComponent {
+export class CategoryDetailComponent implements OnInit , OnDestroy{
 
-  musicGenre!:MusicGenresModel;
+  specificMusicGenre$!: Observable<MusicGenresModel>;
+  subscription: Subscription[] = [];
+  specificMusicGenre!: MusicGenresModel;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private musicGenresService: MusicGenresService,
+    private store:Store<{
+      musicGenres: MusicGenresState
+    }>
   ) {
     let {id} = this.activatedRoute.snapshot.params;
     console.log(id);
-    this.musicGenre = this.musicGenresService.getMusicGenreType(id);
-    console.log(this.musicGenre.name);
+    this.specificMusicGenre$ = this.store.select('musicGenres', 'specificMusicGenre');
+    this.store.dispatch(MusicGenreActions.getSpecificMusicGenre({id:id}));
+  }
+
+  ngOnInit() {
+    this.subscription.push(
+      this.specificMusicGenre$.subscribe(musicGenres => {
+        this.specificMusicGenre = musicGenres;
+        console.log(this.specificMusicGenre);
+      }),
+    )
+  }
+
+  ngOnDestroy() {
+    this.subscription.forEach(subscription => subscription.unsubscribe());
   }
 }

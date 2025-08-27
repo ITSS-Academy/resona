@@ -12,3 +12,15 @@ export const getAllMusicGenresSuccess = createAction(
 export const getAllMusicGenresFailure = createAction(
   '[MusicGenres] getAllMusicGenresFailure', props<{error: any}>()
 )
+
+export const getSpecificMusicGenre = createAction(
+  '[MusicGenres] getSpecificMusicGenre', props<{id: string}>()
+)
+
+export const getSpecificMusicGenreSuccess = createAction(
+  '[MusicGenres] getSpecificMusicGenreSuccess', props<{specificMusicGenre: MusicGenresModel}>()
+)
+
+export const getSpecificMusicGenreFailure = createAction(
+  '[MusicGenres] getSpecificMusicGenreFailure', props<{error: any}>()
+)

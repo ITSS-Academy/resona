@@ -245,4 +245,13 @@ export class MusicGenresService {
     return this.categories;
   }
 
+  getSpecificMusicGenre(id: string): MusicGenresModel {
+    let musicGenre = this.categories.find(category => category.id === id);
+    if (musicGenre) {
+      return musicGenre;
+    }else{
+      return {} as MusicGenresModel;
+    }
+  }
+
 }
