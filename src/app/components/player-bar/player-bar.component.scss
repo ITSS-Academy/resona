@@ -161,6 +161,16 @@ footer {
   justify-content: end;
   align-items: center;
 }
+
+.drawer{
+  width: fit-content;
+  position: fixed;
+  right: 0;
+  top: 72px;
+  max-height: 703px;
+  z-index: 1;
+}
+
 .player-right button {
   background: none;
   border: none;

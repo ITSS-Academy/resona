@@ -1,13 +1,13 @@
 <div class="category-container">
-  @for (category of categories; track $index) {
-    <div
-      class="category-card"
-      [style.background]="category.gradient || category.color"
-    >
-      <div class="category-content">
-        <h3>{{ category.name }}</h3>
-      </div>
-      <img [src]="category.image" alt="{{ category.name }}" />
+  @for (item of categories; track $index) {
+  <div
+    class="category-card"
+    [style.background]="item.gradient || item.color"
+  >
+    <div class="category-content">
+      <h3>{{ item.name }}</h3>
     </div>
+    <img src="{{ item.image }}" alt="{{ item.name }}" />
+  </div>
   }
 </div>

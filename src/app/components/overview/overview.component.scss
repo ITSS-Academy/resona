@@ -50,18 +50,19 @@
   }
   .overview-right{
     width: 30%;
+    margin-top: 58px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
     .statistics{
       width: 80%;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      align-items: flex-start;
+      align-items: center;
       border: 1px solid var(--mat-sys-on-surface);
-      padding: 16px;
+      padding: 0 16px 16px 16px;
       box-sizing: border-box;
       border-radius: 16px;
       .statistics-tabs{
@@ -75,7 +76,7 @@
           flex-direction: row;
           justify-content: flex-start;
           align-items: center;
-          gap: 4px;
+          gap: 8px;
           p{
             margin: 0;
             font-size: 16px;
