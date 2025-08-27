@@ -25,10 +25,10 @@
           <button mat-mini-fab class="other-btn" (click)="toggleFavoritePlaylist()">
             <mat-icon>{{ isFavoritePlaylist ? 'favorite' : 'favorite_outline' }}</mat-icon>
           </button>
-          <button mat-mini-fab class="other-btn"><mat-icon>add_circle_outline</mat-icon></button>
-          <button mat-mini-fab class="other-btn"><mat-icon>download_2</mat-icon></button>
-          <button mat-mini-fab class="other-btn"><mat-icon>delete</mat-icon></button>
-          <button mat-mini-fab class="other-btn"><mat-icon>share</mat-icon></button>
+          <button mat-mini-fab class="other-btn"><mat-icon fontSet="material-icons-outlined">download</mat-icon></button>
+          <button mat-mini-fab class="other-btn"><mat-icon fontSet="material-icons-outlined">add_box</mat-icon></button>
+          <button mat-mini-fab class="other-btn"><mat-icon>delete_outline</mat-icon></button>
+          <button mat-mini-fab class="other-btn"><mat-icon >ios_share</mat-icon></button>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
       <div class="body-artist">Saint Tone MVP</div>
       <div class="body-time">3:20</div>
     <span class="body-actions-delete">
-    <mat-icon>delete</mat-icon>
+    <mat-icon>delete_outline</mat-icon>
     <mat-checkbox></mat-checkbox>
   </span>
     <span class="body-actions-list">
@@ -77,7 +77,7 @@
       <div class="body-artist">Saint Tone MVP</div>
       <div class="body-time">3:20</div>
       <span class="body-actions-delete">
-    <mat-icon>delete</mat-icon>
+    <mat-icon>delete_outline</mat-icon>
     <mat-checkbox></mat-checkbox>
   </span>
       <span class="body-actions-list">
@@ -97,7 +97,7 @@
       <div class="body-artist">Saint Tone MVP</div>
       <div class="body-time">3:20</div>
       <span class="body-actions-delete">
-    <mat-icon>delete</mat-icon>
+    <mat-icon>delete_outline</mat-icon>
     <mat-checkbox></mat-checkbox>
   </span>
       <span class="body-actions-list">
@@ -117,7 +117,67 @@
       <div class="body-artist">Saint Tone MVP</div>
       <div class="body-time">3:20</div>
       <span class="body-actions-delete">
-    <mat-icon>delete</mat-icon>
+    <mat-icon>delete_outline</mat-icon>
+    <mat-checkbox></mat-checkbox>
+  </span>
+      <span class="body-actions-list">
+    <button mat-icon-button (click)="toggleFavoriteSong(4)">
+      <mat-icon>{{ favoriteSongs[4] ? 'favorite' : 'favorite_outline' }}</mat-icon>
+    </button>
+      <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
+    </span>
+    </div>
+
+    <div class="body-music">
+      <div class="image-music">
+        <div class="body-index">1</div>
+        <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/174965/Originals/meme-la-gi-3.jpg" alt="cover" class="song-cover"/>
+        <span class="song-title">Name music 1</span>
+      </div>
+      <div class="body-artist">Saint Tone MVP</div>
+      <div class="body-time">3:20</div>
+      <span class="body-actions-delete">
+    <mat-icon>delete_outline</mat-icon>
+    <mat-checkbox></mat-checkbox>
+  </span>
+      <span class="body-actions-list">
+    <button mat-icon-button (click)="toggleFavoriteSong(4)">
+      <mat-icon>{{ favoriteSongs[4] ? 'favorite' : 'favorite_outline' }}</mat-icon>
+    </button>
+      <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
+    </span>
+    </div>
+
+    <div class="body-music">
+      <div class="image-music">
+        <div class="body-index">1</div>
+        <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/174965/Originals/meme-la-gi-3.jpg" alt="cover" class="song-cover"/>
+        <span class="song-title">Name music 1</span>
+      </div>
+      <div class="body-artist">Saint Tone MVP</div>
+      <div class="body-time">3:20</div>
+      <span class="body-actions-delete">
+    <mat-icon>delete_outline</mat-icon>
+    <mat-checkbox></mat-checkbox>
+  </span>
+      <span class="body-actions-list">
+    <button mat-icon-button (click)="toggleFavoriteSong(4)">
+      <mat-icon>{{ favoriteSongs[4] ? 'favorite' : 'favorite_outline' }}</mat-icon>
+    </button>
+      <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
+    </span>
+    </div>
+
+    <div class="body-music">
+      <div class="image-music">
+        <div class="body-index">1</div>
+        <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/174965/Originals/meme-la-gi-3.jpg" alt="cover" class="song-cover"/>
+        <span class="song-title">Name music 1</span>
+      </div>
+      <div class="body-artist">Saint Tone MVP</div>
+      <div class="body-time">3:20</div>
+      <span class="body-actions-delete">
+    <mat-icon>delete_outline</mat-icon>
     <mat-checkbox></mat-checkbox>
   </span>
       <span class="body-actions-list">

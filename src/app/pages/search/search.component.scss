@@ -7,6 +7,10 @@
   padding: 10px 20px;
 }
 
+.search-tabs h2{
+  color: #EE10B0;
+}
+
 .playlist-table-header {
   border-top: 1px solid #666;
   border-bottom: 1px solid #666;
@@ -24,7 +28,8 @@
 }
 
 .song-info:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: #3c002a;
+  border-radius: 8px;
 }
 
 /* ảnh + tên */
@@ -65,10 +70,10 @@
 }
 
 .search-playlist{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  padding-top: 10px;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+
 }
 
 .card {

@@ -18,22 +18,63 @@ import {CategoryComponent} from '../category/category.component';
 })
 export class SearchComponent {
   categories = [
-    { name: 'Pop', image: 'assets/pop.jpg', color: '#ff6b6b' },
-    { name: 'Rock', image: 'assets/rock.jpg', color: '#4ecdc4' },
-    { name: 'Jazz', image: 'assets/jazz.jpg', color: '#ffe66d' },
-    { name: 'Hip Hop', image: 'assets/hiphop.jpg', color: '#ff6f61' },
-    { name: 'EDM', image: 'assets/edm.jpg', color: '#6a4c93' },
-    { name: 'Classical', image: 'assets/classical.jpg', color: '#1a535c' },
-    { name: 'Country', image: 'assets/country.jpg', color: '#f7fff7' },
-    {name: 'Electronic', image: 'https://source.unsplash.com/200x200/?electronic-music', color: '#3498DB' },
-    {name: 'Country', image: 'https://source.unsplash.com/200x200/?country-music', color: '#D35400' },
-
+    {
+      id: 1,
+      name: 'Pop',
+      image: 'https://i.scdn.co/image/ab67616d0000b27308f3e7a08eb03064e6eb0af7',
+      color: '#FF98BF',
+      gradient: 'linear-gradient(135deg, #FF98BF 0%, #FDE2F3 100%)',
+    },
+    {
+      id: 2,
+      name: 'Rock',
+      image: 'https://www.neatbeats.net/wp-content/uploads/2023/04/1-2.jpg',
+      color: '#999999',
+    },
+    {
+      id: 3,
+      name: 'Hip-Hop',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoyvm1Y_PRKQ-E30YK6RpSBbOlbTHZd0jMpw&s',
+      color: '#1DB954',
+      gradient: 'linear-gradient(135deg, #1DB954 0%, #000000 100%)',
+    },
+    {
+      id: 4,
+      name: 'Jazz',
+      image: 'https://i.ytimg.com/vi/K7RmhU4m2no/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDVcburO3kiLKRR4uV1_6mGBNcMbw',
+      color: '#6A4C93',
+      gradient: 'linear-gradient(135deg, #6A4C93 0%, #B977D1 100%)',
+    },
+    {
+      id: 5,
+      name: 'Classical',
+      image: 'https://f4.bcbits.com/img/a2598011156_16.jpg',
+      color: '#F39C12',
+    },
+    {
+      id: 6,
+      name: 'R&B',
+      image: 'https://i.scdn.co/image/ab67616d0000b273ccfa5146e54fa6a91d5bb0bd',
+      color: '#8E44AD',
+    },
+    {
+      id: 7,
+      name: 'Electronic',
+      image: 'https://i0.wp.com/publicseminar.org/wp-content/uploads/2018/12/shutterstock_544851574.jpg?fit=1000%2C625&ssl=1',
+      color: '#3498DB',
+    },
+    {
+      id: 8,
+      name: 'Country',
+      image: 'https://play-lh.googleusercontent.com/8cslWPWWj9tKoVot10Zx6JrGvSeJZ8LPFBp54GQAknYBBtfv5nRxm-ZO2GgmLX8rPg',
+      color: '#D35400',
+    }
   ];
 
+  // chỉ lấy 8 cái đầu tiên
   get topCategories() {
     return this.categories.slice(0, 8);
   }
-
 
 
 
