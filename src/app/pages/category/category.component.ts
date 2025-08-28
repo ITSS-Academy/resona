@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MusicGenresService } from '../../service/music-genres.service';
+import { MusicGenresService } from '../../service/music-genres/music-genres.service';
 import { Router } from '@angular/router';
 import { MusicGenresModel } from '../../models/musicGenres.model';
 import {Store} from '@ngrx/store';
@@ -18,19 +18,15 @@ import {AsyncPipe} from '@angular/common';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
 
-  musicGenres: MusicGenresModel[] = [];
   musicGenresList$!: Observable<MusicGenresModel[]>;
   subscriptions: Subscription[] = [];
 
   constructor(
     private router: Router,
-    private musicGenresService: MusicGenresService,
     private store: Store<{
       musicGenres: MusicGenresState
     }>
     ) {
-    this.musicGenres = this.musicGenresService.categories;
-    console.log(this.musicGenres);
     this.musicGenresList$ = this.store.select('musicGenres', 'musicGenres');
     this.getAllMusicGenres();
   }
