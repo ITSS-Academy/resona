@@ -3,6 +3,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MusicGenresService } from '../../service/music-genres.service';
 import { MusicGenresModel } from '../../models/musicGenres.model';
 import { MatIconButton } from '@angular/material/button';
+import {MoodPlaylistModel} from '../../models/moodPlaylist.model';
+import {NewReleaseSongModel} from '../../models/newReleaseSong.model';
+import {PopularArtistModel} from '../../models/popularArtist.model';
+import {MoodPlaylistService} from '../../service/mood-playlist.service';
+import {NewReleaseSongsService} from '../../service/new-release-songs.service';
+import {PopularArtistService} from '../../service/popular-artist.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +27,6 @@ export class HomeComponent implements AfterViewInit {
   isGenresScrollable = false;
   showGenresLeftBtn = false;
   showGenresRightBtn = false;
-  musicGenres: MusicGenresModel[] = [];
 
   isMoodScrollable = false;
   showMoodLeftBtn = false;
@@ -31,11 +36,22 @@ export class HomeComponent implements AfterViewInit {
   showArtistLeftBtn = false;
   showArtistRightBtn = false;
 
+  musicGenres: MusicGenresModel[] = [];
+  moodPlaylists: MoodPlaylistModel[] = [];
+  newReleases: NewReleaseSongModel[] = [];
+  popularArtists: PopularArtistModel[] = [];
+
   constructor(
     private musicGenresService: MusicGenresService,
+    private moodPlaylistService: MoodPlaylistService,
+    private newReleasesService: NewReleaseSongsService,
+    private popularArtistService: PopularArtistService,
     private renderer: Renderer2
   ) {
     this.musicGenres = this.musicGenresService.categories;
+    this.moodPlaylists = this.moodPlaylistService.playlists;
+    this.newReleases = this.newReleasesService.songs;
+    this.popularArtists = this.popularArtistService.artists;
   }
 
   ngAfterViewInit() {

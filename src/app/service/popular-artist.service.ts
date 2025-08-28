@@ -1,0 +1,77 @@
+import { Injectable } from '@angular/core';
+import {PopularArtistModel} from '../models/popularArtist.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PopularArtistService {
+  artists: PopularArtistModel[] = [
+    { name: 'Eminem', imageUrl: 'https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg' },
+    { name: 'The Weekend', imageUrl: 'https://storage.googleapis.com/a1aa/image/a313b2fc-895f-4a75-b28e-520be109364f.jpg' },
+    { name: 'Adele', imageUrl: 'https://storage.googleapis.com/a1aa/image/70374d57-2f63-4c33-fdf9-ce6b9fa36157.jpg' },
+    { name: 'Lana Del Ray', imageUrl: 'https://storage.googleapis.com/a1aa/image/31b1495a-dede-4073-b0ed-f729a8114e37.jpg' },
+    { name: 'Billie Eilish', imageUrl: 'https://storage.googleapis.com/a1aa/image/1338182e-0d67-43ea-c6ee-33636c4593b5.jpg'},
+
+    { name: 'Eminem', imageUrl: 'https://placehold.co/600x600?text=Eminem' },
+    { name: 'The Weeknd', imageUrl: 'https://placehold.co/600x600?text=The%20Weeknd' },
+    { name: 'Adele', imageUrl: 'https://placehold.co/600x600?text=Adele' },
+    { name: 'Lana Del Rey', imageUrl: 'https://placehold.co/600x600?text=Lana%20Del%20Rey' },
+    { name: 'Billie Eilish', imageUrl: 'https://placehold.co/600x600?text=Billie%20Eilish' },
+    { name: 'Drake', imageUrl: 'https://placehold.co/600x600?text=Drake' },
+    { name: 'Kanye West', imageUrl: 'https://placehold.co/600x600?text=Kanye%20West' },
+    { name: 'Taylor Swift', imageUrl: 'https://placehold.co/600x600?text=Taylor%20Swift' },
+    { name: 'Bruno Mars', imageUrl: 'https://placehold.co/600x600?text=Bruno%20Mars' },
+    { name: 'Ed Sheeran', imageUrl: 'https://placehold.co/600x600?text=Ed%20Sheeran' },
+    { name: 'Justin Bieber', imageUrl: 'https://placehold.co/600x600?text=Justin%20Bieber' },
+    { name: 'Selena Gomez', imageUrl: 'https://placehold.co/600x600?text=Selena%20Gomez' },
+    { name: 'Rihanna', imageUrl: 'https://placehold.co/600x600?text=Rihanna' },
+    { name: 'Shawn Mendes', imageUrl: 'https://placehold.co/600x600?text=Shawn%20Mendes' },
+    { name: 'Dua Lipa', imageUrl: 'https://placehold.co/600x600?text=Dua%20Lipa' },
+    { name: 'Post Malone', imageUrl: 'https://placehold.co/600x600?text=Post%20Malone' },
+    { name: 'Ariana Grande', imageUrl: 'https://placehold.co/600x600?text=Ariana%20Grande' },
+    { name: 'Coldplay', imageUrl: 'https://placehold.co/600x600?text=Coldplay' },
+    { name: 'Imagine Dragons', imageUrl: 'https://placehold.co/600x600?text=Imagine%20Dragons' },
+    { name: 'Harry Styles', imageUrl: 'https://placehold.co/600x600?text=Harry%20Styles' },
+    { name: 'Charlie Puth', imageUrl: 'https://placehold.co/600x600?text=Charlie%20Puth' },
+    { name: 'Sia', imageUrl: 'https://placehold.co/600x600?text=Sia' },
+    { name: 'Sam Smith', imageUrl: 'https://placehold.co/600x600?text=Sam%20Smith' },
+    { name: 'Ellie Goulding', imageUrl: 'https://placehold.co/600x600?text=Ellie%20Goulding' },
+    { name: 'Zayn Malik', imageUrl: 'https://placehold.co/600x600?text=Zayn%20Malik' },
+    { name: 'Jennifer Lopez', imageUrl: 'https://placehold.co/600x600?text=Jennifer%20Lopez' },
+    { name: 'Beyoncé', imageUrl: 'https://placehold.co/600x600?text=Beyonce' },
+    { name: 'Jay-Z', imageUrl: 'https://placehold.co/600x600?text=Jay-Z' },
+    { name: 'Lady Gaga', imageUrl: 'https://placehold.co/600x600?text=Lady%20Gaga' },
+    { name: 'Maroon 5', imageUrl: 'https://placehold.co/600x600?text=Maroon%205' }
+
+    // { name: 'Eminem',          imageUrl: 'https://images.pexels.com/photos/174938/pexels-photo-174938.jpeg' },
+    // { name: 'The Weeknd',      imageUrl: 'https://images.pexels.com/photos/274192/pexels-photo-274192.jpeg' },
+    // { name: 'Adele',           imageUrl: 'https://images.pexels.com/photos/127028/pexels-photo-127028.jpeg' },
+    // { name: 'Lana Del Rey',    imageUrl: 'https://images.pexels.com/photos/1030890/pexels-photo-1030890.jpeg' },
+    // { name: 'Billie Eilish',   imageUrl: 'https://images.pexels.com/photos/1549359/pexels-photo-1549359.jpeg' },
+    // { name: 'Drake',           imageUrl: 'https://images.pexels.com/photos/889279/pexels-photo-889279.jpeg' },
+    // { name: 'Kanye West',      imageUrl: 'https://images.pexels.com/photos/1036604/pexels-photo-1036604.jpeg' },
+    // { name: 'Taylor Swift',    imageUrl: 'https://images.pexels.com/photos/225425/pexels-photo-225425.jpeg' },
+    // { name: 'Bruno Mars',      imageUrl: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg' },
+    // { name: 'Ed Sheeran',      imageUrl: 'https://images.pexels.com/photos/360052/pexels-photo-360052.jpeg' },
+    // { name: 'Justin Bieber',   imageUrl: 'https://images.pexels.com/photos/174938/pexels-photo-174938.jpeg' },
+    // { name: 'Selena Gomez',    imageUrl: 'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg' },
+    // { name: 'Rihanna',         imageUrl: 'https://images.pexels.com/photos/2199330/pexels-photo-2199330.jpeg' },
+    // { name: 'Shawn Mendes',    imageUrl: 'https://images.pexels.com/photos/210360/pexels-photo-210360.jpeg' },
+    // { name: 'Dua Lipa',        imageUrl: 'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg' },
+    // { name: 'Post Malone',     imageUrl: 'https://images.pexels.com/photos/1538150/pexels-photo-1538150.jpeg' },
+    // { name: 'Ariana Grande',   imageUrl: 'https://images.pexels.com/photos/374904/pexels-photo-374904.jpeg' },
+    // { name: 'Coldplay',        imageUrl: 'https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg' },
+    // { name: 'Imagine Dragons', imageUrl: 'https://images.pexels.com/photos/1763641/pexels-photo-1763641.jpeg' },
+    // { name: 'Harry Styles',    imageUrl: 'https://images.pexels.com/photos/374167/pexels-photo-374167.jpeg' },
+    // { name: 'Charlie Puth',    imageUrl: 'https://images.pexels.com/photos/250206/pexels-photo-250206.jpeg' },
+    // { name: 'Sia',             imageUrl: 'https://images.pexels.com/photos/936137/pexels-photo-936137.jpeg' },
+    // { name: 'Sam Smith',       imageUrl: 'https://images.pexels.com/photos/3013206/pexels-photo-3013206.jpeg' },
+    // { name: 'Ellie Goulding',  imageUrl: 'https://images.pexels.com/photos/1263091/pexels-photo-1263091.jpeg' },
+    // { name: 'Zayn Malik',      imageUrl: 'https://images.pexels.com/photos/2041371/pexels-photo-2041371.jpeg' },
+    // { name: 'Jennifer Lopez',  imageUrl: 'https://images.pexels.com/photos/270466/pexels-photo-270466.jpeg' },
+    // { name: 'Beyoncé',         imageUrl: 'https://images.pexels.com/photos/1114909/pexels-photo-1114909.jpeg' },
+    // { name: 'Jay-Z',           imageUrl: 'https://images.pexels.com/photos/237717/pexels-photo-237717.jpeg' },
+    // { name: 'Lady Gaga',       imageUrl: 'https://images.pexels.com/photos/295919/pexels-photo-295919.jpeg' },
+    // { name: 'Maroon 5',        imageUrl: 'https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg' }
+  ];
+}
