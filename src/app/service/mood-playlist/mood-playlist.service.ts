@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {MoodPlaylistModel} from '../models/moodPlaylist.model';
+import {MoodPlaylistModel} from '../../models/moodPlaylist.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,19 +1,16 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
+import {Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy, OnInit} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MusicGenresService } from '../../service/music-genres.service';
-import { MusicGenresModel } from '../../models/musicGenres.model';
 import { MatIconButton } from '@angular/material/button';
+import { MusicGenresModel } from '../../models/musicGenres.model';
 import {MoodPlaylistModel} from '../../models/moodPlaylist.model';
 import {NewReleaseSongModel} from '../../models/newReleaseSong.model';
 import {PopularArtistModel} from '../../models/popularArtist.model';
-import {MoodPlaylistService} from '../../service/mood-playlist.service';
-import {NewReleaseSongsService} from '../../service/new-release-songs.service';
-import {PopularArtistService} from '../../service/popular-artist.service';
-// import {Component, OnDestroy, OnInit} from '@angular/core';
-// import {PlayerBarComponent} from '../../components/player-bar/player-bar.component';
-// import { MatIconModule } from '@angular/material/icon';
-// import {MusicGenresService} from '../../service/music-genres/music-genres.service';
-// import {MusicGenresModel} from '../../models/musicGenres.model';
+import {MusicGenresService} from '../../service/music-genres/music-genres.service';
+import {MoodPlaylistService} from '../../service/mood-playlist/mood-playlist.service';
+import {NewReleaseSongsService} from '../../service/new-release-songs/new-release-songs.service';
+import {PopularArtistService} from '../../service/popular-artist/popular-artist.service';
+
+
 // import {Router} from '@angular/router';
 // import {MusicGenresState} from '../../ngrx/musicGenres/musicGenres.state';
 // import {Store} from '@ngrx/store';
@@ -34,7 +31,7 @@ import {PopularArtistService} from '../../service/popular-artist.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements AfterViewInit, OnInit , OnDestroy {
   @ViewChild('genresScroll') genresScroll!: ElementRef;
   @ViewChild('moodScroll') moodScroll!: ElementRef;
   @ViewChild('artistScroll') artistScroll!: ElementRef;
@@ -216,9 +213,7 @@ export class HomeComponent implements AfterViewInit {
     const scrollAmount = (cardWidth + gap) * numCards;
     el.scrollBy({ left: direction === 'right' ? scrollAmount : -scrollAmount, behavior: 'smooth' });
   }
-
-// export class HomeComponent implements OnInit , OnDestroy{
-
+  // -----------------------code by Hà Hiệp Thanh-----------------------------------------------------------------------------------------------
 //   musicGenresList$!: Observable<MusicGenresModel[]>;
 //   albumList$!: Observable<AlbumModel[]>;
 //   subscriptions: Subscription[] = [];
@@ -252,18 +247,18 @@ export class HomeComponent implements AfterViewInit {
 //     this.router.navigate(['/song-detail', id]).then();
 //   }
 
-//   ngOnInit() {
-//     this.subscriptions.push(
-//       this.musicGenresList$.subscribe((musicGenres: MusicGenresModel[]) => {
-//         console.log(musicGenres);
-//       }),
-//       this.albumList$.subscribe((albums: AlbumModel[]) => {
-//         console.log(albums);
-//       })
-//     )
-//   }
+  ngOnInit() {
+    // this.subscriptions.push(
+    //   this.musicGenresList$.subscribe((musicGenres: MusicGenresModel[]) => {
+    //     console.log(musicGenres);
+    //   }),
+    //   this.albumList$.subscribe((albums: AlbumModel[]) => {
+    //     console.log(albums);
+    //   })
+    // )
+  }
 
-//   ngOnDestroy() {
-//     this.subscriptions.forEach(subscription => subscription.unsubscribe());
-//   }
-// }
+  ngOnDestroy() {
+    // this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+}
