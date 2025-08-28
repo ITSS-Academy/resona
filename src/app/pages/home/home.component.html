@@ -32,6 +32,18 @@
           <div class="card">
             <img src="{{genre.image}}" alt="{{genre.name}}" width="100" height="96" />
             <p class="label">{{genre.name}}</p>
+    <!-- <div>
+      <h2 class="section-title">Music <span>Genres</span></h2>
+      <div class="horizontal-scroll" aria-label="Music genres">
+        @for (genre of (musicGenresList$ | async); track $index) {
+          <div class="card" (click)="navigateToCategoryDetail(genre.id)">
+          <img
+            src="{{genre.image}}"
+            alt="Young woman singing on stage with microphone and purple lighting"
+            width="100"
+            height="96"
+          />
+          <p class="label">{{genre.name}}</p> -->
           </div>
         }
       </div>
@@ -76,6 +88,22 @@
           </div>
         </div>
     <!-- New Release Songs -->
+    <!-- <div>
+      <h2 class="section-title">Mood <span>Playlist</span></h2>
+      <div class="horizontal-scroll" aria-label="Mood playlists">
+        @for (album of (albumList$ | async); track $index) {
+          <div class="card" (click)="navigateToSongDetail(album.id)">
+            <img
+              src="{{album.album}}"
+              alt="Young woman singing on stage with microphone and purple lighting"
+              width="100"
+              height="96"
+            />
+            <p class="label">{{album.name}}</p>
+          </div>
+        }
+      </div>
+    </div> -->
     <section aria-labelledby="release-title">
       <h2 class="section-title">New Release <span>Songs</span></h2>
       <div class="songs-list">

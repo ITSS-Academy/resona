@@ -1,5 +1,5 @@
 export interface MusicGenresModel{
-  id: number,
+  id: string,
   name:string,
   image:string,
   color:string,

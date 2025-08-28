@@ -1,5 +1,5 @@
 <div class="category-container">
-  @for (item of musicGenres; track item.id) {
+  @for (item of (musicGenresList$ | async); track item.id) {
   <div
     class="category-card"
     (click)="navigateToCategoryDetail(item.id)"
