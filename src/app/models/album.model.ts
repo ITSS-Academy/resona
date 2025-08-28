@@ -14,5 +14,5 @@ export interface AlbumModel{
   commentCount:number;
   shareCount:number;
   downloadCount:number;
-  genre: MusicGenresModel[];
+  genre?: MusicGenresModel[];
 }

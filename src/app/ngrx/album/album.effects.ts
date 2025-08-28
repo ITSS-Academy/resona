@@ -41,4 +41,23 @@ export const albumByIdEffects = createEffect(
     );
   },
   {functional: true}
+);
+
+export const albumsByArtistEffects = createEffect(
+  (action$ = inject(Actions), albumService = inject (AlbumService))=>{
+    return action$.pipe(
+      ofType(AlbumActions.getAlbumsByArtist),
+      switchMap((action)=>
+        of(albumService.getAlbumsByArtist(action.artist)).pipe(
+          map((albumList:AlbumModel[])=>
+            AlbumActions.getAlbumsByArtistSuccess({albumList: albumList})
+          ),
+          catchError((error:any) =>
+            of(AlbumActions.getAlbumsByArtistFailure({error}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
 )
