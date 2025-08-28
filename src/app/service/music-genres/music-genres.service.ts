@@ -5,10 +5,6 @@ import {MusicGenresModel} from '../../models/musicGenres.model';
   providedIn: 'root'
 })
 export class MusicGenresService {
-
-  constructor(
-  ) { }
-
   categories: MusicGenresModel[] = [
     {
       id: '1',
