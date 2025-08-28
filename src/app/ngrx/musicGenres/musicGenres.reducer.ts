@@ -7,7 +7,7 @@ export const initialMusicGenres: MusicGenresState = {
   musicGenres:<MusicGenresModel[]>[],
   specificMusicGenre: <MusicGenresModel>{},
   isLoading: false,
-  error: null
+  error: null,
 }
 
 export const musicGenresReducer = createReducer(
@@ -18,6 +18,7 @@ export const musicGenresReducer = createReducer(
     return {
       ...state,
       isLoading: true,
+      error: null,
     }
   }),
 
@@ -27,16 +28,15 @@ export const musicGenresReducer = createReducer(
       ...state,
       musicGenres: musicGenresList,
       isLoading: false,
-      error: null,
     }
   }),
 
-  on(MusicGenresActions.getAllMusicGenresFailure, (state, {type})=>{
+  on(MusicGenresActions.getAllMusicGenresFailure, (state, {type,error})=>{
     console.log(type);
     return {
       ...state,
       isLoading: false,
-      error: null,
+      error: error
     }
   }),
 
@@ -44,7 +44,9 @@ export const musicGenresReducer = createReducer(
     console.log(type);
     return {
       ...state,
+      specificMusicGenre: <MusicGenresModel>{},
       isLoading: true,
+      error: null,
     }
   }),
 
@@ -54,7 +56,6 @@ export const musicGenresReducer = createReducer(
       ...state,
       specificMusicGenre: specificMusicGenre,
       isLoading: false,
-      error: null,
     }
   }),
 

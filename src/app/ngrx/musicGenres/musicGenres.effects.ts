@@ -1,6 +1,6 @@
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as MusicGenresActions from '../musicGenres/musicGenres.actions';
-import {MusicGenresService} from '../../service/music-genres.service';
+import {MusicGenresService} from '../../service/music-genres/music-genres.service';
 import {catchError, map, of, switchMap} from 'rxjs';
 import {inject} from '@angular/core';
 
