@@ -22,4 +22,23 @@ export const albumEffects = createEffect(
     );
   },
   {functional: true}
+);
+
+export const albumByIdEffects = createEffect(
+  (action$ = inject(Actions), albumService = inject (AlbumService))=>{
+    return action$.pipe(
+      ofType(AlbumActions.getAlbumById),
+      switchMap((action)=>
+        of(albumService.getAlbumById(action.id)).pipe(
+          map((albumDetail:AlbumModel)=>
+            AlbumActions.getAlbumByIdSuccess({albumDetail: albumDetail})
+          ),
+          catchError((error:any) =>
+            of(AlbumActions.getAlbumByIdFailure({error}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
 )

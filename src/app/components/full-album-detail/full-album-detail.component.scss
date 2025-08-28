@@ -11,8 +11,6 @@
   justify-content: flex-start;
   align-items: center;
   padding: 16px;
-  background-color: white;
-  background-image: url("https://photo-resize-zmp3.zmdcdn.me/w600_r300x169_jpeg/thumb_video/d/9/5/9/d9596f1082e736d59d716010bd2d2fb5.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -28,6 +26,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: transparent;
     img{
       border-radius: 12px;
       width: auto;

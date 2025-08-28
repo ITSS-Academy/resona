@@ -18,6 +18,7 @@ export class AlbumService {
       mv: 'https://photo-resize-zmp3.zmdcdn.me/w600_r300x169_jpeg/thumb_video/d/9/5/9/d9596f1082e736d59d716010bd2d2fb5.jpg',
       audio: 'https://www.youtube.com/watch?v=HXkh7EOqcQ4',
       artist: 'JustaTee, Phương Ly',
+      duration: '3:35',
       listenerCount: 0,
       likeCount: 0,
       commentCount: 0,
@@ -47,6 +48,7 @@ export class AlbumService {
       mv: 'https://i.ytimg.com/vi/FN7ALfpGxiI/maxresdefault.jpg',
       audio: 'https://www.youtube.com/watch?v=qHpE45b4INk',
       artist: 'Sơn Tùng M-TP',
+      duration: '4:20',
       listenerCount: 0,
       likeCount: 0,
       commentCount: 0,
@@ -76,6 +78,7 @@ export class AlbumService {
       mv: 'https://i.ytimg.com/vi/jPjQJYKhhk4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDd0BL1BbNCygcYeRQ-12xT_LxMhQ',
       audio: 'https://www.youtube.com/watch?v=jPjQJYKhhk4',
       artist: 'Nguyễn Quốc Hùng',
+      duration: '4:27',
       listenerCount: 0,
       likeCount: 0,
       commentCount: 0,
@@ -102,6 +105,15 @@ export class AlbumService {
 
   getAllAlbums(){
     return this.albums;
+  }
+
+  getAlbumById(id:string): AlbumModel {
+    let album = this.albums.find(album => album.id === id);
+    if (album) {
+      return album;
+    }else{
+      return {} as AlbumModel
+    }
   }
 
 }

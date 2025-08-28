@@ -5,6 +5,7 @@ import {AlbumState} from './album.state';
 
 export const initialAlbum : AlbumState = {
   albumList: <AlbumModel[]>[],
+  albumDetail: <AlbumModel>{},
   isLoading: false,
   error: null,
 }
@@ -16,6 +17,8 @@ export const albumReducer = createReducer(
     console.log(type);
     return {
       ...state,
+      isLoading: true,
+      error: null,
     }
   }),
 
@@ -24,6 +27,7 @@ export const albumReducer = createReducer(
     return{
       ...state,
       albumList: albumList,
+      isLoading: false,
     }
   }),
 
@@ -31,7 +35,37 @@ export const albumReducer = createReducer(
     console.log(type);
     return {
       ...state,
+      isLoading: false,
       error: error,
     }
   }),
+
+  on(AlbumActions.getAlbumById, (state, {type, id})=>{
+    console.log(type);
+    return{
+      ...state,
+      albumDetail: <AlbumModel>{},
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(AlbumActions.getAlbumByIdSuccess, (state, {type, albumDetail})=>{
+    console.log(type);
+    return {
+      ...state,
+      albumDetail: albumDetail,
+      isLoading: false,
+    }
+  }),
+
+  on(AlbumActions.getAlbumByIdFailure, (state, {type, error})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
 )

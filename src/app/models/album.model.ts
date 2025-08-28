@@ -8,6 +8,7 @@ export interface AlbumModel{
   mv:string;
   audio:string;
   artist:string;
+  duration:string;
   listenerCount:number;
   likeCount:number;
   commentCount:number;

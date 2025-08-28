@@ -12,3 +12,15 @@ export const getAllAlbumsSuccess = createAction(
 export const getAllAlbumsFailure = createAction(
   '[Album] getAllAlbumsFailure', props<{error: any}>()
 )
+
+export const getAlbumById = createAction(
+  '[Album] getAlbumById', props<{id: string}>()
+)
+
+export const getAlbumByIdSuccess = createAction(
+  '[Album] getAlbumByIdSuccess', props<{albumDetail: AlbumModel}>()
+)
+
+export const getAlbumByIdFailure = createAction(
+  '[Album] getAlbumByIdFailure', props<{error: any}>()
+)
