@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MusicGenresService } from '../../service/music-genres.service';
+import { MusicGenresService } from '../../service/music-geres/music-genres.service';
 import { Router } from '@angular/router';
 import { MusicGenresModel } from '../../models/musicGenres.model';
 

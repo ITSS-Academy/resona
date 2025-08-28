@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {MusicGenresService} from '../../service/music-genres.service';
+import {MusicGenresService} from '../../service/music-geres/music-genres.service';
 import {MusicGenresModel} from '../../models/musicGenres.model';
 import {NgStyle} from '@angular/common';
 import {AlbumCardComponent} from '../../components/album-card/album-card.component';

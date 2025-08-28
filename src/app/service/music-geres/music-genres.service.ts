@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {MusicGenresModel} from '../models/musicGenres.model';
+import {MusicGenresModel} from '../../models/musicGenres.model';
 
 @Injectable({
   providedIn: 'root'
