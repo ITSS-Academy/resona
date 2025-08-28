@@ -68,4 +68,31 @@ export const albumReducer = createReducer(
     }
   }),
 
+  on(AlbumActions.getAlbumsByArtist, (state, {type, artist})=>{
+    console.log(type);
+    return{
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(AlbumActions.getAlbumsByArtistSuccess, (state, {type,albumList})=>{
+    console.log(type);
+    return{
+      ...state,
+      albumList: albumList,
+      isLoading: false,
+    }
+  }),
+
+  on(AlbumActions.getAlbumsByArtistFailure, (state, {type, error})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  })
+
 )

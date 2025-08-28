@@ -24,7 +24,8 @@ export class SongDetailComponent implements OnInit , OnDestroy{
   albumDetail$!: Observable<AlbumModel>;
   subscription: Subscription[]=[];
   albumDetail!: AlbumModel;
-
+  albumRelatedToArtist$!: Observable<AlbumModel[]>;
+  albumRelatedToArtist: AlbumModel[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -35,6 +36,7 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     let {id} = this.activatedRoute.snapshot.params;
     console.log(id);
     this.albumDetail$ = this.store.select ('albums', 'albumDetail');
+    this.albumRelatedToArtist$ = this.store.select('albums', 'albumList');
     this.store.dispatch(AlbumActions.getAlbumById({id: id}));
   }
 
@@ -42,7 +44,15 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     this.subscription.push(
       this.albumDetail$.subscribe(album=>{
         this.albumDetail = album;
-        console.log(album);
+        if (album && album.artist) {
+          // Dispatch action to get albums by the same artist
+          this.store.dispatch(AlbumActions.getAlbumsByArtist({ artist: album.artist }));
+          console.log(album.artist);
+        }
+      }),
+      this.albumRelatedToArtist$.subscribe(albumList=>{
+        this.albumRelatedToArtist = albumList;
+        console.log(this.albumRelatedToArtist);
       })
     )
   }
