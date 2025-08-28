@@ -9,8 +9,8 @@
       <p>Discovery all</p>
     </div>
     <div class="overview-left-bot">
-      @for (item of [1,2,3,4,5,6,7,8,9,10];track $index){
-        <app-album-card></app-album-card>
+      @for (item of albums;track $index){
+        <app-album-card [album]="item"></app-album-card>
       }
     </div>
   </div>
