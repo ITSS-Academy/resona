@@ -1,5 +1,5 @@
 .playlist-detail-container {
-  padding: 0 40px;
+  padding: 0 20px;
 }
 
 .playlist-header {
@@ -181,8 +181,14 @@
   padding: 10px 20px;
   color: #e0e0e0;
   font-size: 16px;
+  cursor: pointer;
 }
 
+.body-music:hover{
+  background-color: #3c002a;
+  border-radius: 8px;
+
+}
 
 .image-music {
   flex: 2;

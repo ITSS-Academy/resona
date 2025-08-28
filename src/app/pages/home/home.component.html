@@ -4,116 +4,34 @@
     <div>
       <h2 class="section-title">Music <span>Genres</span></h2>
       <div class="horizontal-scroll" aria-label="Music genres">
-        <div class="card">
+        @for (genre of (musicGenresList$ | async); track $index) {
+          <div class="card" (click)="navigateToCategoryDetail(genre.id)">
           <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+            src="{{genre.image}}"
             alt="Young woman singing on stage with microphone and purple lighting"
             width="100"
             height="96"
           />
-          <p class="label">Label</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-        </div>
+          <p class="label">{{genre.name}}</p>
+          </div>
+        }
       </div>
     </div>
     <!-- Mood Playlist -->
     <div>
       <h2 class="section-title">Mood <span>Playlist</span></h2>
       <div class="horizontal-scroll" aria-label="Mood playlists">
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-          <p class="tracks">25 tracks</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-          <p class="tracks">25 tracks</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-          <p class="tracks">25 tracks</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-          <p class="tracks">25 tracks</p>
-        </div>
-        <div class="card">
-          <img
-            src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
-            alt="Young woman singing on stage with microphone and purple lighting"
-            width="100"
-            height="96"
-          />
-          <p class="label">Label</p>
-          <p class="tracks">25 tracks</p>
-        </div>
+        @for (album of (albumList$ | async); track $index) {
+          <div class="card" (click)="navigateToSongDetail(album.id)">
+            <img
+              src="{{album.album}}"
+              alt="Young woman singing on stage with microphone and purple lighting"
+              width="100"
+              height="96"
+            />
+            <p class="label">{{album.name}}</p>
+          </div>
+        }
       </div>
     </div>
     <section aria-labelledby="release-title">

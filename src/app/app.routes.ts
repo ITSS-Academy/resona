@@ -51,7 +51,7 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'song-detail',
+    path: 'song-detail/:id',
     loadComponent() {
       return import('../app/pages/song-detail/song-detail.component').then(
         (m) => m.SongDetailComponent,
