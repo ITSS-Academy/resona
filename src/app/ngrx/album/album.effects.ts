@@ -1,5 +1,5 @@
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {AlbumService} from '../../service/album/album.service';
+import {AlbumService} from '../../services/album/album.service';
 import {inject} from '@angular/core';
 import * as AlbumActions from '../album/album.actions';
 import {catchError, map, of, switchMap} from 'rxjs';

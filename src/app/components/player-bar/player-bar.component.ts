@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ElementRef, OnInit} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {LyricComponent} from '../lyric/lyric.component';
 import {MatDrawer, MatDrawerContainer} from '@angular/material/sidenav';
@@ -7,6 +7,12 @@ import {QueueComponent} from '../queue/queue.component';
 import {AlbumCardComponent} from '../album-card/album-card.component';
 import {QueueSongDetailComponent} from '../queue-song-detail/queue-song-detail.component';
 import {SmallAlbumComponent} from '../small-album/small-album.component';
+import {Observable} from 'rxjs';
+import {TrackModel} from '../../models/track.model';
+import {Store} from '@ngrx/store';
+import {PlayState} from '../../ngrx/play/play.state';
+import * as PlayActions from '../../ngrx/play/play.action';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-player-bar',
@@ -19,14 +25,35 @@ import {SmallAlbumComponent} from '../small-album/small-album.component';
     MatDrawer,
     QueueComponent,
     SmallAlbumComponent,
+    AsyncPipe,
   ],
   styleUrls: ['./player-bar.component.scss']
 })
-export class PlayerBarComponent implements AfterViewInit {
+export class PlayerBarComponent implements AfterViewInit, OnInit {
 
   @ViewChild('lyric') lyricDrawer!: MatDrawer;
   @ViewChild('queue') queueDrawer!: MatDrawer;
   @ViewChild('smallAlbum') smallAlbumDrawer!: MatDrawer;
+  @ViewChild('audio') audioRef!: ElementRef<HTMLAudioElement>;
+
+  currentTrack$!: Observable<TrackModel | null>;
+  isPlaying$!: Observable<boolean>;
+
+  isPlaying = true;
+  duration = 0;
+  currentTime = 0;
+  lastTrack: TrackModel | null = null;
+  filePath: string = '';
+
+  constructor(
+    private store: Store<{ play: PlayState }>
+  ) {
+  }
+
+  ngOnInit() {
+    this.currentTrack$ = this.store.select(state => state.play.currentTrack);
+    this.isPlaying$ = this.store.select(state => state.play.isPlaying);
+  }
 
   toggleLyric() {
     if (this.queueDrawer.opened) {
@@ -60,6 +87,15 @@ export class PlayerBarComponent implements AfterViewInit {
 
 
   ngAfterViewInit() {
+    this.currentTrack$.subscribe(track => {
+      if (track && this.audioRef?.nativeElement) {
+        console.log('Current track:', track);
+        this.lastTrack = track;
+        this.filePath = this.buildStreamUrl(track);
+        this.audioRef.nativeElement.play();
+      }
+    });
+
     // Play progress
     const playRange = document.querySelector('.player-progress input[type="range"]') as HTMLInputElement;
     if (playRange) {
@@ -74,10 +110,25 @@ export class PlayerBarComponent implements AfterViewInit {
     }
   }
 
+  buildStreamUrl(track: TrackModel) {
+    return `https://cynhadjnrnyzycvxcpln.supabase.co/storage/v1/object/public/tracks/${track.filePath}`;
+  }
+
+  onTogglePlay() {
+    if (!this.lastTrack) return;
+    if (this.isPlaying) {
+      this.store.dispatch(PlayActions.pause());
+    } else {
+      // nếu trước đó đã có track thì phát tiếp track hiện tại
+      this.store.dispatch(PlayActions.play({track: this.lastTrack}));
+    }
+  }
+
   updateGradient(range: HTMLInputElement) {
     const percent = ((+range.value - +range.min) / (+range.max - +range.min)) * 100;
     range.style.backgroundSize = `${percent}% 100%`;
   }
+
   // ngAfterViewInit() {
   //   const sliders = document.querySelectorAll<HTMLInputElement>(
   //     '.mini-player-progress input[type="range"], .mini-player-right input[type="range"]'

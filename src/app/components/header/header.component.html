@@ -1,16 +1,41 @@
-<mat-toolbar  color="primary" class="toolbar">
+<mat-toolbar color="primary" class="toolbar">
   <div class="left">
     <button mat-icon-button (click)="onToggleSidebar()">
       <mat-icon>menu</mat-icon>
     </button>
     <div class="outline-search">
-      <input type="text" placeholder="Search some song" class="search-input" (keyup.enter)="navigateToSearch()" />
-      <mat-icon  class="material-symbols-rounded" (click)="navigateToSearch()">search</mat-icon>
+      <input type="text" placeholder="Search some song" class="search-input" (keyup.enter)="navigateToSearch()"/>
+      <mat-icon class="material-symbols-rounded" (click)="navigateToSearch()">search</mat-icon>
     </div>
   </div>
 
-  <button mat-icon-button class="user-none-login" aria-label="Example icon-button with share icon">
-    <mat-icon class="material-symbols-rounded">person</mat-icon>
+  <button mat-stroked-button (click)="openCreateDialog()">
+    <mat-icon>add</mat-icon>
+    <span>Create playlist</span>
   </button>
+
+  @if (profile$|async; as profile) {
+    @if (profile.uid) {
+      <div class="user-login" [matMenuTriggerFor]="profileMenu">
+        <img src="{{ profile.photoUrl }}" class="user-profile" (error)="onImgError($event)"
+        />
+      </div>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Log out</span>
+        </button>
+      </mat-menu>
+    } @else {
+      <button mat-flat-button (click)="openLoginDialog()">
+        Login
+      </button>
+    }
+  }
+
 
 </mat-toolbar>

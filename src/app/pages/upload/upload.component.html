@@ -1,83 +1,119 @@
-<div class="upload-container">
-  <div class="left-col">
-<!--    <div class="upload-music">-->
-      <div class="upload-music-box">
-        <img mat-card-image src="./assets/images/cloud-upload_icon-icons.com_54314.png" alt="">
-        <p>Drag music here or click to select file</p>
-          <input type="file" id="musicFile" hidden />
-          <label for="musicFile" class="upload-btn"> <mat-icon>music_note</mat-icon>Choose File</label>
-      </div>
-<!--    </div>-->
+  <form [formGroup]="form" class="upload-container">
 
-    <div class="upload-picture">
-      <div class="picture-content">
-        <img mat-card-image src="./assets/images/add_image.png" alt="">
+    <div class="left-col">
+      <!--    <div class="upload-music">-->
+      <div class="upload-music-box">
+              <img mat-card-image src="./assets/images/cloud-upload_icon-icons.com_54314.png" alt="">
         <p>Drag music here or click to select file</p>
-        <input type="file" id="pictureFile" hidden />
-        <label for="pictureFile" class="upload-btn"> <mat-icon>image</mat-icon>Choose Picture</label>
+        <button mat-flat-button type="button" (click)="fileInput.click()">
+          <mat-icon>upload</mat-icon>
+          Choose file
+        </button>
+        <input
+          #fileInput
+          type="file"
+          accept="audio/*,video/*"
+          (change)="onFileSelected($event)"
+          hidden
+        />
+
+        @if (form.value.file) {
+          <div class="file-chip">
+            <mat-icon>attach_file</mat-icon>
+            <span>{{ form.value.file.name }}</span>
+          </div>
+        }
+      </div>
+      <!--    </div>-->
+
+      <div class="upload-picture">
+        <div class="picture-content">
+                  <img mat-card-image src="./assets/images/add_image.png" alt="">
+          <p>Drag music here or click to select file</p>
+          <input type="file" id="pictureFile" (change)="onThumbnailSelected($event)"
+                 hidden/>
+          <label for="pictureFile" class="upload-btn">
+            <mat-icon>image</mat-icon>
+            Choose Picture</label>
+        </div>
+        @if (form.value.thumbnail) {
+          <div class="file-chip">
+            <mat-icon>attach_file</mat-icon>
+            <span>{{ form.value.thumbnail.name }}</span>
+          </div>
+        }
       </div>
     </div>
-  </div>
 
-  <div class="song-info">
-    <h3>Song Information</h3>
-    <mat-form-field appearance="outline">
-      <mat-label>Song title</mat-label>
-      <input matInput placeholder="Enter song title">
-    </mat-form-field>
+    <div class="song-info">
+      <h3>Song Information</h3>
+      <mat-form-field appearance="outline">
+        <mat-label>Song title</mat-label>
+        <input matInput placeholder="Enter song title" formControlName="title">
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Artist</mat-label>
-      <input matInput placeholder="Enter artist name">
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Artist</mat-label>
+        <input matInput placeholder="Enter artist name" formControlName="artist">
+      </mat-form-field>
 
-    <div class="upload-lyrics">
-      <mat-tab-group>
-        <mat-tab label="Enter Lyrics">
-          <div class="lyrics-tab">
-            <mat-form-field class="full-width no-border">
+      <div class="upload-lyrics">
+        <mat-tab-group>
+          <mat-tab label="Enter Lyrics">
+            <div class="lyrics-tab">
+              <mat-form-field class="full-width no-border">
               <textarea
                 matInput
                 rows="8"
                 placeholder="Type song lyrics here..."
+                formControlName="lyrics"
               ></textarea>
-            </mat-form-field>
-          </div>
-        </mat-tab>
-
-        <mat-tab label="Upload File">
-          <div class="upload-tab">
-            <div class="lyrics-upload">
-              <p>
-                Drag & drop files or click to select<br />
-              </p>
-              <input type="file" id="lyricsFile" hidden />
-              <label for="lyricsFile" class="upload-btn">Choose File</label>
+              </mat-form-field>
             </div>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
+          </mat-tab>
+
+          <mat-tab label="Upload File">
+            <div class="upload-tab">
+              <div class="lyrics-upload">
+                <p>
+                  Drag & drop files or click to select<br/>
+                </p>
+                <input type="file" id="lyricsFile" (change)="onLyricsFileSelected($event)" hidden/>
+                <label for="lyricsFile" class="upload-btn">Choose File</label>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <!--      <mat-form-field appearance="outline">-->
+      <!--        <mat-label>Category</mat-label>-->
+      <!--        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>-->
+      <!--        <mat-select formControlName="categoryId">-->
+      <!--          <mat-option value="pop">Pop</mat-option>-->
+      <!--          <mat-option value="bolero">Bolero</mat-option>-->
+      <!--          <mat-option value="rock">Rock</mat-option>-->
+      <!--          <mat-option value="hiphop">Hip-hop</mat-option>-->
+      <!--          <mat-option value="jazz">Jazz</mat-option>-->
+      <!--          <mat-option value="edm">EDM</mat-option>-->
+      <!--          <mat-option value="rap">Rap</mat-option>-->
+      <!--          <mat-option value="other">Other</mat-option>-->
+      <!--        </mat-select>-->
+      <!--      </mat-form-field>-->
+
+      <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="categoryId" style="color: white">
+          @for (category of categories$ | async; track $index) {
+            <mat-option [value]="category.id">
+              {{ category.name }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="upload-submit">
+        <button mat-flat-button (click)="submit()">Upload</button>
+      </div>
     </div>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Category</mat-label>
-      <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
-      <mat-select panelClass="custom-select-panel" >
-        <mat-option value="pop">Pop</mat-option>
-        <mat-option value="bolero">Bolero</mat-option>
-        <mat-option value="rock">Rock</mat-option>
-        <mat-option value="hiphop">Hip-hop</mat-option>
-        <mat-option value="jazz">Jazz</mat-option>
-        <mat-option value="edm">EDM</mat-option>
-        <mat-option value="rap">Rap</mat-option>
-        <mat-option value="other">Other</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <div class="upload-submit">
-      <button mat-flat-button>Upload</button>
-    </div>
-  </div>
-
-</div>
-<div class="bottom-space"></div>
+  </form>

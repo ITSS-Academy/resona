@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PlayerBarComponent} from '../../components/player-bar/player-bar.component';
 import { MatIconModule } from '@angular/material/icon';
-import {MusicGenresService} from '../../service/music-genres/music-genres.service';
+import {MusicGenresService} from '../../services/music-genres/music-genres.service';
 import {MusicGenresModel} from '../../models/musicGenres.model';
 import {Router} from '@angular/router';
 import {MusicGenresState} from '../../ngrx/musicGenres/musicGenres.state';
@@ -12,6 +12,11 @@ import {AlbumModel} from '../../models/album.model';
 import {AlbumState} from '../../ngrx/album/album.state';
 import * as AlbumActions from '../../ngrx/album/album.actions';
 import {AsyncPipe} from '@angular/common';
+import {TrackModel} from '../../models/track.model';
+import * as PlayActions from '../../ngrx/play/play.action';
+import {SongModel} from '../../models/song.model';
+import {ProfileModel} from '../../models/profile.model';
+import {PlaylistModel} from '../../models/playlist.model';
 
 @Component({
   selector: 'app-home',
@@ -66,6 +71,11 @@ export class HomeComponent implements OnInit , OnDestroy{
         console.log(albums);
       })
     )
+  }
+
+  onPlayTrack(track: TrackModel) {
+    console.log('Playing track:', track);
+    this.store.dispatch(PlayActions.play({track}));
   }
 
   ngOnDestroy() {

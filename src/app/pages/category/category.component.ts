@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MusicGenresService } from '../../service/music-genres/music-genres.service';
-import { Router } from '@angular/router';
-import { MusicGenresModel } from '../../models/musicGenres.model';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {MusicGenresService} from '../../services/music-genres/music-genres.service';
+import {Router} from '@angular/router';
+import {MusicGenresModel} from '../../models/musicGenres.model';
 import {Store} from '@ngrx/store';
 import {MusicGenresState} from '../../ngrx/musicGenres/musicGenres.state';
 import {Observable, Subscription} from 'rxjs';
@@ -26,7 +26,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     private store: Store<{
       musicGenres: MusicGenresState
     }>
-    ) {
+  ) {
     this.musicGenresList$ = this.store.select('musicGenres', 'musicGenres');
     this.getAllMusicGenres();
   }

@@ -9,7 +9,7 @@ export interface TrackModel {
   filePath: string;
   viewCount: number;
   createdAt: string; // ISO date string từ API
-  artists: string;
+  artistName: string;
   thumbnailPath?: string | null;
   owner: ProfileModel;
   playlists?: PlaylistModel[];
