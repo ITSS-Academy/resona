@@ -5,6 +5,11 @@ import {LyricComponent} from '../lyric/lyric.component';
 import {CommentsComponent} from '../comments/comments.component';
 import {AlbumModel} from '../../models/album.model';
 import {Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {CommentState} from '../../ngrx/comment/comment.state';
+import {Observable, Subscription} from 'rxjs';
+import {CommentModel} from '../../models/comment.model';
+import * as CommentActions from '../../ngrx/comment/comment.actions';
 
 @Component({
   selector: 'app-three-options-button',
@@ -13,15 +18,10 @@ import {Router} from '@angular/router';
   styleUrl: './three-options-button.component.scss'
 })
 
-export class ThreeOptionsButtonComponent implements OnInit , OnDestroy {
+export class ThreeOptionsButtonComponent{
   @Input() albumDetail!: AlbumModel[];
-
   constructor(
-    private router: Router,
-  ) { }
-
-  ngOnInit() {}
-
-  ngOnDestroy() {}
+  ) {
+  }
 }
 
