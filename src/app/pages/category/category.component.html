@@ -4,14 +4,13 @@
       class="category-card"
       (click)="navigateToCategoryDetail(item.id)"
       [ngStyle]="{
-        background: item.color?.startsWith('linear-gradient') ? item.color : '',
-        backgroundColor: !(item.color?.startsWith('linear-gradient')) ? item.color : ''
+        background: item.color
       }"
     >
       <div class="category-content">
         <h3>{{ item.name }}</h3>
       </div>
-      <img [src]="item.image" [alt]="item.name" />
+      <img [src]="item.image" [alt]="item.name"/>
     </div>
   }
 </div>

@@ -4,7 +4,8 @@
       <mat-icon>menu</mat-icon>
     </button>
     <div class="outline-search">
-      <input type="text" placeholder="Search some song" class="search-input" (keyup.enter)="navigateToSearch()"/>
+      <input type="text" placeholder="Search..." class="search-input" [formControl]="searchControl"
+             (keyup.enter)="navigateToSearch()"/>
       <mat-icon class="material-symbols-rounded" (click)="navigateToSearch()">search</mat-icon>
     </div>
   </div>

@@ -1,13 +1,13 @@
-<mat-tab-group class="search-tabs" >
+<mat-tab-group class="search-tabs">
   <mat-tab label="All">
     <h2>Genres</h2>
     <div class="category-container">
-      @for (category of topCategories; track $index) {
+      @for (category of categories$ | async; track $index) {
         <div class="category-card" [style.background]="category.color">
           <div class="category-content">
             <h3>{{ category.name }}</h3>
           </div>
-          <img [src]="category.image" alt="{{ category.name }}" />
+          <img [src]="category.image" alt="{{ category.name }}"/>
         </div>
       }
     </div>
@@ -53,7 +53,8 @@
     <div class="search-playlist">
 
       <div class="card">
-        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg" alt="Young woman singing on stage with microphone and purple lighting"/>
+        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+             alt="Young woman singing on stage with microphone and purple lighting"/>
         <div class="play-btn">
           <mat-icon>play_arrow</mat-icon>
         </div>
@@ -61,7 +62,8 @@
         <p class="tracks">25 tracks</p>
       </div>
       <div class="card">
-        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg" alt="Young woman singing on stage with microphone and purple lighting"/>
+        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+             alt="Young woman singing on stage with microphone and purple lighting"/>
         <div class="play-btn">
           <mat-icon>play_arrow</mat-icon>
         </div>
@@ -74,19 +76,22 @@
     <h2>Profile</h2>
     <div class="search-profile">
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>
 
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>
 
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>
@@ -145,16 +150,18 @@
   <mat-tab label="Playlist">
     <div class="search-playlist">
 
-    <div class="card">
-      <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg" alt="Young woman singing on stage with microphone and purple lighting"/>
-      <div class="play-btn">
-        <mat-icon>play_arrow</mat-icon>
-      </div>
-      <p class="label">Thiên hạ nghe gì</p>
-      <p class="tracks">25 tracks</p>
-    </div>
       <div class="card">
-        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg" alt="Young woman singing on stage with microphone and purple lighting"/>
+        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+             alt="Young woman singing on stage with microphone and purple lighting"/>
+        <div class="play-btn">
+          <mat-icon>play_arrow</mat-icon>
+        </div>
+        <p class="label">Thiên hạ nghe gì</p>
+        <p class="tracks">25 tracks</p>
+      </div>
+      <div class="card">
+        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+             alt="Young woman singing on stage with microphone and purple lighting"/>
         <div class="play-btn">
           <mat-icon>play_arrow</mat-icon>
         </div>
@@ -163,7 +170,8 @@
       </div>
 
       <div class="card">
-        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg" alt="Young woman singing on stage with microphone and purple lighting"/>
+        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+             alt="Young woman singing on stage with microphone and purple lighting"/>
         <div class="play-btn">
           <mat-icon>play_arrow</mat-icon>
         </div>
@@ -172,7 +180,8 @@
       </div>
 
       <div class="card">
-        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg" alt="Young woman singing on stage with microphone and purple lighting"/>
+        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+             alt="Young woman singing on stage with microphone and purple lighting"/>
         <div class="play-btn">
           <mat-icon>play_arrow</mat-icon>
         </div>
@@ -181,7 +190,8 @@
       </div>
 
       <div class="card">
-        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg" alt="Young woman singing on stage with microphone and purple lighting"/>
+        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+             alt="Young woman singing on stage with microphone and purple lighting"/>
         <div class="play-btn">
           <mat-icon>play_arrow</mat-icon>
         </div>
@@ -190,7 +200,8 @@
       </div>
 
       <div class="card">
-        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg" alt="Young woman singing on stage with microphone and purple lighting"/>
+        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+             alt="Young woman singing on stage with microphone and purple lighting"/>
         <div class="play-btn">
           <mat-icon>play_arrow</mat-icon>
         </div>
@@ -199,7 +210,8 @@
       </div>
 
       <div class="card">
-        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg" alt="Young woman singing on stage with microphone and purple lighting"/>
+        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"
+             alt="Young woman singing on stage with microphone and purple lighting"/>
         <div class="play-btn">
           <mat-icon>play_arrow</mat-icon>
         </div>
@@ -211,56 +223,65 @@
 
   <mat-tab label="Profile">
     <div class="search-profile">
-    <div class="artist">
-      <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
-      <p class="artist-name">Eminiem</p>
-      <p class="artist-name">Profile</p>
-    </div>
-
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>
 
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>
 
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>
 
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>
 
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>
 
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>
 
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>
 
       <div class="artist">
-        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg" alt="Black and white portrait of Eminem"/>
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
+        <p class="artist-name">Eminiem</p>
+        <p class="artist-name">Profile</p>
+      </div>
+
+      <div class="artist">
+        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
+             alt="Black and white portrait of Eminem"/>
         <p class="artist-name">Eminiem</p>
         <p class="artist-name">Profile</p>
       </div>

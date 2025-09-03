@@ -4,16 +4,19 @@ import {Router} from '@angular/router';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {LoginDialogComponent} from '../login-dialog/login-dialog.component';
 import {CreatePlaylistDialogComponent} from '../create-playlist-dialog/create-playlist-dialog.component';
-import {Observable, Subscription} from 'rxjs';
+import {debounceTime, distinctUntilChanged, Observable, Subscription} from 'rxjs';
 import {ProfileModel} from '../../models/profile.model';
 import {Store} from '@ngrx/store';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {AsyncPipe} from '@angular/common';
 import {logout} from '../../ngrx/auth/auth.actions';
+import {SearchState} from '../../ngrx/search/search.state';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import * as SearchActions from '../../ngrx/search/search.actions';
 
 @Component({
   selector: 'app-header',
-  imports: [MaterialModule, AsyncPipe],
+  imports: [MaterialModule, AsyncPipe, ReactiveFormsModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -21,6 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Output() toggleSidebar = new EventEmitter<void>();
 
   searchText: string = '';
+  searchControl = new FormControl('');
   profile$!: Observable<ProfileModel>;
   profile!: ProfileModel;
   subscriptions: Subscription[] = [];
@@ -28,8 +32,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private store: Store<{ auth: AuthState }>
+    private store: Store<{
+      auth: AuthState,
+      search: SearchState
+    }>
   ) {
+    this.searchControl.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((query) => {
+        if (query) {
+          this.store.dispatch(SearchActions.searchCategories({query}));
+        }
+      });
   }
 
   ngOnInit() {
