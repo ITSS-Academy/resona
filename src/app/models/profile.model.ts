@@ -6,7 +6,7 @@ export interface ProfileModel {
   email: string;
   displayName: string;
   photoUrl?: string;
-  // createdAt?: string;
+  createdAt?: string;
   // tracks?: TrackModel[];
   // playlists?: PlaylistModel[];
   // followers?: ProfileModel[];  // những người theo dõi mình

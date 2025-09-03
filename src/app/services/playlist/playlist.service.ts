@@ -19,11 +19,12 @@ export class PlaylistService {
     );
   }
 
-  getPlaylists(): Observable<PlaylistModel[]> {
-    return this.http.get<PlaylistModel[]>(`${environment.apiUrl}/playlist/all-playlists/e8d29e92-000d-4478-b8c4-41dafc556323`);
+  getPlaylists(userId: string): Observable<PlaylistModel[]> {
+    return this.http.get<PlaylistModel[]>(`${environment.apiUrl}/playlist/all-playlists/${userId}`);
   }
 
   getPlaylistById(id: string): Observable<PlaylistModel> {
     return this.http.get<PlaylistModel>(`${environment.apiUrl}/playlist/all-tracks/${id}`);
   }
+
 }

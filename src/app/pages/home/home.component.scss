@@ -10,7 +10,8 @@ section.content-scroll {
   gap: 18px;
 }
 
-.horizontal-scroll-wrapper {
+.horizontal-scroll-wrapper{
+  width: 100%;
   position: relative;
   overflow: hidden;
 }
