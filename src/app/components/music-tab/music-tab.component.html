@@ -1,7 +1,7 @@
 <div class="song-item" tabindex="0" (click)="onPlayTrack(track)">
   <div class="song-info">
     <img
-      [src]="'https://cynhadjnrnyzycvxcpln.supabase.co/storage/v1/object/public/thumbnail/' + track.thumbnailPath"
+      [src]="track.thumbnailPath"
       [alt]="'Song cover art for ' + track.title"
     />
     <div class="song-text">

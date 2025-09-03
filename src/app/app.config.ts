@@ -3,9 +3,7 @@ import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
 import {provideStore} from '@ngrx/store';
-import {musicGenresReducer} from './ngrx/musicGenres/musicGenres.reducer';
 import {provideEffects} from '@ngrx/effects';
-import * as MusicGenresEffects from './ngrx/musicGenres/musicGenres.effects';
 import {albumReducer} from './ngrx/album/album.reducer';
 import * as AlbumEffects from './ngrx/album/album.effects';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
@@ -33,7 +31,6 @@ export const appConfig: ApplicationConfig = {
       category: categoryReducer,
       play: playReducer,
       track: trackReducer,
-      musicGenres: musicGenresReducer,
       albums: albumReducer,
       comments: commentReducer,
       playlist: playlistReducer,
@@ -42,7 +39,6 @@ export const appConfig: ApplicationConfig = {
       AuthEffects,
       CategoryEffects,
       TrackEffects,
-      MusicGenresEffects,
       AlbumEffects,
       CommentEffects,
       PlaylistEffects,

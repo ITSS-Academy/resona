@@ -1,49 +1,20 @@
 <div class="container">
-  <div class="music-header" [ngStyle]="{'background-image': 'url(' + specificMusicGenre.image + ')'}">
-    <h1>{{specificMusicGenre.name}}</h1>
-    <p>description</p>
+  <div class="music-header">
+    <h1>Category Detail</h1>
   </div>
   <div class="music-display">
     <div class="title">
-      <h2>Most listened <span>music</span></h2>
-      <p>See all</p>
+      <h2>Tracks</h2>
     </div>
     <div class="list-of-music">
-      @for(index of [1,2,3,4,5,6,7,8,9,10]; track index){
-        <app-album-card></app-album-card>
-      }
-    </div>
-  </div>
-  <div class="music-display">
-    <div class="title">
-      <h2>New <span>release</span></h2>
-      <p>See all</p>
-    </div>
-    <div class="list-of-music">
-      @for(index of [1,2,3,4,5,6,7,8,9,10]; track index){
-        <app-album-card></app-album-card>
-      }
-    </div>
-  </div>
-  <div class="music-display">
-    <div class="title">
-      <h2>Recommended for <span>today</span></h2>
-      <p>See all</p>
-    </div>
-    <div class="list-of-music">
-      @for(index of [1,2,3,4,5,6,7,8,9,10]; track index){
-        <app-album-card></app-album-card>
-      }
-    </div>
-  </div>
-  <div class="music-display">
-    <div class="title">
-      <h2>You may <span>know</span></h2>
-      <p>See all</p>
-    </div>
-    <div class="list-of-music">
-      @for(index of [1,2,3,4,5,6,7,8,9,10]; track index){
-        <app-album-card></app-album-card>
+      @for (track of (tracks$ | async); track track.id) {
+        <div class="track-card">
+          <img [src]="track.thumbnailPath" [alt]="track.title" />
+          <h3>{{ track.title }}</h3>
+          <p>{{ track.artistName }}</p>
+          <p>{{ track.duration }}s</p>
+          <p>Views: {{ track.viewCount }}</p>
+        </div>
       }
     </div>
   </div>
