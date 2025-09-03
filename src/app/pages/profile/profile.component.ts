@@ -56,7 +56,7 @@ export class ProfileComponent {
       track: TrackState,
     }>
   ) {
-    this.uploadedTracks$ = this.trackService.getTracksByOwnerId('0kDK3BVwetazu7zd5nsIi9oETbw2')
+    this.uploadedTracks$ = this.trackService.getTracksByOwnerId('flQsBWoh0PafoZQdy3z7vkMGUAQ2')
 
     this.uploadedTracks$.subscribe((tracks: TrackModel[]) => {
       this.uploadedTracks = tracks;

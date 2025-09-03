@@ -1,66 +1,123 @@
-.category-container {
-  display: grid;
-  //grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  padding: 10px;
+//.category-container {
+//  display: grid;
+//  //grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+//  grid-template-columns: repeat(4, 1fr);
+//  gap: 16px;
+//  padding: 10px;
+//}
+//
+//@media (max-width: 1200px) {
+//  .category-container {
+//    grid-template-columns: repeat(4, 1fr);
+//  }
+//}
+//
+//@media (max-width: 900px) {
+//  .category-container {
+//    grid-template-columns: repeat(2, 1fr);
+//  }
+//}
+//
+//@media (max-width: 600px) {
+//  .category-container {
+//    grid-template-columns: 1fr;
+//  }
+//}
+//
+//.category-card {
+//  position: relative;
+//  height: 90px;
+//  border-radius: 12px;
+//  color: #fff;
+//  cursor: pointer;
+//  overflow: hidden;
+//  transition: transform 0.2s ease-in-out;
+//  display: flex;
+//  justify-content: flex-start;
+//  align-items: flex-start;
+//  padding: 16px;
+//
+//  &:hover {
+//    transform: scale(1.05);
+//  }
+//
+//  h3 {
+//    font-size: 20px;
+//    font-weight: bold;
+//    z-index: 2;
+//    align-self: flex-start;
+//    margin-top: 0;
+//    position: relative;
+//    top: -2px; // Move up by 8px, adjust as needed
+//  }
+//
+//  img {
+//    position: absolute;
+//    right: -11px; // đẩy ra ngoài nhiều hơn
+//    bottom: -8px; // đẩy xuống nhiều hơn
+//    width: 100px; // to hơn để tràn card
+//    height: 100px;
+//    transform: rotate(25deg) scale(1.1); // nghiêng + phóng nhẹ
+//    border-radius: 4px;
+//    object-fit: cover;
+//    z-index: 1;
+//    opacity: 0.7; // làm mờ nhẹ để text nổi hơn
+//  }
+//}
+
+/* src/app/pages/category-detail/category-detail.component.scss */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
-@media (max-width: 1200px) {
-  .category-container {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.music-header {
+  text-align: center;
+  margin-bottom: 32px;
 }
 
-@media (max-width: 900px) {
-  .category-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .category-container {
-    grid-template-columns: 1fr;
-  }
-}
-
-.category-card {
-  position: relative;
-  height: 90px;
+.music-display {
+  background: #fff;
   border-radius: 12px;
-  color: #fff;
-  cursor: pointer;
-  overflow: hidden;
-  transition: transform 0.2s ease-in-out;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 24px;
+}
+
+.title h2 {
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+}
+
+.list-of-music {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.track-card {
+  background: #f7f7f7;
+  border-radius: 8px;
   padding: 16px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
 
-  &:hover {
-    transform: scale(1.05);
-  }
+.track-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
 
-  h3 {
-    font-size: 20px;
-    font-weight: bold;
-    z-index: 2;
-    align-self: flex-start;
-    margin-top: 0;
-    position: relative;
-    top: -2px; // Move up by 8px, adjust as needed
-  }
+.track-card h3 {
+  font-size: 1.1rem;
+  margin: 8px 0 4px;
+}
 
-  img {
-    position: absolute;
-    right: -11px; // đẩy ra ngoài nhiều hơn
-    bottom: -8px; // đẩy xuống nhiều hơn
-    width: 100px; // to hơn để tràn card
-    height: 100px;
-    transform: rotate(25deg) scale(1.1); // nghiêng + phóng nhẹ
-    border-radius: 4px;
-    object-fit: cover;
-    z-index: 1;
-    opacity: 0.7; // làm mờ nhẹ để text nổi hơn
-  }
+.track-card p {
+  margin: 2px 0;
+  color: #555;
+  font-size: 0.95rem;
 }

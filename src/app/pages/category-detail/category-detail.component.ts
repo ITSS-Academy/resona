@@ -1,52 +1,37 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {MusicGenresService} from '../../services/music-genres/music-genres.service';
-import {MusicGenresModel} from '../../models/musicGenres.model';
-import {NgStyle} from '@angular/common';
-import {AlbumCardComponent} from '../../components/album-card/album-card.component';
-import {MusicGenresState} from '../../ngrx/musicGenres/musicGenres.state';
 import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs';
-import * as MusicGenreActions from '../../ngrx/musicGenres/musicGenres.actions';
+import {CategoryDetailState} from '../../ngrx/categoryDetail/categoryDetail.state';
+import * as CategoryDetailActions from '../../ngrx/categoryDetail/categoryDetail.action';
+import {TrackModel} from '../../models/track.model';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-category-detail',
-  imports: [
-    NgStyle,
-    AlbumCardComponent
-  ],
   templateUrl: './category-detail.component.html',
-  styleUrl: './category-detail.component.scss'
+  imports: [
+    AsyncPipe
+  ],
+  styleUrls: ['./category-detail.component.scss']
 })
-export class CategoryDetailComponent implements OnInit , OnDestroy{
-
-  specificMusicGenre$!: Observable<MusicGenresModel>;
-  subscription: Subscription[] = [];
-  specificMusicGenre!: MusicGenresModel;
+export class CategoryDetailComponent implements OnInit, OnDestroy {
+  tracks$!: Observable<TrackModel[]>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private musicGenresService: MusicGenresService,
-    private store:Store<{
-      musicGenres: MusicGenresState
-    }>
+    private store: Store<{ categoryDetail: CategoryDetailState }>
   ) {
-    let {id} = this.activatedRoute.snapshot.params;
-    console.log(id);
-    this.specificMusicGenre$ = this.store.select('musicGenres', 'specificMusicGenre');
-    this.store.dispatch(MusicGenreActions.getSpecificMusicGenre({id:id}));
+    this.tracks$ = this.store.select(state => state.categoryDetail.tracks);
   }
 
   ngOnInit() {
-    this.subscription.push(
-      this.specificMusicGenre$.subscribe(musicGenres => {
-        this.specificMusicGenre = musicGenres;
-        console.log(this.specificMusicGenre);
-      }),
-    )
+    const categoryId = this.activatedRoute.snapshot.params['id'];
+    this.store.dispatch(CategoryDetailActions.getCategoryDetail({categoryId}));
   }
 
   ngOnDestroy() {
-    this.subscription.forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }
