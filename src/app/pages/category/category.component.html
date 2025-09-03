@@ -1,14 +1,17 @@
 <div class="category-container">
-  @for (item of (musicGenresList$ | async); track item.id) {
-  <div
-    class="category-card"
-    (click)="navigateToCategoryDetail(item.id)"
-    [style.background]="item.gradient || item.color"
-  >
-    <div class="category-content">
-      <h3>{{ item.name }}</h3>
+  @for (item of (categories$ | async); track item.id) {
+    <div
+      class="category-card"
+      (click)="navigateToCategoryDetail(item.id)"
+      [ngStyle]="{
+        background: item.color?.startsWith('linear-gradient') ? item.color : '',
+        backgroundColor: !(item.color?.startsWith('linear-gradient')) ? item.color : ''
+      }"
+    >
+      <div class="category-content">
+        <h3>{{ item.name }}</h3>
+      </div>
+      <img [src]="item.image" [alt]="item.name" />
     </div>
-    <img src="{{ item.image }}" alt="{{ item.name }}" />
-  </div>
   }
 </div>

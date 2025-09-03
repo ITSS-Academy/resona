@@ -16,3 +16,34 @@ export const createPlaylistFailure = createAction(
   props<{ error: any }>()
 );
 
+export const getPlaylists = createAction('[Playlist] Get Playlists',
+  props<{ userId: string }>()
+);
+
+export const getPlaylistsSuccess = createAction( '[Playlist] Get Playlists Success',
+  props<{ playlists: PlaylistModel[] }>()
+);
+
+export const getPlaylistsFailure = createAction( '[Playlist] Get Playlists Failure',
+  props<{ error: any }>()
+);
+
+
+
+export const getPlaylistById = createAction('[Playlist] Get Playlists By Id',
+  props<{ playlistId: string }>()
+);
+
+export const getPlaylistByIdSuccess = createAction( '[Playlist] Get Playlists By Id Success',
+  props<{ playlist: PlaylistModel }>()
+);
+
+export const getPlaylistByIdFailure = createAction( '[Playlist] Get Playlists By Id Failure',
+  props<{ error: any }>()
+);
+
+
+
+
+
+

@@ -3,9 +3,7 @@ import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
 import {provideStore} from '@ngrx/store';
-import {musicGenresReducer} from './ngrx/musicGenres/musicGenres.reducer';
 import {provideEffects} from '@ngrx/effects';
-import * as MusicGenresEffects from './ngrx/musicGenres/musicGenres.effects';
 import {albumReducer} from './ngrx/album/album.reducer';
 import * as AlbumEffects from './ngrx/album/album.effects';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
@@ -18,8 +16,10 @@ import {categoryReducer} from './ngrx/category/category.reducer';
 import {playReducer} from './ngrx/play/play.reducer';
 import {trackReducer} from './ngrx/track/track.reducer';
 import * as TrackEffects from './ngrx/track/track.effect';
-import {playlistReducer} from './ngrx/playlist/playlist.reducer';
+import {commentReducer} from './ngrx/comment/comment.reducer';
+import * as CommentEffects from './ngrx/comment/comment.effects';
 import * as PlaylistEffects from './ngrx/playlist/playlist.effect';
+import {playlistReducer} from './ngrx/playlist/playlist.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,16 +31,16 @@ export const appConfig: ApplicationConfig = {
       category: categoryReducer,
       play: playReducer,
       track: trackReducer,
-      musicGenres: musicGenresReducer,
       albums: albumReducer,
+      comments: commentReducer,
       playlist: playlistReducer,
     }),
     provideEffects(
       AuthEffects,
       CategoryEffects,
       TrackEffects,
-      MusicGenresEffects,
       AlbumEffects,
+      CommentEffects,
       PlaylistEffects,
     ),
     provideFirebaseApp(() => initializeApp({

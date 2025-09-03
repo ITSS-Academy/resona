@@ -1,53 +1,66 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MusicGenresService} from '../../services/music-genres/music-genres.service';
 import {Router} from '@angular/router';
-import {MusicGenresModel} from '../../models/musicGenres.model';
 import {Store} from '@ngrx/store';
-import {MusicGenresState} from '../../ngrx/musicGenres/musicGenres.state';
 import {Observable, Subscription} from 'rxjs';
-import * as MusicGenresActions from '../../ngrx/musicGenres/musicGenres.actions';
 import {AsyncPipe} from '@angular/common';
+import {CategoryModel} from '../../models/category.model';
+import {CategoryState} from '../../ngrx/category/category.state';
+import * as CategoryActions from '../../ngrx/category/category.action';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    NgStyle
   ],
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit, OnDestroy {
 
-  musicGenresList$!: Observable<MusicGenresModel[]>;
+  // musicGenresList$!: Observable<MusicGenresModel[]>;
+  categories$!: Observable<CategoryModel[]>;
   subscriptions: Subscription[] = [];
 
   constructor(
     private router: Router,
     private store: Store<{
-      musicGenres: MusicGenresState
+      // musicGenres: MusicGenresState
+      category: CategoryState
     }>
   ) {
-    this.musicGenresList$ = this.store.select('musicGenres', 'musicGenres');
-    this.getAllMusicGenres();
+    // this.musicGenresList$ = this.store.select('musicGenres', 'musicGenres');
+    // this.getAllMusicGenres();
+    this.categories$ = this.store.select(state => state.category.categoryList);
   }
 
   navigateToCategoryDetail(id: string) {
     this.router.navigate(['/category-detail', id]).then();
   }
 
+  // ngOnInit() {
+  //   this.subscriptions.push(
+  //     this.musicGenresList$.subscribe((musicGenres: MusicGenresModel[]) => {
+  //       console.log(musicGenres);
+  //     }),
+  //   )
+  // }
   ngOnInit() {
+    this.store.dispatch(CategoryActions.getAllCategories());
     this.subscriptions.push(
-      this.musicGenresList$.subscribe((musicGenres: MusicGenresModel[]) => {
-        console.log(musicGenres);
-      }),
-    )
+      this.categories$.subscribe(categories => {
+        console.log(categories);
+      })
+    );
   }
 
-  getAllMusicGenres() {
-    this.store.dispatch(MusicGenresActions.getAllMusicGenres());
-  }
+  // getAllMusicGenres() {
+  //   this.store.dispatch(MusicGenresActions.getAllMusicGenres());
+  // }
 
   ngOnDestroy() {
+    // this.subscriptions.forEach(subscription => subscription.unsubscribe());
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

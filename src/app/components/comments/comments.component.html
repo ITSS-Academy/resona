@@ -2,57 +2,29 @@
   <div class="total-comments">
     <p>3 Comments</p>
   </div>
-  <div class="comment-input">
+  <div class="comment-input" [formGroup]="commentForm">
     <div class="image">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXljmskfxM9cutMF5U1M-eklwbwK83wE6bCO106c6CQj_OzqoNCPp04G8aD3uowzVRWcSeqRU8mQuvPYryW3G9cg" alt="">
+      <img src="{{profile.photoUrl}}" alt="">
     </div>
     <div class="form-fill">
       <p>
         <mat-form-field appearance="fill" class="input">
-          <input matInput placeholder="Add a public comment...">
+          <input (keydown.enter)="createComment()" formControlName="content" matInput placeholder="Add a public comment...">
         </mat-form-field>
       </p>
     </div>
   </div>
   <div class="comments">
     <div class="image">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXljmskfxM9cutMF5U1M-eklwbwK83wE6bCO106c6CQj_OzqoNCPp04G8aD3uowzVRWcSeqRU8mQuvPYryW3G9cg" alt="">
+      <img src="{{profile.photoUrl}}" alt="">
     </div>
     <div class="comment-info">
       <div class="comment-info-above">
-        <p class="user">Thanh</p>
-        <p>2022</p>
+        <p class="user">{{profile.displayName}}</p>
+        <p>time</p>
       </div>
       <div class="comment-info-below">
-        <p>Em tuỵt lắm</p>
-      </div>
-    </div>
-  </div>
-  <div class="comments">
-    <div class="image">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXljmskfxM9cutMF5U1M-eklwbwK83wE6bCO106c6CQj_OzqoNCPp04G8aD3uowzVRWcSeqRU8mQuvPYryW3G9cg" alt="">
-    </div>
-    <div class="comment-info">
-      <div class="comment-info-above">
-        <p class="user">Thanh</p>
-        <p>2023</p>
-      </div>
-      <div class="comment-info-below">
-        <p>Em tuỵt lắm nha</p>
-      </div>
-    </div>
-  </div>
-  <div class="comments">
-    <div class="image">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXljmskfxM9cutMF5U1M-eklwbwK83wE6bCO106c6CQj_OzqoNCPp04G8aD3uowzVRWcSeqRU8mQuvPYryW3G9cg" alt="">
-    </div>
-    <div class="comment-info">
-      <div class="comment-info-above">
-        <p class="user">Thanh</p>
-        <p>2024</p>
-      </div>
-      <div class="comment-info-below">
-        <p>Em tuỵt lắm</p>
+        <p>{{profile.email}}</p>
       </div>
     </div>
   </div>
