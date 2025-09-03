@@ -20,9 +20,9 @@ import { MatIconButton } from '@angular/material/button';
 import {MoodPlaylistModel} from '../../models/moodPlaylist.model';
 import {NewReleaseSongModel} from '../../models/newReleaseSong.model';
 import {PopularArtistModel} from '../../models/popularArtist.model';
-import {MoodPlaylistService} from '../../service/mood-playlist/mood-playlist.service';
-import {NewReleaseSongsService} from '../../service/new-release-songs/new-release-songs.service';
-import {PopularArtistService} from '../../service/popular-artist/popular-artist.service';
+import {MoodPlaylistService} from '../../services/mood-playlist/mood-playlist.service';
+import {NewReleaseSongsService} from '../../services/new-release-songs/new-release-songs.service';
+import {PopularArtistService} from '../../services/popular-artist/popular-artist.service';
 import { PlayState } from '../../ngrx/play/play.state';
 
 
