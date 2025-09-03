@@ -23,3 +23,42 @@ export const createPlaylistEffect = createEffect(
   {functional: true}
 )
 
+export const getPlaylistsEffect = createEffect(
+  (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
+    return actions$.pipe(
+      ofType(playlistActions.getPlaylists),
+      switchMap(({userId}) =>
+        playlistService.getPlaylists(userId).pipe(
+          map((playlists) => {
+            console.log(playlists);
+            return playlistActions.getPlaylistsSuccess({playlists});
+          }),
+          catchError((error: { message: any; }) =>
+            of(playlistActions.getPlaylistsFailure({error})))
+        )
+      )
+    )
+  },
+  {functional: true}
+)
+
+
+
+  export const getPlaylistByIdEffect = createEffect(
+    (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
+      return actions$.pipe(
+        ofType(playlistActions.getPlaylistById),
+        switchMap(({playlistId}) =>
+          playlistService.getPlaylistById(playlistId).pipe(
+            map((playlist) => {
+              console.log(playlist);
+              return playlistActions.getPlaylistByIdSuccess({playlist});
+            }),
+            catchError((error: { message: any; }) =>
+              of(playlistActions.getPlaylistByIdFailure({error})))
+          )
+        )
+      )
+    },
+    {functional: true}
+  )

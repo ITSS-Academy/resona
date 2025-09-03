@@ -24,7 +24,6 @@
           </div>
         }
       </div>
-      <!--    </div>-->
 
       <div class="upload-picture">
         <div class="picture-content">
@@ -85,23 +84,7 @@
           </mat-tab>
         </mat-tab-group>
       </div>
-
-      <!--      <mat-form-field appearance="outline">-->
-      <!--        <mat-label>Category</mat-label>-->
-      <!--        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>-->
-      <!--        <mat-select formControlName="categoryId">-->
-      <!--          <mat-option value="pop">Pop</mat-option>-->
-      <!--          <mat-option value="bolero">Bolero</mat-option>-->
-      <!--          <mat-option value="rock">Rock</mat-option>-->
-      <!--          <mat-option value="hiphop">Hip-hop</mat-option>-->
-      <!--          <mat-option value="jazz">Jazz</mat-option>-->
-      <!--          <mat-option value="edm">EDM</mat-option>-->
-      <!--          <mat-option value="rap">Rap</mat-option>-->
-      <!--          <mat-option value="other">Other</mat-option>-->
-      <!--        </mat-select>-->
-      <!--      </mat-form-field>-->
-
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Category</mat-label>
         <mat-select formControlName="categoryId" style="color: white">
           @for (category of categories$ | async; track $index) {
