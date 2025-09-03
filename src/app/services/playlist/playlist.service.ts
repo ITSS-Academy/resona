@@ -12,10 +12,15 @@ export class PlaylistService {
   constructor(private http: HttpClient) {
   }
 
-  createPlaylist(title: string, userId: string, thumbnailPath: string, description: string): Observable<PlaylistModel> {
+  createPlaylist(title: string, description: string, file: File, userId: string): Observable<PlaylistModel> {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('file', file);
+
     return this.http.post<PlaylistModel>(
       `${environment.apiUrl}/playlist/create/${userId}`,
-      {title, thumbnailPath, description}
+      formData
     );
   }
 

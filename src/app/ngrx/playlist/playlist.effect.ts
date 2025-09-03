@@ -8,8 +8,8 @@ export const createPlaylistEffect = createEffect(
   (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
     return actions$.pipe(
       ofType(playlistActions.createPlaylist),
-      switchMap(({title, thumbnailPath, description, userId}) =>
-        playlistService.createPlaylist(title, thumbnailPath, description, userId).pipe(
+      switchMap(({title, description, file, userId}) =>
+        playlistService.createPlaylist(title, description, file, userId).pipe(
           map((playlist) => {
             console.log(playlist);
             return playlistActions.createPlaylistSuccess({playlist: playlist});

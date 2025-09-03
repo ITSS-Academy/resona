@@ -1,5 +1,5 @@
 import {Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy, OnInit} from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import {MatIconModule} from '@angular/material/icon';
 import {MusicGenresService} from '../../services/music-genres/music-genres.service';
 import {MusicGenresModel} from '../../models/musicGenres.model';
 import {Router} from '@angular/router';
@@ -16,14 +16,14 @@ import * as PlayActions from '../../ngrx/play/play.action';
 import {SongModel} from '../../models/song.model';
 import {ProfileModel} from '../../models/profile.model';
 import {PlaylistModel} from '../../models/playlist.model';
-import { MatIconButton } from '@angular/material/button';
+import {MatIconButton} from '@angular/material/button';
 import {MoodPlaylistModel} from '../../models/moodPlaylist.model';
 import {NewReleaseSongModel} from '../../models/newReleaseSong.model';
 import {PopularArtistModel} from '../../models/popularArtist.model';
-import {MoodPlaylistService} from '../../service/mood-playlist/mood-playlist.service';
-import {NewReleaseSongsService} from '../../service/new-release-songs/new-release-songs.service';
-import {PopularArtistService} from '../../service/popular-artist/popular-artist.service';
-import { PlayState } from '../../ngrx/play/play.state';
+import {MoodPlaylistService} from '../../services/mood-playlist/mood-playlist.service';
+import {NewReleaseSongsService} from '../../services/new-release-songs/new-release-songs.service';
+import {PopularArtistService} from '../../services/popular-artist/popular-artist.service';
+import {PlayState} from '../../ngrx/play/play.state';
 
 
 // import {Router} from '@angular/router';
@@ -46,7 +46,7 @@ import { PlayState } from '../../ngrx/play/play.state';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements AfterViewInit, OnInit , OnDestroy {
+export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('genresScroll') genresScroll!: ElementRef;
   @ViewChild('moodScroll') moodScroll!: ElementRef;
   @ViewChild('artistScroll') artistScroll!: ElementRef;
@@ -197,23 +197,36 @@ export class HomeComponent implements AfterViewInit, OnInit , OnDestroy {
     const cardWidth = card.offsetWidth;
     const gap = parseInt(style.marginRight) || 16;
     const scrollAmount = (cardWidth + gap) * numCards;
-    el.scrollBy({ left: direction === 'right' ? scrollAmount : -scrollAmount, behavior: 'smooth' });
+    el.scrollBy({left: direction === 'right' ? scrollAmount : -scrollAmount, behavior: 'smooth'});
     setTimeout(() => {
       // this.snapScrollToCard();
       this.updateGenresScrollBtns();
     }, 350);
   }
+
   // ----------------------------------------------------------------------------------------------------------------------
-  scrollMoodRight() { this.scrollByCardsGeneric(this.moodScroll, 'right', 3, 'card'); }
-  scrollMoodLeft() { this.scrollByCardsGeneric(this.moodScroll, 'left', 3, 'card'); }
+  scrollMoodRight() {
+    this.scrollByCardsGeneric(this.moodScroll, 'right', 3, 'card');
+  }
+
+  scrollMoodLeft() {
+    this.scrollByCardsGeneric(this.moodScroll, 'left', 3, 'card');
+  }
+
   updateMoodScrollBtns() {
     const el = this.moodScroll.nativeElement;
     this.showMoodLeftBtn = el.scrollLeft > 0;
     this.showMoodRightBtn = el.scrollLeft + el.clientWidth < el.scrollWidth - 2;
   }
 
-  scrollArtistRight() { this.scrollByCardsGeneric(this.artistScroll, 'right', 3, 'artist'); }
-  scrollArtistLeft() { this.scrollByCardsGeneric(this.artistScroll, 'left', 3, 'artist'); }
+  scrollArtistRight() {
+    this.scrollByCardsGeneric(this.artistScroll, 'right', 3, 'artist');
+  }
+
+  scrollArtistLeft() {
+    this.scrollByCardsGeneric(this.artistScroll, 'left', 3, 'artist');
+  }
+
   updateArtistScrollBtns() {
     const el = this.artistScroll.nativeElement;
     this.showArtistLeftBtn = el.scrollLeft > 0;
@@ -229,8 +242,9 @@ export class HomeComponent implements AfterViewInit, OnInit , OnDestroy {
     const cardWidth = card.offsetWidth;
     const gap = parseInt(style.marginRight) || 16;
     const scrollAmount = (cardWidth + gap) * numCards;
-    el.scrollBy({ left: direction === 'right' ? scrollAmount : -scrollAmount, behavior: 'smooth' });
+    el.scrollBy({left: direction === 'right' ? scrollAmount : -scrollAmount, behavior: 'smooth'});
   }
+
   // -----------------------code by Hà Hiệp Thanh-----------------------------------------------------------------------------------------------
 //   musicGenresList$!: Observable<MusicGenresModel[]>;
 //   albumList$!: Observable<AlbumModel[]>;

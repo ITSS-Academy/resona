@@ -1,9 +1,9 @@
 <h2 mat-dialog-title>Create your playlist</h2>
-<div class="dialog-detail">
+<form class="dialog-detail" [formGroup]="form">
   <div mat-dialog-content class="dialog-container">
     <div class="image-box">
       <mat-icon>image</mat-icon>
-      <input type="file" id="pictureFile" hidden/>
+      <input type="file" id="pictureFile" hidden formControlName="file"/>
       <label for="pictureFile" class="upload-btn">Choose Picture</label>
     </div>
 
@@ -13,7 +13,8 @@
         <input
           matInput
           placeholder="Add your playlist name"
-          [formControl]="playlistName"
+          formControlName="title"
+          (change)="onFileSelected($event)"
         />
       </mat-form-field>
 
@@ -22,14 +23,14 @@
         <textarea
           matInput
           placeholder="Add your description"
-          [formControl]="description"
+          formControlName="description"
         ></textarea>
       </mat-form-field>
     </div>
   </div>
-</div>
+</form>
 
 <div mat-dialog-actions align="end">
-  <button mat-flat-button class="save-btn">Save</button>
+  <button mat-flat-button class="save-btn" (click)="createPlaylist()">Save</button>
 </div>
 

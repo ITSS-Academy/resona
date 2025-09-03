@@ -3,8 +3,8 @@ import {PlaylistModel} from '../../models/playlist.model';
 
 export const createPlaylist = createAction(
   '[Playlist] Create Playlist',
-  props<{ title: string, userId: string, thumbnailPath: string, description: string }>()
-)
+  props<{ title: string, description: string, file: File, userId: string }>()
+);
 
 export const createPlaylistSuccess = createAction(
   '[Playlist] Create Playlist Success',
