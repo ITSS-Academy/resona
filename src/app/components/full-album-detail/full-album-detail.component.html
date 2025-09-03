@@ -1,32 +1,19 @@
-<div class="album-container">
+<div class="album-container" [ngStyle]="{'background-image': 'url(' + albumDetail.mv + ')'}">
   <div class="album-image">
-    <img src="https://upload.wikimedia.org/wikipedia/vi/thumb/2/20/JustaTee_-_Thang_dien.jpg/250px-JustaTee_-_Thang_dien.jpg" alt="">
+    <img src="{{albumDetail.album}}" alt="">
   </div>
   <div class="album-detail">
       <p>Song</p>
-      <p class="song-title">Thằng điên</p>
+      <p class="song-title">{{albumDetail.name}}</p>
       <div class="detail">
-        <span>2025</span>
+        <span>{{albumDetail.date}}</span>
         <span> | </span>
-        <span>5:00</span>
+        <span>{{albumDetail.duration}}</span>
         <span> | </span>
-        <span>1,000,000</span>
+        <span>{{albumDetail.listenerCount}}</span>
       </div>
       <mat-list>
-        <mat-list-item class="author">Author: Trịnh Tú Hảo</mat-list-item>
-<!--        <mat-divider></mat-divider>-->
+        <mat-list-item class="author">Author: {{albumDetail.artist}}</mat-list-item>
       </mat-list>
-<!--    <mat-list>-->
-<!--      <div class="co-author">-->
-<!--        <span>Co-Authors: </span>-->
-<!--        <span>Hà Hiệp Thanh</span>-->
-<!--        <div class="dot"></div>-->
-<!--        <span>Voòng Thành Thu</span>-->
-<!--        <div class="dot"></div>-->
-<!--        <span>Nguyễn Phú Quí</span>-->
-<!--        <div class="dot"></div>-->
-<!--        <span>Trịnh Minh Kha</span>-->
-<!--      </div>-->
-<!--    </mat-list>-->
   </div>
 </div>

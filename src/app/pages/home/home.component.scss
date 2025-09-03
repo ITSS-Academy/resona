@@ -10,6 +10,20 @@ section.content-scroll {
   gap: 18px;
 }
 
+.horizontal-scroll-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.scroll-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+}
+
 /* Section headings */
 h2.section-title {
   font-weight: 600;
@@ -24,17 +38,16 @@ h2.section-title span {
 .horizontal-scroll {
   display: flex;
   gap: 16px;
+  padding-left: 40px;
   overflow-x: auto;
   max-width: 100%; // Ensure it doesn't overflow the section
   padding-bottom: 8px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .horizontal-scroll::-webkit-scrollbar {
   display: none;
-}
-.horizontal-scroll {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 /* Genre and Mood cards */
@@ -243,6 +256,7 @@ h2#release-title span {
   -ms-overflow-style: none;
   scrollbar-width: none;
   cursor: pointer;
+  padding-left: 24px;
 }
 .popular-artists::-webkit-scrollbar {
   display: none;

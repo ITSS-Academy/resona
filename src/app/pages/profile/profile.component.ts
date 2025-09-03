@@ -1,36 +1,70 @@
-import { Component } from '@angular/core';
-import {NgClass} from '@angular/common';
+import {Component} from '@angular/core';
+import {MatTab, MatTabGroup, MatTabsModule} from '@angular/material/tabs';
+import {
+  MatList,
+  MatListItem,
+  MatListOption,
+  MatSelectionList
+} from '@angular/material/list';
+import {MatButton} from '@angular/material/button';
+import {TrackService} from '../../services/track/track.service';
+import {TrackModel} from '../../models/track.model';
+import {Observable} from 'rxjs';
+import {DurationPipe} from '../../shared/pipes/duration.pipe';
+import {PlayState} from '../../ngrx/play/play.state';
+import {Store} from '@ngrx/store';
+import * as PlayActions from '../../ngrx/play/play.action';
+import {MusicTabComponent} from '../../components/music-tab/music-tab.component';
+import {TrackState} from '../../ngrx/track/track.state';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   imports: [
-    NgClass
+    MatTabGroup,
+    MatTab,
+    MatTabsModule,
+    MatList,
+    MatListItem,
+    MatButton,
+    MatListOption,
+    MatSelectionList,
+    DurationPipe,
+    MusicTabComponent
   ],
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
-  activeTab: string = 'upload';
+  typesOfShoes: string[] = [
+    'song',
+  ];
+  firstList = [
+    {name: 'Item 1'},
+    {name: 'Item 2'}
+  ];
+  secondList = [
+    {title: 'Title A'},
+    {title: 'Title B'}
+  ];
 
-  openTab(tabName: string) {
-    this.activeTab = tabName;
+  uploadedTracks$!: Observable<TrackModel[]>;
+  uploadedTracks: TrackModel[] = [];
+
+  constructor(
+    private trackService: TrackService,
+    private store: Store<{
+      track: TrackState,
+    }>
+  ) {
+    this.uploadedTracks$ = this.trackService.getTracksByOwnerId('0kDK3BVwetazu7zd5nsIi9oETbw2')
+
+    this.uploadedTracks$.subscribe((tracks: TrackModel[]) => {
+      this.uploadedTracks = tracks;
+      console.log('Uploaded tracks:', tracks);
+    })
   }
+
+
 }
-export class UserProfileComponent {
 
 
-  uploadFiles = [
-    {name: 'song.mp3', size: '5MB', date: '2025-08-01'},
-    {name: 'photo.jpg', size: '2MB', date: '2025-07-30'}
-  ];
-
-  playlists = [
-    {name: 'Chill Vibes', count: 12, created: '2025-06-12'},
-    {name: 'Workout', count: 8, created: '2025-07-01'}
-  ];
-
-  favorites = [
-    {song: 'Shape of You', artist: 'Ed Sheeran', added: '2025-07-29'},
-    {song: 'Blinding Lights', artist: 'The Weeknd', added: '2025-08-10'}
-  ];
-}

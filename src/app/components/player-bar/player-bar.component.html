@@ -1,4 +1,10 @@
-<footer>
+@if (currentTrack$ | async; as track) {
+  <footer>
+  <audio #audio
+         [src]='buildStreamUrl(track)'
+         autoplay="{{this.isPlaying}}"
+  >
+  </audio>
   <div class="player-left">
     <img
       src="https://upload.wikimedia.org/wikipedia/vi/2/20/JustaTee_-_Thang_dien.jpg"
@@ -6,7 +12,7 @@
     />
     <div class="player-song-info">
       <div class="player-song-title" title="Med Med Med Med">
-        <p>Thằng điên</p>
+        <p>{{ track.title }}</p>
       </div>
       <div class="player-song-artist">
         <p>JUSTA TEE x PHƯƠNG LY</p>
@@ -27,7 +33,7 @@
         <mat-icon class="icon">skip_previous</mat-icon>
       </button>
       <div class="play-button">
-        <button mat-icon-button>
+        <button mat-icon-button (click)="onTogglePlay()">
           <mat-icon style="color: var(--mat-sys-surface-container-high)">play_arrow</mat-icon>
         </button>
       </div>
@@ -104,3 +110,4 @@
       </button>
     </div>
 </footer>
+}

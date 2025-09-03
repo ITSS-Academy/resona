@@ -1,0 +1,22 @@
+<div class="song-item" tabindex="0" (click)="onPlayTrack(track)">
+  <div class="song-info">
+    <img
+      [src]="'https://cynhadjnrnyzycvxcpln.supabase.co/storage/v1/object/public/thumbnail/' + track.thumbnailPath"
+      [alt]="'Song cover art for ' + track.title"
+    />
+    <div class="song-text">
+      <div class="song-title">{{ track.title }}</div>
+      <div class="song-artist">{{ track.artistName }}</div>
+    </div>
+  </div>
+  <div class="song-date">{{ track.createdAt | date:'MMM dd, yyyy' }}</div>
+  <div class="song-duration">{{ track.duration | duration }}</div>
+  <div class="song-actions">
+    <button aria-label="Like song">
+      <mat-icon>favorite_border</mat-icon>
+    </button>
+    <button aria-label="vertical ellipsis">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
+</div>
