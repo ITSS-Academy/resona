@@ -26,6 +26,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   error$!: Observable<string | null>
   lastTrack$!: Observable<any>
   categories$!: Observable<CategoryModel[]>;
+  categories: CategoryModel[] = [];
 
   subscriptions: Subscription[] = [];
 
@@ -45,9 +46,8 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.categories$.subscribe(categories => {
-        if (Array.isArray(categories)) {
-          categories.forEach(category => console.log('Category:', category.name));
-        }
+        this.categories = categories;
+        console.log(this.categories);
       })
     );
   }

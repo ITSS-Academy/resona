@@ -1,193 +1,90 @@
-<div class="playlist-detail-container">
-  <div class="playlist-header">
-    <div class="playlist-bg">
-      <img src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474118ZoJ/hinh-meme-suy-nghi-cuc-hai-huoc_041741576.jpg" alt="" />
-    </div>
 
-    <div class="playlist-info">
-      <img class="playlist-cover" src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474118ZoJ/hinh-meme-suy-nghi-cuc-hai-huoc_041741576.jpg" alt="Playlist Cover"/>
+<div class="playlist-detail-container" >
+  @if (getPlaylistById$ | async; as playlist) {
+    <div class="playlist-header">
+      <div class="playlist-bg">
+        <img [src]="playlist.thumbnailPath" alt="background"/>
+      </div>
 
-      <div class="playlist-text">
-        <div class="name-and-time">
-        <h2 class="playlist-title">Playlist 4
-          <button mat-icon-button (click)="openEditDialog()">
-          <mat-icon>edit</mat-icon>
-          </button>
-        </h2>
+      <div class="playlist-info">
+        <img class="playlist-cover" [src]="playlist.thumbnailPath" alt="Playlist Cover"/>
 
-        <p class="playlist-meta">23 songs • 1 hour 30 minutes</p>
+        <div class="playlist-text">
+          <div class="name-and-time">
+            <h2 class="playlist-title">
+              {{ playlist.title }}
+              <button mat-icon-button (click)="openEditDialog()">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </h2>
+
+            <p class="playlist-meta">
+              {{ playlist.title || 0 }} songs •
+              {{ playlist.profile || '0:00' }}
+            </p>
+          </div>
+
+          <div class="playlist-actions">
+            <button mat-mini-fab class="play-btn">
+              <mat-icon>play_arrow</mat-icon>
+            </button>
+            <button mat-mini-fab class="other-btn">
+              <mat-icon>favorite_outline</mat-icon>
+            </button>
+            <button mat-mini-fab class="other-btn">
+              <mat-icon fontSet="material-icons-outlined">download</mat-icon>
+            </button>
+            <button mat-mini-fab class="other-btn">
+              <mat-icon fontSet="material-icons-outlined">add_box</mat-icon>
+            </button>
+            <button mat-mini-fab class="other-btn">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+            <button mat-mini-fab class="other-btn">
+              <mat-icon>ios_share</mat-icon>
+            </button>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <div class="playlist-actions">
-          <button mat-mini-fab class="play-btn" (click)="togglePlay()">
-            <mat-icon>{{ isPlay ? 'pause' : 'play_arrow' }}</mat-icon>
-          </button>
-          <button mat-mini-fab class="other-btn" (click)="toggleFavoritePlaylist()">
-            <mat-icon>{{ isFavoritePlaylist ? 'favorite' : 'favorite_outline' }}</mat-icon>
-          </button>
-          <button mat-mini-fab class="other-btn"><mat-icon fontSet="material-icons-outlined">download</mat-icon></button>
-          <button mat-mini-fab class="other-btn"><mat-icon fontSet="material-icons-outlined">add_box</mat-icon></button>
-          <button mat-mini-fab class="other-btn"><mat-icon>delete_outline</mat-icon></button>
-          <button mat-mini-fab class="other-btn"><mat-icon >ios_share</mat-icon></button>
+    <div class="playlist-table-header">
+      <span class="col-name"># Name</span>
+      <span class="col-artist"># Artist</span>
+      <span class="col-time"><mat-icon>schedule</mat-icon></span>
+      <span class="col-actions">
+        <mat-icon>delete</mat-icon>
+        <mat-checkbox></mat-checkbox>
+      </span>
+      <span class="col-list">
+        <span>#List</span><mat-icon>list</mat-icon>
+      </span>
+    </div>
+
+    <div class="playlist-table-body">
+      @for (track of playlist.tracks ?? []; track track.id; let i = $index) {
+        <div class="body-music">
+          <div class="image-music">
+            <div class="body-index">{{ i + 1 }}</div>
+            <img [src]="track.thumbnailPath" alt="cover" class="song-cover"/>
+            <span class="song-title">{{ track.title }}</span>
+          </div>
+          <div class="body-artist">{{ track.artistName }}</div>
+          <div class="body-time">{{ track.duration }}</div>
+          <span class="body-actions-delete">
+            <mat-icon>delete_outline</mat-icon>
+            <mat-checkbox></mat-checkbox>
+          </span>
+          <span class="body-actions-list">
+            <button mat-icon-button>
+              <mat-icon>favorite_outline</mat-icon>
+            </button>
+            <button mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </span>
         </div>
-      </div>
+      }
     </div>
-  </div>
-
-  <div class="playlist-table-header">
-    <span class="col-name"># Name</span>
-    <span class="col-artist"># Artist</span>
-    <span class="col-time"><mat-icon>schedule</mat-icon></span>
-    <span class="col-actions">
-    <mat-icon>delete</mat-icon>
-    <mat-checkbox></mat-checkbox>
-  </span>
-    <span class="col-list">
-    <span>#List</span><mat-icon>list</mat-icon>
-    </span>
-  </div>
-
-  <div class="playlist-table-body">
-    <div class="body-music">
-      <div class="image-music">
-        <div class="body-index">1</div>
-        <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/174965/Originals/meme-la-gi-3.jpg" alt="cover" class="song-cover"/>
-        <span class="song-title">Name music 1</span>
-      </div>
-      <div class="body-artist">Saint Tone MVP</div>
-      <div class="body-time">3:20</div>
-    <span class="body-actions-delete">
-    <mat-icon>delete_outline</mat-icon>
-    <mat-checkbox></mat-checkbox>
-  </span>
-    <span class="body-actions-list">
-    <button mat-icon-button (click)="toggleFavoriteSong(1)">
-      <mat-icon>{{ favoriteSongs[1] ? 'favorite' : 'favorite_outline' }}</mat-icon>
-    </button>
-      <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
-    </span>
-  </div>
-
-    <div class="body-music">
-      <div class="image-music">
-        <div class="body-index">1</div>
-        <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/174965/Originals/meme-la-gi-3.jpg" alt="cover" class="song-cover"/>
-        <span class="song-title">Name music 1</span>
-      </div>
-      <div class="body-artist">Saint Tone MVP</div>
-      <div class="body-time">3:20</div>
-      <span class="body-actions-delete">
-    <mat-icon>delete_outline</mat-icon>
-    <mat-checkbox></mat-checkbox>
-  </span>
-      <span class="body-actions-list">
-    <button mat-icon-button (click)="toggleFavoriteSong(2)">
-      <mat-icon>{{ favoriteSongs[2] ? 'favorite' : 'favorite_outline' }}</mat-icon>
-    </button>
-      <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
-    </span>
-    </div>
-
-    <div class="body-music">
-      <div class="image-music">
-        <div class="body-index">1</div>
-        <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/174965/Originals/meme-la-gi-3.jpg" alt="cover" class="song-cover"/>
-        <span class="song-title">Name music 1</span>
-      </div>
-      <div class="body-artist">Saint Tone MVP</div>
-      <div class="body-time">3:20</div>
-      <span class="body-actions-delete">
-    <mat-icon>delete_outline</mat-icon>
-    <mat-checkbox></mat-checkbox>
-  </span>
-      <span class="body-actions-list">
-    <button mat-icon-button (click)="toggleFavoriteSong(3)">
-      <mat-icon>{{ favoriteSongs[3] ? 'favorite' : 'favorite_outline' }}</mat-icon>
-    </button>
-      <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
-    </span>
-    </div>
-
-    <div class="body-music">
-      <div class="image-music">
-        <div class="body-index">1</div>
-        <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/174965/Originals/meme-la-gi-3.jpg" alt="cover" class="song-cover"/>
-        <span class="song-title">Name music 1</span>
-      </div>
-      <div class="body-artist">Saint Tone MVP</div>
-      <div class="body-time">3:20</div>
-      <span class="body-actions-delete">
-    <mat-icon>delete_outline</mat-icon>
-    <mat-checkbox></mat-checkbox>
-  </span>
-      <span class="body-actions-list">
-    <button mat-icon-button (click)="toggleFavoriteSong(4)">
-      <mat-icon>{{ favoriteSongs[4] ? 'favorite' : 'favorite_outline' }}</mat-icon>
-    </button>
-      <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
-    </span>
-    </div>
-
-    <div class="body-music">
-      <div class="image-music">
-        <div class="body-index">1</div>
-        <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/174965/Originals/meme-la-gi-3.jpg" alt="cover" class="song-cover"/>
-        <span class="song-title">Name music 1</span>
-      </div>
-      <div class="body-artist">Saint Tone MVP</div>
-      <div class="body-time">3:20</div>
-      <span class="body-actions-delete">
-    <mat-icon>delete_outline</mat-icon>
-    <mat-checkbox></mat-checkbox>
-  </span>
-      <span class="body-actions-list">
-    <button mat-icon-button (click)="toggleFavoriteSong(4)">
-      <mat-icon>{{ favoriteSongs[4] ? 'favorite' : 'favorite_outline' }}</mat-icon>
-    </button>
-      <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
-    </span>
-    </div>
-
-    <div class="body-music">
-      <div class="image-music">
-        <div class="body-index">1</div>
-        <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/174965/Originals/meme-la-gi-3.jpg" alt="cover" class="song-cover"/>
-        <span class="song-title">Name music 1</span>
-      </div>
-      <div class="body-artist">Saint Tone MVP</div>
-      <div class="body-time">3:20</div>
-      <span class="body-actions-delete">
-    <mat-icon>delete_outline</mat-icon>
-    <mat-checkbox></mat-checkbox>
-  </span>
-      <span class="body-actions-list">
-    <button mat-icon-button (click)="toggleFavoriteSong(4)">
-      <mat-icon>{{ favoriteSongs[4] ? 'favorite' : 'favorite_outline' }}</mat-icon>
-    </button>
-      <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
-    </span>
-    </div>
-
-    <div class="body-music">
-      <div class="image-music">
-        <div class="body-index">1</div>
-        <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/174965/Originals/meme-la-gi-3.jpg" alt="cover" class="song-cover"/>
-        <span class="song-title">Name music 1</span>
-      </div>
-      <div class="body-artist">Saint Tone MVP</div>
-      <div class="body-time">3:20</div>
-      <span class="body-actions-delete">
-    <mat-icon>delete_outline</mat-icon>
-    <mat-checkbox></mat-checkbox>
-  </span>
-      <span class="body-actions-list">
-    <button mat-icon-button (click)="toggleFavoriteSong(4)">
-      <mat-icon>{{ favoriteSongs[4] ? 'favorite' : 'favorite_outline' }}</mat-icon>
-    </button>
-      <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
-    </span>
-    </div>
-  </div>
-
+  }
 </div>
-

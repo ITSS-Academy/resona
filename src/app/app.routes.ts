@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import {PlaylistDetailComponent} from './pages/playlist-detail/playlist-detail.component';
 
 
 export const routes: Routes = [
@@ -50,6 +51,12 @@ export const routes: Routes = [
       );
     }
   },
+
+  {
+    path: 'playlist-detail/:id',
+    component: PlaylistDetailComponent
+  },
+
   {
     path: 'song-detail/:id',
     loadComponent() {
@@ -75,4 +82,5 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'home',
   },
+
 ];

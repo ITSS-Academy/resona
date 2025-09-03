@@ -20,6 +20,8 @@ import {trackReducer} from './ngrx/track/track.reducer';
 import * as TrackEffects from './ngrx/track/track.effect';
 import {commentReducer} from './ngrx/comment/comment.reducer';
 import * as CommentEffects from './ngrx/comment/comment.effects';
+import * as PlaylistEffects from './ngrx/playlist/playlist.effect';
+import {playlistReducer} from './ngrx/playlist/playlist.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,6 +36,7 @@ export const appConfig: ApplicationConfig = {
       musicGenres: musicGenresReducer,
       albums: albumReducer,
       comments: commentReducer,
+      playlist: playlistReducer,
     }),
     provideEffects(
       AuthEffects,
@@ -42,6 +45,7 @@ export const appConfig: ApplicationConfig = {
       MusicGenresEffects,
       AlbumEffects,
       CommentEffects,
+      PlaylistEffects,
     ),
     provideFirebaseApp(() => initializeApp({
       projectId: "resona-77317",
