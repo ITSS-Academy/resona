@@ -18,6 +18,8 @@ export class ThreeOptionsButtonComponent{
   @Input() comments!: CommentModel[];
   @Input() trackDetail!: TrackModel;
   @Input() totalComment!: number;
+  @Input() lyrics!: string;
+
   constructor(
   ) {
   }

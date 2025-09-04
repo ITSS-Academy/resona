@@ -35,6 +35,10 @@ export class SongDetailComponent implements OnInit , OnDestroy{
   isLoadingTrack$!: Observable<boolean>;
   totalComment$!: Observable<number>;
   totalComment!: number;
+  thumbnailUrl$!: Observable<string>;
+  thumbnailUrl!: string;
+  lyric$!: Observable<string>;
+  lyric!: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -48,25 +52,36 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     this.store.dispatch(CommentActions.getComments({id: id}));
     this.store.dispatch(TrackActions.getTrackById({id: id}));
     this.store.dispatch(CommentActions.getTotalCommentBasedOnTrackId({id: id}));
+    this.store.dispatch(TrackActions.getThumbnailBasedOnTrackId({id: id}));
+    this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
 
     this.comment$ = this.store.select('comments', 'commentList');
     this.trackDetail$ = this.store.select('track', 'trackDetail');
     this.isLoadingTrack$ = this.store.select('track', 'isLoading');
     this.totalComment$ = this.store.select('comments', 'totalComments');
+    this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
+    this.lyric$ = this.store.select('track', 'lyrics');
   }
 
   ngOnInit(): void {
     this.subscription.push(
       this.trackDetail$.subscribe(track=>{
         this.trackDetail = track;
+        console.log(this.trackDetail);
       }),
       this.comment$.subscribe(comments=>{
         this.comment = comments;
       }),
       this.totalComment$.subscribe(total=>{
         this.totalComment = total;
-        console.log(total);
-      })
+      }),
+      this.thumbnailUrl$.subscribe(thumbnailUrl=>{
+        this.thumbnailUrl = thumbnailUrl;
+      }),
+      this.lyric$.subscribe(lyric=>{
+        this.lyric = lyric;
+        console.log(this.lyric);
+      }),
     )
   }
 

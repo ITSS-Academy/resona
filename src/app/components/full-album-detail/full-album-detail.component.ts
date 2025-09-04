@@ -17,4 +17,5 @@ import {TrackModel} from '../../models/track.model';
 })
 export class FullAlbumDetailComponent {
   @Input() trackDetail!: TrackModel;
+  @Input() thumbnailUrl!: string;
 }

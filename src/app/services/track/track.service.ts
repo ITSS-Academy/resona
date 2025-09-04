@@ -135,4 +135,11 @@ export class TrackService {
     return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/uploaded/${ownerId}`);
   }
 
+  getThumbnailBasedOnTrackId(id: string){
+    return this.http.get<{ url: string }>(`${environment.apiUrl}/track/thumbnail-url/${id}`);
+  }
+
+  getLyricsBasedOnTrackId(id: string) {
+    return this.http.get<{ lyrics: string }>(`${environment.apiUrl}/track/lyrics/${id}`);
+  }
 }

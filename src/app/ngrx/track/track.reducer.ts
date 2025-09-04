@@ -6,6 +6,8 @@ import {TrackModel} from '../../models/track.model';
 export const initialState: TrackState = {
   tracks: <TrackModel[]>[],
   trackDetail: <TrackModel>{},
+  thumbnailUrl: '',
+  lyrics: '',
   isLoading: false,
   error: null,
 }
@@ -53,7 +55,7 @@ export const trackReducer = createReducer(
   }),
 
   on(trackActions.getTrackByIdSuccess, (state, {type, trackDetail})=>{
-    console.log(type,trackDetail);
+    console.log(type);
     return {
       ...state,
       isLoading: false,
@@ -70,4 +72,62 @@ export const trackReducer = createReducer(
       error: error,
     }
   }),
+
+  on(trackActions.getThumbnailBasedOnTrackId, (state, {type,id})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getThumbnailBasedOnTrackIdSuccess, (state, {type,thumbnailUrl})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      thumbnailUrl: thumbnailUrl,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getThumbnailBasedOnTrackIdFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
+  on(trackActions.getLyricsByTrackId, (state, {type,id})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getLyricsByTrackIdSuccess, (state, {type,lyrics})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      lyrics: lyrics,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getLyricsByTrackIdFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
+
 );
