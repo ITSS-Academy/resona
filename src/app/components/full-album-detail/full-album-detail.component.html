@@ -1,19 +1,19 @@
-<div class="album-container" [ngStyle]="{'background-image': 'url(' + albumDetail.mv + ')'}">
+<div class="album-container" [ngStyle]="{'background-image': 'url(' + trackDetail.thumbnailPath + ')'}">
   <div class="album-image">
-    <img src="{{albumDetail.album}}" alt="">
+    <img src="{{trackDetail.thumbnailPath}}" alt="">
   </div>
   <div class="album-detail">
       <p>Song</p>
-      <p class="song-title">{{albumDetail.name}}</p>
+      <p class="song-title">{{trackDetail.title}}</p>
       <div class="detail">
-        <span>{{albumDetail.date}}</span>
+        <span>{{trackDetail.createdAt}}</span>
         <span> | </span>
-        <span>{{albumDetail.duration}}</span>
+        <span>{{trackDetail.duration}}</span>
         <span> | </span>
-        <span>{{albumDetail.listenerCount}}</span>
+        <span>{{trackDetail.viewCount}}</span>
       </div>
       <mat-list>
-        <mat-list-item class="author">Author: {{albumDetail.artist}}</mat-list-item>
+        <mat-list-item class="author">Author: {{trackDetail.artistName}}</mat-list-item>
       </mat-list>
   </div>
 </div>

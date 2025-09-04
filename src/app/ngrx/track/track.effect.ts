@@ -36,3 +36,21 @@ export const createTrackEffect = createEffect(
   {functional: true}
 );
 
+export const getTrackByIdEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getTrackById),
+      switchMap(({id}) =>
+        trackService.getTrackById(id).pipe(
+          map((trackDetail) => trackActions.getTrackByIdSuccess({trackDetail: trackDetail})),
+          catchError((error) =>
+            of(trackActions.getTrackByIdFailure({error: error.message || 'Get track by id failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);
+
+

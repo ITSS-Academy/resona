@@ -5,7 +5,7 @@
         Overview
       </ng-template>
 
-      <app-overview [albums]="albumDetail"></app-overview>
+      <app-overview></app-overview>
 
     </mat-tab>
 
@@ -23,7 +23,7 @@
         Comments
       </ng-template>
 
-      <app-comments></app-comments>
+      <app-comments [commentList]="comments" [trackDetail]="trackDetail" [totalComment]="totalComment"></app-comments>
 
     </mat-tab>
   </mat-tab-group>

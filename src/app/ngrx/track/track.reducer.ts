@@ -5,7 +5,7 @@ import {TrackModel} from '../../models/track.model';
 
 export const initialState: TrackState = {
   tracks: <TrackModel[]>[],
-  trackDetails: <TrackModel>{},
+  trackDetail: <TrackModel>{},
   isLoading: false,
   error: null,
 }
@@ -42,4 +42,32 @@ export const trackReducer = createReducer(
       }
     }
   ),
+
+  on(trackActions.getTrackById, (state, {type, id})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTrackByIdSuccess, (state, {type, trackDetail})=>{
+    console.log(type,trackDetail);
+    return {
+      ...state,
+      isLoading: false,
+      trackDetail: trackDetail,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTrackByIdFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
 );

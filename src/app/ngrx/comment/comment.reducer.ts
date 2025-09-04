@@ -6,6 +6,7 @@ import {createReducer, on} from '@ngrx/store';
 export const initialCommentState: CommentState = {
   commentList: <CommentModel[]>[],
   comment: <CommentModel>{},
+  totalComments: 0,
   isLoading: false,
   error: null
 }
@@ -67,5 +68,31 @@ export const commentReducer = createReducer(
     }
   }),
 
+  on(CommentActions.getTotalCommentBasedOnTrackId, (state, {type, id})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(CommentActions.getTotalCommentBasedOnTrackIdSuccess, (state, {type, totalComments})=>{
+    console.log(type);
+    return {
+      ...state,
+      totalComments: totalComments,
+      isLoading: false,
+    }
+  }),
+
+  on(CommentActions.getTotalCommentBasedOnTrackIdFailure, (state, {type, error})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
 
 )

@@ -24,3 +24,16 @@ export const uploadTrackFailure = createAction(
   '[Track] Upload Track Failure',
   props<{ error: string }>()
 );
+
+export const getTrackById = createAction(
+  '[Track] Get Track By Id', props<{ id: string }>()
+)
+
+export const getTrackByIdSuccess = createAction(
+  '[Track] Get Track By Id Success', props<{ trackDetail: TrackModel }>()
+)
+
+export const getTrackByIdFailure = createAction(
+  '[Track] Get Track By Id Failure', props<{ error: any }>()
+)
+
