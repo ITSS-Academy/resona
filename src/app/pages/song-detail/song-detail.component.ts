@@ -3,14 +3,16 @@ import {FullAlbumDetailComponent} from '../../components/full-album-detail/full-
 import {SongDetailButtonComponent} from '../../components/song-detail-button/song-detail-button.component';
 import {ThreeOptionsButtonComponent} from '../../components/three-options-button/three-options-button.component';
 import {ActivatedRoute} from '@angular/router';
-import * as AlbumActions from '../../ngrx/album/album.actions';
 import {Store} from '@ngrx/store';
-import {AlbumState} from '../../ngrx/album/album.state';
 import {Observable, Subscription} from 'rxjs';
-import {AlbumModel} from '../../models/album.model';
 import {CommentModel} from '../../models/comment.model';
 import {CommentState} from '../../ngrx/comment/comment.state';
 import * as CommentActions from '../../ngrx/comment/comment.actions';
+import {TrackModel} from '../../models/track.model';
+import {TrackState} from '../../ngrx/track/track.state';
+import * as TrackActions from '../../ngrx/track/track.action'
+import {AsyncPipe} from '@angular/common';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-song-detail',
@@ -18,53 +20,61 @@ import * as CommentActions from '../../ngrx/comment/comment.actions';
     FullAlbumDetailComponent,
     SongDetailButtonComponent,
     ThreeOptionsButtonComponent,
+    AsyncPipe,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './song-detail.component.html',
   styleUrl: './song-detail.component.scss'
 })
 export class SongDetailComponent implements OnInit , OnDestroy{
-
-  albumDetail$!: Observable<AlbumModel>;
   subscription: Subscription[]=[];
-  albumDetail!: AlbumModel;
-  albumRelatedToArtist$!: Observable<AlbumModel[]>;
-  albumRelatedToArtist: AlbumModel[] = [];
+  trackDetail$!: Observable<TrackModel>;
+  trackDetail!: TrackModel;
   comment$!: Observable<CommentModel[]>;
   comment: CommentModel[] = [];
+  totalComment!:number;
+  isLoadingTrack$!: Observable<boolean>;
+  thumbnailUrl$!: Observable<string>;
+  thumbnailUrl!: string;
+  lyric$!: Observable<string>;
+  lyric!: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<{
-      albums: AlbumState,
       comments: CommentState,
+      track: TrackState,
     }>
   ) {
     let {id} = this.activatedRoute.snapshot.params;
     console.log(id);
-    this.albumDetail$ = this.store.select ('albums', 'albumDetail');
-    this.albumRelatedToArtist$ = this.store.select('albums', 'albumList');
+    this.store.dispatch(CommentActions.getComments({id: id}));
+    this.store.dispatch(TrackActions.getTrackById({id: id}));
+    this.store.dispatch(TrackActions.getThumbnailBasedOnTrackId({id: id}));
+    this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
+
     this.comment$ = this.store.select('comments', 'commentList');
-    this.store.dispatch(AlbumActions.getAlbumById({id: id}));
-    this.store.dispatch(CommentActions.getComments({id: '46c5f304-91b3-4d74-ae28-a022cbe89e46'}));
+    this.trackDetail$ = this.store.select('track', 'trackDetail');
+    this.isLoadingTrack$ = this.store.select('track', 'isLoading');
+    this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
+    this.lyric$ = this.store.select('track', 'lyrics');
   }
 
   ngOnInit(): void {
     this.subscription.push(
-      this.albumDetail$.subscribe(album=>{
-        this.albumDetail = album;
-        if (album && album.artist) {
-          // Dispatch action to get albums by the same artist
-          this.store.dispatch(AlbumActions.getAlbumsByArtist({ artist: album.artist }));
-          console.log(album.artist);
-        }
-      }),
-      this.albumRelatedToArtist$.subscribe(albumList=>{
-        this.albumRelatedToArtist = albumList;
-        console.log(this.albumRelatedToArtist);
+      this.trackDetail$.subscribe(track=>{
+        this.trackDetail = track;
+        console.log(this.trackDetail);
       }),
       this.comment$.subscribe(comments=>{
         this.comment = comments;
-        console.log(this.comment);
+        this.totalComment = this.comment.length;
+      }),
+      this.thumbnailUrl$.subscribe(thumbnailUrl=>{
+        this.thumbnailUrl = thumbnailUrl;
+      }),
+      this.lyric$.subscribe(lyric=>{
+        this.lyric = lyric;
       }),
     )
   }
