@@ -66,7 +66,7 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'profile',
+    path: 'profile/:id',
     loadComponent() {
       return import('../app/pages/profile/profile.component').then(
         (m) => m.ProfileComponent,
