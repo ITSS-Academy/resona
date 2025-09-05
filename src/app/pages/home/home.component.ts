@@ -81,7 +81,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     uid: 'default',
     email: 'unknown@email.com',
     displayName: 'Unknown',
-    photoUrl: ''
+    photoURL: ''
   };
 
   private defaultGenre: MusicGenresModel = {
