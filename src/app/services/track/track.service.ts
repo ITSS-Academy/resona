@@ -127,12 +127,23 @@ export class TrackService {
     return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/track`);
   }
 
-  getTrackById(id: string): Observable<TrackModel> {
-    return this.http.get<TrackModel>(`${environment.apiUrl}/track/track/${id}`);
+  getTrackById(id: string) {
+    return this.http.get<TrackModel>(`http://localhost:3000/track/${id}`);
   }
 
   getTracksByOwnerId(ownerId: string): Observable<TrackModel[]> {
     return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/uploaded/${ownerId}`);
   }
 
+  getThumbnailBasedOnTrackId(id: string){
+    return this.http.get<{ url: string }>(`${environment.apiUrl}/track/thumbnail-url/${id}`);
+  }
+
+  getLyricsBasedOnTrackId(id: string) {
+    return this.http.get<{ lyrics: string }>(`${environment.apiUrl}/track/lyrics/${id}`);
+  }
+
+  getTrackByCategoryId(categoryId: string): Observable<TrackModel[]> {
+    return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/by-category/${categoryId}`);
+  }
 }

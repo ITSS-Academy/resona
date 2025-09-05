@@ -1,7 +1,19 @@
-<app-full-album-detail [albumDetail]="albumDetail"></app-full-album-detail>
+
+@if(isLoadingTrack$|async){
+  <mat-spinner></mat-spinner>
+}@else{
+  <app-full-album-detail [trackDetail]="trackDetail" [thumbnailUrl]="thumbnailUrl"></app-full-album-detail>
+  <app-song-detail-button></app-song-detail-button>
+  <app-three-options-button
+    [comments]="comment"
+    [trackDetail]="trackDetail"
+    [totalComment]="totalComment"
+    [lyrics]="lyric"
+  ></app-three-options-button>
+}
 <!--<app-album-card></app-album-card>-->
 <!--<app-queue></app-queue>-->
-<app-song-detail-button></app-song-detail-button>
-<app-three-options-button [albumDetail]="albumRelatedToArtist"></app-three-options-button>
+<!--<app-full-album-detail></app-full-album-detail>-->
+<!--<app-three-options-button></app-three-options-button>-->
 <!--<app-lyric></app-lyric>-->
 <!--<app-overview></app-overview>-->

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MatFormField, MatHint, MatInput, MatLabel} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {Store} from '@ngrx/store';
@@ -10,6 +10,8 @@ import {AuthState} from '../../ngrx/auth/auth.state';
 import {idToken} from '@angular/fire/auth';
 import {ProfileModel} from '../../models/profile.model';
 import {Observable, Subscription} from 'rxjs';
+import {TrackModel} from '../../models/track.model';
+import {MatIconButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-comments',
@@ -19,6 +21,7 @@ import {Observable, Subscription} from 'rxjs';
     MatFormField,
     MatIconModule,
     ReactiveFormsModule,
+    MatIconButton,
   ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss'
@@ -30,6 +33,10 @@ export class CommentsComponent implements OnInit , OnDestroy{
   subscriptions: Subscription[] = [];
   comments$!: Observable<CommentModel>;
   comments!: CommentModel;
+
+  @Input() commentList!: CommentModel[];
+  @Input() trackDetail!: TrackModel;
+  @Input() totalComment!: number;
 
   constructor(
     private store:Store<{
@@ -44,12 +51,11 @@ export class CommentsComponent implements OnInit , OnDestroy{
   ngOnInit() {
     this.subscriptions.push(
       this.profile$.subscribe(profile => {
-        if (profile.uid) {
-          this.profile = profile;
-        }
+        this.profile = profile;
+        console.log(this.profile);
       }),
       this.comments$.subscribe(comments => {
-      })
+      }),
     )
   }
 
@@ -64,12 +70,13 @@ export class CommentsComponent implements OnInit , OnDestroy{
   createComment(){
     if(this.commentForm.valid){
       const newComment = {
-        // trackId: id
-        trackId: 'd7c775a8-cef6-47e1-a535-6e00f594e4e0',
+        // trackId: id,
+        trackId: this.trackDetail.id,
         userId: this.profile.uid,
         content: this.commentForm.value.content || '',
       }
       this.store.dispatch(CommentActions.createComment(newComment));
+      this.commentForm.reset();
     }
   }
 

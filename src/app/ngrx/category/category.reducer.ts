@@ -37,7 +37,7 @@ export const categoryReducer = createReducer(
       error: error
     }
   }),
-  on(categoryActions.getCategoryDetails, (state, {type}) => {
+  on(categoryActions.getCategoryDetails, (state, {type, categoryId}) => {
     console.log(type)
     return {
       ...state,

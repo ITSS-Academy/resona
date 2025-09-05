@@ -36,4 +36,4 @@ export const createCommentEffect = createEffect(
     );
   },
   {functional: true}
-)
+);

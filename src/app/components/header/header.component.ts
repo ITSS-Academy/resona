@@ -71,6 +71,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
+  }
+
   logout() {
     this.store.dispatch(logout());
   }
