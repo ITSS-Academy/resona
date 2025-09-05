@@ -87,6 +87,23 @@ export const getLyricsByTrackIdEffect = createEffect(
   },
   {functional: true}
 );
+
+export const getTrackByCategoryIdEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getTrackByCategoryId),
+      switchMap(({categoryId}) =>
+        trackService.getTrackByCategoryId(categoryId).pipe(
+          map((tracks) => trackActions.getTrackByCategoryIdSuccess({tracks: tracks})),
+          catchError((error) =>
+            of(trackActions.getTrackByCategoryIdFailure({error: error}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+)
 export const incrementTrackPlayCountEffect = createEffect(
   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
     return actions$.pipe(

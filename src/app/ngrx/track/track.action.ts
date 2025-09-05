@@ -61,6 +61,18 @@ export const getLyricsByTrackIdFailure = createAction(
   '[Track] Get Lyrics By Track Id Failure', props<{ error: any }>()
 )
 
+export const getTrackByCategoryId = createAction(
+  '[Track] Get Track By Category Id', props<{ categoryId: string }>()
+)
+
+export const getTrackByCategoryIdSuccess = createAction(
+  '[Track] Get Track By Category Id Success', props<{ tracks: TrackModel[] }>()
+)
+
+export const getTrackByCategoryIdFailure = createAction(
+  '[Track] Get Track By Category Id Failure', props<{ error: any }>()
+)
+
 
 export const incrementTrackPlayCount = createAction(
   '[Track] Increment Track Play Count',

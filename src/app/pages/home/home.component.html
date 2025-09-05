@@ -78,7 +78,7 @@
     <!-- New Release Songs -->
     <section aria-labelledby="release-title">
       <h2 class="section-title">New Release <span>Songs</span></h2>
-      @for (track of newReleaseTracks; track track.title) {
+      @for (track of newReleaseTracks; track $index) {
         <app-music-tab [track]="track"></app-music-tab>
       }
     </section>
@@ -111,7 +111,7 @@
           }
         }
         <div class="popular-artists" #artistScroll aria-label="Popular artists">
-          @for (artist of popularArtists; track artist.name) {
+          @for (artist of popularArtists; track $index) {
             <div class="artist">
               <img [src]="artist.imageUrl" [alt]="artist.name" width="56" height="56"/>
               <p class="artist-name">{{ artist.name }}</p>
