@@ -180,3 +180,32 @@ mat-list-item{
 .card:hover .tracks {
   color: #ffffff;
 }
+
+
+
+.song-cover {
+  border-radius: 6px;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.track-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-title {
+  font-weight: 600;
+}
+
+.track-artist {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.empty, .loading {
+  text-align: center;
+  margin: 20px 0;
+  color: #aaa;
+}
+
