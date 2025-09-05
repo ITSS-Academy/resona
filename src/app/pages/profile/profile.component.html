@@ -1,13 +1,12 @@
 <div class="background">
   <div class="profile">
-    <img class nona1
-         src="https://imgs.search.brave.com/XEp6p4OwoRAySBzTPLPGiem0V-p3gXU7JUC9XDIbBww/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS50ZW5vci5jb20v/dWF2SHZwTXdXU0VB/QUFBTS9jYXQtY2F0/LW1lbWUuZ2lm.gif"
-         alt="avatar">
+    <img [src]="currentUser.photoURL" alt="User Avatar" />
   </div>
   <div class="right">
     <div class="name">
-      <h3>Zuzzy cat</h3>
-      <p>Profile song meow meow</p>
+      <h3>{{currentUser.displayName}}</h3>
+      <p>{{currentUser.email}}</p>
+      <p>100 Followers</p>
       <button mat-flat-button>Follow</button>
     </div>
     <div class="information">

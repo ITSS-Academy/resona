@@ -3,13 +3,17 @@ import {MaterialModule} from '../../shared/modules/material.module';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {PlaylistService} from '../../services/playlist/playlist.service';
 import {PlaylistState} from '../../ngrx/playlist/playlist.state';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as playlistActions from '../../ngrx/playlist/playlist.action';
 import {createPlaylist} from '../../ngrx/playlist/playlist.action';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {ProfileModel} from '../../models/profile.model';
-import {Observable, Subscription} from 'rxjs';
+import {filter, Observable, Subscription} from 'rxjs';
 import {loginFailure} from '../../ngrx/auth/auth.actions';
+import {PlaylistModel} from '../../models/playlist.model';
+import {Router} from '@angular/router';
+import {MatDialogRef} from '@angular/material/dialog';
+import {Actions, ofType} from '@ngrx/effects';
 
 @Component({
   selector: 'app-create-playlist-dialog',
@@ -32,6 +36,9 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
   previewUrl: string | null = null;
 
   constructor(
+    private router:Router,
+    private dialogRef: MatDialogRef<CreatePlaylistDialogComponent>,
+    private actions$: Actions,
     private store: Store<{
       auth: AuthState,
       playlist: PlaylistState
@@ -44,9 +51,15 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.currentUser$.subscribe(user => {
         this.currentUser = user;
-        console.log('Current User in CreatePlaylistDialog:', this.currentUser);
-      })
-    )
+      }),
+      this.actions$.pipe(
+        ofType(playlistActions.createPlaylistSuccess),
+        filter(action => !!action.playlist && !!action.playlist.id)
+      ).subscribe(action => {
+        this.router.navigate([`/playlist-detail`, action.playlist.id]);
+        this.dialogRef.close();
+      }),
+    );
   }
 
   form = new FormGroup({
