@@ -1,21 +1,23 @@
 <div class="container">
-  <div class="music-header">
-    <h1>Category Detail</h1>
-  </div>
-  <div class="music-display">
-    <div class="title">
-      <h2>Tracks</h2>
+  @if (tracks) {
+    <div class="music-header">
+      <h1>{{category.name}}</h1>
     </div>
-    <div class="list-of-music">
-      @for (track of (tracks$ | async); track track.id) {
-        <div class="track-card">
-          <img [src]="track.thumbnailPath" [alt]="track.title" />
-          <h3>{{ track.title }}</h3>
-          <p>{{ track.artistName }}</p>
-          <p>{{ track.duration }}s</p>
-          <p>Views: {{ track.viewCount }}</p>
-        </div>
-      }
+    <div class="music-display">
+      <div class="title">
+        <h2>Tracks</h2>
+      </div>
+      <div class="list-of-music">
+        @for (track of tracks; track $index) {
+          <div class="track-card">
+            <img src="{{track.thumbnailPath | imgConverter}}" [alt]="track.title" />
+            <h3>{{ track.title }}</h3>
+            <p>{{ track.artistName }}</p>
+            <p>{{ track.duration }}s</p>
+            <p>Views: {{ track.viewCount }}</p>
+          </div>
+        }
+      </div>
     </div>
-  </div>
+  }
 </div>

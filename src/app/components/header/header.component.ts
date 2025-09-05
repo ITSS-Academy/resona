@@ -70,9 +70,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.router.navigate(['/search']);
     }
   }
-  
-  navigateToProfile(uid: string) {
-    this.router.navigate(['/profile', this.profile.uid]);
+
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
   }
 
   logout() {

@@ -129,5 +129,33 @@ export const trackReducer = createReducer(
     }
   }),
 
+  on(trackActions.getTrackByCategoryId, (state, {type, categoryId})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTrackByCategoryIdSuccess, (state, {type, tracks})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      tracks: tracks,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTrackByCategoryIdFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
 
 );

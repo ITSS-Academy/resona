@@ -12,6 +12,7 @@ import {Store} from '@ngrx/store';
 import {AuthState} from './ngrx/auth/auth.state';
 import * as AuthActions from './ngrx/auth/auth.actions';
 import {Observable, Subscription} from 'rxjs';
+import {ProfileModel} from './models/profile.model';
 
 @Component({
   selector: 'app-root',
