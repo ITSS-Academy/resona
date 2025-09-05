@@ -75,7 +75,7 @@
     <div class="player-right">
 
       <div class="smallAlbum">
-        <button mat-icon-button aria-label="Fullscreen">
+        <button mat-icon-button aria-label="Fullscreen" (click)="toggleSmallAlbum()">
           <mat-icon class="icon" fontSet="material-icons-outlined">image</mat-icon>
         </button>
 
@@ -88,7 +88,7 @@
       </div>
 
       <div class="lyric">
-        <button mat-icon-button aria-label="lyric-frame">
+        <button mat-icon-button aria-label="lyric-frame" (click)="toggleLyric()">
           <mat-icon class="icon">music_note</mat-icon>
         </button>
 
@@ -100,7 +100,7 @@
       </div>
 
       <div class="queue">
-        <button mat-icon-button aria-label="Queue">
+        <button mat-icon-button aria-label="Queue" (click)="toggleQueue()">
           <mat-icon class="icon">playlist_play</mat-icon>
         </button>
 
