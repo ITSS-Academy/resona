@@ -1,4 +1,6 @@
 
+
+
 .playlist-table-header,
 .song-info {
   display: flex;
@@ -25,6 +27,7 @@
 .song-info {
   cursor: pointer;
   transition: background 0.2s ease;
+  overflow-y: hidden;
 }
 
 .song-info:hover {
@@ -73,6 +76,7 @@
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+  overflow-y: hidden;
 
 }
 
@@ -143,6 +147,7 @@
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 24px;
   padding: 20px;
+  overflow-y: hidden;
 }
 
 .artist {
@@ -176,15 +181,12 @@
   color: #b3b3b3;
 }
 
-
-
-
-
 .category-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   padding: 10px;
+  overflow-y: hidden;
 }
 
 @media (max-width: 1200px) {
@@ -246,8 +248,6 @@
   }
 }
 
-
-
 @media (max-width: 375px) {
   .col-artist,.song-artist {
     display: none !important;
@@ -267,4 +267,34 @@
     margin-left: auto;
     font-size: 13px;
   }
+}
+
+.search-pages {
+  height: calc(100vh - 170px); /* full màn hình */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+
+.search-tabs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* quan trọng để con flex có thể co lại */
+}
+
+/* Thanh tab luôn cố định trên cùng */
+.search-tabs .mat-mdc-tab-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #121212;
+}
+
+/* Vùng nội dung tab scroll riêng */
+.tab-content {
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 40px; /* tránh dính sát cuối */
 }

@@ -98,9 +98,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
       this.currentTime = audio.currentTime;
       this.duration = audio.duration || 0;
       if (this.currentTrack && !this.hasIncremented) {
-        console.log('Audio currentTime updated:', this.currentTime);
         if (audio.currentTime >= 120) {
-          console.log('more than 120s, increment play count for track:', this.currentTrack.id, this.currentTime);
           this.store.dispatch(
             TrackActions.incrementTrackPlayCount({trackId: this.currentTrack.id})
           );
@@ -159,6 +157,36 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     } else {
       this.repeatMode = 'none';
     }
+  }
+
+  toggleLyric() {
+    if (this.queueDrawer.opened) {
+      this.queueDrawer.close().then();
+    }
+    if (this.smallAlbumDrawer.opened) {
+      this.smallAlbumDrawer.close().then();
+    }
+    this.lyricDrawer.toggle().then();
+  }
+
+  toggleQueue() {
+    if (this.lyricDrawer.opened) {
+      this.lyricDrawer.close().then();
+    }
+    if (this.smallAlbumDrawer.opened) {
+      this.smallAlbumDrawer.close().then();
+    }
+    this.queueDrawer.toggle().then();
+  }
+
+  toggleSmallAlbum() {
+    if (this.lyricDrawer.opened) {
+      this.lyricDrawer.close().then();
+    }
+    if (this.queueDrawer.opened) {
+      this.queueDrawer.close().then();
+    }
+    this.smallAlbumDrawer.toggle().then();
   }
 
   onTrackChanged(track: TrackModel) {
