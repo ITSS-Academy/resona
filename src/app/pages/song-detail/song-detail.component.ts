@@ -56,11 +56,11 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
 
     this.comment$ = this.store.select('comments', 'commentList');
-    this.trackDetail$ = this.store.select('track', 'trackDetail');
+    // this.trackDetail$ = this.store.select('track', 'trackDetail');
     this.isLoadingTrack$ = this.store.select('track', 'isLoading');
     this.totalComment$ = this.store.select('comments', 'totalComments');
-    this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
-    this.lyric$ = this.store.select('track', 'lyrics');
+    // this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
+    // this.lyric$ = this.store.select('track', 'lyrics');
   }
 
   ngOnInit(): void {

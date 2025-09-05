@@ -22,6 +22,7 @@ import { AuthState } from '../../ngrx/auth/auth.state';
 import { ProfileModel } from '../../models/profile.model';
 import { Router } from '@angular/router';
 import * as trackActions from '../../ngrx/track/track.action';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-profile',
@@ -35,6 +36,7 @@ import * as trackActions from '../../ngrx/track/track.action';
     MatListItem,
     MatButton,
     MusicTabComponent,
+    MatIconModule,
   ],
   styleUrls: ['./profile.component.scss'],
 })
@@ -49,6 +51,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   getPlaylists$!: Observable<PlaylistModel[]>;
   playlist: PlaylistModel[] = [];
   favoriteTracks$!: Observable<TrackModel[]>;
+  favoriteTracks: TrackModel[] = [];
+
 
   subscriptions: Subscription[] = [];
 
@@ -96,6 +100,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.getPlaylists$.subscribe((playlists) => {
         this.playlist = playlists;
         console.log(this.playlist);
+      }),
+      this.favoriteTracks$.subscribe((tracks: TrackModel[]) => {
+        this.favoriteTracks = tracks;
+        console.log('Favorite tracks:', tracks);
       })
     );
   }

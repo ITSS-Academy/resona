@@ -46,4 +46,38 @@ export const trackReducer = createReducer(
       }
     }
   ),
+
+  on(
+    trackActions.getFavoriteTracks, (state, {type}) => {
+      console.log(type)
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      }
+    }
+  ),
+
+  on(
+    trackActions.getFavoriteTracksSuccess, (state, {type, tracks}) => {
+    console.log(type)
+    return {
+      ...state,
+      favoriteTracks: tracks,
+      isLoading: false,
+      error: null,
+    }
+  }
+  ),
+  on(
+    trackActions.getFavoriteTracksFailure, (state, {error}) => {
+      console.error(error);
+      return {
+        ...state,
+        isLoading: false,
+        error: error,
+      }
+    }
+  ),
+
 );

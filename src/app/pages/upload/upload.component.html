@@ -1,11 +1,15 @@
   <form [formGroup]="form" class="upload-container">
 
     <div class="left-col">
-      <!--    <div class="upload-music">-->
-      <div class="upload-music-box">
-              <img mat-card-image src="./assets/images/cloud-upload_icon-icons.com_54314.png" alt="">
+      <div class="upload-music-box"
+           (dragover)="onMusicDragOver($event)"
+           (dragleave)="onMusicDragLeave($event)"
+           (drop)="onMusicDrop($event)"
+           [class.drag-over]="musicDragOver"
+           (click)="fileInput.click()">
+              <img mat-card-image src="./assets/images/cloud-upload_icon-icons.com_54314.png" class="" alt="">
         <p>Drag music here or click to select file</p>
-        <button mat-flat-button type="button" (click)="fileInput.click()">
+        <button mat-flat-button type="button" class="upload-btn">
           <mat-icon>upload</mat-icon>
           Choose file
         </button>
@@ -25,23 +29,39 @@
         }
       </div>
 
-      <div class="upload-picture">
-        <div class="picture-content">
-                  <img mat-card-image src="./assets/images/add_image.png" alt="">
-          <p>Drag music here or click to select file</p>
-          <input type="file" id="pictureFile" (change)="onThumbnailSelected($event)"
-                 hidden/>
-          <label for="pictureFile" class="upload-btn">
-            <mat-icon>image</mat-icon>
-            Choose Picture</label>
-        </div>
-        @if (form.value.thumbnail) {
-          <div class="file-chip">
-            <mat-icon>attach_file</mat-icon>
-            <span>{{ form.value.thumbnail.name }}</span>
+      <div class="upload-picture"
+           (dragover)="onImgDragOver($event)"
+           (dragleave)="onImgDragLeave($event)"
+           (drop)="onImgDrop($event)"
+           [class.drag-over]="imgDragOver"
+           (click)="pictureInput.click()">
+
+        @if (thumbnailPreview) {
+          <img [src]="thumbnailPreview" alt="Preview" class="preview-img"/>
+          <button mat-icon-button type="button" class="remove-btn" (click)="removeImg($event)">
+            <mat-icon>close</mat-icon>
+          </button>
+        } @else {
+          <div class="picture-content">
+            <img mat-card-image src="./assets/images/add_image.png" alt="">
+            <p>Drag image here or click to select file</p>
+            <label class="upload-btn">
+              <mat-icon>image</mat-icon>
+              Choose Picture
+            </label>
+
           </div>
         }
+        <input
+          #pictureInput
+          id="pictureFile"
+          type="file"
+          accept="image/*"
+          (change)="onThumbnailSelected($event)"
+          hidden
+        />
       </div>
+
     </div>
 
     <div class="song-info">
@@ -73,12 +93,31 @@
 
           <mat-tab label="Upload File">
             <div class="upload-tab">
-              <div class="lyrics-upload">
+              <div class="lyrics-upload"
+                   (dragover)="onLyricsDragOver($event)"
+                   (dragleave)="onLyricsDragLeave($event)"
+                   (drop)="onLyricsDrop($event)"
+                   [class.drag-over]="lyricsDragOver"
+                   (click)="lyricsFileInput.click()">
                 <p>
                   Drag & drop files or click to select<br/>
                 </p>
-                <input type="file" id="lyricsFile" (change)="onLyricsFileSelected($event)" hidden/>
-                <label for="lyricsFile" class="upload-btn">Choose File</label>
+                <input
+                  #lyricsFileInput
+                  type="file"
+                  id="lyricsFile"
+                  (change)="onLyricsFileSelected($event)" hidden/>
+                <label class="upload-btn">Choose File</label>
+
+                @if (form.value.lyricsFile) {
+                  <div class="file-chip">
+                    <mat-icon>attach_file</mat-icon>
+                    <span>{{ form.value.lyricsFile.name }}</span>
+                    <button mat-icon-button type="button" (click)="removeLyricsFile($event)">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </div>
+                }
               </div>
             </div>
           </mat-tab>

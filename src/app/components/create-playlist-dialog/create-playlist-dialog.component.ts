@@ -20,12 +20,16 @@ import {loginFailure} from '../../ngrx/auth/auth.actions';
   ],
   templateUrl: './create-playlist-dialog.component.html',
   styleUrl: './create-playlist-dialog.component.scss',
+  // styleUrls: ['./create-playlist-dialog.component.scss'],
 
 })
 export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
   currentUser$!: Observable<ProfileModel>
   currentUser!: ProfileModel
   subscriptions: Subscription[] = [];
+
+  isDragging = false;
+  previewUrl: string | null = null;
 
   constructor(
     private store: Store<{
@@ -51,12 +55,28 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
     file: new FormControl<File | null>(null, Validators.required),
   });
 
-  onFileSelected(event: Event) {
+  // onFileSelected(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input?.files && input.files.length > 0) {
+  //     this.form.patchValue({file: input.files[0]});
+  //
+  //     const file = input.files[0];
+  //     this.handleFile(file);
+  //   }
+  // }
+
+  onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input?.files && input.files.length > 0) {
-      this.form.patchValue({file: input.files[0]});
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result as string;
+      };
+      reader.readAsDataURL(file);
     }
   }
+
 
   createPlaylist() {
     if (this.form.invalid || !this.currentUser) return;
@@ -74,6 +94,38 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
     );
 
     this.form.reset();
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+
+    if (event.dataTransfer && event.dataTransfer.files.length > 0) {
+      const file = event.dataTransfer.files[0];
+      this.handleFile(file);
+    }
+  }
+
+
+  handleFile(file: File) {
+    this.form.patchValue({ file: file });
+    this.form.get('file')?.updateValueAndValidity();
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.previewUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
   ngOnDestroy() {

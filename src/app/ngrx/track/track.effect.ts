@@ -56,26 +56,6 @@ export const getFavoriteTracksEffect = createEffect(
 )
 
 
-//
-// export const getFavoriteTracksEffect = createEffect(
-//   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
-//     return actions$.pipe(
-//       ofType(trackActions.getFavoriteTracks),
-//       switchMap(({userId}) =>
-//         trackService.getFavouriteTracks(userId).pipe(
-//           map((tracks) => {
-//             console.log(tracks);
-//             return trackActions.getFavoriteTracksSuccess({tracks});
-//           }),
-//           catchError((error: { message: any; }) =>
-//             of(trackActions.getFavoriteTracksFailure({error: error.message})))
-//         )
-//       )
-//     )
-//   },
-//   {functional: true}
-// )
-
 export const getTrackByIdEffect = createEffect(
   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
     return actions$.pipe(
@@ -93,37 +73,37 @@ export const getTrackByIdEffect = createEffect(
   {functional: true}
 );
 
-export const getThumbnailBasedOnTrackIdEffect = createEffect(
-  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
-    return actions$.pipe(
-      ofType(trackActions.getThumbnailBasedOnTrackId),
-      switchMap(({id}) =>
-        trackService.getThumbnailBasedOnTrackId(id).pipe(
-          map((res) => trackActions.getThumbnailBasedOnTrackIdSuccess({thumbnailUrl: res.url})),
-          catchError((error) =>
-            of(trackActions.getThumbnailBasedOnTrackIdFailure({error: error.message || 'Get thumbnail failed'}))
-          )
-        )
-      )
-    );
-  },
-  {functional: true}
-);
-
-
-export const getLyricsByTrackIdEffect = createEffect(
-  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
-    return actions$.pipe(
-      ofType(trackActions.getLyricsByTrackId),
-      switchMap(({id}) =>
-        trackService.getLyricsBasedOnTrackId(id).pipe(
-          map((res) => trackActions.getLyricsByTrackIdSuccess({ lyrics: res.lyrics })),
-          catchError((error) =>
-            of(trackActions.getLyricsByTrackIdFailure({error: error.message || 'Get lyrics failed'}))
-          )
-        )
-      )
-    );
-  },
-  {functional: true}
-);
+// export const getThumbnailBasedOnTrackIdEffect = createEffect(
+//   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+//     return actions$.pipe(
+//       ofType(trackActions.getThumbnailBasedOnTrackId),
+//       switchMap(({id}) =>
+//         trackService.getThumbnailBasedOnTrackId(id).pipe(
+//           map((res) => trackActions.getThumbnailBasedOnTrackIdSuccess({thumbnailUrl: res.url})),
+//           catchError((error) =>
+//             of(trackActions.getThumbnailBasedOnTrackIdFailure({error: error.message || 'Get thumbnail failed'}))
+//           )
+//         )
+//       )
+//     );
+//   },
+//   {functional: true}
+// );
+//
+//
+// export const getLyricsByTrackIdEffect = createEffect(
+//   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+//     return actions$.pipe(
+//       ofType(trackActions.getLyricsByTrackId),
+//       switchMap(({id}) =>
+//         trackService.getLyricsBasedOnTrackId(id).pipe(
+//           map((res) => trackActions.getLyricsByTrackIdSuccess({ lyrics: res.lyrics })),
+//           catchError((error) =>
+//             of(trackActions.getLyricsByTrackIdFailure({error: error.message || 'Get lyrics failed'}))
+//           )
+//         )
+//       )
+//     );
+//   },
+//   {functional: true}
+// );
