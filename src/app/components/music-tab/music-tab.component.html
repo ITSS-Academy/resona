@@ -1,7 +1,8 @@
 <div class="song-item" tabindex="0" (click)="onPlayTrack(track)">
+  <!-- Song info -->
   <div class="song-info">
     <img
-      [src]="track.thumbnailPath"
+      [src]="track.thumbnailPath | imgConverter"
       [alt]="'Song cover art for ' + track.title"
     />
     <div class="song-text">
@@ -9,8 +10,17 @@
       <div class="song-artist">{{ track.artistName }}</div>
     </div>
   </div>
-  <div class="song-date">{{ track.createdAt | date:'MMM dd, yyyy' }}</div>
+
+  <!-- Song created date -->
+  <div class="song-date">{{ track.createdAt | date: 'MMM dd, yyyy' }}</div>
+
+  <!-- Song duration -->
   <div class="song-duration">{{ track.duration | duration }}</div>
+
+  <!-- Song views -->
+  <div class="song-views">{{ track.viewCount | number }} views</div>
+
+  <!-- Actions -->
   <div class="song-actions">
     <button aria-label="Like song">
       <mat-icon>favorite_border</mat-icon>

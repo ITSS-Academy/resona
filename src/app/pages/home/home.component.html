@@ -23,7 +23,7 @@
 <!--          </button>-->
       <div class="horizontal-scroll" #genresScroll aria-label="Music genres">
         @for (genre of categories$ | async; track genre.id) {
-          <div class="card">
+          <div class="card" (click)="navigateToCategoryDetail(genre.id)">
             <img src="{{genre.image}}" alt="{{genre.name}}" width="100" height="96" />
             <p class="label">{{genre.name}}</p>
           </div>

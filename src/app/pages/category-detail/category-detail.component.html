@@ -1,26 +1,124 @@
+<!--<div class="container">-->
+<!--  @if (tracks) {-->
+<!--  <div class="music-header">-->
+<!--    <h1>{{ category.name }}</h1>-->
+<!--  </div>-->
+<!--  <div class="music-display">-->
+<!--    <div class="title">-->
+<!--      <h2>Tracks</h2>-->
+<!--    </div>-->
+<!--    <div class="list-of-music">-->
+<!--      @for (track of tracks; track $index) {-->
+<!--      <div class="track-card">-->
+<!--        <img-->
+<!--          src="{{ track.thumbnailPath | imgConverter }}"-->
+<!--          [alt]="track.title"-->
+<!--          width="130"-->
+<!--          height="130"-->
+<!--        />-->
+<!--        <h3>{{ track.title }}</h3>-->
+<!--        <p>{{ track.artistName }}</p>-->
+<!--        <p>{{ track.duration }}s</p>-->
+<!--        <p>Views: {{ track.viewCount }}</p>-->
+<!--      </div>-->
+<!--      }-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  }-->
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--  @if (tracks) {-->
+<!--    &lt;!&ndash; Header &ndash;&gt;-->
+<!--    <div class="music-header" [style.background-image]="'url(' + category.image + ')'">-->
+<!--      <h1>{{ category.name }}</h1>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Tracks Section &ndash;&gt;-->
+<!--    <div class="music-display">-->
+<!--      <div class="title">-->
+<!--        <h2>Tracks</h2>-->
+<!--      </div>-->
+
+<!--      <div class="list-of-music">-->
+<!--        @for (track of tracks; track $index) {-->
+<!--          <app-music-tab [track]="track"></app-music-tab>-->
+<!--        }-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  }-->
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--  @if (tracks) {-->
+<!--    &lt;!&ndash; Header &ndash;&gt;-->
+<!--    <div class="music-header" [style.background-image]="'url(' + category.image + ')'">-->
+<!--      <h1>{{ category.name }}</h1>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Tracks Section &ndash;&gt;-->
+<!--    <div class="music-display">-->
+<!--      <div class="title">-->
+<!--        <h2>Tracks</h2>-->
+<!--      </div>-->
+
+<!--      <div class="list-of-music">-->
+<!--        @for (track of tracks; track $index) {-->
+<!--          <div class="song-item" tabindex="0" (click)="onPlayTrack(track)">-->
+<!--            &lt;!&ndash; Song info &ndash;&gt;-->
+<!--            <div class="song-info">-->
+<!--              <img-->
+<!--                [src]="track.thumbnailPath | imgConverter"-->
+<!--                [alt]="'Song cover art for ' + track.title"-->
+<!--              />-->
+<!--              <div class="song-text">-->
+<!--                <div class="song-title">{{ track.title }}</div>-->
+<!--                <div class="song-artist">{{ track.artistName }}</div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Song created date &ndash;&gt;-->
+<!--            <div class="song-date">{{ track.createdAt | date:'MMM dd, yyyy' }}</div>-->
+
+<!--            &lt;!&ndash; Song duration &ndash;&gt;-->
+<!--            <div class="song-duration">{{ track.duration | duration }}</div>-->
+
+<!--            &lt;!&ndash; Song views &ndash;&gt;-->
+<!--            <div class="song-views">{{ track.viewCount | number }} views</div>-->
+
+<!--            &lt;!&ndash; Actions &ndash;&gt;-->
+<!--            <div class="song-actions">-->
+<!--              <button aria-label="Like song">-->
+<!--                <mat-icon>favorite_border</mat-icon>-->
+<!--              </button>-->
+<!--              <button aria-label="vertical ellipsis">-->
+<!--                <mat-icon>more_vert</mat-icon>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        }-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  }-->
+<!--</div>-->
+
 <div class="container">
   @if (tracks) {
-  <div class="music-header">
-    <h1>{{ category.name }}</h1>
-  </div>
-  <div class="music-display">
-    <div class="title">
-      <h2>Tracks</h2>
+    <div class="music-header" [style.background-image]="'url(' + category.image + ')'">
+      <h1>{{ category.name }}</h1>
     </div>
-    <div class="list-of-music">
-      @for (track of tracks; track $index) {
-      <div class="track-card">
-        <img
-          src="{{ track.thumbnailPath | imgConverter }}"
-          [alt]="track.title"
-        />
-        <h3>{{ track.title }}</h3>
-        <p>{{ track.artistName }}</p>
-        <p>{{ track.duration }}s</p>
-        <p>Views: {{ track.viewCount }}</p>
+
+    <div class="music-display">
+      <div class="title">
+        <h2>Tracks</h2>
       </div>
-      }
+
+      <div class="list-of-music">
+        @for (track of tracks; track $index) {
+          <app-music-tab [track]="track"></app-music-tab>
+        }
+      </div>
     </div>
-  </div>
   }
 </div>
+

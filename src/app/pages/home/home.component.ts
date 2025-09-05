@@ -50,7 +50,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private store: Store<{
       category: CategoryState,
       play: PlayState
-    }>
+    }>,
+    private router: Router
   ) {
     // this.musicGenres = this.musicGenresService.categories;
     this.categories$ = this.store.select(state => state.category.categoryList);
@@ -104,5 +105,9 @@ get newReleaseTracks(): TrackModel[] {
   }
 
   ngOnDestroy() {
+  }
+
+  navigateToCategoryDetail(id: string) {
+    this.router.navigate(['/category-detail', id]).then();
   }
 }
