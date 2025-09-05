@@ -135,6 +135,12 @@ export class TrackService {
     return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/uploaded/${ownerId}`);
   }
 
+
+  getFavouriteTracks(userId: string): Observable<TrackModel[]> {
+    return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/favorite/${userId}`);
+  }
+
+
   getThumbnailBasedOnTrackId(id: string){
     return this.http.get<{ url: string }>(`${environment.apiUrl}/track/thumbnail-url/${id}`);
   }
@@ -145,5 +151,8 @@ export class TrackService {
 
   getTrackByCategoryId(categoryId: string): Observable<TrackModel[]> {
     return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/by-category/${categoryId}`);
+  }
+  incrementViewCount(trackId: string): Observable<any> {
+    return this.http.patch(`${environment.apiUrl}/track/${trackId}/increase-view`, {});
   }
 }

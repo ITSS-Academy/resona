@@ -24,7 +24,8 @@ export const playlistReducer = createReducer(
     console.log(type)
     return {
       ...state,
-      playlistList: [...state.playlists, playlist],
+      playlists: [...state.playlists, playlist], // correct property name
+      playlist: playlist,
       isLoading: false,
       error: null,
     };

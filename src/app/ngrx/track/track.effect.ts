@@ -36,6 +36,26 @@ export const createTrackEffect = createEffect(
   {functional: true}
 );
 
+export const getFavoriteTracksEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getFavoriteTracks),
+      switchMap(({userId}) =>
+        trackService.getFavouriteTracks(userId).pipe(
+          map((tracks) => {
+            console.log(tracks);
+            return trackActions.getFavoriteTracksSuccess({tracks});
+          }),
+          catchError((error: { message: any; }) =>
+            of(trackActions.getFavoriteTracksFailure({error: error.message})))
+        )
+      )
+    )
+  },
+  {functional: true}
+)
+
+
 export const getTrackByIdEffect = createEffect(
   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
     return actions$.pipe(
@@ -104,3 +124,19 @@ export const getTrackByCategoryIdEffect = createEffect(
   },
   {functional: true}
 )
+export const incrementTrackPlayCountEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.incrementTrackPlayCount),
+      switchMap(({trackId}) =>
+        trackService.incrementViewCount(trackId).pipe(
+          map(() => trackActions.incrementTrackPlayCountSuccess({trackId})),
+          catchError((error) =>
+            of(trackActions.incrementTrackPlayCountFailure({error: error.message || 'Increment failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);
