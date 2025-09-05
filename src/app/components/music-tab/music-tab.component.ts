@@ -5,14 +5,17 @@ import {Store} from '@ngrx/store';
 import {PlayState} from '../../ngrx/play/play.state';
 import * as PlayActions from '../../ngrx/play/play.action';
 import {DurationPipe} from '../../shared/pipes/duration.pipe';
-import {DatePipe} from '@angular/common';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 
 @Component({
   selector: 'app-music-tab',
   imports: [
     MaterialModule,
     DurationPipe,
-    DatePipe
+    DatePipe,
+    DecimalPipe,
+    ImgConverterPipe
   ],
   templateUrl: './music-tab.component.html',
   styleUrl: './music-tab.component.scss'
