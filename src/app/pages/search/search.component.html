@@ -1,5 +1,7 @@
+<div class="search-pages">
 <mat-tab-group class="search-tabs">
   <mat-tab label="All">
+    <div class="tab-content">
     <h2>Genres</h2>
     <div class="category-container">
       @for (category of categories$ | async; track $index) {
@@ -97,9 +99,11 @@
       </div>
     </div>
     <button mat-button>See more...</button>
+    </div>
   </mat-tab>
 
   <mat-tab label="Songs">
+    <div class="tab-content">
     <div class="playlist-table-header">
       <span class="col-name"># Name</span>
       <span class="col-artist"># Artist</span>
@@ -141,13 +145,17 @@
       <div class="song-artist">Saint Tame MP</div>
       <div class="song-duration">3:20</div>
     </div>
+    </div>
   </mat-tab>
 
   <mat-tab label="Genres">
+    <div class="tab-content">
     <app-category></app-category>
+    </div>
   </mat-tab>
 
   <mat-tab label="Playlist">
+    <div class="tab-content">
     <div class="search-playlist">
 
       <div class="card">
@@ -219,9 +227,11 @@
         <p class="tracks">25 tracks</p>
       </div>
     </div>
+    </div>
   </mat-tab>
 
   <mat-tab label="Profile">
+    <div class="tab-content">
     <div class="search-profile">
       <div class="artist">
         <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"
@@ -286,7 +296,9 @@
         <p class="artist-name">Profile</p>
       </div>
     </div>
+    </div>
 
   </mat-tab>
 
 </mat-tab-group>
+</div>

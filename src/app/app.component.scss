@@ -131,6 +131,10 @@
   -ms-overflow-style: none;
 }
 
+.content:has(app-search) {
+  padding-top: 0 !important;
+}
+
 //mat-drawer.mat-drawer-closed ~ .mat-drawer-content .content {
 //  margin-left: 80px; /* khi sidebar thu nhỏ thì content tự dịch trái */
 //}
