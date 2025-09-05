@@ -29,6 +29,6 @@ export class MusicTabComponent {
 
   onPlayTrack(track: TrackModel) {
     console.log('Playing track:', track);
-    this.store.dispatch(PlayActions.play({track}));
+    this.store.dispatch(PlayActions.setTrack({track}));
   }
 }

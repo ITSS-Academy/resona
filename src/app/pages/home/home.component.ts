@@ -17,7 +17,7 @@ import {PopularArtistModel} from '../../models/popularArtist.model';
 import {MoodPlaylistService} from '../../services/mood-playlist/mood-playlist.service';
 import {NewReleaseSongsService} from '../../services/new-release-songs/new-release-songs.service';
 import {PopularArtistService} from '../../services/popular-artist/popular-artist.service';
-import { PlayState } from '../../ngrx/play/play.state';
+import {PlayState} from '../../ngrx/play/play.state';
 import {MusicTabComponent} from '../../components/music-tab/music-tab.component';
 import {CategoryState} from '../../ngrx/category/category.state';
 import {CategoryModel} from '../../models/category.model';
@@ -77,34 +77,34 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     this.popularArtists = this.popularArtistService.artists;
   }
 
-private defaultProfile: ProfileModel = {
-  uid: 'default',
-  email: 'unknown@email.com',
-  displayName: 'Unknown',
-  photoUrl: ''
-};
+  private defaultProfile: ProfileModel = {
+    uid: 'default',
+    email: 'unknown@email.com',
+    displayName: 'Unknown',
+    photoUrl: ''
+  };
 
-private defaultGenre: MusicGenresModel = {
-  id: 'default',
-  name: 'Unknown',
-  image: '',
-  color: '#cccccc'
-};
+  private defaultGenre: MusicGenresModel = {
+    id: 'default',
+    name: 'Unknown',
+    image: '',
+    color: '#cccccc'
+  };
 
-get newReleaseTracks(): TrackModel[] {
-  return this.newReleases.map((song, idx) => ({
-    id: `new-${idx}`,
-    title: song.title,
-    artistName: song.artist,
-    thumbnailPath: song.imageUrl,
-    filePath: '',
-    viewCount: 0,
-    createdAt: song.releaseDate,
-    duration: this.parseDuration(song.duration),
-    owner: this.defaultProfile,
-    category: this.defaultGenre
-  }));
-}
+  get newReleaseTracks(): TrackModel[] {
+    return this.newReleases.map((song, idx) => ({
+      id: `new-${idx}`,
+      title: song.title,
+      artistName: song.artist,
+      thumbnailPath: song.imageUrl,
+      filePath: '',
+      viewCount: 0,
+      createdAt: song.releaseDate,
+      duration: this.parseDuration(song.duration),
+      owner: this.defaultProfile,
+      category: this.defaultGenre
+    }));
+  }
 
   // Helper function
   private parseDuration(duration: string): number {
@@ -307,7 +307,7 @@ get newReleaseTracks(): TrackModel[] {
 
   onPlayTrack(track: TrackModel) {
     console.log('Playing track:', track);
-    this.store.dispatch(PlayActions.play({track}));
+    this.store.dispatch(PlayActions.play());
   }
 
   ngOnDestroy() {

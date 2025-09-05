@@ -148,4 +148,11 @@ export class TrackService {
   getLyricsBasedOnTrackId(id: string) {
     return this.http.get<{ lyrics: string }>(`${environment.apiUrl}/track/lyrics/${id}`);
   }
+
+  getTrackByCategoryId(categoryId: string): Observable<TrackModel[]> {
+    return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/by-category/${categoryId}`);
+  }
+  incrementViewCount(trackId: string): Observable<any> {
+    return this.http.patch(`${environment.apiUrl}/track/${trackId}/increase-view`, {});
+  }
 }

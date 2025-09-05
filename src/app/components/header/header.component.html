@@ -5,6 +5,7 @@
     </button>
     <div class="outline-search">
       <input type="text" placeholder="Search..." class="search-input" [formControl]="searchControl"
+             (click)="navigateToSearch()"
              (keyup.enter)="navigateToSearch()"/>
       <mat-icon class="material-symbols-rounded" (click)="navigateToSearch()">search</mat-icon>
     </div>
@@ -22,7 +23,7 @@
         />
       </div>
       <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item (click)="navigateToProfile(profile.uid)">
+        <button mat-menu-item (click)="navigateToProfile()">
           <mat-icon>person</mat-icon>
           <span>Profile</span>
         </button>

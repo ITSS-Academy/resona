@@ -73,37 +73,70 @@ export const getTrackByIdEffect = createEffect(
   {functional: true}
 );
 
-// export const getThumbnailBasedOnTrackIdEffect = createEffect(
-//   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
-//     return actions$.pipe(
-//       ofType(trackActions.getThumbnailBasedOnTrackId),
-//       switchMap(({id}) =>
-//         trackService.getThumbnailBasedOnTrackId(id).pipe(
-//           map((res) => trackActions.getThumbnailBasedOnTrackIdSuccess({thumbnailUrl: res.url})),
-//           catchError((error) =>
-//             of(trackActions.getThumbnailBasedOnTrackIdFailure({error: error.message || 'Get thumbnail failed'}))
-//           )
-//         )
-//       )
-//     );
-//   },
-//   {functional: true}
-// );
-//
-//
-// export const getLyricsByTrackIdEffect = createEffect(
-//   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
-//     return actions$.pipe(
-//       ofType(trackActions.getLyricsByTrackId),
-//       switchMap(({id}) =>
-//         trackService.getLyricsBasedOnTrackId(id).pipe(
-//           map((res) => trackActions.getLyricsByTrackIdSuccess({ lyrics: res.lyrics })),
-//           catchError((error) =>
-//             of(trackActions.getLyricsByTrackIdFailure({error: error.message || 'Get lyrics failed'}))
-//           )
-//         )
-//       )
-//     );
-//   },
-//   {functional: true}
-// );
+export const getThumbnailBasedOnTrackIdEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getThumbnailBasedOnTrackId),
+      switchMap(({id}) =>
+        trackService.getThumbnailBasedOnTrackId(id).pipe(
+          map((res) => trackActions.getThumbnailBasedOnTrackIdSuccess({thumbnailUrl: res.url})),
+          catchError((error) =>
+            of(trackActions.getThumbnailBasedOnTrackIdFailure({error: error.message || 'Get thumbnail failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);
+
+
+export const getLyricsByTrackIdEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getLyricsByTrackId),
+      switchMap(({id}) =>
+        trackService.getLyricsBasedOnTrackId(id).pipe(
+          map((res) => trackActions.getLyricsByTrackIdSuccess({ lyrics: res.lyrics })),
+          catchError((error) =>
+            of(trackActions.getLyricsByTrackIdFailure({error: error.message || 'Get lyrics failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);
+
+export const getTrackByCategoryIdEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getTrackByCategoryId),
+      switchMap(({categoryId}) =>
+        trackService.getTrackByCategoryId(categoryId).pipe(
+          map((tracks) => trackActions.getTrackByCategoryIdSuccess({tracks: tracks})),
+          catchError((error) =>
+            of(trackActions.getTrackByCategoryIdFailure({error: error}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+)
+export const incrementTrackPlayCountEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.incrementTrackPlayCount),
+      switchMap(({trackId}) =>
+        trackService.incrementViewCount(trackId).pipe(
+          map(() => trackActions.incrementTrackPlayCountSuccess({trackId})),
+          catchError((error) =>
+            of(trackActions.incrementTrackPlayCountFailure({error: error.message || 'Increment failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);

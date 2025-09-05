@@ -20,9 +20,4 @@ export class CommentService {
     return this.http.post<CommentModel>(`http://localhost:3000/comment/${trackId}/${userId}`, {trackId, userId, content});
   }
 
-  getTotalCommentBasedOnTrackId(id: string): Observable<number> {
-    return this.http.get<number>(`http://localhost:3000/comment/count/${id}`);
-  }
-
-
 }
