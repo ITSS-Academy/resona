@@ -32,9 +32,8 @@ export class SongDetailComponent implements OnInit , OnDestroy{
   trackDetail!: TrackModel;
   comment$!: Observable<CommentModel[]>;
   comment: CommentModel[] = [];
+  totalComment!:number;
   isLoadingTrack$!: Observable<boolean>;
-  totalComment$!: Observable<number>;
-  totalComment!: number;
   thumbnailUrl$!: Observable<string>;
   thumbnailUrl!: string;
   lyric$!: Observable<string>;
@@ -51,14 +50,12 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     console.log(id);
     this.store.dispatch(CommentActions.getComments({id: id}));
     this.store.dispatch(TrackActions.getTrackById({id: id}));
-    this.store.dispatch(CommentActions.getTotalCommentBasedOnTrackId({id: id}));
     this.store.dispatch(TrackActions.getThumbnailBasedOnTrackId({id: id}));
     this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
 
     this.comment$ = this.store.select('comments', 'commentList');
     this.trackDetail$ = this.store.select('track', 'trackDetail');
     this.isLoadingTrack$ = this.store.select('track', 'isLoading');
-    this.totalComment$ = this.store.select('comments', 'totalComments');
     this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
     this.lyric$ = this.store.select('track', 'lyrics');
   }
@@ -71,16 +68,13 @@ export class SongDetailComponent implements OnInit , OnDestroy{
       }),
       this.comment$.subscribe(comments=>{
         this.comment = comments;
-      }),
-      this.totalComment$.subscribe(total=>{
-        this.totalComment = total;
+        this.totalComment = this.comment.length;
       }),
       this.thumbnailUrl$.subscribe(thumbnailUrl=>{
         this.thumbnailUrl = thumbnailUrl;
       }),
       this.lyric$.subscribe(lyric=>{
         this.lyric = lyric;
-        console.log(this.lyric);
       }),
     )
   }

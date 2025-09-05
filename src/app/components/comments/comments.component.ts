@@ -52,6 +52,7 @@ export class CommentsComponent implements OnInit , OnDestroy{
     this.subscriptions.push(
       this.profile$.subscribe(profile => {
         this.profile = profile;
+        console.log(this.profile);
       }),
       this.comments$.subscribe(comments => {
       }),
