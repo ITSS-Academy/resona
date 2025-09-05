@@ -36,4 +36,21 @@ export const createCommentEffect = createEffect(
     );
   },
   {functional: true}
-)
+);
+
+export const getTotalCommentBasedOnTrackIdEffect = createEffect(
+  (actions$ = inject(Actions), commentService = inject(CommentService)) => {
+    return actions$.pipe(
+      ofType(CommentActions.getTotalCommentBasedOnTrackId),
+      switchMap((action) =>
+        commentService.getTotalCommentBasedOnTrackId(action.id).pipe(
+          map((totalComments) => CommentActions.getTotalCommentBasedOnTrackIdSuccess({totalComments: totalComments})),
+          catchError((error: {message: any}) =>
+            of(CommentActions.getTotalCommentBasedOnTrackIdFailure({error}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);

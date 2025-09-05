@@ -24,3 +24,15 @@ export const createCommentSuccess = createAction(
 export const createCommentFailure = createAction(
   '[Comment] Create Comment Failure', props<{error: any}>()
 )
+
+export const getTotalCommentBasedOnTrackId = createAction(
+  '[Comment] Get Total Comment Based On Track Id', props<{id: string}>()
+)
+
+export const getTotalCommentBasedOnTrackIdSuccess = createAction(
+  '[Comment] Get Total Comment Based On Track Id Success', props<{totalComments: number}>()
+)
+
+export const getTotalCommentBasedOnTrackIdFailure = createAction(
+  '[Comment] Get Total Comment Based On Track Id Failure', props<{error: any}>()
+)

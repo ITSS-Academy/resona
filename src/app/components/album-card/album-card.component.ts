@@ -1,5 +1,4 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {AlbumModel} from '../../models/album.model';
 import {Router} from '@angular/router';
 
 @Component({
@@ -9,7 +8,6 @@ import {Router} from '@angular/router';
   styleUrl: './album-card.component.scss'
 })
 export class AlbumCardComponent implements OnInit , OnDestroy {
-  @Input() album!: AlbumModel;
 
   constructor(
     private router: Router,
