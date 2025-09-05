@@ -4,29 +4,23 @@
   <div>
     <h2 class="section-title">Music <span>Genres</span></h2>
     <div class="horizontal-scroll-wrapper">
-      @if (isGenresScrollable) {
-        @if (showGenresLeftBtn) {
-          <button
-            mat-icon-button
-            class="scroll-btn"
-            aria-label="Scroll left"
-            style="left: 12px; right: auto;"
-            (click)="scrollLeft()"
-          >
-            <mat-icon>arrow_back</mat-icon>
-          </button>
-        }
-        @if (showGenresRightBtn) {
-          <button
-            mat-icon-button
-            class="scroll-btn"
-            aria-label="Scroll right"
-            (click)="scrollRight()"
-          >
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        }
-      }
+<!--          <button-->
+<!--            mat-icon-button-->
+<!--            class="scroll-btn"-->
+<!--            aria-label="Scroll left"-->
+<!--            style="left: 12px; right: auto;"-->
+<!--            (click)="scrollLeft()"-->
+<!--          >-->
+<!--            <mat-icon>arrow_back</mat-icon>-->
+<!--          </button>-->
+<!--          <button-->
+<!--            mat-icon-button-->
+<!--            class="scroll-btn"-->
+<!--            aria-label="Scroll right"-->
+<!--            (click)="scrollRight()"-->
+<!--          >-->
+<!--            <mat-icon>arrow_forward</mat-icon>-->
+<!--          </button>-->
       <div class="horizontal-scroll" #genresScroll aria-label="Music genres">
         @for (genre of categories$ | async; track genre.id) {
           <div class="card">
@@ -41,29 +35,23 @@
         <div>
           <h2 class="section-title">Mood <span>Playlist</span></h2>
           <div class="horizontal-scroll-wrapper">
-            @if (isMoodScrollable) {
-              @if (showMoodLeftBtn) {
-                <button
-                  mat-icon-button
-                  class="scroll-btn"
-                  aria-label="Scroll left"
-                  style="left: 12px; right: auto;"
-                  (click)="scrollMoodLeft()"
-                >
-                  <mat-icon>arrow_back</mat-icon>
-                </button>
-              }
-              @if (showMoodRightBtn) {
-                <button
-                  mat-icon-button
-                  class="scroll-btn"
-                  aria-label="Scroll right"
-                  (click)="scrollMoodRight()"
-                >
-                  <mat-icon>arrow_forward</mat-icon>
-                </button>
-              }
-            }
+<!--                <button-->
+<!--                  mat-icon-button-->
+<!--                  class="scroll-btn"-->
+<!--                  aria-label="Scroll left"-->
+<!--                  style="left: 12px; right: auto;"-->
+<!--&lt;!&ndash;                  (click)="scrollMoodLeft()"&ndash;&gt;-->
+<!--                >-->
+<!--                  <mat-icon>arrow_back</mat-icon>-->
+<!--                </button>-->
+<!--                <button-->
+<!--                  mat-icon-button-->
+<!--                  class="scroll-btn"-->
+<!--                  aria-label="Scroll right"-->
+<!--                  (click)="scrollMoodRight()"-->
+<!--                >-->
+<!--                  <mat-icon>arrow_forward</mat-icon>-->
+<!--                </button>-->
             <div class="horizontal-scroll" #moodScroll aria-label="Mood playlists">
               @for (mood of moodPlaylists; track mood.name) {
                 <div class="card">
@@ -87,29 +75,23 @@
     <div>
       <h2 class="section-title">Popular <span>Artists</span></h2>
       <div class="horizontal-scroll-wrapper">
-        @if (isArtistScrollable) {
-          @if (showArtistLeftBtn) {
-            <button
-              mat-icon-button
-              class="scroll-btn"
-              aria-label="Scroll left"
-              style="left: 12px; right: auto;"
-              (click)="scrollArtistLeft()"
-            >
-              <mat-icon>arrow_back</mat-icon>
-            </button>
-          }
-          @if (showArtistRightBtn) {
-            <button
-              mat-icon-button
-              class="scroll-btn"
-              aria-label="Scroll right"
-              (click)="scrollArtistRight()"
-            >
-              <mat-icon>arrow_forward</mat-icon>
-            </button>
-          }
-        }
+<!--            <button-->
+<!--              mat-icon-button-->
+<!--              class="scroll-btn"-->
+<!--              aria-label="Scroll left"-->
+<!--              style="left: 12px; right: auto;"-->
+<!--&lt;!&ndash;              (click)="scrollArtistLeft()"&ndash;&gt;-->
+<!--            >-->
+<!--              <mat-icon>arrow_back</mat-icon>-->
+<!--            </button>-->
+<!--            <button-->
+<!--              mat-icon-button-->
+<!--              class="scroll-btn"-->
+<!--              aria-label="Scroll right"-->
+<!--              (click)="scrollArtistRight()"-->
+<!--            >-->
+<!--              <mat-icon>arrow_forward</mat-icon>-->
+<!--            </button>-->
         <div class="popular-artists" #artistScroll aria-label="Popular artists">
           @for (artist of popularArtists; track artist.name) {
             <div class="artist">
