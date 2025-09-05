@@ -1,18 +1,19 @@
-import {Component, AfterViewInit, ViewChild, ElementRef, OnInit} from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ElementRef, OnInit, OnDestroy} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {LyricComponent} from '../lyric/lyric.component';
 import {MatDrawer, MatDrawerContainer} from '@angular/material/sidenav';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {QueueComponent} from '../queue/queue.component';
-import {AlbumCardComponent} from '../album-card/album-card.component';
-import {QueueSongDetailComponent} from '../queue-song-detail/queue-song-detail.component';
 import {SmallAlbumComponent} from '../small-album/small-album.component';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {TrackModel} from '../../models/track.model';
 import {Store} from '@ngrx/store';
 import {PlayState} from '../../ngrx/play/play.state';
 import * as PlayActions from '../../ngrx/play/play.action';
 import {AsyncPipe} from '@angular/common';
+import {DurationPipe} from '../../shared/pipes/duration.pipe';
+import {TrackState} from '../../ngrx/track/track.state';
+import * as TrackActions from '../../ngrx/track/track.action';
 
 @Component({
   selector: 'app-player-bar',
@@ -26,17 +27,19 @@ import {AsyncPipe} from '@angular/common';
     QueueComponent,
     SmallAlbumComponent,
     AsyncPipe,
+    DurationPipe,
   ],
   styleUrls: ['./player-bar.component.scss']
 })
-export class PlayerBarComponent implements AfterViewInit, OnInit {
+export class PlayerBarComponent implements OnInit, OnDestroy {
 
   @ViewChild('lyric') lyricDrawer!: MatDrawer;
   @ViewChild('queue') queueDrawer!: MatDrawer;
   @ViewChild('smallAlbum') smallAlbumDrawer!: MatDrawer;
-  @ViewChild('audio') audioRef!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio', {static: true}) audio!: ElementRef<HTMLAudioElement>;
 
-  currentTrack$!: Observable<TrackModel | null>;
+  currentTrack$!: Observable<TrackModel>;
+  currentTrack!: TrackModel;
   isPlaying$!: Observable<boolean>;
 
   isPlaying = true;
@@ -44,71 +47,96 @@ export class PlayerBarComponent implements AfterViewInit, OnInit {
   currentTime = 0;
   lastTrack: TrackModel | null = null;
   filePath: string = '';
+  subscriptions: Subscription[] = [];
+  hasIncremented = false;
+  repeatMode: 'none' | 'infinite' | 'once' = 'none';
 
   constructor(
-    private store: Store<{ play: PlayState }>
+    private store: Store<{
+      play: PlayState,
+      track: TrackState,
+    }>
   ) {
   }
 
   ngOnInit() {
+    const audio = this.audio.nativeElement;
+    console.log('Audio element ready in OnInit:', audio);
+
     this.currentTrack$ = this.store.select(state => state.play.currentTrack);
     this.isPlaying$ = this.store.select(state => state.play.isPlaying);
-  }
 
-  toggleLyric() {
-    if (this.queueDrawer.opened) {
-      this.queueDrawer.close().then();
-    }
-    if (this.smallAlbumDrawer.opened) {
-      this.smallAlbumDrawer.close().then();
-    }
-    this.lyricDrawer.toggle().then();
-  }
+    // lắng nghe track thay đổi
+    this.subscriptions.push(
+      this.currentTrack$.subscribe(track => {
+        console.log('Current track changed:', track);
+        if (track) {
+          this.lastTrack = track;
+          this.currentTrack = track;
+          this.filePath = this.buildStreamUrl(track);
+          this.hasIncremented = false;
 
-  toggleQueue() {
-    if (this.lyricDrawer.opened) {
-      this.lyricDrawer.close().then();
-    }
-    if (this.smallAlbumDrawer.opened) {
-      this.smallAlbumDrawer.close().then();
-    }
-    this.queueDrawer.toggle().then();
-  }
+          audio.src = this.filePath;
+          audio.load();
+          audio.play();
+        }
+      }),
 
-  toggleSmallAlbum() {
-    if (this.lyricDrawer.opened) {
-      this.lyricDrawer.close().then();
-    }
-    if (this.queueDrawer.opened) {
-      this.queueDrawer.close().then();
-    }
-    this.smallAlbumDrawer.toggle().then();
-  }
+      // lắng nghe trạng thái play/pause
+      this.isPlaying$.subscribe(isPlaying => {
+        this.isPlaying = isPlaying;
+        if (isPlaying) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      })
+    );
 
+    // cập nhật progress khi audio chạy
+    audio.ontimeupdate = () => {
+      this.currentTime = audio.currentTime;
+      this.duration = audio.duration || 0;
+      if (this.currentTrack && !this.hasIncremented) {
+        console.log('Audio currentTime updated:', this.currentTime);
+        if (audio.currentTime >= 120) {
+          console.log('more than 120s, increment play count for track:', this.currentTrack.id, this.currentTime);
+          this.store.dispatch(
+            TrackActions.incrementTrackPlayCount({trackId: this.currentTrack.id})
+          );
+          this.hasIncremented = true;
+        }
+      }
 
-  ngAfterViewInit() {
-    this.currentTrack$.subscribe(track => {
-      if (track && this.audioRef?.nativeElement) {
-        console.log('Current track:', track);
-        this.lastTrack = track;
-        this.filePath = this.buildStreamUrl(track);
-        this.audioRef.nativeElement.play();
+    };
+
+    audio.addEventListener('ended', () => {
+      if (this.repeatMode === 'once') {
+        audio.currentTime = 0;
+        audio.play();
+        this.repeatMode = 'none'; // sau 1 lần thì quay lại none
+      } else if (this.repeatMode === 'infinite') {
+        audio.currentTime = 0;
+        audio.play();
+      } else {
+        console.log('track ended') // nếu bạn có danh sách nhạc
       }
     });
-
-    // Play progress
-    const playRange = document.querySelector('.player-progress input[type="range"]') as HTMLInputElement;
-    if (playRange) {
-      this.updateGradient(playRange);
-      playRange.addEventListener('input', () => this.updateGradient(playRange));
-    }
-    // Volume
-    const volumeRange = document.querySelector('.player-right input[type="range"]') as HTMLInputElement;
-    if (volumeRange) {
-      this.updateGradient(volumeRange);
-      volumeRange.addEventListener('input', () => this.updateGradient(volumeRange));
-    }
   }
+
+  onSeek(event: any) {
+    const input = event.target as HTMLInputElement;
+    const audio = this.audio.nativeElement;
+
+    audio.currentTime = +input.value; // chỉ tua
+    if (this.isPlaying) {
+      audio.play(); // đảm bảo vẫn chạy tiếp
+    }
+
+    const percent = (+input.value / this.duration) * 100;
+    input.style.setProperty('--progress', `${percent}%`);
+  }
+
 
   buildStreamUrl(track: TrackModel) {
     return `https://cynhadjnrnyzycvxcpln.supabase.co/storage/v1/object/public/tracks/${track.filePath}`;
@@ -119,29 +147,26 @@ export class PlayerBarComponent implements AfterViewInit, OnInit {
     if (this.isPlaying) {
       this.store.dispatch(PlayActions.pause());
     } else {
-      // nếu trước đó đã có track thì phát tiếp track hiện tại
-      this.store.dispatch(PlayActions.play({track: this.lastTrack}));
+      this.store.dispatch(PlayActions.play());
     }
   }
 
-  updateGradient(range: HTMLInputElement) {
-    const percent = ((+range.value - +range.min) / (+range.max - +range.min)) * 100;
-    range.style.backgroundSize = `${percent}% 100%`;
+  onToggleRepeat() {
+    if (this.repeatMode === 'none') {
+      this.repeatMode = 'infinite';
+    } else if (this.repeatMode === 'infinite') {
+      this.repeatMode = 'once';
+    } else {
+      this.repeatMode = 'none';
+    }
   }
 
-  // ngAfterViewInit() {
-  //   const sliders = document.querySelectorAll<HTMLInputElement>(
-  //     '.mini-player-progress input[type="range"], .mini-player-right input[type="range"]'
-  //   );
-  //   sliders.forEach((slider) => {
-  //     this.updateSliderBackground(slider);
-  //     slider.addEventListener('input', () => this.updateSliderBackground(slider));
-  //   });
-  // }
-  //
-  // private updateSliderBackground(slider: HTMLInputElement) {
-  //   const value =
-  //     ((+slider.value - +slider.min) / (+slider.max - +slider.min)) * 100;
-  //   slider.style.backgroundSize = `${value}% 100%`;
-  // }
+  onTrackChanged(track: TrackModel) {
+    this.currentTrack = track;
+    this.hasIncremented = false; // reset lại để tính cho bài mới
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
 }

@@ -42,4 +42,36 @@ export const trackReducer = createReducer(
       }
     }
   ),
+  on(
+    trackActions.incrementTrackPlayCount, (state, {type}) => {
+      console.log(type)
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      }
+    }
+  ),
+  on(trackActions.incrementTrackPlayCountSuccess, (state, {type, trackId}) => {
+    console.log(type, trackId);
+    return {
+      ...state,
+      loading: false,
+      tracks: state.tracks.map((track) =>
+        track.id === trackId
+          ? {...track, viewCount: track.viewCount + 1}
+          : track
+      ),
+    }
+  }),
+  on(
+    trackActions.incrementTrackPlayCountFailure, (state, {type, error}) => {
+      console.log(type);
+      return {
+        ...state,
+        isLoading: false,
+        error: error,
+      }
+    }
+  )
 );

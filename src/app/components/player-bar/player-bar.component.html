@@ -1,67 +1,81 @@
+<audio #audio></audio>
+
 @if (currentTrack$ | async; as track) {
   <footer>
-  <audio #audio
-         [src]='buildStreamUrl(track)'
-         autoplay="{{this.isPlaying}}"
-  >
-  </audio>
-  <div class="player-left">
-    <img
-      src="https://upload.wikimedia.org/wikipedia/vi/2/20/JustaTee_-_Thang_dien.jpg"
-      alt="Current playing song cover art"
-    />
-    <div class="player-song-info">
-      <div class="player-song-title" title="Med Med Med Med">
-        <p>{{ track.title }}</p>
-      </div>
-      <div class="player-song-artist">
-        <p>JUSTA TEE x PHƯƠNG LY</p>
+    <div class="player-left">
+      <img
+        [src]="'https://cynhadjnrnyzycvxcpln.supabase.co/storage/v1/object/public/thumbnail/' + track.thumbnailPath"
+        alt="Current playing song cover art"
+      />
+      <div class="player-song-info">
+        <div class="player-song-title" title="Med Med Med Med">
+          <p>{{ track.title }}</p>
+        </div>
+        <div class="player-song-artist">
+          <p>{{ track.artistName }}</p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="player-center">
-    <div
-      class="player-controls"
-      role="group"
-      aria-label="Playback controls"
-    >
-      <button mat-icon-button aria-label="Shuffle">
-        <mat-icon class="icon">shuffle</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="Previous">
-        <mat-icon class="icon">skip_previous</mat-icon>
-      </button>
-      <div class="play-button">
-        <button mat-icon-button (click)="onTogglePlay()">
-          <mat-icon style="color: var(--mat-sys-surface-container-high)">play_arrow</mat-icon>
+    <div class="player-center">
+      <div
+        class="player-controls"
+        role="group"
+        aria-label="Playback controls"
+      >
+        <button mat-icon-button aria-label="Shuffle">
+          <mat-icon class="icon">shuffle</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Previous">
+          <mat-icon class="icon">skip_previous</mat-icon>
+        </button>
+        <div class="play-button">
+          <button mat-icon-button (click)="onTogglePlay()">
+            <mat-icon>
+              {{ (isPlaying$ | async) ? 'pause' : 'play_arrow' }}
+            </mat-icon>
+
+          </button>
+        </div>
+        <button mat-icon-button aria-label="Next" class="play-button">
+          <mat-icon class="icon">skip_next</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Repeat" (click)="onToggleRepeat()">
+          @switch (repeatMode) {
+            @case ('none') {
+              <mat-icon color="default">repeat</mat-icon>
+            }
+            @case ('infinite') {
+              <mat-icon style="color: var(--mat-sys-primary)">repeat</mat-icon>
+            }
+            @case ('once') {
+              <mat-icon style="color: var(--mat-sys-primary)">repeat_one</mat-icon>
+            }
+          }
         </button>
       </div>
-      <button mat-icon-button aria-label="Next" class="play-button">
-        <mat-icon class="icon">skip_next</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="Repeat">
-        <mat-icon class="icon">sync</mat-icon>
-      </button>
+
+      <div class="player-progress progress-container">
+        <span>{{ currentTime | duration }}</span>
+        <input
+          class="progress-bar"
+          type="range"
+          min="0"
+          [max]="duration"
+          [value]="currentTime"
+          (input)="onSeek($event)"
+          aria-label="Song progress"
+          [style.--progress]="(currentTime / duration) * 100 + '%'"
+
+        />
+        <span>{{ track.duration | duration }}</span>
+      </div>
     </div>
 
-    <div class="player-progress">
-      <span>0:00</span>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        value="50"
-        aria-label="Song progress"
-      />
-      <span>5:08</span>
-    </div>
-  </div>
-
-  <div class="player-right">
+    <div class="player-right">
 
       <div class="smallAlbum">
-        <button mat-icon-button aria-label="Fullscreen" (click)="toggleSmallAlbum()">
+        <button mat-icon-button aria-label="Fullscreen">
           <mat-icon class="icon" fontSet="material-icons-outlined">image</mat-icon>
         </button>
 
@@ -74,7 +88,7 @@
       </div>
 
       <div class="lyric">
-        <button mat-icon-button (click)="toggleLyric()" aria-label="lyric-frame">
+        <button mat-icon-button aria-label="lyric-frame">
           <mat-icon class="icon">music_note</mat-icon>
         </button>
 
@@ -86,7 +100,7 @@
       </div>
 
       <div class="queue">
-        <button mat-icon-button aria-label="Queue" (click)="toggleQueue()">
+        <button mat-icon-button aria-label="Queue">
           <mat-icon class="icon">playlist_play</mat-icon>
         </button>
 
@@ -109,5 +123,5 @@
         />
       </button>
     </div>
-</footer>
+  </footer>
 }

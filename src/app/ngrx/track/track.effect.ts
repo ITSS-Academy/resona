@@ -36,3 +36,19 @@ export const createTrackEffect = createEffect(
   {functional: true}
 );
 
+export const incrementTrackPlayCountEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.incrementTrackPlayCount),
+      switchMap(({trackId}) =>
+        trackService.incrementViewCount(trackId).pipe(
+          map(() => trackActions.incrementTrackPlayCountSuccess({trackId})),
+          catchError((error) =>
+            of(trackActions.incrementTrackPlayCountFailure({error: error.message || 'Increment failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);

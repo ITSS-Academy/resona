@@ -24,3 +24,18 @@ export const uploadTrackFailure = createAction(
   '[Track] Upload Track Failure',
   props<{ error: string }>()
 );
+
+export const incrementTrackPlayCount = createAction(
+  '[Track] Increment Track Play Count',
+  props<{ trackId: string }>()
+);
+
+export const incrementTrackPlayCountSuccess = createAction(
+  '[Track] Increment Track Play Count Success',
+  props<{ trackId: string }>()
+);
+
+export const incrementTrackPlayCountFailure = createAction(
+  '[Track] Increment Track Play Count Failure',
+  props<{ error: string }>()
+);

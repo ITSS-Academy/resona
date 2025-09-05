@@ -135,4 +135,7 @@ export class TrackService {
     return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/uploaded/${ownerId}`);
   }
 
+  incrementViewCount(trackId: string): Observable<any> {
+    return this.http.patch(`${environment.apiUrl}/track/${trackId}/increase-view`, {});
+  }
 }
