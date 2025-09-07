@@ -4,7 +4,7 @@
   </div>
   <form class="comment-input" [formGroup]="commentForm" (ngSubmit)="createComment()">
     <div class="image">
-      <img src="{{profile.photoUrl}}" alt="">
+      <img src="{{profile.photoURL}}" alt="">
     </div>
     <div class="form-fill">
         <mat-form-field appearance="fill" class="input">
@@ -18,7 +18,7 @@
   @for(comment of commentList; track comment.id) {
     <div class="comments">
       <div class="image">
-        <img src="{{comment.profile?.photoUrl}}" alt="">
+        <img src="{{comment.profile?.photoURL}}" alt="">
       </div>
       <div class="comment-info">
         <div class="comment-info-above">
