@@ -7,6 +7,7 @@ import * as PlayActions from '../../ngrx/play/play.action';
 import {DurationPipe} from '../../shared/pipes/duration.pipe';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
+import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
 
 @Component({
   selector: 'app-music-tab',
@@ -22,6 +23,7 @@ import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 })
 export class MusicTabComponent {
   @Input() track!: TrackModel;
+  @Input() userId!: string;
 
   constructor(
     private store: Store<{
@@ -34,4 +36,11 @@ export class MusicTabComponent {
     console.log('Playing track:', track);
     this.store.dispatch(PlayActions.setTrack({track}));
   }
+
+  onFavoriteTrack(track: TrackModel) {
+    if (this.userId && track.id) {
+    this.store.dispatch(FavoriteActions.addToFavorite({userId: this.userId, songId: track.id}));
+    }
+  }
+
 }

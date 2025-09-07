@@ -33,5 +33,11 @@ export class PlaylistService {
     return this.http.get<PlaylistModel>(`${environment.apiUrl}/playlist/all-tracks/${id}`);
   }
 
+  addToFavorite(userId: string, songId: string) {
+    return this.http.post(
+      `${environment.apiUrl}/playlist/favorite/${userId}/${songId}`,
+      {}
+    );
+  }
 
 }
