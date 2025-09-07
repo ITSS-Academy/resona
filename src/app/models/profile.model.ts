@@ -5,7 +5,7 @@ export interface ProfileModel {
   uid: string;
   email: string;
   displayName: string;
-  photoUrl?: string;
+  photoURL?: string;
   createdAt?: string;
   // tracks?: TrackModel[];
   // playlists?: PlaylistModel[];
