@@ -20,18 +20,22 @@
   <!-- Song views -->
   <div class="song-views">{{ track.viewCount | number }} views</div>
 
+  <div class="song-delete">
+
+            <mat-checkbox></mat-checkbox>
+    </div>
+
   <!-- Actions -->
   <div class="song-actions">
-    <button aria-label="Like song" (click)="$event.stopPropagation()">
+    <button aria-label="Like song">
       <mat-icon>favorite_border</mat-icon>
     </button>
     <!-- Nút mở menu -->
     <button
       mat-icon-button
       [matMenuTriggerFor]="menu"
-      (click)="$event.stopPropagation();onOpenAddToPlaylist()"
+      (click)="onOpenAddToPlaylist()"
       aria-label="Song options"
-
     >
       <mat-icon>more_vert</mat-icon>
     </button>

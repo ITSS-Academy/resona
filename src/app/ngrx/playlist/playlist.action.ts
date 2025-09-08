@@ -46,6 +46,35 @@ export const getPlaylistByIdFailure = createAction( '[Playlist] Get Playlists By
 
 
 
+export const addTrackToPlaylist = createAction(
+  '[Playlist] Add Track To Playlist',
+  props<{ playlistId: string, trackId: string }>()
+);
 
+export const addTrackToPlaylistSuccess = createAction(
+  '[Playlist] Add Track To Playlist Success',
+  props<{ playlist: PlaylistModel }>()
+);
+
+export const addTrackToPlaylistFailure = createAction(
+  '[Playlist] Add Track To Playlist Failure',
+  props<{ error: any }>()
+);
+
+
+export const deletePlaylist = createAction(
+  '[Playlist] Delete Playlist',
+  props<{ id: string }>()
+);
+
+export const deletePlaylistSuccess = createAction(
+  '[Playlist] Delete Playlist Success',
+  props<{ id: string }>()
+);
+
+export const deletePlaylistFailure = createAction(
+  '[Playlist] Delete Playlist Failure',
+  props<{ error: any }>()
+);
 
 
