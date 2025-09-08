@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {QueueSongDetailComponent} from '../queue-song-detail/queue-song-detail.component';
-import {MatDrawer, MatDrawerContainer, MatDrawerContent} from '@angular/material/sidenav';
-import {MatButton} from '@angular/material/button';
+import {QueueModel} from '../../models/queue.model';
 
 @Component({
   selector: 'app-queue',
@@ -11,6 +10,7 @@ import {MatButton} from '@angular/material/button';
   templateUrl: './queue.component.html',
   styleUrl: './queue.component.scss'
 })
-export class QueueComponent {
+export class QueueComponent{
+  @Input() queueList: QueueModel[] = [];
 
 }
