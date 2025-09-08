@@ -4,7 +4,7 @@ import {PlaylistModel} from './playlist.model';
 export interface ProfileModel {
   uid: string;
   email: string;
-  displayName: string;
+  name: string;
   photoURL?: string;
   createdAt?: string;
   // tracks?: TrackModel[];

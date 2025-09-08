@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import {TrackModel} from '../../models/track.model';
 import {environment} from '../../../environments/environment.development';
 import {CategoryModel} from '../../models/category.model';
+import {ProfileModel} from '../../models/profile.model';
+import {PlaylistModel} from '../../models/playlist.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,4 +21,26 @@ export class SearchService {
       {params: {search: query}}
     );
   }
+
+  searchProfiles(username: string): Observable<ProfileModel[]> {
+    return this.http.get<ProfileModel[]>(
+      `${environment.apiUrl}/profile/search`,
+      {params: {search: username}}
+    );
+  }
+
+  searchPlaylists(query: string): Observable<PlaylistModel[]> {
+    return this.http.get<PlaylistModel[]>(
+      `${environment.apiUrl}/playlist/search`,
+      {params: {search: query}}
+    );
+  }
+
+  searchTracks(query: string): Observable<TrackModel[]> {
+    return this.http.get<TrackModel[]>(
+      `${environment.apiUrl}/track/search`,
+      {params: {search: query}}
+    );
+  }
+
 }
