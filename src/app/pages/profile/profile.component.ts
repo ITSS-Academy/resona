@@ -3,17 +3,12 @@ import { MatTab, MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import {
   MatList,
   MatListItem,
-  MatListOption,
-  MatSelectionList,
 } from '@angular/material/list';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { TrackService } from '../../services/track/track.service';
 import { TrackModel } from '../../models/track.model';
 import { Observable, Subscription } from 'rxjs';
-import { DurationPipe } from '../../shared/pipes/duration.pipe';
-import { PlayState } from '../../ngrx/play/play.state';
 import { Store } from '@ngrx/store';
-import * as PlayActions from '../../ngrx/play/play.action';
 import { MusicTabComponent } from '../../components/music-tab/music-tab.component';
 import { TrackState } from '../../ngrx/track/track.state';
 import { PlaylistModel } from '../../models/playlist.model';
@@ -26,6 +21,8 @@ import { play } from '../../ngrx/play/play.action';
 import { AuthState } from '../../ngrx/auth/auth.state';
 import { ProfileModel } from '../../models/profile.model';
 import { Router } from '@angular/router';
+import * as trackActions from '../../ngrx/track/track.action';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-profile',
@@ -38,9 +35,8 @@ import { Router } from '@angular/router';
     MatList,
     MatListItem,
     MatButton,
-    MatListOption,
-    MatSelectionList,
     MusicTabComponent,
+    MatIconModule,
   ],
   styleUrls: ['./profile.component.scss'],
 })
@@ -54,6 +50,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   error$!: Observable<string | null>;
   getPlaylists$!: Observable<PlaylistModel[]>;
   playlist: PlaylistModel[] = [];
+  favoriteTracks$!: Observable<TrackModel[]>;
+  favoriteTracks: TrackModel[] = [];
+
+  getTracksByOwnerId$!: Observable<TrackModel[]>;
+
 
   subscriptions: Subscription[] = [];
 
@@ -73,6 +74,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.loading$ = this.store.select((state) => state.track.isLoading);
     this.error$ = this.store.select((state) => state.track.error);
     this.getPlaylists$ = this.store.select('playlist', 'playlists');
+    this.favoriteTracks$ = this.store.select('track', 'favoriteTracks');
+    this.getTracksByOwnerId$ = this.store.select('track', 'tracks');
 
     this.subscriptions.push(
       this.currentUser$.subscribe((user) => {
@@ -90,11 +93,26 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.store.dispatch(
             playlistActions.getPlaylists({ userId: user.uid })
           );
+          this.store.dispatch(
+            trackActions.getFavoriteTracks({ userId: user.uid })
+          );
+          this.store.dispatch(
+            trackActions.getTrackByOwnerId({ ownerId: user.uid })
+          );
+
         }
       }),
       this.getPlaylists$.subscribe((playlists) => {
         this.playlist = playlists;
         console.log(this.playlist);
+      }),
+      this.favoriteTracks$.subscribe((tracks: TrackModel[]) => {
+        this.favoriteTracks = tracks;
+        console.log('Favorite tracks:', tracks);
+      }),
+      this.getTracksByOwnerId$.subscribe((tracks: TrackModel[]) => {
+        this.uploadedTracks = tracks;
+        console.log('Uploaded tracks from store:', tracks);
       })
     );
   }

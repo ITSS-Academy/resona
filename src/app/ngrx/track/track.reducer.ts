@@ -3,9 +3,11 @@ import * as trackActions from './track.action';
 import {createReducer, on} from '@ngrx/store';
 import {TrackModel} from '../../models/track.model';
 
+
 export const initialState: TrackState = {
   tracks: <TrackModel[]>[],
-  trackDetail: <TrackModel>{},
+  favoriteTracks: <TrackModel[]>[],
+  trackDetails: <TrackModel>{},
   thumbnailUrl: '',
   lyrics: '',
   isLoading: false,
@@ -36,6 +38,39 @@ export const trackReducer = createReducer(
   ),
   on(
     trackActions.uploadTrackFailure, (state, {error}) => {
+      console.error(error);
+      return {
+        ...state,
+        isLoading: false,
+        error: error,
+      }
+    }
+  ),
+
+  on(
+    trackActions.getFavoriteTracks, (state, {type}) => {
+      console.log(type)
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      }
+    }
+  ),
+
+  on(
+    trackActions.getFavoriteTracksSuccess, (state, {type, tracks}) => {
+    console.log(type)
+    return {
+      ...state,
+      favoriteTracks: tracks,
+      isLoading: false,
+      error: null,
+    }
+  }
+  ),
+  on(
+    trackActions.getFavoriteTracksFailure, (state, {error}) => {
       console.error(error);
       return {
         ...state,
@@ -189,5 +224,34 @@ export const trackReducer = createReducer(
         error: error,
       }
     }
-  )
+  ),
+
+
+  on(trackActions.getTrackByOwnerId, (state, {type})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTrackByOwnerIdSuccess, (state, {type, tracks})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      tracks: tracks,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTrackByOwnerIdFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  })
 );

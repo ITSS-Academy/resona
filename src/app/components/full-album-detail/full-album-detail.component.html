@@ -1,6 +1,6 @@
-<div class="album-container" [ngStyle]="{'background-image': 'url(' + thumbnailUrl + ')'}">
+<div class="album-container" [ngStyle]="{'background-image': 'url(' + (trackDetail.thumbnailPath | imgConverter) + ')'}">
   <div class="album-image">
-    <img src="{{thumbnailUrl}}" alt="">
+    <img src="{{trackDetail.thumbnailPath | imgConverter}}" alt="">
   </div>
   <div class="album-detail">
       <p>Song</p>

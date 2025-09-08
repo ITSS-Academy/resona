@@ -24,7 +24,8 @@ export const playlistReducer = createReducer(
     console.log(type)
     return {
       ...state,
-      playlistList: [...state.playlists, playlist],
+      playlists: [...state.playlists, playlist], // correct property name
+      playlist: playlist,
       isLoading: false,
       error: null,
     };
@@ -88,6 +89,62 @@ export const playlistReducer = createReducer(
     };
   }),
   on(playlistActions.getPlaylistByIdFailure, (state, {type, error}) => {
+    console.log(type)
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  }),
+
+
+
+  on(playlistActions.addTrackToPlaylist, (state, {type}) => {
+    console.log(type)
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    };
+  }),
+
+  on(playlistActions.addTrackToPlaylistSuccess, (state, {type, playlist}) => {
+    console.log(type)
+    return {
+      ...state,
+      playlist: playlist,
+      isLoading: false,
+      error: null,
+    };
+  }),
+  on(playlistActions.addTrackToPlaylistFailure, (state, {type, error}) => {
+    console.log(type)
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  }),
+
+
+  on(playlistActions.deletePlaylist, (state, {type}) => {
+    console.log(type)
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    };
+  }),
+  on(playlistActions.deletePlaylistSuccess, (state, {type, id}) => {
+    console.log(type)
+    return {
+      ...state,
+      playlists: state.playlists.filter(playlist => playlist.id !== id),
+      isLoading: false,
+      error: null,
+    };
+  }),
+  on(playlistActions.deletePlaylistFailure, (state, {type, error}) => {
     console.log(type)
     return {
       ...state,

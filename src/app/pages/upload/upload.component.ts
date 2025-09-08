@@ -27,6 +27,10 @@ export class UploadComponent implements OnInit, OnDestroy {
   lastTrack$!: Observable<any>
   categories$!: Observable<CategoryModel[]>;
   categories: CategoryModel[] = [];
+  musicDragOver = false;
+  imgDragOver = false;
+  lyricsDragOver = false;
+  thumbnailPreview: string | null = null;
 
   subscriptions: Subscription[] = [];
 
@@ -58,7 +62,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     artist: new FormControl('', [Validators.required, Validators.maxLength(100)]),
     categoryId: new FormControl('', Validators.required),
     file: new FormControl<File | null>(null, Validators.required),
-    thumbnail: new FormControl<File | null>(null)
+    thumbnail: new FormControl<File | null>(null),
+    lyricsFile: new FormControl<File | null>(null)
   });
 
   private currentTrackId: string | null = null;
@@ -77,7 +82,14 @@ export class UploadComponent implements OnInit, OnDestroy {
     if (f) {
       this.form.patchValue({thumbnail: f});
       this.form.get('thumbnail')?.updateValueAndValidity();
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.thumbnailPreview = reader.result as string;
+      };
+      reader.readAsDataURL(f);
     }
+
   }
 
   onLyricsFileSelected(event: Event) {
@@ -117,6 +129,97 @@ export class UploadComponent implements OnInit, OnDestroy {
     );
     console.log('Form submitted', this.form.value);
   }
+
+
+
+  // Music
+  onMusicDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.musicDragOver = true;
+  }
+  onMusicDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.musicDragOver = false;
+  }
+  onMusicDrop(event: DragEvent) {
+    event.preventDefault();
+    this.musicDragOver = false;
+
+    const file = event.dataTransfer?.files[0];
+    if (file && file.type.startsWith('audio/')) {
+      this.form.patchValue({ file });
+    }
+  }
+  removeMusic(event: Event) {
+    event.stopPropagation();
+    this.form.patchValue({ file: null });
+  }
+
+// Image
+  onImgDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.imgDragOver = true;
+  }
+  onImgDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.imgDragOver = false;
+  }
+  onImgDrop(event: DragEvent) {
+    event.preventDefault();
+    this.imgDragOver = false;
+
+    const file = event.dataTransfer?.files[0];
+    if (file && file.type.startsWith('image/')) {
+      this.form.patchValue({ thumbnail: file });
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.thumbnailPreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  removeImg(event: Event) {
+    event.stopPropagation();
+    this.form.patchValue({ thumbnail: null });
+    this.thumbnailPreview = null;
+  }
+
+  // Lyrics File Drag & Drop
+  onLyricsDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.lyricsDragOver = true;
+  }
+
+  onLyricsDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.lyricsDragOver = false;
+  }
+
+  onLyricsDrop(event: DragEvent) {
+    event.preventDefault();
+    this.lyricsDragOver = false;
+
+    const file = event.dataTransfer?.files[0];
+    if (file) {
+      // gán file vào form để hiện chip
+      this.form.patchValue({ lyricsFile: file });
+
+      // đọc nội dung text của file đưa vào lyrics
+      const reader = new FileReader();
+      reader.onload = () => {
+        const text = reader.result as string;
+        this.form.patchValue({ lyrics: text });
+      };
+      reader.readAsText(file);
+    }
+  }
+
+  removeLyricsFile(event: Event) {
+    event.stopPropagation();
+    this.form.patchValue({ lyricsFile: null, lyrics: '' });
+  }
+
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());

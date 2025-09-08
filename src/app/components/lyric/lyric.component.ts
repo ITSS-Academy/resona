@@ -8,7 +8,6 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
   styleUrl: './lyric.component.scss'
 })
 export class LyricComponent implements OnChanges {
-
   @Input() lyrics!: string;
   remakeLyric: SafeHtml = '';
 

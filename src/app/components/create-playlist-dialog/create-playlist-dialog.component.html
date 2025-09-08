@@ -1,13 +1,33 @@
 <h2 mat-dialog-title>Create your playlist</h2>
 <form class="dialog-detail" [formGroup]="form">
   <div mat-dialog-content class="dialog-container">
-    <div class="image-box">
-      <mat-icon>image</mat-icon>
-      <input type="file" id="pictureFile" hidden formControlName="file"
-             (change)="onFileSelected($event)"
+    <div class="image-box"
+         (dragover)="onDragOver($event)"
+         (dragleave)="onDragLeave($event)"
+         (drop)="onDrop($event)"
+         [class.dragging]="isDragging"
+         (click)="fileInput.click()">
+
+      @if (previewUrl) {
+        <img [src]="previewUrl" alt="Preview" class="preview-img" />
+      } @else {
+        <mat-icon>image</mat-icon>
+        <p class="hint">Drag & drop or choose file</p>
+        <label  class="upload-btn">Choose Picture</label>
+      }
+
+      <input
+        #fileInput
+        type="file"
+        id="pictureFile"
+        hidden
+        formControlName="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
       />
-      <label for="pictureFile" class="upload-btn">Choose Picture</label>
     </div>
+
+
 
     <div class="input-box">
       <mat-form-field appearance="outline" class="full-width">

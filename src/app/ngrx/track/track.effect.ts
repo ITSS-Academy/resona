@@ -36,6 +36,26 @@ export const createTrackEffect = createEffect(
   {functional: true}
 );
 
+export const getFavoriteTracksEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getFavoriteTracks),
+      switchMap(({userId}) =>
+        trackService.getFavouriteTracks(userId).pipe(
+          map((tracks) => {
+            console.log(tracks);
+            return trackActions.getFavoriteTracksSuccess({tracks});
+          }),
+          catchError((error: { message: any; }) =>
+            of(trackActions.getFavoriteTracksFailure({error: error.message})))
+        )
+      )
+    )
+  },
+  {functional: true}
+)
+
+
 export const getTrackByIdEffect = createEffect(
   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
     return actions$.pipe(
@@ -120,3 +140,22 @@ export const incrementTrackPlayCountEffect = createEffect(
   },
   {functional: true}
 );
+
+export const getTrackByOwnerIdEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getTrackByOwnerId),
+      switchMap(({ownerId}) =>
+        trackService.getTracksByOwnerId(ownerId).pipe(
+          map((tracks) => {
+            console.log(tracks);
+            return trackActions.getTrackByOwnerIdSuccess({tracks});
+          }),
+          catchError((error: { message: any; }) =>
+            of(trackActions.getTrackByOwnerIdFailure({error: error.message})))
+        )
+      )
+    )
+  },
+  {functional: true}
+)

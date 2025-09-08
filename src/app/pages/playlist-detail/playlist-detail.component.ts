@@ -15,12 +15,22 @@ import {TrackModel} from '../../models/track.model';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {TrackState} from '../../ngrx/track/track.state';
 import {AsyncPipe} from '@angular/common';
+import {ThreeOptionsButtonComponent} from '../../components/three-options-button/three-options-button.component';
+import {SongDetailButtonComponent} from '../../components/song-detail-button/song-detail-button.component';
+import {MusicTabComponent} from '../../components/music-tab/music-tab.component';
+import {PlaylistMusicTabComponent} from '../../components/playlist-music-tab/playlist-music-tab.component';
+import {PlaylistDetailButtonComponent} from '../../components/playlist-detail-button/playlist-detail-button.component';
 
 @Component({
   selector: 'app-playlist-detail',
   imports: [
     MaterialModule,
-    AsyncPipe
+    AsyncPipe,
+    ThreeOptionsButtonComponent,
+    SongDetailButtonComponent,
+    MusicTabComponent,
+    PlaylistMusicTabComponent,
+    PlaylistDetailButtonComponent
   ],
   templateUrl: './playlist-detail.component.html',
   styleUrls: ['./playlist-detail.component.scss']
