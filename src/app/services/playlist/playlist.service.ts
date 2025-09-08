@@ -57,4 +57,10 @@ export class PlaylistService {
       params: { id },
     });
   }
+
+  removeTrackFromPlaylist(playlistId: string, trackId: string): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/playlist/remove-track`, {body: { playlistId, trackId }});
+  }
+
+
 }

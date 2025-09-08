@@ -77,3 +77,17 @@ export const deletePlaylistFailure = createAction(
 );
 
 
+export const removeTrackFromPlaylist = createAction(
+  '[Playlist] Remove Track From Playlist',
+  props<{ playlistId: string, trackId: string }>()
+);
+
+export const removeTrackFromPlaylistSuccess = createAction(
+  '[Playlist] Remove Track From Playlist Success',
+  props<{ playlist: PlaylistModel }>()
+);
+
+export const removeTrackFromPlaylistFailure = createAction(
+  '[Playlist] Remove Track From Playlist Failure',
+  props<{ error: any }>()
+);
