@@ -30,7 +30,7 @@
             routerLinkActive="active"
           >
             <img
-              [src]="item.cover"
+              [src]="item.thumbnailPath | playlistImgConverter"
               alt=""
               class="background">
             <span class="menu-title">{{ item.title }}</span>

@@ -3,7 +3,9 @@
   <div mat-dialog-content class="dialog-container">
     <div class="image-box">
       <mat-icon>image</mat-icon>
-      <input type="file" id="pictureFile" hidden formControlName="file"/>
+      <input type="file" id="pictureFile" hidden formControlName="file"
+             (change)="onFileSelected($event)"
+      />
       <label for="pictureFile" class="upload-btn">Choose Picture</label>
     </div>
 
@@ -14,7 +16,6 @@
           matInput
           placeholder="Add your playlist name"
           formControlName="title"
-          (change)="onFileSelected($event)"
         />
       </mat-form-field>
 
