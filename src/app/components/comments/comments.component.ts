@@ -12,6 +12,7 @@ import {ProfileModel} from '../../models/profile.model';
 import {Observable, Subscription} from 'rxjs';
 import {TrackModel} from '../../models/track.model';
 import {MatFabButton, MatIconButton} from '@angular/material/button';
+import {AsyncPipe, DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-comments',
@@ -22,7 +23,7 @@ import {MatFabButton, MatIconButton} from '@angular/material/button';
     MatIconModule,
     ReactiveFormsModule,
     MatIconButton,
-    MatFabButton,
+    DatePipe,
   ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss'
@@ -77,6 +78,7 @@ export class CommentsComponent implements OnInit , OnDestroy{
         content: this.commentForm.value.content || '',
       }
       this.store.dispatch(CommentActions.createComment(newComment));
+      this.store.dispatch(CommentActions.getComments({trackId: this.trackDetail.id}));
       this.commentForm.reset();
     }
   }

@@ -1,9 +1,9 @@
 <div class="container">
   <div class="container-left">
-    <img src="https://upload.wikimedia.org/wikipedia/vi/thumb/2/20/JustaTee_-_Thang_dien.jpg/250px-JustaTee_-_Thang_dien.jpg" alt="">
+    <img src="{{queue.track.thumbnailPath | imgConverter}}" alt="">
   </div>
   <div class="container-right">
-    <p>Thằng điên</p>
-    <p class="author">JUSTATEE x PHƯƠNG LY</p>
+    <p>{{queue.track.title}}</p>
+    <p class="author">{{queue.track.artistName}}</p>
   </div>
 </div>

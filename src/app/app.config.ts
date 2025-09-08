@@ -20,6 +20,8 @@ import * as PlaylistEffects from './ngrx/playlist/playlist.effect';
 import {playlistReducer} from './ngrx/playlist/playlist.reducer';
 import {searchReducer} from './ngrx/search/search.reducer';
 import * as SearchEffects from './ngrx/search/search.effect';
+import {queueReducer} from './ngrx/queue/queue.reducer';
+import * as QueueEffects from './ngrx/queue/queue.effects'
 import {historyReducer} from './ngrx/history/history.reducer';
 import * as HistoryEffects from './ngrx/history/history.effect';
 
@@ -36,6 +38,7 @@ export const appConfig: ApplicationConfig = {
       comments: commentReducer,
       playlist: playlistReducer,
       search: searchReducer,
+      queue: queueReducer,
       history: historyReducer,
     }),
     provideEffects(
@@ -45,6 +48,7 @@ export const appConfig: ApplicationConfig = {
       CommentEffects,
       PlaylistEffects,
       SearchEffects,
+      QueueEffects,
       HistoryEffects,
     ),
     provideFirebaseApp(() => initializeApp({

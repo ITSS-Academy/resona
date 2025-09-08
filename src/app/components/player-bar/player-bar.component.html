@@ -106,7 +106,7 @@
 
         <mat-drawer-container>
           <mat-drawer #queue mode="over" position="end" class="drawer" autoFocus="false">
-            <app-queue></app-queue>
+            <app-queue [queueList]="queueList"></app-queue>
           </mat-drawer>
         </mat-drawer-container>
 
@@ -132,5 +132,5 @@
     </div>
   </footer>
 } @else {
-  
+
 }
