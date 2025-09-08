@@ -30,8 +30,8 @@ export class SongDetailComponent implements OnInit , OnDestroy{
   subscription: Subscription[]=[];
   trackDetail$!: Observable<TrackModel>;
   trackDetail!: TrackModel;
-  comment$!: Observable<CommentModel[]>;
-  comment: CommentModel[] = [];
+  comments$!: Observable<CommentModel[]>;
+  comments: CommentModel[] = [];
   totalComment!:number;
   isLoadingTrack$!: Observable<boolean>;
   thumbnailUrl$!: Observable<string>;
@@ -48,27 +48,32 @@ export class SongDetailComponent implements OnInit , OnDestroy{
   ) {
     let {id} = this.activatedRoute.snapshot.params;
     console.log(id);
-    this.store.dispatch(CommentActions.getComments({id: id}));
+    this.comments$ = this.store.select('comments', 'commentList');
+    this.trackDetail$ = this.store.select('track', 'trackDetails');
+    this.isLoadingTrack$ = this.store.select('track', 'isLoading');
+    this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
+    this.lyric$ = this.store.select('track', 'lyrics');
+
+    this.store.dispatch(CommentActions.getComments({trackId: id}));
     this.store.dispatch(TrackActions.getTrackById({id: id}));
     this.store.dispatch(TrackActions.getThumbnailBasedOnTrackId({id: id}));
     this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
 
-    this.comment$ = this.store.select('comments', 'commentList');
-    // this.trackDetail$ = this.store.select('track', 'trackDetail');
-    this.isLoadingTrack$ = this.store.select('track', 'isLoading');
-    this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
-    this.lyric$ = this.store.select('track', 'lyrics');
   }
 
   ngOnInit(): void {
     this.subscription.push(
       this.trackDetail$.subscribe(track=>{
-        this.trackDetail = track;
-        console.log(this.trackDetail);
+        if (track) {
+          this.trackDetail = track;
+          console.log(this.trackDetail);
+        } else {
+          console.log('No track detail loaded yet');
+        }
       }),
-      this.comment$.subscribe(comments=>{
-        this.comment = comments;
-        this.totalComment = this.comment.length;
+      this.comments$.subscribe(comments=>{
+        this.comments = comments;
+        this.totalComment = this.comments.length;
       }),
       this.thumbnailUrl$.subscribe(thumbnailUrl=>{
         this.thumbnailUrl = thumbnailUrl;

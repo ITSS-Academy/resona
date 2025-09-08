@@ -5,4 +5,5 @@ export interface CommentState {
   comment: CommentModel;
   isLoading: boolean;
   error: any;
+  message: string;
 }

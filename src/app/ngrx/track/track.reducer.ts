@@ -94,7 +94,7 @@ export const trackReducer = createReducer(
     return {
       ...state,
       isLoading: false,
-      trackDetail: trackDetail,
+      trackDetails: trackDetail,
       error: null,
     }
   }),
@@ -207,7 +207,7 @@ export const trackReducer = createReducer(
     console.log(type, trackId);
     return {
       ...state,
-      loading: false,
+      isLoading: false,
       tracks: state.tracks.map((track) =>
         track.id === trackId
           ? {...track, viewCount: track.viewCount + 1}
