@@ -7,4 +7,5 @@ export interface PlaylistModel {
   thumbnailPath: string;
   profile: ProfileModel;      // chủ sở hữu playlist
   tracks?: TrackModel[];
+  description?: string;
 }

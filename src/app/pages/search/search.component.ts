@@ -1,38 +1,40 @@
 import {Component} from '@angular/core';
-import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {MatFormField, MatInput} from '@angular/material/input';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
-import {MatCheckbox} from '@angular/material/checkbox';
-import {MatIcon} from '@angular/material/icon';
+import {AsyncPipe} from '@angular/common';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+
 import {MaterialModule} from '../../shared/modules/material.module';
 import {CategoryComponent} from '../category/category.component';
-import {Observable} from 'rxjs';
+
 import {CategoryModel} from '../../models/category.model';
-import {Store} from '@ngrx/store';
-import {CategoryState} from '../../ngrx/category/category.state';
+import {TrackModel} from '../../models/track.model';
+import {PlaylistModel} from '../../models/playlist.model';
+import {ProfileModel} from '../../models/profile.model';
+
 import {SearchState} from '../../ngrx/search/search.state';
-import {AsyncPipe} from '@angular/common';
+import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 
 @Component({
   selector: 'app-search',
   imports: [
     MaterialModule,
     CategoryComponent,
-    AsyncPipe
+    AsyncPipe,
+    ImgConverterPipe
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
 export class SearchComponent {
   categories$!: Observable<CategoryModel[]>;
+  tracks$!: Observable<TrackModel[]>;
+  playlists$!: Observable<PlaylistModel[]>;
+  profiles$!: Observable<ProfileModel[]>;
 
-  constructor(private store: Store<{
-    search: SearchState
-  }>) {
-    this.categories$ = this.store.select((state) => state.search.searchCategories);
+  constructor(private store: Store<{ search: SearchState }>) {
+    this.categories$ = this.store.select(state => state.search.searchCategories);
+    this.tracks$ = this.store.select(state => state.search.searchTracks);
+    this.playlists$ = this.store.select(state => state.search.searchPlaylists);
+    this.profiles$ = this.store.select(state => state.search.searchProfiles);
   }
-
-
 }
-
-
