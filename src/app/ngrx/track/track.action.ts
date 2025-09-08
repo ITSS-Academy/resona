@@ -25,7 +25,6 @@ export const uploadTrackFailure = createAction(
   props<{ error: string }>()
 );
 
-
 // Favorite Tracks
 export const getFavoriteTracks = createAction(
   '[Track] Get Favorite Tracks',
@@ -102,5 +101,22 @@ export const incrementTrackPlayCountSuccess = createAction(
 
 export const incrementTrackPlayCountFailure = createAction(
   '[Track] Increment Track Play Count Failure',
+  props<{ error: string }>()
+);
+
+
+
+export const getTrackByOwnerId = createAction(
+  '[Track] Get Track By Owner Id',
+  props<{ ownerId: string }>()
+);
+
+export const getTrackByOwnerIdSuccess = createAction(
+  '[Track] Get Track By Owner Id Success',
+  props<{ tracks: TrackModel[] }>()
+);
+
+export const getTrackByOwnerIdFailure = createAction(
+  '[Track] Get Track By Owner Id Failure',
   props<{ error: string }>()
 );

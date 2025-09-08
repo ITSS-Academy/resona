@@ -4,10 +4,17 @@
       <mat-icon>menu</mat-icon>
     </button>
     <div class="outline-search">
-      <input type="text" placeholder="Search..." class="search-input" [formControl]="searchControl"
-             (click)="navigateToSearch()"
-             (keyup.enter)="navigateToSearch()"/>
-      <mat-icon class="material-symbols-rounded" (click)="navigateToSearch()">search</mat-icon>
+      <input
+        type="text"
+        placeholder="Search..."
+        class="search-input"
+        [formControl]="searchControl"
+        (click)="navigateToSearch()"
+        (keyup.enter)="navigateToSearch()"
+      />
+      <mat-icon class="material-symbols-rounded" (click)="navigateToSearch()"
+        >search</mat-icon
+      >
     </div>
   </div>
 
@@ -16,28 +23,25 @@
     <span>Create playlist</span>
   </button>
 
-  @if (profile$|async; as profile) {
-    @if (profile.uid) {
-      <div class="user-login" [matMenuTriggerFor]="profileMenu">
-        <img src="{{ profile.photoURL }}" class="user-profile" (error)="onImgError($event)"
-        />
-      </div>
-      <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item (click)="navigateToProfile()">
-          <mat-icon>person</mat-icon>
-          <span>Profile</span>
-        </button>
-        <button mat-menu-item (click)="logout()">
-          <mat-icon>logout</mat-icon>
-          <span>Log out</span>
-        </button>
-      </mat-menu>
-    } @else {
-      <button mat-flat-button (click)="openLoginDialog()">
-        Login
-      </button>
-    }
-  }
-
-
+  @if (profile$|async; as profile) { @if (profile.uid) {
+  <div class="user-login" [matMenuTriggerFor]="profileMenu">
+    <img
+      src="{{ profile.photoURL }}"
+      class="user-profile"
+      (error)="onImgError($event)"
+    />
+  </div>
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item (click)="navigateToProfile()">
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Log out</span>
+    </button>
+  </mat-menu>
+  } @else {
+  <button mat-flat-button (click)="openLoginDialog()">Login</button>
+  } }
 </mat-toolbar>
