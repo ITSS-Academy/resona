@@ -6,13 +6,14 @@ import {createReducer, on} from '@ngrx/store';
 export const initialCommentState: CommentState = {
   commentList: <CommentModel[]>[],
   comment: <CommentModel>{},
+  message: '',
   isLoading: false,
   error: null
 }
 
 export const commentReducer = createReducer(
   initialCommentState,
-  on(CommentActions.getComments, (state, {type,id})=>{
+  on(CommentActions.getComments, (state, {type,trackId})=>{
     console.log(type);
     return {
       ...state,
@@ -59,6 +60,34 @@ export const commentReducer = createReducer(
   }),
 
   on(CommentActions.createCommentFailure, (state, {type, error})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
+  on(CommentActions.deleteComment, (state, {type, commentId, userId})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(CommentActions.deleteCommentSuccess, (state, { type, message, commentId }) => {
+    console.log(type);
+    return {
+      ...state,
+      commentList: state.commentList.filter(comment => comment.id !== commentId),
+      message: message,
+      isLoading: false,
+    };
+  }),
+
+  on(CommentActions.deleteCommentFailure, (state, {type, error})=>{
     console.log(type);
     return {
       ...state,

@@ -1,6 +1,5 @@
 import {Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy, OnInit} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import {MusicGenresService} from '../../services/music-genres/music-genres.service';
 import {MusicGenresModel} from '../../models/musicGenres.model';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';

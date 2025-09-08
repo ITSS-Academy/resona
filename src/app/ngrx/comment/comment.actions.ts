@@ -2,7 +2,7 @@ import {createAction, props} from '@ngrx/store';
 import {CommentModel} from '../../models/comment.model';
 
 export const getComments = createAction(
-  '[Comment] Get Comments', props<{id:string}>()
+  '[Comment] Get Comments', props<{trackId:string}>()
 )
 
 export const getCommentsSuccess = createAction(
@@ -23,4 +23,16 @@ export const createCommentSuccess = createAction(
 
 export const createCommentFailure = createAction(
   '[Comment] Create Comment Failure', props<{error: any}>()
+)
+
+export const deleteComment = createAction(
+  '[Comment] Delete Comment', props<{commentId: string, userId: string}>()
+)
+
+export const deleteCommentSuccess = createAction(
+  '[Comment] Delete Comment Success', props<{message: string, commentId: string}>()
+);
+
+export const deleteCommentFailure = createAction(
+  '[Comment] Delete Comment Failure', props<{error: any}>()
 )
