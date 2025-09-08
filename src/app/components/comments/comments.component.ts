@@ -11,7 +11,7 @@ import {idToken} from '@angular/fire/auth';
 import {ProfileModel} from '../../models/profile.model';
 import {Observable, Subscription} from 'rxjs';
 import {TrackModel} from '../../models/track.model';
-import {MatIconButton} from '@angular/material/button';
+import {MatFabButton, MatIconButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-comments',
@@ -22,17 +22,18 @@ import {MatIconButton} from '@angular/material/button';
     MatIconModule,
     ReactiveFormsModule,
     MatIconButton,
+    MatFabButton,
   ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss'
 })
 export class CommentsComponent implements OnInit , OnDestroy{
 
-  profile$!: Observable<ProfileModel>;
-  profile!: ProfileModel;
+  currentUser$!: Observable<ProfileModel>;
+  currentUser!: ProfileModel;
   subscriptions: Subscription[] = [];
-  comments$!: Observable<CommentModel>;
-  comments!: CommentModel;
+  comment$!: Observable<CommentModel>;
+  comment!: CommentModel;
 
   @Input() commentList!: CommentModel[];
   @Input() trackDetail!: TrackModel;
@@ -44,16 +45,17 @@ export class CommentsComponent implements OnInit , OnDestroy{
       auth: AuthState,
     }>
   ) {
-    this.comments$ = this.store.select('comment', 'comment');
-    this.profile$ = this.store.select('auth', 'currentUser');
+    this.comment$ = this.store.select('comment', 'comment');
+    this.currentUser$ = this.store.select('auth', 'currentUser');
   }
 
   ngOnInit() {
     this.subscriptions.push(
-      this.profile$.subscribe(profile => {
-        this.profile = profile;
+      this.currentUser$.subscribe(profile => {
+        this.currentUser = profile;
       }),
-      this.comments$.subscribe(comments => {
+      this.comment$.subscribe(comments => {
+        this.comment = comments;
       }),
     )
   }
@@ -71,12 +73,16 @@ export class CommentsComponent implements OnInit , OnDestroy{
       const newComment = {
         // trackId: id,
         trackId: this.trackDetail.id,
-        userId: this.profile.uid,
+        userId: this.currentUser.uid,
         content: this.commentForm.value.content || '',
       }
       this.store.dispatch(CommentActions.createComment(newComment));
       this.commentForm.reset();
     }
+  }
+
+  onDeleteComment(commentId:string, userId:string){
+    this.store.dispatch(CommentActions.deleteComment({commentId: commentId, userId: userId}));
   }
 
 }

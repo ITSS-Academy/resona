@@ -14,6 +14,10 @@ import {AsyncPipe} from '@angular/common';
 import {DurationPipe} from '../../shared/pipes/duration.pipe';
 import {TrackState} from '../../ngrx/track/track.state';
 import * as TrackActions from '../../ngrx/track/track.action';
+import {Router} from '@angular/router';
+import {CategoryModel} from '../../models/category.model';
+import {CategoryState} from '../../ngrx/category/category.state';
+import * as CategoryActions from '../../ngrx/category/category.action';
 
 @Component({
   selector: 'app-player-bar',
@@ -41,6 +45,10 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   currentTrack$!: Observable<TrackModel>;
   currentTrack!: TrackModel;
   isPlaying$!: Observable<boolean>;
+  lyrics$!: Observable<string>;
+  lyrics!: string;
+  categoryDetail$!: Observable<CategoryModel>;
+  categoryDetail!: CategoryModel;
 
   isPlaying = true;
   duration = 0;
@@ -52,11 +60,14 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   repeatMode: 'none' | 'infinite' | 'once' = 'none';
 
   constructor(
+    private router: Router,
     private store: Store<{
       play: PlayState,
       track: TrackState,
+      category: CategoryState,
     }>
   ) {
+
   }
 
   ngOnInit() {
@@ -65,6 +76,8 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
 
     this.currentTrack$ = this.store.select(state => state.play.currentTrack);
     this.isPlaying$ = this.store.select(state => state.play.isPlaying);
+    this.lyrics$ = this.store.select('track', 'lyrics');
+    this.categoryDetail$ = this.store.select('category', 'category');
 
     // lắng nghe track thay đổi
     this.subscriptions.push(
@@ -75,11 +88,21 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
           this.currentTrack = track;
           this.filePath = this.buildStreamUrl(track);
           this.hasIncremented = false;
+          this.store.dispatch(TrackActions.getLyricsByTrackId({id: track.id}))
+          this.store.dispatch(CategoryActions.getCategoryDetails({categoryId: track.id}));
 
           audio.src = this.filePath;
           audio.load();
           audio.play();
         }
+      }),
+
+      this.lyrics$.subscribe(lyrics => {
+        this.lyrics = lyrics;
+      }),
+
+      this.categoryDetail$.subscribe(detail => {
+        this.categoryDetail = detail;
       }),
 
       // lắng nghe trạng thái play/pause
@@ -160,13 +183,15 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   toggleLyric() {
-    if (this.queueDrawer.opened) {
-      this.queueDrawer.close().then();
+    if(this.lyrics){
+      if (this.queueDrawer.opened) {
+        this.queueDrawer.close().then();
+      }
+      if (this.smallAlbumDrawer.opened) {
+        this.smallAlbumDrawer.close().then();
+      }
+      this.lyricDrawer.toggle().then();
     }
-    if (this.smallAlbumDrawer.opened) {
-      this.smallAlbumDrawer.close().then();
-    }
-    this.lyricDrawer.toggle().then();
   }
 
   toggleQueue() {
@@ -180,13 +205,15 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   toggleSmallAlbum() {
-    if (this.lyricDrawer.opened) {
-      this.lyricDrawer.close().then();
+    if(this.currentTrack){
+      if (this.lyricDrawer.opened) {
+        this.lyricDrawer.close().then();
+      }
+      if (this.queueDrawer.opened) {
+        this.queueDrawer.close().then();
+      }
+      this.smallAlbumDrawer.toggle().then();
     }
-    if (this.queueDrawer.opened) {
-      this.queueDrawer.close().then();
-    }
-    this.smallAlbumDrawer.toggle().then();
   }
 
   onTrackChanged(track: TrackModel) {
@@ -196,5 +223,11 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  navigateToSongDetail(id:string) {
+    if(id){
+      this.router.navigate([`/song-detail/${id}`]).then();
+    }
   }
 }
