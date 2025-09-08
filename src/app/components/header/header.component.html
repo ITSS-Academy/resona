@@ -4,10 +4,17 @@
       <mat-icon>menu</mat-icon>
     </button>
     <div class="outline-search">
-      <input type="text" placeholder="Search..." class="search-input" [formControl]="searchControl"
-             (click)="navigateToSearch()"
-             (keyup.enter)="navigateToSearch()"/>
-      <mat-icon class="material-symbols-rounded" (click)="navigateToSearch()">search</mat-icon>
+      <input
+        type="text"
+        placeholder="Search..."
+        class="search-input"
+        [formControl]="searchControl"
+        (click)="navigateToSearch()"
+        (keyup.enter)="navigateToSearch()"
+      />
+      <mat-icon class="material-symbols-rounded" (click)="navigateToSearch()"
+        >search</mat-icon
+      >
     </div>
   </div>
 

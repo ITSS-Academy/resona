@@ -1,17 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {PlaylistModel} from '../../models/playlist.model';
-import {environment} from '../../../environments/environment.development';
-import {TrackModel} from '../../models/track.model';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { PlaylistModel } from '../../models/playlist.model';
+import { environment } from '../../../environments/environment.development';
+import { TrackModel } from '../../models/track.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlaylistService {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   createPlaylist(title: string, description: string, thumbnail: File, userId: string): Observable<PlaylistModel> {
     const formData = new FormData();
@@ -30,20 +28,33 @@ export class PlaylistService {
   }
 
   getPlaylists(userId: string): Observable<PlaylistModel[]> {
-    return this.http.get<PlaylistModel[]>(`${environment.apiUrl}/playlist/all-playlists/${userId}`);
+    return this.http.get<PlaylistModel[]>(
+      `${environment.apiUrl}/playlist/all-playlists/${userId}`
+    );
   }
 
   getPlaylistById(id: string): Observable<PlaylistModel> {
-    return this.http.get<PlaylistModel>(`${environment.apiUrl}/playlist/all-tracks/${id}`);
+    return this.http.get<PlaylistModel>(
+      `${environment.apiUrl}/playlist/all-tracks/${id}`
+    );
   }
 
+  addToFavorite(userId: string, songId: string) {
+    return this.http.post(
+      `${environment.apiUrl}/playlist/favorite/${userId}/${songId}`,
+      {}
+    );
+  }
   addTrackToPlaylist(playlistId: string, trackId: string): Observable<any> {
-    return this.http.post<PlaylistModel>(`${environment.apiUrl}/playlist/add-track`, {playlistId, trackId});
+    return this.http.post<PlaylistModel>(
+      `${environment.apiUrl}/playlist/add-track`,
+      { playlistId, trackId }
+    );
   }
 
   deletePlaylist(id: string): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}/playlist/delete`,{params: { id }});
+    return this.http.delete(`${environment.apiUrl}/playlist/delete`, {
+      params: { id },
+    });
   }
-
-
 }

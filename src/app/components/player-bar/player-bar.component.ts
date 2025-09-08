@@ -14,6 +14,7 @@ import {AsyncPipe} from '@angular/common';
 import {DurationPipe} from '../../shared/pipes/duration.pipe';
 import {TrackState} from '../../ngrx/track/track.state';
 import * as TrackActions from '../../ngrx/track/track.action';
+import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 
 @Component({
   selector: 'app-player-bar',
@@ -28,6 +29,7 @@ import * as TrackActions from '../../ngrx/track/track.action';
     SmallAlbumComponent,
     AsyncPipe,
     DurationPipe,
+    ImgConverterPipe,
   ],
   styleUrls: ['./player-bar.component.scss']
 })

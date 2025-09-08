@@ -46,7 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
         let idToken = await auth.getIdToken()
         const user = {
           uid: auth.uid,
-          displayName: auth.displayName,
+          name: auth.name,
           email: auth.email,
           photoURL: auth.photoURL
         }

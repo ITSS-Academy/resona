@@ -128,7 +128,7 @@ export class TrackService {
   }
 
   getTrackById(id: string) {
-    return this.http.get<TrackModel>(`http://localhost:3000/track/${id}`);
+    return this.http.get<TrackModel>(`http://localhost:3000/track/detail/${id}`);
   }
 
   getTracksByOwnerId(ownerId: string): Observable<TrackModel[]> {
