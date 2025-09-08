@@ -9,8 +9,8 @@ export const createPlaylistEffect = createEffect(
   (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
     return actions$.pipe(
       ofType(playlistActions.createPlaylist),
-      switchMap(({title, description, file, userId}) =>
-        playlistService.createPlaylist(title, description, file, userId).pipe(
+      switchMap(({title, description, thumbnail, userId}) =>
+        playlistService.createPlaylist(title, description, thumbnail, userId).pipe(
           map((playlist) => {
             console.log(playlist);
             return playlistActions.createPlaylistSuccess({playlist: playlist});
@@ -44,25 +44,24 @@ export const getPlaylistsEffect = createEffect(
 )
 
 
-
-  export const getPlaylistByIdEffect = createEffect(
-    (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
-      return actions$.pipe(
-        ofType(playlistActions.getPlaylistById),
-        switchMap(({playlistId}) =>
-          playlistService.getPlaylistById(playlistId).pipe(
-            map((playlist) => {
-              console.log(playlist);
-              return playlistActions.getPlaylistByIdSuccess({playlist});
-            }),
-            catchError((error: { message: any; }) =>
-              of(playlistActions.getPlaylistByIdFailure({error})))
-          )
+export const getPlaylistByIdEffect = createEffect(
+  (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
+    return actions$.pipe(
+      ofType(playlistActions.getPlaylistById),
+      switchMap(({playlistId}) =>
+        playlistService.getPlaylistById(playlistId).pipe(
+          map((playlist) => {
+            console.log(playlist);
+            return playlistActions.getPlaylistByIdSuccess({playlist});
+          }),
+          catchError((error: { message: any; }) =>
+            of(playlistActions.getPlaylistByIdFailure({error})))
         )
       )
-    },
-    {functional: true}
-  )
+    )
+  },
+  {functional: true}
+)
 
 
 export const addTrackToPlaylistEffect = createEffect(
@@ -93,6 +92,23 @@ export const deletePlaylistEffect = createEffect(
           map(() => playlistActions.deletePlaylistSuccess({ id })),
           catchError((error) =>
             of(playlistActions.deletePlaylistFailure({ error }))
+          )
+        )
+      )
+    );
+  },
+  { functional: true }
+);
+
+export const removeTrackFromPlaylistEffect = createEffect(
+  (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
+    return actions$.pipe(
+      ofType(playlistActions.removeTrackFromPlaylist),
+      switchMap(({ playlistId, trackId }) =>
+        playlistService.removeTrackFromPlaylist(playlistId, trackId).pipe(
+          map((playlist) => playlistActions.removeTrackFromPlaylistSuccess({ playlist })),
+          catchError((error) =>
+            of(playlistActions.removeTrackFromPlaylistFailure({ error }))
           )
         )
       )

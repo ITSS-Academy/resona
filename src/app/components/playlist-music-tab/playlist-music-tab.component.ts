@@ -85,6 +85,27 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
     );
   }
 
+  onRemoveTrackFromPlaylist(playlistId: string) {
+    if (!this.track || !playlistId) return;
+
+    this.store.dispatch(
+      PlaylistActions.removeTrackFromPlaylist({
+        playlistId,
+        trackId: this.track.id
+      })
+    );
+
+    const sub = this.store
+      .select('playlist')
+      .subscribe(state => {
+        if (!state.loading && !state.error) {
+          // Reload lại trang sau khi xóa
+          window.location.reload();
+        }
+      });
+    this.subscriptions.push(sub);
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }

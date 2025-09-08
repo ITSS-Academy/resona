@@ -42,6 +42,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((query) => {
         if (query) {
           this.store.dispatch(SearchActions.searchCategories({query}));
+          this.store.dispatch(SearchActions.searchTracks({query}));
+          this.store.dispatch(SearchActions.searchPlaylists({query}));
+          this.store.dispatch(SearchActions.searchProfiles({query}));
         }
       });
   }

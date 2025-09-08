@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {HeaderComponent} from "../../components/header/header.component";
 import {PlayerBarComponent} from "../../components/player-bar/player-bar.component";
 import {SidebarComponent} from "../../components/sidebar/sidebar.component";
@@ -20,17 +20,16 @@ import {SongDetailButtonComponent} from '../../components/song-detail-button/son
 import {MusicTabComponent} from '../../components/music-tab/music-tab.component';
 import {PlaylistMusicTabComponent} from '../../components/playlist-music-tab/playlist-music-tab.component';
 import {PlaylistDetailButtonComponent} from '../../components/playlist-detail-button/playlist-detail-button.component';
+import {ShareSnackbarComponent} from '../../components/share-snackbar/share-snackbar.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-playlist-detail',
   imports: [
     MaterialModule,
     AsyncPipe,
-    ThreeOptionsButtonComponent,
-    SongDetailButtonComponent,
-    MusicTabComponent,
     PlaylistMusicTabComponent,
-    PlaylistDetailButtonComponent
+    PlaylistDetailButtonComponent,
   ],
   templateUrl: './playlist-detail.component.html',
   styleUrls: ['./playlist-detail.component.scss']
@@ -76,6 +75,16 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       })
     )
 
+  }
+
+  private _snackBar = inject(MatSnackBar);
+
+  durationInSeconds = 5;
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(ShareSnackbarComponent, {
+      duration: this.durationInSeconds * 1000,
+    });
   }
 
   ngOnDestroy() {

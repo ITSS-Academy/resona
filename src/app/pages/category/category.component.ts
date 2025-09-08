@@ -19,19 +19,15 @@ import { NgStyle } from '@angular/common';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
 
-  // musicGenresList$!: Observable<MusicGenresModel[]>;
   categories$!: Observable<CategoryModel[]>;
   subscriptions: Subscription[] = [];
 
   constructor(
     private router: Router,
     private store: Store<{
-      // musicGenres: MusicGenresState
       category: CategoryState
     }>
   ) {
-    // this.musicGenresList$ = this.store.select('musicGenres', 'musicGenres');
-    // this.getAllMusicGenres();
     this.categories$ = this.store.select(state => state.category.categoryList);
   }
 
@@ -39,13 +35,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.router.navigate(['/category-detail', id]).then();
   }
 
-  // ngOnInit() {
-  //   this.subscriptions.push(
-  //     this.musicGenresList$.subscribe((musicGenres: MusicGenresModel[]) => {
-  //       console.log(musicGenres);
-  //     }),
-  //   )
-  // }
   ngOnInit() {
     this.store.dispatch(CategoryActions.getAllCategories());
     this.subscriptions.push(
@@ -55,12 +44,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     );
   }
 
-  // getAllMusicGenres() {
-  //   this.store.dispatch(MusicGenresActions.getAllMusicGenres());
-  // }
-
   ngOnDestroy() {
-    // this.subscriptions.forEach(subscription => subscription.unsubscribe());
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }
