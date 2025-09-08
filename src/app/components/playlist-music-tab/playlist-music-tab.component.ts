@@ -1,33 +1,39 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {MaterialModule} from '../../shared/modules/material.module';
+import {AsyncPipe, DatePipe, DecimalPipe} from '@angular/common';
+import {DurationPipe} from '../../shared/pipes/duration.pipe';
+import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
+import {MatIconButton} from '@angular/material/button';
+import {MatMenu, MatMenuItem} from '@angular/material/menu';
 import {TrackModel} from '../../models/track.model';
+import {Observable, Subscription} from 'rxjs';
+import {PlaylistModel} from '../../models/playlist.model';
 import {Store} from '@ngrx/store';
 import {PlayState} from '../../ngrx/play/play.state';
-import * as PlayActions from '../../ngrx/play/play.action';
-import {DurationPipe} from '../../shared/pipes/duration.pipe';
-import {AsyncPipe, DatePipe, DecimalPipe} from '@angular/common';
-import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
-import {PlaylistModel} from '../../models/playlist.model';
-import {Observable, Subscription} from 'rxjs';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {PlaylistState} from '../../ngrx/playlist/playlist.state';
+import * as PlayActions from '../../ngrx/play/play.action';
 import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
-import {addTrackToPlaylist} from '../../ngrx/playlist/playlist.action';
+import {MatIcon} from '@angular/material/icon';
+import {MaterialModule} from '../../shared/modules/material.module';
 
 @Component({
-  selector: 'app-music-tab',
+  selector: 'app-playlist-music-tab',
   imports: [
-    MaterialModule,
-    DurationPipe,
+    AsyncPipe,
     DatePipe,
     DecimalPipe,
+    DurationPipe,
     ImgConverterPipe,
-    AsyncPipe
+    MatIcon,
+    MatIconButton,
+    MatMenu,
+    MatMenuItem,
+    MaterialModule
   ],
-  templateUrl: './music-tab.component.html',
-  styleUrl: './music-tab.component.scss'
+  templateUrl: './playlist-music-tab.component.html',
+  styleUrl: './playlist-music-tab.component.scss'
 })
-export class MusicTabComponent implements OnInit, OnDestroy {
+export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
   @Input() track!: TrackModel;
   playlists$!: Observable<PlaylistModel[]>;
   subscriptions: Subscription[] = [];
@@ -82,5 +88,6 @@ export class MusicTabComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
 
 }

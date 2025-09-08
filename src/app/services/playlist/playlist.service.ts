@@ -33,5 +33,13 @@ export class PlaylistService {
     return this.http.get<PlaylistModel>(`${environment.apiUrl}/playlist/all-tracks/${id}`);
   }
 
+  addTrackToPlaylist(playlistId: string, trackId: string): Observable<any> {
+    return this.http.post<PlaylistModel>(`${environment.apiUrl}/playlist/add-track`, {playlistId, trackId});
+  }
+
+  deletePlaylist(id: string): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/playlist/delete`,{params: { id }});
+  }
+
 
 }

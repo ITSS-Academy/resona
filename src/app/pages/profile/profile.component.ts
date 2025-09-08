@@ -53,6 +53,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   favoriteTracks$!: Observable<TrackModel[]>;
   favoriteTracks: TrackModel[] = [];
 
+  getTracksByOwnerId$!: Observable<TrackModel[]>;
+
 
   subscriptions: Subscription[] = [];
 
@@ -73,6 +75,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.error$ = this.store.select((state) => state.track.error);
     this.getPlaylists$ = this.store.select('playlist', 'playlists');
     this.favoriteTracks$ = this.store.select('track', 'favoriteTracks');
+    this.getTracksByOwnerId$ = this.store.select('track', 'tracks');
 
     this.subscriptions.push(
       this.currentUser$.subscribe((user) => {
@@ -93,7 +96,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.store.dispatch(
             trackActions.getFavoriteTracks({ userId: user.uid })
           );
-
+          this.store.dispatch(
+            trackActions.getTrackByOwnerId({ ownerId: user.uid })
+          );
 
         }
       }),
@@ -104,6 +109,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.favoriteTracks$.subscribe((tracks: TrackModel[]) => {
         this.favoriteTracks = tracks;
         console.log('Favorite tracks:', tracks);
+      }),
+      this.getTracksByOwnerId$.subscribe((tracks: TrackModel[]) => {
+        this.uploadedTracks = tracks;
+        console.log('Uploaded tracks from store:', tracks);
       })
     );
   }
