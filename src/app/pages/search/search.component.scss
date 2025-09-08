@@ -1,12 +1,10 @@
-
-
-
 .playlist-table-header,
 .song-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  gap: 16px;
+  padding: 10px 30px;
 }
 
 .search-tabs h2{
@@ -24,12 +22,6 @@
 }
 
 /* Song row */
-.song-info {
-  cursor: pointer;
-  transition: background 0.2s ease;
-  overflow-y: hidden;
-}
-
 .song-info:hover {
   background: #3c002a;
   border-radius: 8px;
@@ -40,9 +32,14 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #fff;
+  width: 300px; /* fixed width for title */
+  min-width: 0;
+}
+
+.song-title span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .song-title img {
@@ -53,23 +50,21 @@
 }
 
 .song-artist {
+  width: 120px;
   font-size: 14px;
   color: #b3b3b3;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .song-duration {
+  width: 60px; /* fixed width for duration */
   font-size: 14px;
   color: #b3b3b3;
   text-align: right;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100%;
+  margin-left: auto;
 }
 
 .search-playlist{

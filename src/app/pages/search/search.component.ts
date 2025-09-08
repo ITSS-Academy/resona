@@ -13,6 +13,8 @@ import {ProfileModel} from '../../models/profile.model';
 
 import {SearchState} from '../../ngrx/search/search.state';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
+import {searchCategories} from '../../ngrx/search/search.actions';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -31,10 +33,18 @@ export class SearchComponent {
   playlists$!: Observable<PlaylistModel[]>;
   profiles$!: Observable<ProfileModel[]>;
 
-  constructor(private store: Store<{ search: SearchState }>) {
+  constructor(
+    private router: Router,
+    private store: Store<{
+      search: SearchState }>)
+  {
     this.categories$ = this.store.select(state => state.search.searchCategories);
     this.tracks$ = this.store.select(state => state.search.searchTracks);
     this.playlists$ = this.store.select(state => state.search.searchPlaylists);
     this.profiles$ = this.store.select(state => state.search.searchProfiles);
+  }
+
+  navigateToCategoryDetail(id: string) {
+    this.router.navigate(['/category-detail', id]).then();
   }
 }

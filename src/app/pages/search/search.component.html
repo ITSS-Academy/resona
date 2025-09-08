@@ -1,131 +1,3 @@
-<!--<div class="search-pages">-->
-<!--<mat-tab-group class="search-tabs">-->
-<!--  <mat-tab label="All">-->
-<!--    <div class="tab-content">-->
-<!--    <h2>Genres</h2>-->
-<!--    <div class="category-container">-->
-<!--      @for (category of categories$ | async; track $index) {-->
-<!--        <div class="category-card" [style.background]="category.color">-->
-<!--          <div class="category-content">-->
-<!--            <h3>{{ category.name }}</h3>-->
-<!--          </div>-->
-<!--          <img [src]="category.image" alt="{{ category.name }}"/>-->
-<!--        </div>-->
-<!--      }-->
-<!--    </div>-->
-
-<!--    <button mat-button>See more...</button>-->
-<!--    <h2>Songs</h2>-->
-<!--      @for (track of tracks$ | async; track $index) {-->
-<!--        <div class="song-info">-->
-<!--          <div class="song-title">-->
-<!--            <img-->
-<!--              [src]="track.thumbnailPath | imgConverter"-->
-<!--              [alt]="'Song cover art for ' + track.title"-->
-<!--            />-->
-<!--            <span>{{ track.title }}</span>-->
-<!--          </div>-->
-<!--          <div class="song-artist">{{ track.artistName}}</div>-->
-<!--          <div class="song-duration">{{ track.duration }}</div>-->
-<!--        </div>-->
-<!--      }-->
-
-<!--    <button mat-button>See more...</button>-->
-
-<!--    <h2>Playlist</h2>-->
-<!--      <div class="search-playlist">-->
-<!--        @for (playlist of playlists$ | async; track $index) {-->
-<!--          <div class="card">-->
-<!--            <img-->
-<!--              [src]="playlist.thumbnailPath | imgConverter"-->
-<!--              [alt]="'Song cover art for ' + playlist.title"-->
-<!--            />-->
-<!--            <div class="play-btn">-->
-<!--              <mat-icon>play_arrow</mat-icon>-->
-<!--            </div>-->
-<!--&lt;!&ndash;            <p class="label">{{ playlist.name }}</p>&ndash;&gt;-->
-<!--&lt;!&ndash;            <p class="tracks">{{ playlist.trackCount }} tracks</p>&ndash;&gt;-->
-<!--          </div>-->
-<!--        }-->
-<!--      </div>-->
-<!--    <button mat-button>See more...</button>-->
-
-<!--    <h2>Profile</h2>-->
-<!--    <div class="search-profile">-->
-<!--      @for (profile of profiles$ | async; track $index) {-->
-<!--        <div class="artist">-->
-<!--          <img [src]="profile.avatar" alt="{{ profile.name }}"/>-->
-<!--          <p class="artist-name">{{ profile.name }}</p>-->
-<!--          <p class="artist-role">Profile</p>-->
-<!--        </div>-->
-<!--      }-->
-<!--    </div>-->
-<!--    <button mat-button>See more...</button>-->
-
-<!--    </div>-->
-<!--  </mat-tab>-->
-
-<!--  <mat-tab label="Songs">-->
-<!--    <div class="tab-content">-->
-<!--    <div class="playlist-table-header">-->
-<!--      <span class="col-name"># Name</span>-->
-<!--      <span class="col-artist"># Artist</span>-->
-<!--      <span class="col-time"><mat-icon>schedule</mat-icon></span>-->
-<!--    </div>-->
-
-<!--    <div class="song-info">-->
-<!--      <div class="song-title">-->
-<!--        <img src="https://storage.googleapis.com/a1aa/image/97a157ab-946c-4f1a-40ac-64a6ed348cd0.jpg" alt="cover"/>-->
-<!--        <span>Name music 1</span>-->
-<!--      </div>-->
-<!--      <div class="song-artist">Saint Tame MP</div>-->
-<!--      <div class="song-duration">3:20</div>-->
-<!--    </div>-->
-<!--    </div>-->
-<!--  </mat-tab>-->
-
-<!--  <mat-tab label="Genres">-->
-<!--    <div class="tab-content">-->
-<!--    <app-category></app-category>-->
-<!--    </div>-->
-<!--  </mat-tab>-->
-
-<!--  <mat-tab label="Playlist">-->
-<!--    <div class="tab-content">-->
-<!--    <div class="search-playlist">-->
-
-<!--      <div class="card">-->
-<!--        <img src="https://storage.googleapis.com/a1aa/image/cff2ac59-d9a7-4423-41c0-de0169f25f26.jpg"-->
-<!--             alt="Young woman singing on stage with microphone and purple lighting"/>-->
-<!--        <div class="play-btn">-->
-<!--          <mat-icon>play_arrow</mat-icon>-->
-<!--        </div>-->
-<!--        <p class="label">Thiên hạ nghe gì</p>-->
-<!--        <p class="tracks">25 tracks</p>-->
-<!--      </div>-->
-
-<!--    </div>-->
-<!--    </div>-->
-<!--  </mat-tab>-->
-
-<!--  <mat-tab label="Profile">-->
-<!--    <div class="tab-content">-->
-<!--    <div class="search-profile">-->
-<!--      <div class="artist">-->
-<!--        <img src="https://storage.googleapis.com/a1aa/image/baab503d-46f0-4100-fe62-16d5b62cb921.jpg"-->
-<!--             alt="Black and white portrait of Eminem"/>-->
-<!--        <p class="artist-name">Eminiem</p>-->
-<!--        <p class="artist-name">Profile</p>-->
-<!--      </div>-->
-
-<!--    </div>-->
-<!--    </div>-->
-
-<!--  </mat-tab>-->
-
-<!--</mat-tab-group>-->
-<!--</div>-->
-
 <div class="search-pages">
   <mat-tab-group class="search-tabs">
     <!-- ALL TAB -->
@@ -136,7 +8,7 @@
         <h2>Genres</h2>
         <div class="category-container">
           @for (category of categories$ | async; track $index) {
-            <div class="category-card" [style.background]="category.color">
+            <div class="category-card" [style.background]="category.color" (click)="navigateToCategoryDetail(category.id)">
               <div class="category-content">
                 <h3>{{ category.name }}</h3>
               </div>
@@ -146,7 +18,7 @@
         </div>
         <button mat-button>See more...</button>
 
-        <!-- Track -->
+        <!-- Song -->
         <h2>Songs</h2>
         @for (track of tracks$ | async; track $index) {
           <div class="song-info">
@@ -169,7 +41,7 @@
           @for (playlist of playlists$ | async; track $index) {
             <div class="card">
               <img
-                [src]="playlist.thumbnailPath | imgConverter"
+                [src]="playlist.thumbnailPath"
                 [alt]="'Song cover art for ' + playlist.title"
               />
               <div class="play-btn">
@@ -187,8 +59,8 @@
         <div class="search-profile">
           @for (profile of profiles$ | async; track $index) {
             <div class="artist">
-<!--              <img [src]="profile.image" alt="{{ profile.name }}"/>-->
-<!--              <p class="artist-name">{{ profile.name }}</p>-->
+              <img [src]="profile.photoURL" alt="{{ profile.name}}"/>
+              <p class="artist-name">{{ profile.name}}</p>
               <p class="artist-role">Profile</p>
             </div>
           }
@@ -235,7 +107,10 @@
         <div class="search-playlist">
           @for (playlist of playlists$ | async; track $index) {
             <div class="card">
-<!--              <img [src]="playlist.image" alt="{{ playlist.name }}"/>-->
+              <img
+                [src]="playlist.thumbnailPath"
+                [alt]="'Song cover art for ' + playlist.title"
+              />
               <div class="play-btn">
                 <mat-icon>play_arrow</mat-icon>
               </div>
@@ -253,8 +128,8 @@
         <div class="search-profile">
           @for (profile of profiles$ | async; track $index) {
             <div class="artist">
-<!--              <img [src]="profile.avatar" alt="{{ profile.name }}"/>-->
-<!--              <p class="artist-name">{{ profile.name }}</p>-->
+              <img [src]="profile.photoURL" alt="{{ profile.name }}"/>
+              <p class="artist-name">{{ profile.name }}</p>
               <p class="artist-role">Profile</p>
             </div>
           }

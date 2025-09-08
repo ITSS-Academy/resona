@@ -22,10 +22,10 @@ export class SearchService {
     );
   }
 
-  searchProfiles(query: string): Observable<ProfileModel[]> {
+  searchProfiles(username: string): Observable<ProfileModel[]> {
     return this.http.get<ProfileModel[]>(
       `${environment.apiUrl}/profile/search`,
-      {params: {search: query}}
+      {params: {search: username}}
     );
   }
 
