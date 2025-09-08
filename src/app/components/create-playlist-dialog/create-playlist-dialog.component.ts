@@ -1,4 +1,4 @@
-import {Component, NgZone, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {MaterialModule} from '../../shared/modules/material.module';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {PlaylistService} from '../../services/playlist/playlist.service';
@@ -14,6 +14,8 @@ import {PlaylistModel} from '../../models/playlist.model';
 import {Router} from '@angular/router';
 import {MatDialogRef} from '@angular/material/dialog';
 import {Actions, ofType} from '@ngrx/effects';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ShareSnackbarComponent} from '../share-snackbar/share-snackbar.component';
 
 @Component({
   selector: 'app-create-playlist-dialog',
@@ -58,6 +60,7 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
         filter(action => !!action.playlist && !!action.playlist.id)
       ).subscribe(action => {
         this.router.navigate([`/playlist-detail`, action.playlist.id]);
+        this.openSnackBar('Playlist created successfully!');
         this.dialogRef.close();
       }),
     );
@@ -135,6 +138,17 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
       });
     };
     reader.readAsDataURL(file);
+  }
+
+  private _snackBar = inject(MatSnackBar);
+
+  durationInSeconds = 30;
+
+  openSnackBar(content: string) {
+    this._snackBar.openFromComponent(ShareSnackbarComponent, {
+      data: content,
+      duration: this.durationInSeconds * 1000,
+    });
   }
 
   ngOnDestroy() {
