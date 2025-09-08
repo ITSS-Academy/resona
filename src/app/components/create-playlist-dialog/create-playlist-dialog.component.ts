@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {MaterialModule} from '../../shared/modules/material.module';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {PlaylistService} from '../../services/playlist/playlist.service';
@@ -39,6 +39,7 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
     private router:Router,
     private dialogRef: MatDialogRef<CreatePlaylistDialogComponent>,
     private actions$: Actions,
+    private zone: NgZone,
     private store: Store<{
       auth: AuthState,
       playlist: PlaylistState
@@ -68,16 +69,6 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
     file: new FormControl<File | null>(null, Validators.required),
   });
 
-  // onFileSelected(event: Event) {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input?.files && input.files.length > 0) {
-  //     this.form.patchValue({file: input.files[0]});
-  //
-  //     const file = input.files[0];
-  //     this.handleFile(file);
-  //   }
-  // }
-
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -90,10 +81,9 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
         this.previewUrl = reader.result as string;
       };
       reader.readAsDataURL(file);
-      console.log('Selected file:', file); // 👈 phải ra File {...}
+      console.log('Selected file:', file);
     }
   }
-
 
   createPlaylist() {
     if (this.form.invalid || !this.currentUser) return;
@@ -140,7 +130,9 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
 
     const reader = new FileReader();
     reader.onload = () => {
-      this.previewUrl = reader.result as string;
+      this.zone.run(() => {
+        this.previewUrl = reader.result as string;
+      });
     };
     reader.readAsDataURL(file);
   }
