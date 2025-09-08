@@ -23,6 +23,11 @@ import { ProfileModel } from '../../models/profile.model';
 import { Router } from '@angular/router';
 import * as trackActions from '../../ngrx/track/track.action';
 import {MatIconModule} from '@angular/material/icon';
+import * as historyActions from '../../ngrx/history/history.action';
+import { HistoryModel } from '../../models/history.model';
+import {loadHistory} from '../../ngrx/history/history.action';
+import {HistoryState} from '../../ngrx/history/history.state';
+import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 
 @Component({
   selector: 'app-profile',
@@ -37,6 +42,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatButton,
     MusicTabComponent,
     MatIconModule,
+    ImgConverterPipe,
   ],
   styleUrls: ['./profile.component.scss'],
 })
@@ -52,6 +58,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   playlist: PlaylistModel[] = [];
   favoriteTracks$!: Observable<TrackModel[]>;
   favoriteTracks: TrackModel[] = [];
+  historyTracks$!: Observable<HistoryModel[]>;
 
   getTracksByOwnerId$!: Observable<TrackModel[]>;
 
@@ -65,6 +72,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       auth: AuthState;
       track: TrackState;
       playlist: PlaylistState;
+      history: HistoryState;
     }>,
     private router: Router
   ) {}
@@ -76,6 +84,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.getPlaylists$ = this.store.select('playlist', 'playlists');
     this.favoriteTracks$ = this.store.select('track', 'favoriteTracks');
     this.getTracksByOwnerId$ = this.store.select('track', 'tracks');
+    this.historyTracks$ = this.store.select((state) => state.history.history);
 
     this.subscriptions.push(
       this.currentUser$.subscribe((user) => {
@@ -99,6 +108,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.store.dispatch(
             trackActions.getTrackByOwnerId({ ownerId: user.uid })
           );
+          this.store.dispatch(
+            loadHistory({ userId: user.uid })
+          );
 
         }
       }),
@@ -113,6 +125,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.getTracksByOwnerId$.subscribe((tracks: TrackModel[]) => {
         this.uploadedTracks = tracks;
         console.log('Uploaded tracks from store:', tracks);
+      }),
+
+      this.historyTracks$.subscribe((history) => {
+        console.log('History tracks:', history);
       })
     );
   }
