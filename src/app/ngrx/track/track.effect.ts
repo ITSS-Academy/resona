@@ -140,3 +140,22 @@ export const incrementTrackPlayCountEffect = createEffect(
   },
   {functional: true}
 );
+
+export const getTrackByOwnerIdEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getTrackByOwnerId),
+      switchMap(({ownerId}) =>
+        trackService.getTracksByOwnerId(ownerId).pipe(
+          map((tracks) => {
+            console.log(tracks);
+            return trackActions.getTrackByOwnerIdSuccess({tracks});
+          }),
+          catchError((error: { message: any; }) =>
+            of(trackActions.getTrackByOwnerIdFailure({error: error.message})))
+        )
+      )
+    )
+  },
+  {functional: true}
+)

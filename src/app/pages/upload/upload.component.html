@@ -37,10 +37,12 @@
            (click)="pictureInput.click()">
 
         @if (thumbnailPreview) {
-          <img [src]="thumbnailPreview" alt="Preview" class="preview-img"/>
-          <button mat-icon-button type="button" class="remove-btn" (click)="removeImg($event)">
-            <mat-icon>close</mat-icon>
-          </button>
+          <div class="preview-img-wrapper">
+            <img [src]="thumbnailPreview" alt="Preview" class="preview-img"/>
+            <button mat-icon-button type="button" class="remove-btn" (click)="removeImg($event)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
         } @else {
           <div class="picture-content">
             <img mat-card-image src="./assets/images/add_image.png" alt="">

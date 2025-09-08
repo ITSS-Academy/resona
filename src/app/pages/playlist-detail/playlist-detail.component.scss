@@ -108,37 +108,35 @@
 
 /* ===== HEADER ===== */
 .playlist-table-header {
-  display: flex;
+  display: grid;
+  grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;/* 6 cột bằng nhau */
   align-items: center;
   padding: 10px 20px;
   border-top: 1px solid #666;
   border-bottom: 1px solid #666;
   color: #e0e0e0;
   font-size: 16px;
-  gap: 20px;
+  text-align: center;
+  gap: 0;
 }
 
 .col-name {
-  flex: 2;
   display: flex;
   align-items: center;
   font-size: 19px;
+  max-width: 100px;
 }
 .col-artist {
-  flex: 1;
   display: flex;
   align-items: center;
   font-size: 19px;
 }
 .col-time {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 15px;
 }
 .col-actions {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -166,88 +164,6 @@
   display: flex;
   flex-direction: column;
 }
-
-.body-music {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  color: #e0e0e0;
-  font-size: 16px;
-  cursor: pointer;
-}
-.body-music:hover {
-  background-color: #3c002a;
-  border-radius: 8px;
-}
-
-.image-music {
-  flex: 2;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.body-artist {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-}
-
-.body-time {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-}
-
-.body-actions-delete {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.body-actions-list {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.body-index {
-  width: 24px;
-  text-align: center;
-  font-weight: 500;
-}
-
-.song-cover {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-.song-title {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.playlist-table-body mat-icon:hover {
-  color: #ee10b0;
-}
-
-.col-name   { flex: 2; }
-.col-artist { flex: 1; }
-.col-time   { flex: 1; }
-.col-actions { flex: 1; }
-
-.image-music        { flex: 2; }
-.body-artist        { flex: 1; }
-.body-time          { flex: 1; }
-.body-actions-delete { flex: 1; }
-
 
 @media (max-width: 1023px) {
   .playlist-header {
@@ -292,7 +208,6 @@
     display: flex !important;
     justify-content: center;
     align-items: center;
-    gap: 8px;
   }
 
 

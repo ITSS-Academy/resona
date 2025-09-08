@@ -4,7 +4,7 @@
   <footer>
     <div class="player-left">
       <img
-        [src]="'https://cynhadjnrnyzycvxcpln.supabase.co/storage/v1/object/public/thumbnail/' + track.thumbnailPath"
+        [src]="track.thumbnailPath | imgConverter"
         alt="Current playing song cover art"
       />
       <div class="player-song-info">
@@ -131,4 +131,6 @@
       </div>
     </div>
   </footer>
+} @else {
+  
 }

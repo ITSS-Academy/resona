@@ -1,0 +1,94 @@
+.song-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  color: #9ca3af;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 8px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--mat-sys-surface-container-high);
+    cursor: pointer;
+  }
+}
+
+.song-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .song-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 300px;
+
+    .song-title {
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 16px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .song-artist {
+      font-size: 14px;
+      color: #9ca3af;
+      white-space: normal; // cho phép xuống dòng
+    }
+  }
+}
+
+.song-date {
+  font-size: 12px;
+  text-align: left;
+}
+
+.song-duration {
+  font-size: 12px;
+  text-align: center;
+}
+
+.song-views {
+  font-size: 12px;
+  text-align: center;
+  color: #9ca3af;
+}
+.song-delete{
+  display: flex;
+  font-size: 12px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.song-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+
+    mat-icon {
+      font-size: 20px;
+      transition: color 0.2s ease;
+    }
+
+    &:hover mat-icon {
+      color: var(--mat-sys-primary);
+    }
+  }
+}

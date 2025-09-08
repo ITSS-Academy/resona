@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private defaultProfile: ProfileModel = {
     uid: 'default',
     email: 'unknown@email.com',
-    displayName: 'Unknown',
+    name: 'Unknown',
     photoURL: ''
   };
 

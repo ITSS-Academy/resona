@@ -224,5 +224,34 @@ export const trackReducer = createReducer(
         error: error,
       }
     }
-  )
+  ),
+
+
+  on(trackActions.getTrackByOwnerId, (state, {type})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTrackByOwnerIdSuccess, (state, {type, tracks})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      tracks: tracks,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTrackByOwnerIdFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  })
 );

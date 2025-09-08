@@ -40,45 +40,6 @@
     <div>
       <h2 class="section-title">Mood <span>Playlist</span></h2>
       <div class="horizontal-scroll-wrapper">
-<!--        @if (isMoodScrollable) { @if (showMoodLeftBtn) {-->
-<!--        <button-->
-<!--          mat-icon-button-->
-<!--          class="scroll-btn"-->
-<!--          aria-label="Scroll left"-->
-<!--          style="left: 12px; right: auto"-->
-<!--          (click)="scrollMoodLeft()"-->
-<!--        >-->
-<!--          <mat-icon>arrow_back</mat-icon>-->
-<!--        </button>-->
-<!--        } @if (showMoodRightBtn) {-->
-<!--        <button-->
-<!--          mat-icon-button-->
-<!--          class="scroll-btn"-->
-<!--          aria-label="Scroll right"-->
-<!--&lt;!&ndash;          (click)="scrollMoodRight()"&ndash;&gt;-->
-<!--        >-->
-<!--          <mat-icon>arrow_forward</mat-icon>-->
-<!--        </button>-->
-<!--        } }-->
-        <div class="horizontal-scroll" #moodScroll aria-label="Mood playlists">
-          @for (mood of moodPlaylists; track mood.name) {
-          <div class="card">
-            <img
-              [src]="mood.imageUrl"
-              [alt]="mood.name"
-              width="100"
-              height="96"
-            />
-            <p class="label">{{ mood.name }}</p>
-            <p class="tracks">{{ mood.tracks }} tracks</p>
-          </div>
-          }
-        </div>
-      </div>
-    </div>
-    <div>
-      <h2 class="section-title">Mood <span>Playlist</span></h2>
-      <div class="horizontal-scroll-wrapper">
         <!--                <button-->
         <!--                  mat-icon-button-->
         <!--                  class="scroll-btn"-->

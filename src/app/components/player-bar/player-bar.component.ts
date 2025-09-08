@@ -18,6 +18,7 @@ import {Router} from '@angular/router';
 import {CategoryModel} from '../../models/category.model';
 import {CategoryState} from '../../ngrx/category/category.state';
 import * as CategoryActions from '../../ngrx/category/category.action';
+import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 
 @Component({
   selector: 'app-player-bar',
@@ -32,6 +33,7 @@ import * as CategoryActions from '../../ngrx/category/category.action';
     SmallAlbumComponent,
     AsyncPipe,
     DurationPipe,
+    ImgConverterPipe,
   ],
   styleUrls: ['./player-bar.component.scss']
 })

@@ -80,13 +80,17 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
+    if (input.files && input.files.length > 0) {
       const file = input.files[0];
       const reader = new FileReader();
+
+      this.form.patchValue({file});
+      this.form.get('file')?.updateValueAndValidity();
       reader.onload = () => {
         this.previewUrl = reader.result as string;
       };
       reader.readAsDataURL(file);
+      console.log('Selected file:', file); // 👈 phải ra File {...}
     }
   }
 
@@ -101,7 +105,7 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
       createPlaylist({
         title: title!,
         description: description ?? '',
-        file: file!,
+        thumbnail: file!,
         userId: userId,
       })
     );
