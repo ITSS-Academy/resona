@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }>,
     private router: Router
   ) {
-    // this.musicGenres = this.musicGenresService.categories;
+    this.store.dispatch(CategoryActions.getAllCategories());
     this.categories$ = this.store.select(state => state.category.categoryList);
     this.moodPlaylists = this.moodPlaylistService.playlists;
     this.newReleases = this.newReleasesService.songs;
@@ -95,7 +95,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   // ----------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
-    this.store.dispatch(CategoryActions.getAllCategories());
   }
 
   onPlayTrack(track: TrackModel) {

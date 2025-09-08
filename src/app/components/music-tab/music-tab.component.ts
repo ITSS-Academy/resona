@@ -30,7 +30,6 @@ import { addTrackToPlaylist } from '../../ngrx/playlist/playlist.action';
 })
 export class MusicTabComponent implements OnInit, OnDestroy {
   @Input() track!: TrackModel;
-  @Input() userId!: string;
 
   playlists$!: Observable<PlaylistModel[]>;
   subscriptions: Subscription[] = [];
@@ -50,9 +49,9 @@ export class MusicTabComponent implements OnInit, OnDestroy {
   }
 
   onFavoriteTrack(track: TrackModel) {
-    if (this.userId && track.id) {
+    if (track.id) {
       this.store.dispatch(
-        FavoriteActions.addToFavorite({ userId: this.userId, songId: track.id })
+        FavoriteActions.addToFavorite({ songId: track.id })
       );
     }
   }
