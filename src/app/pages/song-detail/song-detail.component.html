@@ -3,9 +3,9 @@
   <mat-spinner></mat-spinner>
 }@else{
   <app-full-album-detail [trackDetail]="trackDetail" [thumbnailUrl]="thumbnailUrl"></app-full-album-detail>
-  <app-song-detail-button></app-song-detail-button>
+  <app-song-detail-button [trackDetail]="trackDetail"></app-song-detail-button>
   <app-three-options-button
-    [comments]="comment"
+    [comments]="comments"
     [trackDetail]="trackDetail"
     [totalComment]="totalComment"
     [lyrics]="lyric"

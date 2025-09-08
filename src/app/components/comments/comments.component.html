@@ -8,7 +8,7 @@
     (ngSubmit)="createComment()"
   >
     <div class="image">
-      <img src="{{ profile.photoURL }}" alt="" />
+      <img src="{{this.currentUser.photoURL}}" alt="">
     </div>
     <div class="form-fill">
       <mat-form-field appearance="fill" class="input">
@@ -24,19 +24,22 @@
     </div>
   </form>
   @for(comment of commentList; track comment.id) {
-  <div class="comments">
-    <div class="image">
-      <img src="{{ comment.profile?.photoURL }}" alt="" />
-    </div>
-    <div class="comment-info">
-      <div class="comment-info-above">
-        <p class="user">{{ comment.profile.name }}</p>
-        <p>{{ comment.createdAt }}</p>
+    <div class="comments">
+      <div class="image">
+        <img src="{{comment.profile.photoURL}}" alt="">
       </div>
-      <div class="comment-info-below">
-        <p>{{ comment.content }}</p>
+      <div class="comment-info">
+        <div class="comment-info-above">
+          <p class="user">{{comment.profile.uid}}</p>
+          <p>{{comment.createdAt}}</p>
+        </div>
+        <div class="comment-info-below">
+          <p>{{comment.content}}</p>
+        </div>
       </div>
+      <button mat-icon-button type="submit" aria-label="Example icon button with a delete icon" (click)="onDeleteComment(comment.id,currentUser.uid)">
+        <mat-icon >delete</mat-icon>
+      </button>
     </div>
-  </div>
   }
 </div>

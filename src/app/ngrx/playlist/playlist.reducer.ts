@@ -152,5 +152,32 @@ export const playlistReducer = createReducer(
       error: error,
     };
   }),
+
+
+  on(playlistActions.removeTrackFromPlaylist, (state, {type}) => {
+    console.log(type)
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    };
+  }),
+  on(playlistActions.removeTrackFromPlaylistSuccess, (state, {type, playlist}) => {
+    console.log(type)
+    return {
+      ...state,
+      playlist: playlist,
+      isLoading: false,
+      error: null,
+    };
+  }),
+  on(playlistActions.removeTrackFromPlaylistFailure, (state, {type, error}) => {
+    console.log(type)
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    };
+  })
 )
 

@@ -20,32 +20,44 @@
   <!-- Song views -->
   <div class="song-views">{{ track.viewCount | number }} views</div>
 
-  <div class="song-delete">
-
+  <div class="song-delete" (click)="$event.stopPropagation()">
             <mat-checkbox></mat-checkbox>
     </div>
 
   <!-- Actions -->
   <div class="song-actions">
-    <button aria-label="Like song">
+    <button aria-label="Like song" (click)="$event.stopPropagation()">
       <mat-icon>favorite_border</mat-icon>
     </button>
     <!-- Nút mở menu -->
     <button
       mat-icon-button
       [matMenuTriggerFor]="menu"
-      (click)="onOpenAddToPlaylist()"
+      (click)="$event.stopPropagation();onOpenAddToPlaylist()"
       aria-label="Song options"
     >
+
       <mat-icon>more_vert</mat-icon>
     </button>
 
     <!-- Menu chính -->
-    <mat-menu #menu="matMenu">
+    <mat-menu #menu="matMenu" [overlapTrigger]="false" yPosition="below" xPosition="after">
       <button mat-menu-item [matMenuTriggerFor]="addToPlaylistMenu">
         <mat-icon>playlist_add</mat-icon>
         <span>Add to playlist</span>
       </button>
+
+
+      @if (playlists$ | async; as playlists) {
+        @for (playlist of playlists; track playlist.id) {
+          <button mat-menu-item (click)="onRemoveTrackFromPlaylist(playlist.id)">
+            <mat-icon>delete</mat-icon>
+            Remove from {{ playlist.title }}
+          </button>
+        }
+      } @else {
+        <button mat-menu-item disabled>No playlists found</button>
+      }
     </mat-menu>
 
     <!-- Menu con: danh sách playlist -->

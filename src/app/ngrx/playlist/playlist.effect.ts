@@ -99,3 +99,20 @@ export const deletePlaylistEffect = createEffect(
   },
   { functional: true }
 );
+
+export const removeTrackFromPlaylistEffect = createEffect(
+  (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
+    return actions$.pipe(
+      ofType(playlistActions.removeTrackFromPlaylist),
+      switchMap(({ playlistId, trackId }) =>
+        playlistService.removeTrackFromPlaylist(playlistId, trackId).pipe(
+          map((playlist) => playlistActions.removeTrackFromPlaylistSuccess({ playlist })),
+          catchError((error) =>
+            of(playlistActions.removeTrackFromPlaylistFailure({ error }))
+          )
+        )
+      )
+    );
+  },
+  { functional: true }
+);
