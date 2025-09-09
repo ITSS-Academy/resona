@@ -27,7 +27,7 @@
 .category-card {
   position: relative;
   height: 90px;
-  border-radius: 12px;
+  border-radius: 16px;
   color: #fff;
   cursor: pointer;
   overflow: hidden;
@@ -41,10 +41,28 @@
     transform: scale(1.05);
   }
 
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+  }
+
+  &:hover::after,
+  &:hover .play-btn {
+    opacity: 1;
+  }
+
   h3 {
     font-size: 20px;
     font-weight: bold;
-    z-index: 2;
+    z-index: 4;
     align-self: flex-start;
     margin-top: 0;
     position: relative;
@@ -63,6 +81,28 @@
     z-index: 1;
     opacity: 0.7; // làm mờ nhẹ để text nổi hơn
   }
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #EE10B0;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+}
+
+.play-btn mat-icon {
+  font-size: 22px;
+  color: white;
 }
 
 /* src/app/pages/category-detail/category-detail.component.scss */
