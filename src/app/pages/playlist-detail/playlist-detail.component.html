@@ -32,7 +32,7 @@
     </div>
 
     <div class="playlist-table-header">
-      <span class="col-name" (click)="openSnackBar()"># Name</span>
+      <span class="col-name" ># Name</span>
       <span class="col-artist"># Date</span>
       <span class="col-time"><mat-icon>schedule</mat-icon></span>
       <span class="col-views"><mat-icon>visibility</mat-icon></span>
@@ -47,7 +47,11 @@
 
     <div class="playlist-table-body">
       @for (track of playlist.tracks ?? []; track track.id; let i = $index) {
-        <app-playlist-music-tab [track]="track"></app-playlist-music-tab>
+        <app-playlist-music-tab
+          [track]="track"
+          [playlistId]="playlistId"
+          [playlistTitle]="playlist.title">
+        </app-playlist-music-tab>
       }
     </div>
   }

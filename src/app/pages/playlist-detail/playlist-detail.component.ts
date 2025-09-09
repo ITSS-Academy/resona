@@ -79,10 +79,11 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
 
   private _snackBar = inject(MatSnackBar);
 
-  durationInSeconds = 5;
+  durationInSeconds = 30;
 
-  openSnackBar() {
+  openSnackBar(content: string) {
     this._snackBar.openFromComponent(ShareSnackbarComponent, {
+      data: content,
       duration: this.durationInSeconds * 1000,
     });
   }
