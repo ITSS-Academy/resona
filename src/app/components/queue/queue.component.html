@@ -1,12 +1,12 @@
 <div class="queue">
-  <div class="now-playing">
-    <p class="heading">Now playing</p>
-    <app-queue-song-detail></app-queue-song-detail>
-  </div>
+<!--  <div class="now-playing">-->
+<!--    <p class="heading">Now playing</p>-->
+<!--    <app-queue-song-detail></app-queue-song-detail>-->
+<!--  </div>-->
   <div class="next-song">
-    <p class="heading">Next song:</p>
-    @for (item of [1,2,3,4,5,6,7,8,9,10];track $index){
-      <app-queue-song-detail></app-queue-song-detail>
+    <p class="heading">Song queue:</p>
+    @for (queue of queueList;track $index){
+      <app-queue-song-detail [queue]="queue"></app-queue-song-detail>
     }
   </div>
 </div>

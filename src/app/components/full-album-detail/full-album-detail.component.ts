@@ -1,9 +1,10 @@
 import {Component, Input} from '@angular/core';
 import {MatDivider, MatList, MatListItem} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
-import {NgStyle} from '@angular/common';
+import {DatePipe, NgStyle} from '@angular/common';
 import {TrackModel} from '../../models/track.model';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
+import {DurationPipe} from '../../shared/pipes/duration.pipe';
 
 @Component({
   selector: 'app-full-album-detail',
@@ -13,6 +14,8 @@ import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
     MatIconModule,
     NgStyle,
     ImgConverterPipe,
+    DatePipe,
+    DurationPipe,
   ],
   templateUrl: './full-album-detail.component.html',
   styleUrl: './full-album-detail.component.scss'

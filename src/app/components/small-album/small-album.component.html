@@ -1,44 +1,46 @@
 <div class="container">
   @if(track){
-    <div class="container-top">
-      <div class="container-top-image">
-        <img src="{{this.track.thumbnailPath | imgConverter}}" alt="">
-      </div>
-      <div class="container-top-detail">
-        <div class="information">
-          <div class="song-name">
-            <p>{{this.track.title}}</p>
-          </div>
-          <div class="author">
-            <p>{{this.track.artistName}}</p>
-          </div>
+  <div class="container-top">
+    <div class="container-top-image">
+      <img src="{{ this.track.thumbnailPath | imgConverter }}" alt="" />
+    </div>
+    <div class="container-top-detail">
+      <div class="information">
+        <div class="song-name" (click)="navigateToTrackDetail(this.track.id)">
+          <p>{{ this.track.title }}</p>
+        </div>
+        <div class="author">
+          <p>{{ this.track.artistName }}</p>
         </div>
       </div>
     </div>
-    <div class="container-middle">
-      <div class="container-middle-image" [ngStyle]="{'background-image': 'url(' + this.categoryDetail.image + ')'}">
-      </div>
-      <div class="container-middle-information">
-        <div class="container-middle-information-author">
-          <p>About Genre: </p>
-          <p>{{this.categoryDetail.name}}</p>
-        </div>
+  </div>
+  <div class="container-middle">
+    <div
+      class="container-middle-image"
+      [ngStyle]="{ 'background-image': 'url(' + this.category?.image + ')' }"
+    ></div>
+    <div class="container-middle-information">
+      <div class="container-middle-information-author">
+        <p>About Genre:</p>
+        <span (click)="navigateToCategoryDetail(this.category.id)">{{
+          this.category?.name
+        }}</span>
       </div>
     </div>
+  </div>
   }
 
-
-
-<!--  <div class="container-bot">-->
-<!--    <p id="credits">More songs by author</p>-->
-<!--    <div class="more-songs">-->
-<!--      <p>Nơi này có anh</p>-->
-<!--    </div>-->
-<!--    <div class="more-songs">-->
-<!--      <p>Gác hết những âu lo</p>-->
-<!--    </div>-->
-<!--    <div class="more-songs">-->
-<!--      <p>Phép màu</p>-->
-<!--    </div>-->
-<!--  </div>-->
+  <!--  <div class="container-bot">-->
+  <!--    <p id="credits">More songs by author</p>-->
+  <!--    <div class="more-songs">-->
+  <!--      <p>Nơi này có anh</p>-->
+  <!--    </div>-->
+  <!--    <div class="more-songs">-->
+  <!--      <p>Gác hết những âu lo</p>-->
+  <!--    </div>-->
+  <!--    <div class="more-songs">-->
+  <!--      <p>Phép màu</p>-->
+  <!--    </div>-->
+  <!--  </div>-->
 </div>

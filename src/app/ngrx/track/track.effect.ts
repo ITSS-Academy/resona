@@ -158,4 +158,38 @@ export const getTrackByOwnerIdEffect = createEffect(
     )
   },
   {functional: true}
+);
+
+export const deleteTrackEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.deleteTrack),
+      switchMap(({trackId}) =>
+        trackService.deleteTrack(trackId).pipe(
+          map((trackDetails) => trackActions.deleteTrackSuccess({trackDetails})),
+          catchError((error) =>
+            of(trackActions.deleteTrackFailure({error: error.message || 'Delete track failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);
+
+export const getTracksSameArtistNameEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getTracksBySameArtist),
+      switchMap(({trackId}) =>
+        trackService.getTracksBySameArtist(trackId).pipe(
+          map((tracks) => trackActions.getTracksBySameArtistSuccess({tracksSameArtist: tracks})),
+          catchError((error) =>
+            of(trackActions.getTracksBySameArtistFailure({error: error.message || 'Get tracks by artist name failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
 )

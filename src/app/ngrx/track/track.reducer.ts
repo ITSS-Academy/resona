@@ -8,6 +8,7 @@ export const initialState: TrackState = {
   tracks: <TrackModel[]>[],
   favoriteTracks: <TrackModel[]>[],
   trackDetails: <TrackModel>{},
+  tracksSameArtist: <TrackModel[]>[],
   thumbnailUrl: '',
   lyrics: '',
   isLoading: false,
@@ -253,5 +254,62 @@ export const trackReducer = createReducer(
       isLoading: false,
       error: error,
     }
-  })
+  }),
+
+  on(trackActions.deleteTrack, (state, {type, trackId})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.deleteTrackSuccess, (state, {type, trackDetails})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      trackDetails: trackDetails,
+      error: null,
+    }
+  }),
+
+  on(trackActions.deleteTrackFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
+  on(trackActions.getTracksBySameArtist, (state, {type, trackId})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTracksBySameArtistSuccess, (state, {type, tracksSameArtist})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      tracksSameArtist: tracksSameArtist,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTracksBySameArtistFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
 );

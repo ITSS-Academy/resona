@@ -19,6 +19,12 @@ import {CategoryModel} from '../../models/category.model';
 import {CategoryState} from '../../ngrx/category/category.state';
 import * as CategoryActions from '../../ngrx/category/category.action';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
+import * as QueueActions from '../../ngrx/queue/queue.actions';
+import {QueueState} from '../../ngrx/queue/queue.state';
+import {AuthState} from '../../ngrx/auth/auth.state';
+import {ProfileModel} from '../../models/profile.model';
+import {QueueModel} from '../../models/queue.model';
+import {getTrackById} from '../../ngrx/track/track.action';
 
 @Component({
   selector: 'app-player-bar',
@@ -51,6 +57,10 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   lyrics!: string;
   categoryDetail$!: Observable<CategoryModel>;
   categoryDetail!: CategoryModel;
+  currentUser$!: Observable<ProfileModel>;
+  currentUser!: ProfileModel;
+  queueList$!: Observable<QueueModel[]>;
+  queueList: QueueModel[] = [];
 
   isPlaying = true;
   duration = 0;
@@ -67,9 +77,12 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
       play: PlayState,
       track: TrackState,
       category: CategoryState,
+      queue: QueueState,
+      auth: AuthState,
     }>
   ) {
-
+    this.currentUser$ = this.store.select('auth', 'currentUser');
+    this.queueList$ = this.store.select('queue', 'queueList');
   }
 
   ngOnInit() {
@@ -106,6 +119,18 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
         this.categoryDetail = detail;
       }),
 
+      this.currentUser$.subscribe(currentUser => {
+        if(currentUser) {
+          this.currentUser = currentUser;
+          this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.uid}));
+        }
+      }),
+
+      this.queueList$.subscribe(queueList => {
+        this.queueList = queueList;
+        console.log('Queue: ', this.queueList);
+      }),
+
       // lắng nghe trạng thái play/pause
       this.isPlaying$.subscribe(isPlaying => {
         this.isPlaying = isPlaying;
@@ -118,7 +143,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     );
 
     // cập nhật progress khi audio chạy
-    audio.ontimeupdate = () => {
+    audio.ontimeupdate = async () => {
       this.currentTime = audio.currentTime;
       this.duration = audio.duration || 0;
       if (this.currentTrack && !this.hasIncremented) {
@@ -126,6 +151,8 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
           this.store.dispatch(
             TrackActions.incrementTrackPlayCount({trackId: this.currentTrack.id})
           );
+          await new Promise(resolve => setTimeout(resolve, 200));
+          this.store.dispatch(TrackActions.getTrackById({id: this.currentTrack.id}));
           this.hasIncremented = true;
         }
       }
@@ -196,17 +223,21 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   toggleQueue() {
-    if (this.lyricDrawer.opened) {
-      this.lyricDrawer.close().then();
+    if(this.queueList.length > 0){
+      if (this.lyricDrawer.opened) {
+        this.lyricDrawer.close().then();
+      }
+      if (this.smallAlbumDrawer.opened) {
+        this.smallAlbumDrawer.close().then();
+      }
+      this.queueDrawer.toggle().then();
+    }else{
+      this.queueDrawer.close().then();
     }
-    if (this.smallAlbumDrawer.opened) {
-      this.smallAlbumDrawer.close().then();
-    }
-    this.queueDrawer.toggle().then();
   }
 
   toggleSmallAlbum() {
-    if(this.currentTrack){
+    if(this.currentTrack.id){
       if (this.lyricDrawer.opened) {
         this.lyricDrawer.close().then();
       }

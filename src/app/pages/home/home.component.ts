@@ -1,6 +1,5 @@
 import {Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy, OnInit} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import {MusicGenresModel} from '../../models/musicGenres.model';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs';
@@ -65,7 +64,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     photoURL: ''
   };
 
-  private defaultGenre: MusicGenresModel = {
+  private defaultGenre: CategoryModel = {
     id: 'default',
     name: 'Unknown',
     image: '',

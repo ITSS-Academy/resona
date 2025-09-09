@@ -46,3 +46,18 @@ export const getTracksByCategoryFailure = createAction(
   '[Category] Get Tracks By Category Failure',
   props<{ error: any }>()
 );
+
+export const getCategoryDetailByTrackId = createAction(
+  '[Category] Get Category Detail By Track Id',
+  props<{ trackId: string }>()
+);
+
+export const getCategoryDetailByTrackIdSuccess = createAction(
+  '[Category] Get Category Detail By Track Id Success',
+  props<{ category: CategoryModel }>() // Replace 'any' with the actual track model if available
+);
+
+export const getCategoryDetailByTrackIdFailure = createAction(
+  '[Category] Get Category Detail By Track Id Failure',
+  props<{ error: any }>()
+);
