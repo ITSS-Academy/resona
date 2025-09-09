@@ -160,4 +160,9 @@ export class TrackService {
   deleteTrack(trackId: string): Observable<TrackModel> {
     return this.http.delete<TrackModel>(`${environment.apiUrl}/track/${trackId}`);
   }
+
+  getTracksBySameArtist(trackId:string): Observable<TrackModel[]> {
+    return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/same-artist/${trackId}`);
+  }
+
 }

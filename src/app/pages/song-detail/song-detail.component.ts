@@ -39,6 +39,8 @@ export class SongDetailComponent implements OnInit , OnDestroy{
   thumbnailUrl!: string;
   lyric$!: Observable<string>;
   lyric!: string;
+  tracksSameArtist$!: Observable<TrackModel[]>;
+  tracksSameArtist!: TrackModel[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,12 +56,14 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     this.store.dispatch(TrackActions.getTrackById({id: id}));
     this.store.dispatch(TrackActions.getThumbnailBasedOnTrackId({id: id}));
     this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
+    this.store.dispatch(TrackActions.getTracksBySameArtist({trackId:id}))
 
     this.comments$ = this.store.select('comments', 'commentList');
     this.trackDetail$ = this.store.select('track', 'trackDetails');
     this.isLoadingTrack$ = this.store.select('track', 'isLoading');
     this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
     this.lyric$ = this.store.select('track', 'lyrics');
+    this.tracksSameArtist$ = this.store.select('track','tracksSameArtist')
 
   }
 
@@ -84,6 +88,10 @@ export class SongDetailComponent implements OnInit , OnDestroy{
       this.lyric$.subscribe(lyric=>{
         this.lyric = lyric;
       }),
+      this.tracksSameArtist$.subscribe(tracksSameArtist=>{
+        this.tracksSameArtist = tracksSameArtist;
+        console.log(this.tracksSameArtist);
+      })
     )
   }
 

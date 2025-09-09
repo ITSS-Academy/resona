@@ -128,3 +128,15 @@ export const deleteTrackSuccess = createAction(
 export const deleteTrackFailure = createAction(
   '[Track] Delete Track Failure', props<{ error: any }>()
 );
+
+export const getTracksBySameArtist = createAction(
+  '[Track] Get Tracks Same Artist Name', props<{ trackId: string }>()
+);
+
+export const getTracksBySameArtistSuccess = createAction(
+  '[Track] Get Tracks Same Artist Name Success', props<{ tracksSameArtist: TrackModel[] }>()
+);
+
+export const getTracksBySameArtistFailure = createAction(
+  '[Track] Get Tracks Same Artist Name Failure', props<{ error: any }>()
+);

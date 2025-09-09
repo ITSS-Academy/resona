@@ -176,3 +176,20 @@ export const deleteTrackEffect = createEffect(
   },
   {functional: true}
 );
+
+export const getTracksSameArtistNameEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getTracksBySameArtist),
+      switchMap(({trackId}) =>
+        trackService.getTracksBySameArtist(trackId).pipe(
+          map((tracks) => trackActions.getTracksBySameArtistSuccess({tracksSameArtist: tracks})),
+          catchError((error) =>
+            of(trackActions.getTracksBySameArtistFailure({error: error.message || 'Get tracks by artist name failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+)

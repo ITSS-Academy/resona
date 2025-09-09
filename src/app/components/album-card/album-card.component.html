@@ -1,13 +1,13 @@
-<div class="album-card">
+<div class="album-card" (click)="navigateToSongDetail()">
   <div class="album-card-image">
-    <img [src]="" alt="">
+    <img src="{{track.thumbnailPath | imgConverter}}" alt="">
   </div>
   <div class="album-card-detail">
     <div class="album-card-song-name">
-      <p>b</p>
+      <p>{{track.title}}</p>
     </div>
     <div class="album-card-debut-date">
-      <p>c</p>
+      <p>{{track.artistName}}</p>
     </div>
   </div>
 </div>
