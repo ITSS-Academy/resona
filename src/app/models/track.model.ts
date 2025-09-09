@@ -1,6 +1,7 @@
 import {ProfileModel} from './profile.model';
 import {PlaylistModel} from './playlist.model';
 import {MusicGenresModel} from './musicGenres.model';
+import {CategoryModel} from './category.model';
 
 export interface TrackModel {
   id: string;
@@ -13,5 +14,5 @@ export interface TrackModel {
   thumbnailPath?: string | null;
   owner: ProfileModel;
   playlists?: PlaylistModel[];
-  category: MusicGenresModel;
+  category: CategoryModel;
 }
