@@ -24,6 +24,7 @@ import {QueueState} from '../../ngrx/queue/queue.state';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {ProfileModel} from '../../models/profile.model';
 import {QueueModel} from '../../models/queue.model';
+import {getTrackById} from '../../ngrx/track/track.action';
 
 @Component({
   selector: 'app-player-bar',
@@ -151,6 +152,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
           this.store.dispatch(
             TrackActions.incrementTrackPlayCount({trackId: this.currentTrack.id})
           );
+          this.store.dispatch(TrackActions.getTrackById({id: this.currentTrack.id}));
           this.hasIncremented = true;
         }
       }
@@ -221,17 +223,19 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   toggleQueue() {
-    if (this.lyricDrawer.opened) {
-      this.lyricDrawer.close().then();
+    if(this.queueList.length > 0){
+      if (this.lyricDrawer.opened) {
+        this.lyricDrawer.close().then();
+      }
+      if (this.smallAlbumDrawer.opened) {
+        this.smallAlbumDrawer.close().then();
+      }
+      this.queueDrawer.toggle().then();
     }
-    if (this.smallAlbumDrawer.opened) {
-      this.smallAlbumDrawer.close().then();
-    }
-    this.queueDrawer.toggle().then();
   }
 
   toggleSmallAlbum() {
-    if(this.currentTrack){
+    if(this.currentTrack.id){
       if (this.lyricDrawer.opened) {
         this.lyricDrawer.close().then();
       }

@@ -14,6 +14,7 @@ import {PlaylistModel} from './models/playlist.model';
 import {PlaylistState} from './ngrx/playlist/playlist.state';
 import {ImgConverterPipe} from './shared/pipes/img-converter.pipe';
 import {PlaylistImgConverterPipe} from './shared/pipes/playlist-img-converter.pipe';
+import {TrackModel} from './models/track.model';
 
 @Component({
   selector: 'app-root',

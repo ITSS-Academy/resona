@@ -4,6 +4,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {DatePipe, NgStyle} from '@angular/common';
 import {TrackModel} from '../../models/track.model';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
+import {DurationPipe} from '../../shared/pipes/duration.pipe';
 
 @Component({
   selector: 'app-full-album-detail',
@@ -14,6 +15,7 @@ import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
     NgStyle,
     ImgConverterPipe,
     DatePipe,
+    DurationPipe,
   ],
   templateUrl: './full-album-detail.component.html',
   styleUrl: './full-album-detail.component.scss'

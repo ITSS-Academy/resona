@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FullAlbumDetailComponent} from '../../components/full-album-detail/full-album-detail.component';
 import {SongDetailButtonComponent} from '../../components/song-detail-button/song-detail-button.component';
 import {ThreeOptionsButtonComponent} from '../../components/three-options-button/three-options-button.component';
@@ -13,6 +13,7 @@ import {TrackState} from '../../ngrx/track/track.state';
 import * as TrackActions from '../../ngrx/track/track.action'
 import {AsyncPipe} from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import * as CategoryActions from '../../ngrx/category/category.action';
 
 @Component({
   selector: 'app-song-detail',
@@ -48,16 +49,17 @@ export class SongDetailComponent implements OnInit , OnDestroy{
   ) {
     let {id} = this.activatedRoute.snapshot.params;
     console.log(id);
-    this.comments$ = this.store.select('comments', 'commentList');
-    this.trackDetail$ = this.store.select('track', 'trackDetails');
-    this.isLoadingTrack$ = this.store.select('track', 'isLoading');
-    this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
-    this.lyric$ = this.store.select('track', 'lyrics');
 
     this.store.dispatch(CommentActions.getComments({trackId: id}));
     this.store.dispatch(TrackActions.getTrackById({id: id}));
     this.store.dispatch(TrackActions.getThumbnailBasedOnTrackId({id: id}));
     this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
+
+    this.comments$ = this.store.select('comments', 'commentList');
+    this.trackDetail$ = this.store.select('track', 'trackDetails');
+    this.isLoadingTrack$ = this.store.select('track', 'isLoading');
+    this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
+    this.lyric$ = this.store.select('track', 'lyrics');
 
   }
 
@@ -67,6 +69,7 @@ export class SongDetailComponent implements OnInit , OnDestroy{
         if (track) {
           this.trackDetail = track;
           console.log(this.trackDetail);
+          this.store.dispatch(CategoryActions.getCategoryDetailByTrackId({trackId: this.trackDetail.id}));
         } else {
           console.log('No track detail loaded yet');
         }
