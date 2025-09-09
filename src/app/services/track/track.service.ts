@@ -141,7 +141,7 @@ export class TrackService {
   }
 
 
-  getThumbnailBasedOnTrackId(id: string){
+  getThumbnailBasedOnTrackId(id: string) {
     return this.http.get<{ url: string }>(`${environment.apiUrl}/track/thumbnail-url/${id}`);
   }
 
@@ -154,7 +154,15 @@ export class TrackService {
   }
 
   incrementViewCount(trackId: string): Observable<any> {
-    return this.http.patch(`${environment.apiUrl}/track/${trackId}/increase-view`, {});
+    return this.http.patch(`${environment.apiUrl}/track/increase-view/${trackId}`, {});
+  }
+
+  getNewReleasedTracks(): Observable<TrackModel[]> {
+    return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/new-released`);
+  }
+
+  getPopularTracks(): Observable<TrackModel[]> {
+    return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/popular`);
   }
 
   deleteTrack(trackId: string): Observable<TrackModel> {

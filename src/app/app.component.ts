@@ -18,7 +18,7 @@ import {TrackModel} from './models/track.model';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MaterialModule, SidebarComponent, HeaderComponent, PlayerBarComponent, NgClass, RouterLink, RouterLinkActive, NgStyle, AsyncPipe, ImgConverterPipe, PlaylistImgConverterPipe],
+  imports: [RouterOutlet, MaterialModule, HeaderComponent, PlayerBarComponent, NgClass, RouterLink, RouterLinkActive, NgStyle, AsyncPipe, ImgConverterPipe, PlaylistImgConverterPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
