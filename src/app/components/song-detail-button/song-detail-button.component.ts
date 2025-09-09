@@ -35,6 +35,8 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
   categoryDetail$!: Observable<CategoryModel>;
   categoryDetail!: CategoryModel;
 
+  isPlaying$!: Observable<boolean>;
+
   constructor(
     private router: Router,
     private store: Store<{
@@ -47,6 +49,7 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
   ) {
     this.currentUser$ = this.store.select('auth', 'currentUser');
     this.categoryDetail$ = this.store.select('category', 'category');
+    this.isPlaying$ = this.store.select(state => state.play.isPlaying);
   }
 
   onPlayTrack(track: TrackModel) {
@@ -61,7 +64,7 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
       }),
       this.categoryDetail$.subscribe(category => {
         this.categoryDetail = category;
-      })
+      }),
     )
   }
 

@@ -1,6 +1,8 @@
 <div class="container">
     <button id="play-button" mat-fab aria-label="Example icon button with a delete icon" (click)="onPlayTrack(trackDetail)">
-      <mat-icon>play_arrow</mat-icon>
+      <mat-icon>
+        {{ (isPlaying$ | async) ? 'pause' : 'play_arrow' }}
+      </mat-icon>
     </button>
     <button class="buttons" mat-fab aria-label="Example icon button with a delete icon">
       <mat-icon fontSet="material-icons-outlined">favorite_outline</mat-icon>
