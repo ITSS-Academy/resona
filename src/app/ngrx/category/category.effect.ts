@@ -10,7 +10,7 @@ export const getAllCategoriesEffect = createEffect(
       ofType(categoryActions.getAllCategories),
       switchMap(() => categoryService.getAllCategories().pipe(
           map((categories) => {
-            console.log(categories);
+            console.log('API returned categories:', categories); // DEBUGGING LINE
             return categoryActions.getAllCategoriesSuccess({categories: categories});
           }),
           catchError((error: { message: any; }) =>
@@ -38,4 +38,23 @@ export const getCategoryDetailsEffect = createEffect(
     )
   },
   {functional: true}
+);
+
+export const getTracksByCategoryEffect = createEffect(
+  (actions$ = inject(Actions), categoryService = inject(CategoryService)) => {
+    return actions$.pipe(
+      ofType(categoryActions.getTracksByCategory),
+      switchMap((action) =>
+        categoryService.getTracksByCategoryId(action.categoryId).pipe(
+          map((tracks) => {
+            return categoryActions.getTracksByCategorySuccess({ tracks: tracks });
+          }),
+          catchError((error: { message: any }) =>
+            of(categoryActions.getTracksByCategoryFailure({ error }))
+          )
+        )
+      )
+    );
+  },
+  { functional: true }
 );
