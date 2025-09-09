@@ -253,5 +253,34 @@ export const trackReducer = createReducer(
       isLoading: false,
       error: error,
     }
-  })
+  }),
+
+  on(trackActions.deleteTrack, (state, {type, trackId})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.deleteTrackSuccess, (state, {type, trackDetails})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      trackDetails: trackDetails,
+      error: null,
+    }
+  }),
+
+  on(trackActions.deleteTrackFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
 );

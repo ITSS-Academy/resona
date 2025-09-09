@@ -158,4 +158,21 @@ export const getTrackByOwnerIdEffect = createEffect(
     )
   },
   {functional: true}
-)
+);
+
+export const deleteTrackEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.deleteTrack),
+      switchMap(({trackId}) =>
+        trackService.deleteTrack(trackId).pipe(
+          map((trackDetails) => trackActions.deleteTrackSuccess({trackDetails})),
+          catchError((error) =>
+            of(trackActions.deleteTrackFailure({error: error.message || 'Delete track failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);

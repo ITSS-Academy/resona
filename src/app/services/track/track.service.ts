@@ -152,7 +152,12 @@ export class TrackService {
   getTrackByCategoryId(categoryId: string): Observable<TrackModel[]> {
     return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/by-category/${categoryId}`);
   }
+
   incrementViewCount(trackId: string): Observable<any> {
     return this.http.patch(`${environment.apiUrl}/track/${trackId}/increase-view`, {});
+  }
+
+  deleteTrack(trackId: string): Observable<TrackModel> {
+    return this.http.delete<TrackModel>(`${environment.apiUrl}/track/${trackId}`);
   }
 }
