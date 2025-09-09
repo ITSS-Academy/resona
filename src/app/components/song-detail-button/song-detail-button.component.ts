@@ -21,6 +21,7 @@ import {CategoryState} from '../../ngrx/category/category.state';
   selector: 'app-song-detail-button',
   imports: [
     MaterialModule,
+    AsyncPipe,
   ],
   templateUrl: './song-detail-button.component.html',
   styleUrl: './song-detail-button.component.scss'
