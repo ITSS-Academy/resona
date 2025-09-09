@@ -48,16 +48,11 @@
       </button>
 
 
-      @if (playlists$ | async; as playlists) {
-        @for (playlist of playlists; track playlist.id) {
-          <button mat-menu-item (click)="onRemoveTrackFromPlaylist(playlist.id)">
-            <mat-icon>delete</mat-icon>
-            Remove from {{ playlist.title }}
-          </button>
-        }
-      } @else {
-        <button mat-menu-item disabled>No playlists found</button>
-      }
+      <button mat-menu-item (click)="onRemoveTrackFromPlaylist(playlistId)">
+        <mat-icon>delete</mat-icon>
+        Remove from {{ playlistTitle }}
+      </button>
+
     </mat-menu>
 
     <!-- Menu con: danh sách playlist -->

@@ -35,6 +35,10 @@ import {MaterialModule} from '../../shared/modules/material.module';
 })
 export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
   @Input() track!: TrackModel;
+  @Input() playlistId!: string;
+  @Input() playlistTitle!: string;
+
+
   playlists$!: Observable<PlaylistModel[]>;
   subscriptions: Subscription[] = [];
   currentUserId!: string;
@@ -55,8 +59,6 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.playlists$ = this.store.select('playlist', 'playlists');
-
-
 
     this.subscriptions.push(
       this.store.select(state => state.auth.currentUser).subscribe(user => {
