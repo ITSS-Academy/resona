@@ -11,7 +11,6 @@ import {CategoryModel} from '../../models/category.model';
   styleUrl: './small-album.component.scss',
   imports: [
     MatIconModule,
-    MatButton,
     ImgConverterPipe,
     NgStyle
   ]

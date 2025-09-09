@@ -26,7 +26,6 @@ import * as CategoryActions from '../../ngrx/category/category.action';
   selector: 'app-home',
   imports: [
     MatIconModule,
-    MatIconButton,
     MusicTabComponent,
     AsyncPipe,
   ],

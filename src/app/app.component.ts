@@ -17,7 +17,7 @@ import {PlaylistImgConverterPipe} from './shared/pipes/playlist-img-converter.pi
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MaterialModule, SidebarComponent, HeaderComponent, PlayerBarComponent, NgClass, RouterLink, RouterLinkActive, NgStyle, AsyncPipe, ImgConverterPipe, PlaylistImgConverterPipe],
+  imports: [RouterOutlet, MaterialModule, HeaderComponent, PlayerBarComponent, RouterLink, RouterLinkActive, NgStyle, PlaylistImgConverterPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -13,7 +13,6 @@ import * as TrackActions from '../../ngrx/track/track.action';
   selector: 'app-song-detail-button',
   imports: [
     MaterialModule,
-    AsyncPipe
   ],
   templateUrl: './song-detail-button.component.html',
   styleUrl: './song-detail-button.component.scss'

@@ -22,7 +22,6 @@ import {MatFabButton, MatIconButton} from '@angular/material/button';
     MatIconModule,
     ReactiveFormsModule,
     MatIconButton,
-    MatFabButton,
   ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss'
