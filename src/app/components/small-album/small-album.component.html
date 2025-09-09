@@ -6,7 +6,7 @@
       </div>
       <div class="container-top-detail">
         <div class="information">
-          <div class="song-name">
+          <div class="song-name" (click)="navigateToTrackDetail(this.track.id)">
             <p>{{this.track.title}}</p>
           </div>
           <div class="author">
@@ -16,12 +16,12 @@
       </div>
     </div>
     <div class="container-middle">
-      <div class="container-middle-image" [ngStyle]="{'background-image': 'url(' + this.categoryDetail?.image + ')'}">
+      <div class="container-middle-image" [ngStyle]="{'background-image': 'url(' + this.category?.image + ')'}">
       </div>
       <div class="container-middle-information">
         <div class="container-middle-information-author">
           <p>About Genre: </p>
-          <p>{{this.categoryDetail?.name}}</p>
+          <span (click)="navigateToCategoryDetail(this.category.id)">{{this.category?.name}}</span>
         </div>
       </div>
     </div>

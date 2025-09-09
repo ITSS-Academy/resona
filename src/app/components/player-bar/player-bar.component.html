@@ -2,20 +2,37 @@
 
 @if (currentTrack$ | async; as track) {
   <footer>
-    <div class="player-left">
-      <img
-        [src]="track.thumbnailPath | imgConverter"
-        alt="Current playing song cover art"
-      />
-      <div class="player-song-info">
-        <div class="player-song-title" title="Med Med Med Med">
-          <p>{{ track.title }}</p>
-        </div>
-        <div class="player-song-artist">
-          <p>{{ track.artistName }}</p>
+    @if(track.thumbnailPath) {
+      <div class="player-left">
+        <img
+          [src]="track.thumbnailPath | imgConverter"
+          alt="Current playing song cover art"
+        />
+        <div class="player-song-info">
+          <div class="player-song-title" title="Med Med Med Med">
+            <p>{{ track.title }}</p>
+          </div>
+          <div class="player-song-artist">
+            <p>{{ track.artistName }}</p>
+          </div>
         </div>
       </div>
-    </div>
+    }@else{
+      <div class="player-left">
+        <img
+          src="https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg"
+          alt="Current playing song cover art"
+        />
+        <div class="player-song-info">
+          <div class="player-song-title" title="Med Med Med Med">
+            <p>None</p>
+          </div>
+          <div class="player-song-artist">
+            <p>None</p>
+          </div>
+        </div>
+      </div>
+    }
 
     <div class="player-center">
       <div
@@ -81,7 +98,7 @@
 
         <mat-drawer-container>
           <mat-drawer #smallAlbum mode="over" position="end" class="drawer" autoFocus="false">
-            <app-small-album [track]="currentTrack" [categoryDetail]="categoryDetail"></app-small-album>
+            <app-small-album  [track]="currentTrack" [categoryDetail]="categoryDetail"></app-small-album>
           </mat-drawer>
         </mat-drawer-container>
 

@@ -164,4 +164,13 @@ export class TrackService {
   getPopularTracks(): Observable<TrackModel[]> {
     return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/popular`);
   }
+
+  deleteTrack(trackId: string): Observable<TrackModel> {
+    return this.http.delete<TrackModel>(`${environment.apiUrl}/track/${trackId}`);
+  }
+
+  getTracksBySameArtist(trackId:string): Observable<TrackModel[]> {
+    return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/same-artist/${trackId}`);
+  }
+
 }

@@ -25,3 +25,15 @@ export const getQueueByUserSuccess = createAction(
 export const getQueueByUserFailure = createAction(
   '[Queue] Get Queue By User Failure', props<{ error: any }>()
 )
+
+export const removeTrackFromQueue = createAction(
+  '[Queue] Remove Track From Queue', props<{userId: string, trackId: string}>()
+)
+
+export const removeTrackFromQueueSuccess = createAction(
+  '[Queue] Remove Track From Queue Success', props<{ message: string }>()
+)
+
+export const removeTrackFromQueueFailure = createAction(
+  '[Queue] Remove Track From Queue Failure', props<{ error: any }>()
+)

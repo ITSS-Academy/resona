@@ -69,7 +69,7 @@ export class CommentsComponent implements OnInit , OnDestroy{
     content: new FormControl(''),
   });
 
-  createComment(){
+  async createComment(){
     if(this.commentForm.valid){
       const newComment = {
         // trackId: id,
@@ -78,6 +78,7 @@ export class CommentsComponent implements OnInit , OnDestroy{
         content: this.commentForm.value.content || '',
       }
       this.store.dispatch(CommentActions.createComment(newComment));
+      await new Promise(resolve => setTimeout(resolve, 500));
       this.store.dispatch(CommentActions.getComments({trackId: this.trackDetail.id}));
       this.commentForm.reset();
     }

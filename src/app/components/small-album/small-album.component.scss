@@ -28,7 +28,7 @@
       justify-content: space-between;
       align-items: center;
       .information{
-        width: 80%;
+        width: 100%;
         font-size: 16px;
         display: flex;
         flex-direction: column;
@@ -37,8 +37,8 @@
         gap: 12px;
         .song-name{
           width: 100%;
-          line-clamp: 2;
-          -webkit-line-clamp: 2;
+          line-clamp: 1;
+          -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
           display: -webkit-box;
           overflow: hidden;
@@ -47,6 +47,10 @@
             color: var(--mat-sys-on-primary);
             font-weight: bold;
             margin: 12px 0 0 0;
+          }
+          p:hover{
+            text-decoration: underline;
+            cursor: pointer;
           }
         }
         .author{
@@ -94,8 +98,13 @@
         align-items: flex-start;
         gap: 8px;
         margin-left: 12px;
-        p{
+        p,span{
+          color: var(--mat-sys-on-primary);
           margin: 0;
+        }
+        span:hover{
+          text-decoration: underline;
+          cursor: pointer;
         }
       }
     }
