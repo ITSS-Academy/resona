@@ -144,7 +144,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     );
 
     // cập nhật progress khi audio chạy
-    audio.ontimeupdate = () => {
+    audio.ontimeupdate = async () => {
       this.currentTime = audio.currentTime;
       this.duration = audio.duration || 0;
       if (this.currentTrack && !this.hasIncremented) {
@@ -152,6 +152,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
           this.store.dispatch(
             TrackActions.incrementTrackPlayCount({trackId: this.currentTrack.id})
           );
+          await new Promise(resolve => setTimeout(resolve, 200));
           this.store.dispatch(TrackActions.getTrackById({id: this.currentTrack.id}));
           this.hasIncremented = true;
         }
@@ -231,6 +232,8 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
         this.smallAlbumDrawer.close().then();
       }
       this.queueDrawer.toggle().then();
+    }else{
+      this.queueDrawer.close().then();
     }
   }
 

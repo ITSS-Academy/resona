@@ -19,47 +19,38 @@
       <h2>Statistics</h2>
       <div class="statistics-tabs">
         <div class="statistics-tabs-left">
-          <mat-icon>hearing</mat-icon>
-          <p>Plays</p>
+          <mat-icon>publish</mat-icon>
+          <p>Release Date</p>
         </div>
         <div class="statistics-tabs-right">
-          <p>2</p>
+          <p>{{trackDetail.createdAt | date:'dd/MM/yyyy'}}</p>
         </div>
       </div>
       <div class="statistics-tabs">
         <div class="statistics-tabs-left">
-          <mat-icon>thumb_up</mat-icon>
-          <p>Likes</p>
+          <mat-icon>visibility</mat-icon>
+          <p>Views</p>
         </div>
         <div class="statistics-tabs-right">
-          <p>2</p>
+          <p>{{trackDetail.viewCount}}</p>
         </div>
       </div>
       <div class="statistics-tabs">
         <div class="statistics-tabs-left">
-          <mat-icon>chat</mat-icon>
+          <mat-icon>schedule</mat-icon>
+          <p>Duration</p>
+        </div>
+        <div class="statistics-tabs-right">
+          <p>{{trackDetail.duration | duration}}</p>
+        </div>
+      </div>
+      <div class="statistics-tabs">
+        <div class="statistics-tabs-left">
+          <mat-icon>comment</mat-icon>
           <p>Comments</p>
         </div>
         <div class="statistics-tabs-right">
-          <p>2</p>
-        </div>
-      </div>
-      <div class="statistics-tabs">
-        <div class="statistics-tabs-left">
-          <mat-icon>share</mat-icon>
-          <p>Shares</p>
-        </div>
-        <div class="statistics-tabs-right">
-          <p>4</p>
-        </div>
-      </div>
-      <div class="statistics-tabs">
-        <div class="statistics-tabs-left">
-          <mat-icon>download</mat-icon>
-          <p>Downloads</p>
-        </div>
-        <div class="statistics-tabs-right">
-          <p>100</p>
+          <p>{{totalComment}}</p>
         </div>
       </div>
     </div>

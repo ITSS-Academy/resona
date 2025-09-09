@@ -21,4 +21,8 @@ export class QueueService {
     return this.http.get<QueueModel[]>(`${environment.apiUrl}/queue/${userId}`);
   }
 
+  removeTrackFromQueue(userId: string, trackId: string) {
+    return this.http.delete<{ message: string }>(`${environment.apiUrl}/queue`, {params: {userId, trackId}});
+  }
+
 }
