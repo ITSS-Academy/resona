@@ -13,8 +13,9 @@ import {ProfileModel} from '../../models/profile.model';
 
 import {SearchState} from '../../ngrx/search/search.state';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
-import {searchCategories} from '../../ngrx/search/search.actions';
 import {Router} from '@angular/router';
+import {PlayState} from "../../ngrx/play/play.state";
+import * as PlayActions from "../../ngrx/play/play.action";
 
 @Component({
   selector: 'app-search',
@@ -36,7 +37,9 @@ export class SearchComponent {
   constructor(
     private router: Router,
     private store: Store<{
-      search: SearchState }>)
+      search: SearchState,
+      play: PlayState
+    }>)
   {
     this.categories$ = this.store.select(state => state.search.searchCategories);
     this.tracks$ = this.store.select(state => state.search.searchTracks);
@@ -46,5 +49,19 @@ export class SearchComponent {
 
   navigateToCategoryDetail(id: string) {
     this.router.navigate(['/category-detail', id]).then();
+  }
+
+  onPlayTrack(track: TrackModel) {
+    this.store.dispatch(PlayActions.setTrack({track}));
+  }
+
+  navigateToPlaylistDetail(id: string) {
+    this.router.navigate(['/playlist-detail', id]).then();
+  }
+
+  navigateToProfile(id: string | undefined) {
+    if (id) {
+      this.router.navigate(['/profile', id]).then();
+    }
   }
 }
