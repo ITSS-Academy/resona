@@ -13,21 +13,19 @@ import { MusicTabComponent } from '../../components/music-tab/music-tab.componen
 import { TrackState } from '../../ngrx/track/track.state';
 import { PlaylistModel } from '../../models/playlist.model';
 import { PlaylistState } from '../../ngrx/playlist/playlist.state';
-import * as categoryActions from '../../ngrx/category/category.action';
 import * as playlistActions from '../../ngrx/playlist/playlist.action';
-import { CategoryModel } from '../../models/category.model';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { play } from '../../ngrx/play/play.action';
 import { AuthState } from '../../ngrx/auth/auth.state';
 import { ProfileModel } from '../../models/profile.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as trackActions from '../../ngrx/track/track.action';
 import {MatIconModule} from '@angular/material/icon';
-import * as historyActions from '../../ngrx/history/history.action';
-import { HistoryModel } from '../../models/history.model';
 import {loadHistory} from '../../ngrx/history/history.action';
 import {HistoryState} from '../../ngrx/history/history.state';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
+import {ProfileState} from "../../ngrx/profile/profile.state";
+import * as ProfileActions from "../../ngrx/profile/profile.actions";
+import {HistoryModel} from "../../models/history.model";
 
 @Component({
   selector: 'app-profile',
@@ -48,89 +46,81 @@ import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   currentUser$!: Observable<ProfileModel>;
-  currentUser!: ProfileModel;
-  uploadedTracks$!: Observable<TrackModel[]>;
-  uploadedTracks: TrackModel[] = [];
+  viewedProfile$!: Observable<ProfileModel | null>;
+  isViewingOwnProfile: boolean = true;
 
-  loading$!: Observable<boolean>;
-  error$!: Observable<string | null>;
-  getPlaylists$!: Observable<PlaylistModel[]>;
-  playlist: PlaylistModel[] = [];
-  favoriteTracks$!: Observable<TrackModel[]>;
+  uploadedTracks: TrackModel[] = [];
+  playlists: PlaylistModel[] = [];
   favoriteTracks: TrackModel[] = [];
   historyTracks$!: Observable<HistoryModel[]>;
-
-  getTracksByOwnerId$!: Observable<TrackModel[]>;
-
 
   subscriptions: Subscription[] = [];
 
   constructor(
     private trackService: TrackService,
-
     private store: Store<{
       auth: AuthState;
       track: TrackState;
       playlist: PlaylistState;
       history: HistoryState;
+      profile: ProfileState;
     }>,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.currentUser$ = this.store.select('auth', 'currentUser');
-    this.loading$ = this.store.select((state) => state.track.isLoading);
-    this.error$ = this.store.select((state) => state.track.error);
-    this.getPlaylists$ = this.store.select('playlist', 'playlists');
-    this.favoriteTracks$ = this.store.select('track', 'favoriteTracks');
-    this.getTracksByOwnerId$ = this.store.select('track', 'tracks');
-    this.historyTracks$ = this.store.select((state) => state.history.history);
-
     this.subscriptions.push(
-      this.currentUser$.subscribe((user) => {
-        this.currentUser = user;
-        console.log('Current user:', user);
+      this.route.params.subscribe(params => {
+        const userId = params['id'];
+        if (userId) {
+          this.isViewingOwnProfile = false;
+          this.store.dispatch(ProfileActions.getProfileById({ userId }));
+          this.viewedProfile$ = this.store.select(state => state.profile.profile);
 
-        if (user.uid) {
-          this.uploadedTracks$ = this.trackService.getTracksByOwnerId(user.uid);
-
-          this.uploadedTracks$.subscribe((tracks: TrackModel[]) => {
-            this.uploadedTracks = tracks;
-            console.log('Uploaded tracks:', tracks);
-          });
-
-          this.store.dispatch(
-            playlistActions.getPlaylists({ userId: user.uid })
+          this.subscriptions.push(
+            this.viewedProfile$.subscribe(profile => {
+              if (profile) {
+                this.loadProfileData(profile.uid);
+              }
+            })
           );
-          this.store.dispatch(
-            trackActions.getFavoriteTracks({ userId: user.uid })
+        } else {
+          this.isViewingOwnProfile = true;
+          this.currentUser$ = this.store.select(state => state.auth.currentUser);
+          this.subscriptions.push(
+            this.currentUser$.subscribe(user => {
+              if (user) {
+                this.loadProfileData(user.uid);
+              }
+            })
           );
-          this.store.dispatch(
-            trackActions.getTrackByOwnerId({ ownerId: user.uid })
-          );
-          this.store.dispatch(
-            loadHistory({ userId: user.uid })
-          );
-
         }
-      }),
-      this.getPlaylists$.subscribe((playlists) => {
-        this.playlist = playlists;
-        console.log(this.playlist);
-      }),
-      this.favoriteTracks$.subscribe((tracks: TrackModel[]) => {
-        this.favoriteTracks = tracks;
-        console.log('Favorite tracks:', tracks);
-      }),
-      this.getTracksByOwnerId$.subscribe((tracks: TrackModel[]) => {
-        this.uploadedTracks = tracks;
-        console.log('Uploaded tracks from store:', tracks);
-      }),
-
-      this.historyTracks$.subscribe((history) => {
-        console.log('History tracks:', history);
       })
     );
+
+    this.historyTracks$ = this.store.select((state) => state.history.history);
+    this.subscriptions.push(
+      this.store.select('playlist', 'playlists').subscribe((playlists) => {
+        this.playlists = playlists;
+      }),
+      this.store.select('track', 'favoriteTracks').subscribe((tracks: TrackModel[]) => {
+        this.favoriteTracks = tracks;
+      }),
+      this.store.select('track', 'tracks').subscribe((tracks: TrackModel[]) => {
+        this.uploadedTracks = tracks;
+      })
+    );
+  }
+
+  loadProfileData(userId: string) {
+    this.trackService.getTracksByOwnerId(userId).subscribe((tracks: TrackModel[]) => {
+      this.uploadedTracks = tracks;
+    });
+    this.store.dispatch(playlistActions.getPlaylists({ userId }));
+    this.store.dispatch(trackActions.getFavoriteTracks({ userId }));
+    this.store.dispatch(trackActions.getTrackByOwnerId({ ownerId: userId }));
+    this.store.dispatch(loadHistory({ userId }));
   }
 
   navigateToPlaylistDetail(playlistId: string) {

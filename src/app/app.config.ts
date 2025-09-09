@@ -26,6 +26,8 @@ import { historyReducer } from './ngrx/history/history.reducer';
 import * as HistoryEffects from './ngrx/history/history.effect';
 import { favoriteReducer } from './ngrx/favorite/favorite.reducer';
 import * as FavoriteEffects from './ngrx/favorite/favorite.effect';
+import { profileReducer } from './ngrx/profile/profile.reducer';
+import * as ProfileEffects from './ngrx/profile/profile.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -43,6 +45,7 @@ export const appConfig: ApplicationConfig = {
       queue: queueReducer,
       history: historyReducer,
       favorite: favoriteReducer,
+      profile: profileReducer,
     }),
     provideEffects(
       AuthEffects,
@@ -53,7 +56,8 @@ export const appConfig: ApplicationConfig = {
       SearchEffects,
       QueueEffects,
       HistoryEffects,
-      FavoriteEffects
+      FavoriteEffects,
+      ProfileEffects
     ),
     provideFirebaseApp(() =>
       initializeApp({
