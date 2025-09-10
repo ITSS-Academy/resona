@@ -17,16 +17,15 @@
   import {MatSnackBar} from '@angular/material/snack-bar';
   import {ShareSnackbarComponent} from '../share-snackbar/share-snackbar.component';
 
-  @Component({
-    selector: 'app-create-playlist-dialog',
-    imports: [
-      MaterialModule,
-      FormsModule,
-      ReactiveFormsModule
-    ],
-    templateUrl: './create-playlist-dialog.component.html',
-    styleUrl: './create-playlist-dialog.component.scss',
-    // styleUrls: ['./create-playlist-dialog.component.scss'],
+@Component({
+  selector: 'app-create-playlist-dialog',
+  imports: [
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  templateUrl: './create-playlist-dialog.component.html',
+  styleUrl: './create-playlist-dialog.component.scss',
 
   })
   export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
@@ -38,7 +37,7 @@
     previewUrl: string | null = null;
 
     constructor(
-      private router:Router,
+      private router: Router,
       private dialogRef: MatDialogRef<CreatePlaylistDialogComponent>,
       private actions$: Actions,
       private zone: NgZone,
@@ -70,6 +69,7 @@
       title: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       description: new FormControl(''),
       file: new FormControl<File | null>(null, Validators.required),
+      isPublic: new FormControl(true)
     });
 
     onFileSelected(event: Event): void {
@@ -88,70 +88,72 @@
       }
     }
 
-    createPlaylist() {
-      if (this.form.invalid || !this.currentUser) return;
+      createPlaylist() {
+        if (this.form.invalid || !this.currentUser) return;
 
-      const {title, description, file} = this.form.value;
-      const userId = this.currentUser.uid;
+        const {title, description, file} = this.form.value;
+        const userId = this.currentUser.id;
 
-      this.store.dispatch(
-        createPlaylist({
-          title: title!,
-          description: description ?? '',
-          thumbnail: file!,
-          userId: userId,
-        })
-      );
+        this.store.dispatch(
+          createPlaylist({
+            title: title!,
+            description: description ?? '',
+            thumbnail: file!,
+            userId: userId,
+            isPublic: this.form.value.isPublic ?? true
+          })
+        );
 
-      this.form.reset();
-    }
+        this.form.reset();
+      }
 
-    onDragOver(event: DragEvent) {
-      event.preventDefault();
-      this.isDragging = true;
-    }
+      onDragOver(event: DragEvent) {
+        event.preventDefault();
+        this.isDragging = true;
+      }
 
-    onDragLeave(event: DragEvent) {
-      event.preventDefault();
-      this.isDragging = false;
-    }
+      onDragLeave(event: DragEvent) {
+        event.preventDefault();
+        this.isDragging = false;
+      }
 
-    onDrop(event: DragEvent) {
-      event.preventDefault();
-      this.isDragging = false;
+      onDrop(event: DragEvent) {
+        event.preventDefault();
+        this.isDragging = false;
 
-      if (event.dataTransfer && event.dataTransfer.files.length > 0) {
-        const file = event.dataTransfer.files[0];
-        this.handleFile(file);
+        if (event.dataTransfer && event.dataTransfer.files.length > 0) {
+          const file = event.dataTransfer.files[0];
+          this.handleFile(file);
+        }
+      }
+
+
+      handleFile(file: File) {
+        this.form.patchValue({ file: file });
+        this.form.get('file')?.updateValueAndValidity();
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.zone.run(() => {
+            this.previewUrl = reader.result as string;
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+
+      private _snackBar = inject(MatSnackBar);
+
+      durationInSeconds = 10;
+
+      openSnackBar(content: string) {
+        this._snackBar.openFromComponent(ShareSnackbarComponent, {
+          data: content,
+          duration: this.durationInSeconds * 1000,
+        }
+        );
+      }
+
+      ngOnDestroy() {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
       }
     }
-
-
-    handleFile(file: File) {
-      this.form.patchValue({ file: file });
-      this.form.get('file')?.updateValueAndValidity();
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.zone.run(() => {
-          this.previewUrl = reader.result as string;
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-
-    private _snackBar = inject(MatSnackBar);
-
-    durationInSeconds = 10;
-
-    openSnackBar(content: string) {
-      this._snackBar.openFromComponent(ShareSnackbarComponent, {
-        data: content,
-        duration: this.durationInSeconds * 1000,
-      });
-    }
-
-    ngOnDestroy() {
-      this.subscriptions.forEach(sub => sub.unsubscribe());
-    }
-  }

@@ -59,7 +59,7 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.store.select(state => state.auth.currentUser).subscribe(user => {
-        this.currentUserId = user ? user.uid : '';
+        this.currentUserId = user ? user.id : '';
       }),
       this.actions$.pipe(
         ofType(PlaylistActions.addTrackToPlaylistSuccess),

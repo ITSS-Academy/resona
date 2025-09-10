@@ -1,5 +1,17 @@
-import { createAction, props } from '@ngrx/store';
-import { ProfileModel } from '../../models/profile.model';
+import {createAction, props} from '@ngrx/store';
+import {ProfileModel} from '../../models/profile.model';
+
+export const getFollowers = createAction(
+  '[Profile] Get Followers', props<{ profileId: string }>()
+)
+
+export const getFollowersSuccess = createAction(
+  '[Profile] Get Followers Success', props<{ profileList: ProfileModel[] }>()
+)
+
+export const getFollowersFailure = createAction(
+  '[Profile] Get Followers Failure', props<{ error: any }>()
+)
 
 export const getProfileById = createAction(
   '[Profile] Get Profile By Id',
@@ -13,5 +25,17 @@ export const getProfileByIdSuccess = createAction(
 
 export const getProfileByIdFailure = createAction(
   '[Profile] Get Profile By Id Failure',
-  props<{ error: string }>()
+  props<{ error: any }>()
 );
+
+export const followProfile = createAction(
+  '[Profile] Follow Profile', props<{ followerId: string; followingId: string }>()
+)
+
+export const followProfileSuccess = createAction(
+  '[Profile] Follow Profile Success',
+)
+
+export const followProfileFailure = createAction(
+  '[Profile] Follow Profile Failure', props<{ error: any }>()
+)

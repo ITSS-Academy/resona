@@ -50,7 +50,10 @@ import {HistoryModel} from "../../models/history.model";
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   currentUser$!: Observable<ProfileModel>;
-  viewedProfile$!: Observable<ProfileModel | null>;
+  currentUser!: ProfileModel;
+  viewedProfile$!: Observable<ProfileModel>;
+  viewedProfile!: ProfileModel;
+  viewedProfileId!: string;
   isViewingOwnProfile: boolean = true;
 
   uploadedTracks$!: Observable<TrackModel[]>;
@@ -63,6 +66,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   playlistDetailMap: Record<string, PlaylistModel | undefined> = {};
 
   subscriptions: Subscription[] = [];
+
+  followers$!: Observable<ProfileModel[]>;
+  followers!: ProfileModel[];
 
   constructor(
     private trackService: TrackService,
@@ -82,15 +88,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.route.params.subscribe(params => {
         const userId = params['id'];
+        this.viewedProfileId = userId;
         if (userId) {
           this.isViewingOwnProfile = false;
           this.store.dispatch(ProfileActions.getProfileById({ userId }));
+          this.store.dispatch(ProfileActions.getFollowers({ profileId: userId }));
           this.viewedProfile$ = this.store.select(state => state.profile.profile);
 
           this.subscriptions.push(
             this.viewedProfile$.subscribe(profile => {
+              this.viewedProfile = profile;
               if (profile) {
-                this.loadProfileData(profile.uid);
+                this.loadProfileData(profile.id);
               }
             })
           );
@@ -100,8 +109,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.subscriptions.push(
             this.currentUser$.subscribe(user => {
               if (user) {
-                this.loadProfileData(user.uid);
-                this.uploadedTracks$ = this.trackService.getTracksByOwnerId(user.uid);
+                this.loadProfileData(user.id);
+                this.uploadedTracks$ = this.trackService.getTracksByOwnerId(user.id);
 
                 this.uploadedTracks$.subscribe((tracks: TrackModel[]) => {
                   this.uploadedTracks = tracks;
@@ -109,7 +118,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 });
 
                 this.store.dispatch(
-                  playlistActions.getPlaylists({ userId: user.uid })
+                  playlistActions.getPlaylists({ userId: user.id })
                 );
               }
 
@@ -143,8 +152,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }),
       this.store.select('track', 'tracks').subscribe((tracks: TrackModel[]) => {
         this.uploadedTracks = tracks;
+      }),
+    );
+
+    this.followers$ = this.store.select('profile', 'profileList');
+    this.currentUser$ = this.store.select('auth', 'currentUser');
+    this.subscriptions.push(
+      this.followers$.subscribe(followers => {
+        this.followers = followers;
+      }),
+      this.currentUser$.subscribe(currentUser => {
+        this.currentUser = currentUser;
       })
     );
+
+
   }
 
   getTrackCount(playlistId: string) {
@@ -167,5 +189,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  async followProfile() {
+    console.log(this.currentUser.id);
+    this.store.dispatch(ProfileActions.followProfile({ followerId : this.currentUser.id, followingId: this.viewedProfileId }));
+    await new Promise(resolve => setTimeout(resolve, 500));
+    this.store.dispatch(ProfileActions.getFollowers({ profileId: this.viewedProfileId }));
   }
 }

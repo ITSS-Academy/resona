@@ -299,7 +299,23 @@ mat-icon.icon {
   justify-content: flex-start !important;
 }
 
+.empty-player {
+  background-color: #1b1b1b;
+  border-top: 1px solid #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 65px;
+  padding: 8px 26px;
+  color: #9ca3af;
+}
+
+.empty-player img {
+  width: 40px;
+  height: 40px;
+  opacity: 0.5;
 /* Base styles remain unchanged */
+}
 
 /* Responsive adjustments for tablets and below */
 @media (max-width: 1024px) {

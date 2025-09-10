@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.profile$.subscribe(profile => {
-        if (profile.uid) {
+        if (profile.id) {
           this.profile = profile;
           console.log('Current user:', profile);
         }

@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
@@ -7,8 +7,6 @@ import {AsyncPipe} from '@angular/common';
 import {TrackModel} from '../../models/track.model';
 import * as PlayActions from '../../ngrx/play/play.action';
 import {ProfileModel} from '../../models/profile.model';
-import {PlaylistModel} from '../../models/playlist.model';
-import {MatIconButton} from '@angular/material/button';
 import {MoodPlaylistModel} from '../../models/moodPlaylist.model';
 import {NewReleaseSongModel} from '../../models/newReleaseSong.model';
 import {PopularArtistModel} from '../../models/popularArtist.model';
@@ -43,7 +41,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private moodPlaylistService: MoodPlaylistService,
     private newReleasesService: NewReleaseSongsService,
     private popularArtistService: PopularArtistService,
-    private renderer: Renderer2,
     private store: Store<{
       category: CategoryState,
       play: PlayState
@@ -58,10 +55,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private defaultProfile: ProfileModel = {
-    uid: 'default',
+    id: 'default',
     email: 'unknown@email.com',
     name: 'Unknown',
-    photoURL: ''
+    photoUrl: ''
   };
 
   private defaultGenre: CategoryModel = {
@@ -91,6 +88,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const [min, sec] = duration.split(':').map(Number);
     return min * 60 + sec;
   }
+
   // ----------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
   }
