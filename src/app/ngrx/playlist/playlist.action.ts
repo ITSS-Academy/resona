@@ -3,7 +3,7 @@ import {PlaylistModel} from '../../models/playlist.model';
 
 export const createPlaylist = createAction(
   '[Playlist] Create Playlist',
-  props<{ title: string, description: string, thumbnail: File, userId: string }>()
+  props<{ title: string, description: string, thumbnail: File, userId: string, isPublic: boolean }>()
 );
 
 export const createPlaylistSuccess = createAction(
@@ -15,8 +15,6 @@ export const createPlaylistFailure = createAction(
   '[Playlist] Create Playlist Failure',
   props<{ error: any }>()
 );
-
-
 
 export const getPlaylists = createAction('[Playlist] Get Playlists',
   props<{ userId: string }>()
@@ -42,7 +40,6 @@ export const getPlaylistByIdSuccess = createAction('[Playlist] Get Playlists By 
 export const getPlaylistByIdFailure = createAction('[Playlist] Get Playlists By Id Failure',
   props<{ error: any }>()
 );
-
 
 
 export const addTrackToPlaylist = createAction(

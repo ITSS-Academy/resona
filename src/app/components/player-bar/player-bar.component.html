@@ -129,16 +129,21 @@
 
       </div>
 
-      <button aria-label="Volume" style="display: flex; align-items: center; gap: 4px">
-        <mat-icon class="icon">volume_up</mat-icon>
+      <div class="volume-control">
+        <button mat-icon-button (click)="toggleMute()">
+          <mat-icon class="icon">{{ volumeIcon }}</mat-icon>
+        </button>
         <input
           type="range"
           min="0"
-          max="100"
-          value="70"
+          max="1"
+          step="0.01"
+          [value]="volume"
+          (input)="onVolumeChange($event)"
           aria-label="Volume control"
+          [style.--progress]="volume * 100 + '%'"
         />
-      </button>
+      </div>
 
       <div class="queue">
         <button mat-icon-button aria-label="Queue" (click)="navigateToSongDetail(this.currentTrack.id)">
@@ -149,5 +154,17 @@
     </div>
   </footer>
 } @else {
-
+  <footer class="empty-player">
+    <div class="player-left">
+      <img src="assets/placeholder-cover.png" alt="No song playing"/>
+      <div class="player-song-info">
+        <p class="player-song-title">Chưa có bài hát nào</p>
+        <p class="player-song-artist">Hãy chọn một bài để phát</p>
+      </div>
+    </div>
+    <div class="player-center">
+      <p style="color: #aaa; font-size: 14px;">Your music will appear here 🎶</p>
+    </div>
+    <div class="player-right"></div>
+  </footer>
 }

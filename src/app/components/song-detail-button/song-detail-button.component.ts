@@ -1,12 +1,9 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
 import {MaterialModule} from '../../shared/modules/material.module';
 import {TrackModel} from '../../models/track.model';
 import {Store} from '@ngrx/store';
 import {PlayState} from '../../ngrx/play/play.state';
 import * as PlayActions from '../../ngrx/play/play.action';
-import {AsyncPipe} from '@angular/common';
-import * as TrackActions from '../../ngrx/track/track.action';
 import {QueueState} from '../../ngrx/queue/queue.state';
 import * as QueueActions from '../../ngrx/queue/queue.actions';
 import {Observable, Subscription} from 'rxjs';
@@ -17,11 +14,14 @@ import {Router} from '@angular/router';
 import {CategoryModel} from '../../models/category.model';
 import {CategoryState} from '../../ngrx/category/category.state';
 import {QueueModel} from '../../models/queue.model';
+import {AsyncPipe} from '@angular/common';
+import * as TrackActions from '../../ngrx/track/track.action'
 
 @Component({
   selector: 'app-song-detail-button',
   imports: [
     MaterialModule,
+    AsyncPipe,
     AsyncPipe,
   ],
   templateUrl: './song-detail-button.component.html',

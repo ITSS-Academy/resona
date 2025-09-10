@@ -3,7 +3,7 @@ import {TrackModel} from '../../models/track.model';
 import {QueueModel} from '../../models/queue.model';
 
 export const addTrackToQueue = createAction(
-  '[Queue] Add Track To Queue', props<{userId: string, trackId: string, position?: number}>()
+  '[Queue] Add Track To Queue', props<{ userId: string, trackId: string, position?: number }>()
 )
 
 export const addTrackToQueueSuccess = createAction(
@@ -15,7 +15,7 @@ export const addTrackToQueueFailure = createAction(
 )
 
 export const getQueueByUser = createAction(
-  '[Queue] Get Queue By User', props<{userId: string}>()
+  '[Queue] Get Queue By User', props<{ userId: string }>()
 )
 
 export const getQueueByUserSuccess = createAction(
@@ -26,8 +26,12 @@ export const getQueueByUserFailure = createAction(
   '[Queue] Get Queue By User Failure', props<{ error: any }>()
 )
 
+export const restoreQueue = createAction(
+  '[Queue] Store Queue', props<{ queueList: QueueModel[] }>()
+)
+
 export const removeTrackFromQueue = createAction(
-  '[Queue] Remove Track From Queue', props<{userId: string, trackId: string}>()
+  '[Queue] Remove Track From Queue', props<{ userId: string, trackId: string }>()
 )
 
 export const removeTrackFromQueueSuccess = createAction(

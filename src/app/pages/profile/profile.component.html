@@ -50,7 +50,7 @@
         <div class="overlay">
         </div>
         <p class="label">{{ playlist.title }}</p>
-        <p class="tracks">{{ playlist.tracks?.length || 0 }} tracks</p>
+        <p class="tracks">{{ getTrackCount(playlist.id) }} tracks</p>
       </div>
     }
     </div>
@@ -58,51 +58,27 @@
 
 
   <mat-tab label="Favourite">
-    @if (favoriteTracks) {
-      @if (favoriteTracks.length > 0) {
+    @if (favoritePlaylist$ | async; as favPlaylist) {
+      @if (favPlaylist.tracks && favPlaylist.tracks.length > 0) {
         <mat-list>
-          @for (track of favoriteTracks; track track.id) {
-            <mat-list-item>
-              <img
-                [src]="track.thumbnailPath || 'assets/default-cover.png'"
-                alt="{{ track.title }}"
-                width="48"
-                height="48"
-                class="song-cover"
-              />
-              <div class="track-info">
-                <span class="track-title">{{ track.title }}</span>
-                <span class="track-artist">{{ track.artistName }}</span>
-              </div>
-            </mat-list-item>
+          @for (track of favPlaylist.tracks; track track.id) {
+            <app-music-tab [track]="track"></app-music-tab>
           }
         </mat-list>
       } @else {
         <p class="empty">No favourite tracks yet 🐾</p>
       }
+    } @else {
+      <p class="empty">Loading favorite tracks...</p>
     }
   </mat-tab>
 
   <mat-tab label="History">
     @if (historyTracks$ | async; as history) {
       @if (history.length > 0) {
-        <mat-list>
-          @for (track of history; track track.id) {
-            <mat-list-item>
-              <img
-                [src]="track.track.thumbnailPath | imgConverter"
-                alt="{{ track.track.title}}"
-                width="48"
-                height="48"
-                class="song-cover"
-              />
-              <div class="track-info">
-                <span class="track-title">{{ track.track.title }}</span>
-                <span class="track-artist">{{ track.track.artistName }}</span>
-              </div>
-            </mat-list-item>
-          }
-        </mat-list>
+        @for (item of history; track item.id) {
+          <app-music-tab [track]="item.track"></app-music-tab>
+        }
       } @else {
         <p class="empty">No history tracks yet 🐾</p>
       }

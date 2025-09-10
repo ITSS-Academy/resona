@@ -7,7 +7,7 @@ import {
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { TrackService } from '../../services/track/track.service';
 import { TrackModel } from '../../models/track.model';
-import { Observable, Subscription } from 'rxjs';
+import {Observable, Subscription, take} from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MusicTabComponent } from '../../components/music-tab/music-tab.component';
 import { TrackState } from '../../ngrx/track/track.state';
@@ -23,9 +23,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {loadHistory} from '../../ngrx/history/history.action';
 import {HistoryState} from '../../ngrx/history/history.state';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
+import {LoginRequiredDialogComponent} from '../../components/login-required-dialog/login-required-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {MaterialModule} from '../../shared/modules/material.module';
 import {ProfileState} from "../../ngrx/profile/profile.state";
 import * as ProfileActions from "../../ngrx/profile/profile.actions";
 import {HistoryModel} from "../../models/history.model";
+import { FavoriteState } from '../../ngrx/favorite/favorite.state';
+import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
 
 @Component({
   selector: 'app-profile',
@@ -41,6 +46,7 @@ import {HistoryModel} from "../../models/history.model";
     MusicTabComponent,
     MatIconModule,
     ImgConverterPipe,
+    MaterialModule
   ],
   styleUrls: ['./profile.component.scss'],
 })
@@ -52,10 +58,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
   viewedProfileId!: string;
   isViewingOwnProfile: boolean = true;
 
+  uploadedTracks$!: Observable<TrackModel[]>;
   uploadedTracks: TrackModel[] = [];
   playlists: PlaylistModel[] = [];
-  favoriteTracks: TrackModel[] = [];
+  favoritePlaylist$!: Observable<PlaylistModel | null>;
   historyTracks$!: Observable<HistoryModel[]>;
+  playlistDetail$!: Observable<PlaylistModel>;
+  playlistDetail!: PlaylistModel;
+  playlistDetailMap: Record<string, PlaylistModel | undefined> = {};
 
   subscriptions: Subscription[] = [];
 
@@ -70,8 +80,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       playlist: PlaylistState;
       history: HistoryState;
       profile: ProfileState;
+      favorite: FavoriteState;
     }>,
     private router: Router,
+    private dialog: MatDialog,
     private route: ActivatedRoute
   ) {}
 
@@ -101,7 +113,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.currentUser$.subscribe(user => {
               if (user) {
                 this.loadProfileData(user.id);
+                this.uploadedTracks$ = this.trackService.getTracksByOwnerId(user.id);
+
+                this.uploadedTracks$.subscribe((tracks: TrackModel[]) => {
+                  this.uploadedTracks = tracks;
+                  console.log('Uploaded tracks:', tracks);
+                });
+
+                this.store.dispatch(
+                  playlistActions.getPlaylists({ userId: user.id })
+                );
               }
+
             })
           );
         }
@@ -109,12 +132,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
 
     this.historyTracks$ = this.store.select((state) => state.history.history);
+    this.favoritePlaylist$ = this.store.select(state => state.favorite.playlist);
+
     this.subscriptions.push(
       this.store.select('playlist', 'playlists').subscribe((playlists) => {
         this.playlists = playlists;
+
+        playlists.forEach(pl => {
+          this.store.dispatch(playlistActions.getPlaylistById({ playlistId: pl.id }));
+
+          const sub = this.store.select('playlist', 'playlist').subscribe(detail => {
+            if (detail && detail.id === pl.id) {
+              this.playlistDetailMap[pl.id] = detail;
+            }
+          });
+          this.subscriptions.push(sub);
+        });
       }),
-      this.store.select('track', 'favoriteTracks').subscribe((tracks: TrackModel[]) => {
-        this.favoriteTracks = tracks;
+      this.store.select('playlist', 'playlist').subscribe((playlist) => {
+        this.playlistDetail = playlist;
       }),
       this.store.select('track', 'tracks').subscribe((tracks: TrackModel[]) => {
         this.uploadedTracks = tracks;
@@ -135,12 +171,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   }
 
+  getTrackCount(playlistId: string) {
+    return this.playlistDetailMap[playlistId]?.tracks?.length || 0;
+  }
+
   loadProfileData(userId: string) {
     this.trackService.getTracksByOwnerId(userId).subscribe((tracks: TrackModel[]) => {
       this.uploadedTracks = tracks;
     });
     this.store.dispatch(playlistActions.getPlaylists({ userId }));
-    this.store.dispatch(trackActions.getFavoriteTracks({ userId }));
+    this.store.dispatch(FavoriteActions.getFavoritePlaylist({ userId }));
     this.store.dispatch(trackActions.getTrackByOwnerId({ ownerId: userId }));
     this.store.dispatch(loadHistory({ userId }));
   }

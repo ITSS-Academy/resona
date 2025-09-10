@@ -24,7 +24,7 @@
 
           @if (playlistDetail$ | async; as playlist) {
           <p class="playlist-meta">
-            {{ playlist.tracks?.length || 0 }} songs
+            {{ playlist.tracks?.length || 0 }} songs • {{ totalMinutes$ | async }}
           </p>
           }
         </div>

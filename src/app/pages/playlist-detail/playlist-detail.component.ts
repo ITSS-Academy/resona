@@ -36,6 +36,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   playlistDetail$!: Observable<PlaylistModel | undefined>;
   tracks$!: Observable<TrackModel[] | null | undefined>;
   playlistName: string = '';
+  totalMinutes$!: Observable<string>;
 
   subscriptions: Subscription[] = [];
 
@@ -64,11 +65,11 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(params => {
         this.playlistId = params['id'];
         if (this.playlistId === 'popular') {
-          this.playlistName = 'Happy Vibes';
+          this.playlistName = 'popular';
           this.store.dispatch(trackActions.getPopularTracks());
           this.tracks$ = this.store.select(state => state.track.popularTracks);
         } else if (this.playlistId === 'new-released') {
-          this.playlistName = 'Chill Out';
+          this.playlistName = 'new released';
           this.store.dispatch(trackActions.getNewReleasedTracks());
           this.tracks$ = this.store.select(state => state.track.newReleasedTracks);
         } else {
@@ -77,20 +78,35 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
           this.tracks$ = this.playlistDetail$.pipe(map(p => p?.tracks));
           this.playlistDetail$.subscribe(p => this.playlistName = p?.title || '');
         }
+        this.totalMinutes$ = this.tracks$.pipe(
+          map(tracks => {
+            if (!tracks || tracks.length === 0) return '0 seconds';
+
+            const totalSeconds = tracks.reduce((sum, t) => {
+              const duration = Number(t.duration);
+              return sum + (isNaN(duration) ? 0 : Math.floor(duration));
+            }, 0);
+
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            if (hours > 0) {
+              return `${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+            } else if (minutes > 0) {
+              return `${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+            } else {
+              return `${seconds} second${seconds > 1 ? 's' : ''}`;
+            }
+          })
+        );
+
+
       })
     );
   }
 
-  private _snackBar = inject(MatSnackBar);
 
-  durationInSeconds = 30;
-
-  openSnackBar(content: string) {
-    this._snackBar.openFromComponent(ShareSnackbarComponent, {
-      data: content,
-      duration: this.durationInSeconds * 1000,
-    });
-  }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());

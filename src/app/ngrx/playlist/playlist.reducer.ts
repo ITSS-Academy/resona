@@ -112,7 +112,16 @@ export const playlistReducer = createReducer(
     console.log(type)
     return {
       ...state,
-      playlist: playlist,
+      playlist: {
+        ...state.playlist,
+        // merge các thuộc tính mới từ backend (nếu có)
+        ...playlist,
+        // tracks hiện tại + track mới (nếu backend chỉ trả về playlist có 1 track)
+        tracks: [
+          ...(state.playlist?.tracks ?? []),
+          ...(playlist.tracks ?? [])
+        ]
+      },
       isLoading: false,
       error: null,
     };

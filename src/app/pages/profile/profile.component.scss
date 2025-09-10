@@ -50,6 +50,12 @@ mat-tab-group{
   width: 100%;
 
 }
+::ng-deep .mat-mdc-tab-body-content {
+  height: 100vh !important;
+}
+
+
+
 .mat-mdc-list-item-icon {
   color: rgba(5, 5, 5, 5);
 }
