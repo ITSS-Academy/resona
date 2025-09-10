@@ -92,7 +92,7 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
     if (this.form.invalid || !this.currentUser) return;
 
     const {title, description, file} = this.form.value;
-    const userId = this.currentUser.uid;
+    const userId = this.currentUser.id;
 
     this.store.dispatch(
       createPlaylist({

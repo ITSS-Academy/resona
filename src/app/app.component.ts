@@ -20,6 +20,7 @@ import { PlaylistState } from './ngrx/playlist/playlist.state';
 import { ImgConverterPipe } from './shared/pipes/img-converter.pipe';
 import { PlaylistImgConverterPipe } from './shared/pipes/playlist-img-converter.pipe';
 import { TrackModel } from './models/track.model';
+import {ProfileModel} from './models/profile.model';
 
 @Component({
   selector: 'app-root',
@@ -59,11 +60,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.auth.onAuthStateChanged(async (auth: any) => {
       if (auth) {
         let idToken = await auth.getIdToken();
-        const user = {
-          uid: auth.uid,
+        const user:ProfileModel = {
+          id: auth.uid,
           name: auth.name,
           email: auth.email,
-          photoURL: auth.photoURL,
+          photoUrl: auth.photoURL,
         };
         this.store.dispatch(
           AuthActions.storeAuth({ currentUser: user, idToken: idToken })

@@ -55,10 +55,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private defaultProfile: ProfileModel = {
-    uid: 'default',
+    id: 'default',
     email: 'unknown@email.com',
     name: 'Unknown',
-    photoURL: ''
+    photoUrl: ''
   };
 
   private defaultGenre: CategoryModel = {
@@ -99,6 +99,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+  }
+
+  navigateToPlaylistDetail(id: string) {
+    this.router.navigate(['/playlist-detail', id]).then();
   }
 
   navigateToCategoryDetail(id: string) {

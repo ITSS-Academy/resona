@@ -6,6 +6,8 @@ import {TrackModel} from '../../models/track.model';
 
 export const initialState: TrackState = {
   tracks: <TrackModel[]>[],
+  newReleasedTracks: <TrackModel[]>[],
+  popularTracks: <TrackModel[]>[],
   favoriteTracks: <TrackModel[]>[],
   trackDetails: <TrackModel>{},
   tracksSameArtist: <TrackModel[]>[],
@@ -17,6 +19,37 @@ export const initialState: TrackState = {
 
 export const trackReducer = createReducer(
   initialState,
+  // Get New Released
+  on(trackActions.getNewReleasedTracks, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(trackActions.getNewReleasedTracksSuccess, (state, { tracks }) => ({
+    ...state,
+    newReleasedTracks: tracks,
+    isLoading: false,
+  })),
+  on(trackActions.getNewReleasedTracksFailure, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error,
+  })),
+
+  // Get Popular
+  on(trackActions.getPopularTracks, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(trackActions.getPopularTracksSuccess, (state, { tracks }) => ({
+    ...state,
+    popularTracks: tracks,
+    isLoading: false,
+  })),
+  on(trackActions.getPopularTracksFailure, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error,
+  })),
   on(
     trackActions.uploadTrack, (state, {type}) => {
       console.log(type)

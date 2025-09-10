@@ -2,11 +2,10 @@ import {TrackModel} from './track.model';
 import {PlaylistModel} from './playlist.model';
 
 export interface ProfileModel {
-  id?: string;
-  uid: string;
+  id: string;
   email: string;
   name: string;
-  photoURL?: string;
+  photoUrl?: string;
   createdAt?: string;
   // tracks?: TrackModel[];
   // playlists?: PlaylistModel[];

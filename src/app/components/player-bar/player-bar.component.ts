@@ -167,7 +167,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
       this.currentUser$.subscribe(currentUser => {
         if (currentUser) {
           this.currentUser = currentUser;
-          this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.uid}));
+          this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.id}));
         }
       }),
 

@@ -72,9 +72,9 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
   }
 
   async addTrackToQueue() {
-    this.store.dispatch(QueueActions.addTrackToQueue({userId: this.currentUser.uid, trackId: this.trackDetail.id}));
+    this.store.dispatch(QueueActions.addTrackToQueue({userId: this.currentUser.id, trackId: this.trackDetail.id}));
     await new Promise(resolve => setTimeout(resolve, 500));
-    this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.uid}));
+    this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.id}));
   }
 
   removeTrack() {
