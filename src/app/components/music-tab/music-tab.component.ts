@@ -13,7 +13,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthState } from '../../ngrx/auth/auth.state';
 import { PlaylistState } from '../../ngrx/playlist/playlist.state';
 import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
-import { addTrackToPlaylist } from '../../ngrx/playlist/playlist.action';
+import { TrackState } from '../../ngrx/track/track.state';
 
 @Component({
   selector: 'app-music-tab',
@@ -32,6 +32,8 @@ export class MusicTabComponent implements OnInit, OnDestroy {
   @Input() track!: TrackModel;
 
   playlists$!: Observable<PlaylistModel[]>;
+  favoriteTracks$!: Observable<TrackModel[]>;
+  isFavorite = false;
   subscriptions: Subscription[] = [];
   currentUserId!: string;
 
@@ -40,6 +42,7 @@ export class MusicTabComponent implements OnInit, OnDestroy {
       play: PlayState;
       auth: AuthState;
       playlist: PlaylistState;
+      track: TrackState;
     }>
   ) {}
 
@@ -53,18 +56,24 @@ export class MusicTabComponent implements OnInit, OnDestroy {
       this.store.dispatch(
         FavoriteActions.addToFavorite({ songId: track.id })
       );
+      // Optimistic update for instant feedback
+      this.isFavorite = true;
     }
   }
 
   ngOnInit(): void {
     this.playlists$ = this.store.select('playlist', 'playlists');
+    this.favoriteTracks$ = this.store.select('track', 'favoriteTracks');
 
     this.subscriptions.push(
       this.store
         .select((state) => state.auth.currentUser)
         .subscribe((user) => {
           this.currentUserId = user ? user.uid : '';
-        })
+        }),
+      this.favoriteTracks$.subscribe(favoriteTracks => {
+        this.isFavorite = favoriteTracks.some(favTrack => favTrack.id === this.track.id);
+      })
     );
   }
 

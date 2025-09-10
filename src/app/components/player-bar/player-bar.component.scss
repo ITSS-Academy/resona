@@ -211,53 +211,36 @@ footer {
   background-color: var(--mat-sys-background);
 }
 
-.player-right button {
-  background: none;
-  border: none;
-  //color: inherit;
-  cursor: pointer;
-  font-size: 14px;
+.volume-control {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
 }
 
-.icon,
-mat-icon.icon {
-  color: #fff !important;
-}
-
-/* VOLUME SLIDER  */
-.player-right input[type="range"] {
-  width: 120px;
-  -webkit-appearance: none;
-  height: 6px;
-  border-radius: 9999px;
-  background: linear-gradient(
-      90deg,
-      var(--mat-sys-primary),
-      var(--mat-sys-primary)
-  ) no-repeat;
-  background-size: 0% 100%; /* fill = 0% lúc đầu */
-  background-color: #333; /* phần chưa fill = xám */
-  cursor: pointer;
-  /* transition: background-fsize 0.1s linear; */
-}
-
-.player-right input[type="range"]::-webkit-slider-thumb {
+.volume-control input[type="range"] {
+  width: 100px;
   -webkit-appearance: none;
   appearance: none;
-  width: 14px;
-  height: 14px;
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #9d01ec, var(--mat-sys-primary)) 0 / var(--progress, 0%) 100% no-repeat, #555;
+  cursor: pointer;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: var(--mat-sys-primary);
   border: 2px solid var(--mat-sys-primary);
   cursor: pointer;
 }
 
-.player-right input[type="range"]::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
+.volume-control input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: var(--mat-sys-primary);
   border: 2px solid var(--mat-sys-primary);
