@@ -6,8 +6,8 @@ import {MoodPlaylistModel} from '../../models/moodPlaylist.model';
 })
 export class MoodPlaylistService {
   playlists: MoodPlaylistModel[] = [
-    { name: 'Happy Vibes',         imageUrl: 'https://placehold.co/600x600?text=Happy%20Vibes', tracks: 25 },
-    { name: 'Chill Out',           imageUrl: 'https://placehold.co/600x600?text=Chill%20Out', tracks: 18 },
+    { name: 'new release',         imageUrl: 'https://placehold.co/600x600?text=Happy%20Vibes', tracks: 25 },
+    { name: 'popular',           imageUrl: 'https://placehold.co/600x600?text=Chill%20Out', tracks: 18 },
     { name: 'Sad Songs',           imageUrl: 'https://placehold.co/600x600?text=Sad%20Songs', tracks: 30 },
     { name: 'Party Time',          imageUrl: 'https://placehold.co/600x600?text=Party%20Time', tracks: 22 },
     { name: 'Focus Beats',         imageUrl: 'https://placehold.co/600x600?text=Focus%20Beats', tracks: 40 },
