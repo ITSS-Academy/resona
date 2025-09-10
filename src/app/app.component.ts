@@ -1,26 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
   Router,
   RouterLink,
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { MaterialModule } from './shared/modules/material.module';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { HeaderComponent } from './components/header/header.component';
-import { PlayerBarComponent } from './components/player-bar/player-bar.component';
-import { AsyncPipe, NgClass, NgStyle } from '@angular/common';
-import { Auth } from '@angular/fire/auth';
-import { Store } from '@ngrx/store';
-import { AuthState } from './ngrx/auth/auth.state';
+import {MaterialModule} from './shared/modules/material.module';
+import {HeaderComponent} from './components/header/header.component';
+import {PlayerBarComponent} from './components/player-bar/player-bar.component';
+import {NgStyle} from '@angular/common';
+import {Auth} from '@angular/fire/auth';
+import {Store} from '@ngrx/store';
+import {AuthState} from './ngrx/auth/auth.state';
 import * as AuthActions from './ngrx/auth/auth.actions';
-import { Observable, Subscription } from 'rxjs';
-import { PlaylistModel } from './models/playlist.model';
-import { PlaylistState } from './ngrx/playlist/playlist.state';
-import { ImgConverterPipe } from './shared/pipes/img-converter.pipe';
-import { PlaylistImgConverterPipe } from './shared/pipes/playlist-img-converter.pipe';
-import { TrackModel } from './models/track.model';
+import {Observable, Subscription} from 'rxjs';
+import {PlaylistModel} from './models/playlist.model';
+import {PlaylistState} from './ngrx/playlist/playlist.state';
+import {PlaylistImgConverterPipe} from './shared/pipes/playlist-img-converter.pipe';
 import {ProfileModel} from './models/profile.model';
+import * as playlistActions from './ngrx/playlist/playlist.action';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +30,6 @@ import {ProfileModel} from './models/profile.model';
     RouterLink,
     RouterLinkActive,
     NgStyle,
-    PlaylistImgConverterPipe,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -46,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
   idToken: string = '';
   playlists$!: Observable<PlaylistModel[]>;
   playlists: PlaylistModel[] = [];
+  currentUser$!: Observable<ProfileModel>;
 
   constructor(
     private router: Router,
@@ -60,14 +58,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.auth.onAuthStateChanged(async (auth: any) => {
       if (auth) {
         let idToken = await auth.getIdToken();
-        const user:ProfileModel = {
+        const user: ProfileModel = {
           id: auth.uid,
           name: auth.name,
           email: auth.email,
           photoUrl: auth.photoURL,
         };
         this.store.dispatch(
-          AuthActions.storeAuth({ currentUser: user, idToken: idToken })
+          AuthActions.storeAuth({currentUser: user, idToken: idToken})
         );
       } else {
         console.log('No user is signed in.');
@@ -78,10 +76,10 @@ export class AppComponent implements OnInit, OnDestroy {
   isCollapsed = false;
 
   menuItems = [
-    { icon: 'home', title: 'Home', route: 'home' },
-    { icon: 'category', title: 'Category', route: 'category' },
-    { icon: 'cloud_upload', title: 'Upload', route: 'upload' },
-    { icon: 'account_circle', title: 'Profile', route: 'profile' },
+    {icon: 'home', title: 'Home', route: 'home'},
+    {icon: 'category', title: 'Genres', route: 'category'},
+    {icon: 'cloud_upload', title: 'Upload', route: 'upload'},
+    {icon: 'account_circle', title: 'Profile', route: 'profile'},
   ];
 
   ngOnInit() {
@@ -93,6 +91,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     this.playlists$ = this.store.select('playlist', 'playlists');
+    this.currentUser$ = this.store.select('auth', 'currentUser');
 
     this.subscriptions.push(
       this.idToken$.subscribe((idToken: string) => {
@@ -104,6 +103,11 @@ export class AppComponent implements OnInit, OnDestroy {
       this.playlists$.subscribe((playlists) => {
         this.playlists = playlists;
         console.log(this.playlists);
+      }),
+      this.currentUser$.subscribe((user: ProfileModel) => {
+        if (user && user.id) {
+          this.store.dispatch(playlistActions.getPlaylists({userId: user.id}));
+        }
       })
     );
   }

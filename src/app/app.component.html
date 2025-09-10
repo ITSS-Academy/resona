@@ -26,11 +26,11 @@
         @for (item of playlists; track $index) {
           <a
             mat-list-item
-            [routerLink]="['/playlist-detail']"
+            [routerLink]="['/playlist-detail', item.id]"
             routerLinkActive="active"
           >
             <img
-              [src]="item.thumbnailPath | playlistImgConverter"
+              [src]="item.thumbnailPath"
               alt=""
               class="background">
             <span class="menu-title">{{ item.title }}</span>
