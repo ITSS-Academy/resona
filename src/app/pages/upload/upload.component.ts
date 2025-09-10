@@ -52,38 +52,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.profile$ = this.store.select('auth', 'currentUser');
-
-
-    const sub = this.profile$.subscribe(user => {
-      if (!user || !user.uid) {
-        // disable form khi chưa login
-        this.form.disable();
-
-        const dialogRef = this.dialog.open(LoginRequiredDialogComponent, {
-          width: '500px',
-          height: '200px',
-          disableClose: true // cho phép bấm Cancel
-        });
-
-        dialogRef.afterClosed().subscribe(() => {
-          // kiểm tra lại user sau khi đóng dialog
-          this.store.select('auth', 'currentUser').pipe(take(1)).subscribe(u => {
-            if (!u || !u.uid) {
-              this.form.disable();  // vẫn disable nếu chưa login
-            } else {
-              this.form.enable();   // enable khi login thành công
-            }
-          });
-        });
-      } else {
-        // đã login thì enable form
-        this.form.enable();
-      }
-    });
-
-    this.subscriptions.push(sub);
-
 
     this.loading$ = this.store.select(state => state.track.isLoading);
     this.error$ = this.store.select(state => state.track.error);

@@ -58,6 +58,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   playlists: PlaylistModel[] = [];
   favoriteTracks: TrackModel[] = [];
   historyTracks$!: Observable<HistoryModel[]>;
+  playlistDetail$!: Observable<PlaylistModel>;
+  playlistDetail!: PlaylistModel;
+  playlistDetailMap: Record<string, PlaylistModel | undefined> = {};
 
   subscriptions: Subscription[] = [];
 
@@ -110,25 +113,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 );
               }
 
-              if (!user || !user.uid) {
-                // 🚨 chưa đăng nhập → show dialog
-                const dialogRef = this.dialog.open(LoginRequiredDialogComponent, {
-                  width: '500px',
-                  height: '200px',
-                  disableClose: true // bắt buộc chọn Cancel hoặc Login
-                });
-
-                dialogRef.afterClosed().subscribe(() => {
-                  // kiểm tra lại user
-                  this.store.select('auth', 'currentUser').pipe(take(1)).subscribe(u => {
-                    if (!u || !u.uid) {
-                      // nếu vẫn chưa login → điều hướng ra Home
-                      this.router.navigate(['/']);
-                    }
-                  });
-                });
-                return;
-              }
             })
           );
         }
@@ -139,6 +123,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.store.select('playlist', 'playlists').subscribe((playlists) => {
         this.playlists = playlists;
+
+        playlists.forEach(pl => {
+          this.store.dispatch(playlistActions.getPlaylistById({ playlistId: pl.id }));
+
+          const sub = this.store.select('playlist', 'playlist').subscribe(detail => {
+            if (detail && detail.id === pl.id) {
+              this.playlistDetailMap[pl.id] = detail;
+            }
+          });
+          this.subscriptions.push(sub);
+        });
+      }),
+      this.store.select('playlist', 'playlist').subscribe((playlist) => {
+        this.playlistDetail = playlist;
       }),
       this.store.select('track', 'favoriteTracks').subscribe((tracks: TrackModel[]) => {
         this.favoriteTracks = tracks;
@@ -147,6 +145,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.uploadedTracks = tracks;
       })
     );
+  }
+
+  getTrackCount(playlistId: string) {
+    return this.playlistDetailMap[playlistId]?.tracks?.length || 0;
   }
 
   loadProfileData(userId: string) {

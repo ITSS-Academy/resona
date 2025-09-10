@@ -36,6 +36,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   playlistDetail$!: Observable<PlaylistModel | undefined>;
   tracks$!: Observable<TrackModel[] | null | undefined>;
   playlistName: string = '';
+  totalMinutes$!: Observable<string>;
 
   subscriptions: Subscription[] = [];
 
@@ -77,6 +78,30 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
           this.tracks$ = this.playlistDetail$.pipe(map(p => p?.tracks));
           this.playlistDetail$.subscribe(p => this.playlistName = p?.title || '');
         }
+        this.totalMinutes$ = this.tracks$.pipe(
+          map(tracks => {
+            if (!tracks || tracks.length === 0) return '0 seconds';
+
+            const totalSeconds = tracks.reduce((sum, t) => {
+              const duration = Number(t.duration);
+              return sum + (isNaN(duration) ? 0 : Math.floor(duration));
+            }, 0);
+
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            if (hours > 0) {
+              return `${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+            } else if (minutes > 0) {
+              return `${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+            } else {
+              return `${seconds} second${seconds > 1 ? 's' : ''}`;
+            }
+          })
+        );
+
+
       })
     );
   }
