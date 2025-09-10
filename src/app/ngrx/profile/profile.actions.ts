@@ -12,3 +12,18 @@ export const getFollowersSuccess = createAction(
 export const getFollowersFailure = createAction(
   '[Profile] Get Followers Failure', props<{ error: any }>()
 )
+
+export const getProfileById = createAction(
+  '[Profile] Get Profile By Id',
+  props<{ userId: string }>()
+);
+
+export const getProfileByIdSuccess = createAction(
+  '[Profile] Get Profile By Id Success',
+  props<{ profile: ProfileModel }>()
+);
+
+export const getProfileByIdFailure = createAction(
+  '[Profile] Get Profile By Id Failure',
+  props<{ error: any }>()
+);

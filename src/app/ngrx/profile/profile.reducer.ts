@@ -10,6 +10,21 @@ export const initialProfileState = {
 
 export const profileReducer = createReducer(
   initialProfileState,
+  on(ProfileActions.getProfileById, (state , {type, userId}) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(ProfileActions.getProfileByIdSuccess, (state, {type, profile }) => ({
+    ...state,
+    profile: profile,
+    loading: false,
+  })),
+  on(ProfileActions.getProfileByIdFailure, (state, {type, error }) => ({
+    ...state,
+    error: error,
+    loading: false,
+  })),
 
   on(ProfileActions.getFollowers, (state, {type, profileId})=>{
     console.log(type);

@@ -13,6 +13,9 @@
                 <h3>{{ category.name }}</h3>
               </div>
               <img [src]="category.image" alt="{{ category.name }}"/>
+              <div class="play-btn">
+                <mat-icon>play_arrow</mat-icon>
+              </div>
             </div>
           }
         </div>
@@ -21,7 +24,7 @@
         <!-- Song -->
         <h2>Songs</h2>
         @for (track of tracks$ | async; track $index) {
-          <div class="song-info">
+          <div class="song-info" (click)="onPlayTrack(track)">
             <div class="song-title">
               <img
                 [src]="track.thumbnailPath | imgConverter"
@@ -39,7 +42,7 @@
         <h2>Playlist</h2>
         <div class="search-playlist">
           @for (playlist of playlists$ | async; track $index) {
-            <div class="card">
+            <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
               <img
                 [src]="playlist.thumbnailPath"
                 [alt]="'Song cover art for ' + playlist.title"
@@ -58,7 +61,7 @@
         <h2>Profile</h2>
         <div class="search-profile">
           @for (profile of profiles$ | async; track $index) {
-            <div class="artist">
+            <div class="artist" (click)="navigateToProfile(profile.id)">
               <img [src]="profile.photoURL" alt="{{ profile.name}}"/>
               <p class="artist-name">{{ profile.name}}</p>
               <p class="artist-role">Profile</p>
@@ -79,7 +82,7 @@
           <span class="col-time"><mat-icon>schedule</mat-icon></span>
         </div>
         @for (track of tracks$ | async; track $index) {
-          <div class="song-info">
+          <div class="song-info" (click)="onPlayTrack(track)">
             <div class="song-title">
               <img
                 [src]="track.thumbnailPath | imgConverter"
@@ -106,7 +109,7 @@
       <div class="tab-content">
         <div class="search-playlist">
           @for (playlist of playlists$ | async; track $index) {
-            <div class="card">
+            <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
               <img
                 [src]="playlist.thumbnailPath"
                 [alt]="'Song cover art for ' + playlist.title"
@@ -127,7 +130,7 @@
       <div class="tab-content">
         <div class="search-profile">
           @for (profile of profiles$ | async; track $index) {
-            <div class="artist">
+            <div class="artist" (click)="navigateToProfile(profile.id)">
               <img [src]="profile.photoURL" alt="{{ profile.name }}"/>
               <p class="artist-name">{{ profile.name }}</p>
               <p class="artist-role">Profile</p>

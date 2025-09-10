@@ -9,13 +9,9 @@ import {DurationPipe} from '../../shared/pipes/duration.pipe';
 @Component({
   selector: 'app-full-album-detail',
   imports: [
-    MatList,
-    MatListItem,
     MatIconModule,
     NgStyle,
     ImgConverterPipe,
-    DatePipe,
-    DurationPipe,
   ],
   templateUrl: './full-album-detail.component.html',
   styleUrl: './full-album-detail.component.scss'

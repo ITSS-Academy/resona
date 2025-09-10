@@ -25,7 +25,6 @@ import * as CategoryActions from '../../ngrx/category/category.action';
   selector: 'app-home',
   imports: [
     MatIconModule,
-    MatIconButton,
     MusicTabComponent,
     AsyncPipe,
   ],
@@ -51,7 +50,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }>,
     private router: Router
   ) {
-    // this.musicGenres = this.musicGenresService.categories;
+    this.store.dispatch(CategoryActions.getAllCategories());
     this.categories$ = this.store.select(state => state.category.categoryList);
     this.moodPlaylists = this.moodPlaylistService.playlists;
     this.newReleases = this.newReleasesService.songs;
@@ -94,7 +93,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   // ----------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
-    this.store.dispatch(CategoryActions.getAllCategories());
   }
 
   onPlayTrack(track: TrackModel) {
@@ -103,6 +101,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+  }
+
+  navigateToPlaylistDetail(id: string) {
+    this.router.navigate(['/playlist-detail', id]).then();
   }
 
   navigateToCategoryDetail(id: string) {

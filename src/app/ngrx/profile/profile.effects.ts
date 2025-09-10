@@ -22,3 +22,19 @@ export const getFollowersEffect = createEffect(
   },
   {functional: true}
 )
+
+export const getProfileByIdEffect = createEffect(
+  (actions$ = inject(Actions), profileService = inject(ProfileService)) =>
+    actions$.pipe(
+      ofType(ProfileActions.getProfileById),
+      switchMap(({ userId }) =>
+        profileService.getProfileById(userId).pipe(
+          map((profile) => ProfileActions.getProfileByIdSuccess({ profile })),
+          catchError((error) =>
+            of(ProfileActions.getProfileByIdFailure({ error }))
+          )
+        )
+      )
+    ),
+  { functional: true }
+);
