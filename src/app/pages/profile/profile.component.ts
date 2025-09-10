@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.viewedProfile$.subscribe(profile => {
               this.viewedProfile = profile;
               if (profile) {
-                this.loadProfileData(profile.uid);
+                this.loadProfileData(profile.id);
               }
             })
           );
@@ -100,7 +100,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.subscriptions.push(
             this.currentUser$.subscribe(user => {
               if (user) {
-                this.loadProfileData(user.uid);
+                this.loadProfileData(user.id);
               }
             })
           );
@@ -154,8 +154,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   async followProfile() {
-    console.log(this.currentUser.uid);
-    this.store.dispatch(ProfileActions.followProfile({ followerId : this.currentUser.uid, followingId: this.viewedProfileId }));
+    console.log(this.currentUser.id);
+    this.store.dispatch(ProfileActions.followProfile({ followerId : this.currentUser.id, followingId: this.viewedProfileId }));
     await new Promise(resolve => setTimeout(resolve, 500));
     this.store.dispatch(ProfileActions.getFollowers({ profileId: this.viewedProfileId }));
   }

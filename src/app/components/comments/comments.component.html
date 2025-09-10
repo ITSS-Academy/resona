@@ -7,9 +7,12 @@
     [formGroup]="commentForm"
     (ngSubmit)="createComment()"
   >
-    <div class="image">
-      <img src="{{this.currentUser.photoUrl}}" alt="">
-    </div>
+    @if (this.currentUser$ | async; as profile) {
+      <div class="image">
+        <img src="{{profile.photoUrl}}" alt="" referrerpolicy="no-referrer">
+      </div>
+    }
+
     <div class="form-fill">
       <mat-form-field appearance="fill" class="input">
         <input
@@ -43,8 +46,8 @@
           <p>{{comment.content}}</p>
         </div>
       </div>
-      @if(comment.profile.uid === currentUser.uid) {
-        <button mat-icon-button (click)="onDeleteComment(comment.id,currentUser.uid)">
+      @if(comment.profile.id === currentUser.id) {
+        <button mat-icon-button (click)="onDeleteComment(comment.id,currentUser.id)">
           <mat-icon >delete</mat-icon>
         </button>
       }

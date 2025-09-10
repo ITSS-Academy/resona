@@ -1,8 +1,8 @@
 @if (isViewingOwnProfile) {
-  <div class="background" [ngStyle]="{'background-image': 'url(' + (currentUser.photoURL) + '))'}">
+  <div class="background" [ngStyle]="{'background-image': 'url(' + (currentUser.photoUrl) + '))'}">
     @if (currentUser$ | async; as currentUser) {
       <div class="profile">
-        <img [src]="currentUser.photoURL" alt="User Avatar" />
+        <img [src]="currentUser.photoUrl" alt="User Avatar" />
       </div>
       <div class="right">
         <div class="name">
@@ -15,10 +15,10 @@
     }
   </div>
 } @else {
-  <div class="background" [ngStyle]="{'background-image': 'url(' + (viewedProfile.photoURL) + '))'}">
+  <div class="background" [ngStyle]="{'background-image': 'url(' + (viewedProfile.photoUrl) + '))'}">
     @if (viewedProfile$ | async; as viewedUser) {
       <div class="profile">
-        <img [src]="viewedUser.photoURL" alt="User Avatar" />
+        <img [src]="viewedUser.photoUrl" alt="User Avatar" />
       </div>
       <div class="right">
         <div class="name">

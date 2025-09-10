@@ -64,7 +64,11 @@ export class CommentsComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.currentUser$.subscribe((profile) => {
-        this.currentUser = profile;
+        if (profile.id) {
+          console.log("==================",profile)
+          this.currentUser = profile;
+
+        }
       }),
       this.comments$.subscribe((comments) => {
         if (comments && comments.length > 0) {
@@ -87,7 +91,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
     if (this.commentForm.valid) {
       const newComment = {
         trackId: this.trackDetail.id,
-        userId: this.currentUser.uid,
+        userId: this.currentUser.id,
         content: this.commentForm.value.content || '',
       };
       this.store.dispatch(CommentActions.createComment(newComment));
