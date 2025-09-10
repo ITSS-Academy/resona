@@ -1,12 +1,9 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
 import {MaterialModule} from '../../shared/modules/material.module';
 import {TrackModel} from '../../models/track.model';
 import {Store} from '@ngrx/store';
 import {PlayState} from '../../ngrx/play/play.state';
 import * as PlayActions from '../../ngrx/play/play.action';
-import {AsyncPipe} from '@angular/common';
-import * as TrackActions from '../../ngrx/track/track.action';
 import {QueueState} from '../../ngrx/queue/queue.state';
 import * as QueueActions from '../../ngrx/queue/queue.actions';
 import {Observable, Subscription} from 'rxjs';
@@ -17,7 +14,6 @@ import {ProfileModel} from '../../models/profile.model';
   selector: 'app-song-detail-button',
   imports: [
     MaterialModule,
-    AsyncPipe
   ],
   templateUrl: './song-detail-button.component.html',
   styleUrl: './song-detail-button.component.scss'
@@ -26,10 +22,9 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
   @Input() trackDetail!: TrackModel;
   currentUser$!: Observable<ProfileModel>;
   currentUser!: ProfileModel;
-  subscription: Subscription[]=[];
+  subscription: Subscription[] = [];
 
   constructor(
-
     private store: Store<{
       play: PlayState,
       queue: QueueState,

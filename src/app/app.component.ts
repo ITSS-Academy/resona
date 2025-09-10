@@ -1,10 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {MaterialModule} from './shared/modules/material.module';
-import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {HeaderComponent} from './components/header/header.component';
 import {PlayerBarComponent} from './components/player-bar/player-bar.component';
-import {AsyncPipe, NgClass, NgStyle} from '@angular/common';
+import {NgStyle} from '@angular/common';
 import {Auth} from '@angular/fire/auth';
 import {Store} from '@ngrx/store';
 import {AuthState} from './ngrx/auth/auth.state';
@@ -12,12 +11,11 @@ import * as AuthActions from './ngrx/auth/auth.actions';
 import {Observable, Subscription} from 'rxjs';
 import {PlaylistModel} from './models/playlist.model';
 import {PlaylistState} from './ngrx/playlist/playlist.state';
-import {ImgConverterPipe} from './shared/pipes/img-converter.pipe';
 import {PlaylistImgConverterPipe} from './shared/pipes/playlist-img-converter.pipe';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MaterialModule, HeaderComponent, PlayerBarComponent, NgClass, RouterLink, RouterLinkActive, NgStyle, AsyncPipe, ImgConverterPipe, PlaylistImgConverterPipe],
+  imports: [RouterOutlet, MaterialModule, HeaderComponent, PlayerBarComponent, RouterLink, RouterLinkActive, NgStyle, PlaylistImgConverterPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
