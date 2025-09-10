@@ -27,7 +27,9 @@ import {CategoryState} from '../../ngrx/category/category.state';
   styleUrl: './song-detail-button.component.scss'
 })
 export class SongDetailButtonComponent implements OnInit, OnDestroy {
-  @Input() trackDetail!: TrackModel;
+
+  trackDetail$!: Observable<TrackModel>;
+  trackDetail!: TrackModel;
   currentUser$!: Observable<ProfileModel>;
   currentUser!: ProfileModel;
   subscription: Subscription[]=[];
@@ -47,9 +49,6 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
       category: CategoryState,
     }>
   ) {
-    this.currentUser$ = this.store.select('auth', 'currentUser');
-    this.categoryDetail$ = this.store.select('category', 'category');
-    this.isPlaying$ = this.store.select(state => state.play.isPlaying);
   }
 
   onPlayTrack(track: TrackModel) {
@@ -58,13 +57,27 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.currentUser$ = this.store.select('auth', 'currentUser');
+    this.categoryDetail$ = this.store.select('category', 'category');
+    this.isPlaying$ = this.store.select(state => state.play.isPlaying);
+    this.trackDetail$ = this.store.select('track','trackDetail');
+
     this.subscription.push(
       this.currentUser$.subscribe(profile => {
-        this.currentUser = profile;
+        if(profile) {
+          this.currentUser = profile;
+        }
       }),
       this.categoryDetail$.subscribe(category => {
-        this.categoryDetail = category;
+        if (category) {
+          this.categoryDetail = category;
+        }
       }),
+      this.trackDetail$.subscribe(trackDetail => {
+        if(trackDetail) {
+          this.trackDetail = trackDetail;
+        }
+      })
     )
   }
 

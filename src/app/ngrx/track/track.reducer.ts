@@ -9,7 +9,7 @@ export const initialState: TrackState = {
   newReleasedTracks: <TrackModel[]>[],
   popularTracks: <TrackModel[]>[],
   favoriteTracks: <TrackModel[]>[],
-  trackDetails: <TrackModel>{},
+  trackDetail: <TrackModel>{},
   tracksSameArtist: <TrackModel[]>[],
   thumbnailUrl: '',
   lyrics: '',
@@ -128,7 +128,7 @@ export const trackReducer = createReducer(
     return {
       ...state,
       isLoading: false,
-      trackDetails: trackDetail,
+      trackDetail: trackDetail,
       error: null,
     }
   }),
