@@ -104,7 +104,7 @@ export class TrackService {
           .set('trackId', trackId)
           .set('trackName', title)
           .set('categoryId', categoryId)
-          .set('ownerId', user.uid)
+          .set('ownerId', user.id)
           .set('artistName', artists || '');
 
         console.log('Merging track with params:', {
@@ -112,7 +112,7 @@ export class TrackService {
           originalFileName,
           title,
           categoryId,
-          ownerId: user.uid,
+          ownerId: user.id,
           hasThumbnail: !!thumbnail,
           hasLyrics: !!lyrics,
           artists

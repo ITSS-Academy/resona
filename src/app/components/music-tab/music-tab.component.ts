@@ -63,7 +63,7 @@ export class MusicTabComponent implements OnInit, OnDestroy {
       this.store
         .select((state) => state.auth.currentUser)
         .subscribe((user) => {
-          this.currentUserId = user ? user.uid : '';
+          this.currentUserId = user ? user.id : '';
         })
     );
   }

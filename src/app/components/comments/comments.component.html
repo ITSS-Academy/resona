@@ -7,9 +7,12 @@
     [formGroup]="commentForm"
     (ngSubmit)="createComment()"
   >
-    <div class="image">
-      <img src="{{this.currentUser.photoURL}}" alt="">
-    </div>
+    @if (this.currentUser$ | async; as profile) {
+      <div class="image">
+        <img src="{{profile.photoUrl}}" alt="" referrerpolicy="no-referrer">
+      </div>
+    }
+
     <div class="form-fill">
       <mat-form-field appearance="fill" class="input">
         <input
@@ -23,11 +26,11 @@
       </button>
     </div>
   </form>
-  @for(comment of commentList; track $index) {
+  @for(comment of this.comments; track $index) {
     <div class="comments">
-      @if(comment.profile.photoURL) {
+      @if(comment.profile.photoUrl) {
         <div class="image">
-          <img src="{{comment.profile.photoURL}}" alt="">
+          <img src="{{comment.profile.photoUrl}}" alt="" referrerpolicy="no-referrer">
         </div>
       }@else{
         <div class="image">
@@ -43,9 +46,11 @@
           <p>{{comment.content}}</p>
         </div>
       </div>
-        <button mat-icon-button type="submit" aria-label="Example icon button with a delete icon" (click)="onDeleteComment(comment.id,currentUser.uid)">
+      @if(comment.profile.id === currentUser.id) {
+        <button mat-icon-button (click)="onDeleteComment(comment.id,currentUser.id)">
           <mat-icon >delete</mat-icon>
         </button>
+      }
     </div>
   }
 </div>
