@@ -65,5 +65,9 @@ export class PlaylistService {
     return this.http.delete(`${environment.apiUrl}/playlist/remove-track`, {body: {playlistId, trackId}});
   }
 
+  getFavoritePlaylistByUserId(userId: string): Observable<PlaylistModel> {
+    return this.http.get<PlaylistModel>(`${environment.apiUrl}/playlist/detail/${userId}`);
+  }
+
 
 }

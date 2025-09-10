@@ -13,9 +13,7 @@
                 <h3>{{ category.name }}</h3>
               </div>
               <img [src]="category.image" alt="{{ category.name }}"/>
-              <div class="play-btn">
-                <mat-icon>play_arrow</mat-icon>
-              </div>
+
             </div>
           }
         </div>
@@ -47,9 +45,7 @@
                 [src]="playlist.thumbnailPath"
                 [alt]="'Song cover art for ' + playlist.title"
               />
-              <div class="play-btn">
-                <mat-icon>play_arrow</mat-icon>
-              </div>
+
               <p class="label">{{ playlist.title}}</p>
 <!--              <p class="tracks">{{ playlist.trackCount }} tracks</p>-->
             </div>
@@ -62,7 +58,7 @@
         <div class="search-profile">
           @for (profile of profiles$ | async; track $index) {
             <div class="artist" (click)="navigateToProfile(profile.id)">
-              <img [src]="profile.photoURL" alt="{{ profile.name}}"/>
+              <img [src]="profile.photoUrl" alt="{{ profile.name}}"/>
               <p class="artist-name">{{ profile.name}}</p>
               <p class="artist-role">Profile</p>
             </div>
@@ -114,9 +110,7 @@
                 [src]="playlist.thumbnailPath"
                 [alt]="'Song cover art for ' + playlist.title"
               />
-              <div class="play-btn">
-                <mat-icon>play_arrow</mat-icon>
-              </div>
+
               <p class="label">{{ playlist.title}}</p>
 <!--              <p class="tracks">{{ playlist.trackCount }} tracks</p>-->
             </div>
@@ -131,7 +125,7 @@
         <div class="search-profile">
           @for (profile of profiles$ | async; track $index) {
             <div class="artist" (click)="navigateToProfile(profile.id)">
-              <img [src]="profile.photoURL" alt="{{ profile.name }}"/>
+              <img [src]="profile.photoUrl" alt="{{ profile.name }}"/>
               <p class="artist-name">{{ profile.name }}</p>
               <p class="artist-role">Profile</p>
             </div>
