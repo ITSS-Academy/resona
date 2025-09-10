@@ -88,7 +88,52 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     this.queueList$ = this.store.select('queue', 'queueList');
   }
 
+  savePlayerState() {
+    localStorage.setItem('playerState', JSON.stringify({
+      currentTrack: this.currentTrack,   // TrackModel
+      queue: this.queueList,             // TrackModel[]
+      currentTime: this.currentTime,
+      isPlaying: this.isPlaying,
+      repeatMode: this.repeatMode
+    }));
+  }
+
+
   ngOnInit() {
+    const saved = localStorage.getItem('playerState');
+    console.log('Saving playerState to localStorage:', saved);
+    if (saved) {
+      const state = JSON.parse(saved);
+      console.log('Restored playerState from localStorage:', state);
+
+      this.currentTime = state.currentTime;
+
+      if (state.currentTrack && state.currentTrack.id) {
+        this.store.dispatch(PlayActions.setTrack({track: state.currentTrack}));
+      }
+
+      const audio = this.audio.nativeElement;
+
+      // ⬇️ Restore thời gian phát
+      if (state.currentTime && state.currentTime > 0) {
+        audio.currentTime = state.currentTime;
+        this.currentTime = state.currentTime;
+
+        // cập nhật seekbar UI ngay
+        setTimeout(() => {
+          const percent = (this.currentTime / (audio.duration || 1)) * 100;
+          const input = document.querySelector<HTMLInputElement>('.progress-bar');
+          if (input) {
+            input.value = String(this.currentTime);
+            input.style.setProperty('--progress', `${percent}%`);
+          }
+        }, 200);
+      }
+
+      this.store.dispatch(PlayActions.pause());
+
+    }
+
     const audio = this.audio.nativeElement;
     console.log('Audio element ready in OnInit:', audio);
 
@@ -123,9 +168,9 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
       }),
 
       this.currentUser$.subscribe(currentUser => {
-        if(currentUser) {
+        if (currentUser) {
           this.currentUser = currentUser;
-          this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.uid}));
+          this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.id}));
         }
       }),
 
@@ -162,6 +207,8 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
         }
       }
 
+      this.savePlayerState()
+
     };
 
     audio.addEventListener('ended', () => {
@@ -175,6 +222,8 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
       } else {
         console.log('track ended') // nếu bạn có danh sách nhạc
       }
+
+      this.savePlayerState()
     });
   }
 
@@ -243,7 +292,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   toggleLyric() {
-    if(this.lyrics){
+    if (this.lyrics) {
       if (this.queueDrawer.opened) {
         this.queueDrawer.close().then();
       }
@@ -255,7 +304,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   toggleQueue() {
-    if(this.queueList.length > 0){
+    if (this.queueList.length > 0) {
       if (this.lyricDrawer.opened) {
         this.lyricDrawer.close().then();
       }
@@ -263,13 +312,13 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
         this.smallAlbumDrawer.close().then();
       }
       this.queueDrawer.toggle().then();
-    }else{
+    } else {
       this.queueDrawer.close().then();
     }
   }
 
   toggleSmallAlbum() {
-    if(this.currentTrack.id){
+    if (this.currentTrack.id) {
       if (this.lyricDrawer.opened) {
         this.lyricDrawer.close().then();
       }
@@ -283,14 +332,15 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   onTrackChanged(track: TrackModel) {
     this.currentTrack = track;
     this.hasIncremented = false; // reset lại để tính cho bài mới
+    this.savePlayerState()
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  navigateToSongDetail(id:string) {
-    if(id){
+  navigateToSongDetail(id: string) {
+    if (id) {
       this.router.navigate([`/song-detail/${id}`]).then();
     }
   }

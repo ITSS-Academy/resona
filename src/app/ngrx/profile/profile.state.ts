@@ -1,13 +1,8 @@
-import { ProfileModel } from '../../models/profile.model';
+import {ProfileModel} from '../../models/profile.model';
 
-export interface ProfileState {
-  profile: ProfileModel | null;
-  loading: boolean;
-  error: string | null;
+export interface ProfileState{
+  profile: ProfileModel
+  profileList: ProfileModel[];
+  isLoading: boolean;
+  error: any;
 }
-
-export const initialProfileState: ProfileState = {
-  profile: null,
-  loading: false,
-  error: null,
-};

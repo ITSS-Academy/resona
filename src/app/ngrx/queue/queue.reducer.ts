@@ -12,7 +12,7 @@ export const initialQueueState = {
 export const queueReducer = createReducer(
   initialQueueState,
 
-  on(QueueActions.addTrackToQueue, (state, {type, userId, trackId})=>{
+  on(QueueActions.addTrackToQueue, (state, {type, userId, trackId}) => {
     console.log(type);
     return {
       ...state,
@@ -21,7 +21,7 @@ export const queueReducer = createReducer(
     }
   }),
 
-  on(QueueActions.addTrackToQueueSuccess, (state, {type, queue})=>{
+  on(QueueActions.addTrackToQueueSuccess, (state, {type, queue}) => {
     console.log(type);
     return {
       ...state,
@@ -31,7 +31,7 @@ export const queueReducer = createReducer(
     }
   }),
 
-  on(QueueActions.addTrackToQueueFailure, (state, {type, error})=>{
+  on(QueueActions.addTrackToQueueFailure, (state, {type, error}) => {
     console.error(type, error);
     return {
       ...state,
@@ -40,7 +40,7 @@ export const queueReducer = createReducer(
     }
   }),
 
-  on(QueueActions.getQueueByUser, (state, {type, userId})=>{
+  on(QueueActions.getQueueByUser, (state, {type, userId}) => {
     console.log(type);
     return {
       ...state,
@@ -49,7 +49,7 @@ export const queueReducer = createReducer(
     }
   }),
 
-  on(QueueActions.getQueueByUserSuccess, (state, {type, queueList})=>{
+  on(QueueActions.getQueueByUserSuccess, (state, {type, queueList}) => {
     console.log(type);
     return {
       ...state,
@@ -59,7 +59,7 @@ export const queueReducer = createReducer(
     }
   }),
 
-  on(QueueActions.getQueueByUserFailure, (state, {type, error})=>{
+  on(QueueActions.getQueueByUserFailure, (state, {type, error}) => {
     console.error(type, error);
     return {
       ...state,
@@ -68,7 +68,17 @@ export const queueReducer = createReducer(
     }
   }),
 
-  on(QueueActions.removeTrackFromQueue, (state, {type, userId, trackId})=>{
+  on(QueueActions.restoreQueue, (state, {type, queueList}) => {
+    console.log(type);
+    return {
+      ...state,
+      queueList: queueList,
+      isLoading: false,
+      error: null,
+    }
+  }),
+
+  on(QueueActions.removeTrackFromQueue, (state, {type, userId, trackId}) => {
     console.log(type);
     return {
       ...state,
@@ -77,7 +87,7 @@ export const queueReducer = createReducer(
     }
   }),
 
-  on(QueueActions.removeTrackFromQueueSuccess, (state, {type, message})=>{
+  on(QueueActions.removeTrackFromQueueSuccess, (state, {type, message}) => {
     console.log(type);
     return {
       ...state,
@@ -86,7 +96,7 @@ export const queueReducer = createReducer(
     }
   }),
 
-  on(QueueActions.removeTrackFromQueueFailure, (state, {type, error})=>{
+  on(QueueActions.removeTrackFromQueueFailure, (state, {type, error}) => {
     console.error(type, error);
     return {
       ...state,

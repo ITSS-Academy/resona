@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MaterialModule} from '../../shared/modules/material.module';
-import {Observable, Subscription} from 'rxjs';
+import {Observable, Subscription, take} from 'rxjs';
 import {CategoryModel} from '../../models/category.model';
 import {Store} from '@ngrx/store';
 import {TrackState} from '../../ngrx/track/track.state';
@@ -9,6 +9,10 @@ import * as trackActions from '../../ngrx/track/track.action';
 import * as categoryActions from '../../ngrx/category/category.action';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AsyncPipe} from '@angular/common';
+import {AuthState} from '../../ngrx/auth/auth.state';
+import {MatDialog} from '@angular/material/dialog';
+import {LoginRequiredDialogComponent} from '../../components/login-required-dialog/login-required-dialog.component';
+import {ProfileModel} from '../../models/profile.model';
 
 @Component({
   selector: 'app-upload',
@@ -34,19 +38,29 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  profile$!: Observable<ProfileModel | null>;
+  private profile: ProfileModel | null = null;
+
+
   constructor(private store: Store<{
     track: TrackState,
-    category: CategoryState
-  }>,) {
+    category: CategoryState,
+    auth: AuthState,
+  }>, private dialog: MatDialog
+  ) {
 
   }
 
   ngOnInit() {
+
     this.loading$ = this.store.select(state => state.track.isLoading);
     this.error$ = this.store.select(state => state.track.error);
     this.categories$ = this.store.select('category', 'categoryList');
 
+
     this.store.dispatch(categoryActions.getAllCategories());
+
+
 
     this.subscriptions.push(
       this.categories$.subscribe(categories => {

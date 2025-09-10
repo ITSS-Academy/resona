@@ -1,6 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import {MatButton} from '@angular/material/button';
 import {TrackModel} from '../../models/track.model';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 import {NgStyle} from '@angular/common';

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { TrackModel } from '../../models/track.model';
 import { Store } from '@ngrx/store';
@@ -9,11 +9,16 @@ import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { ImgConverterPipe } from '../../shared/pipes/img-converter.pipe';
 import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
 import { PlaylistModel } from '../../models/playlist.model';
-import { Observable, Subscription } from 'rxjs';
+import { filter, Observable, Subscription } from 'rxjs';
 import { AuthState } from '../../ngrx/auth/auth.state';
 import { PlaylistState } from '../../ngrx/playlist/playlist.state';
 import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
 import { TrackState } from '../../ngrx/track/track.state';
+import { addTrackToPlaylist } from '../../ngrx/playlist/playlist.action';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ShareSnackbarComponent } from '../share-snackbar/share-snackbar.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-music-tab',
@@ -43,7 +48,8 @@ export class MusicTabComponent implements OnInit, OnDestroy {
       auth: AuthState;
       playlist: PlaylistState;
       track: TrackState;
-    }>
+    }>,
+    private actions$: Actions
   ) {}
 
   onPlayTrack(track: TrackModel) {
@@ -54,7 +60,10 @@ export class MusicTabComponent implements OnInit, OnDestroy {
   onFavoriteTrack(track: TrackModel) {
     if (track.id && this.currentUserId) {
       this.store.dispatch(
-        FavoriteActions.addToFavorite({ songId: track.id, userId: this.currentUserId })
+        FavoriteActions.addToFavorite({
+          songId: track.id,
+          userId: this.currentUserId,
+        })
       );
       // Optimistic update for instant feedback
       this.isFavorite = true;
@@ -69,11 +78,22 @@ export class MusicTabComponent implements OnInit, OnDestroy {
       this.store
         .select((state) => state.auth.currentUser)
         .subscribe((user) => {
-          this.currentUserId = user ? user.uid : '';
+          this.currentUserId = user ? user.id : '';
         }),
-      this.favoriteTracks$.subscribe(favoriteTracks => {
-        this.isFavorite = favoriteTracks.some(favTrack => favTrack.id === this.track.id);
-      })
+      this.favoriteTracks$.subscribe((favoriteTracks) => {
+        this.isFavorite = favoriteTracks.some(
+          (favTrack) => favTrack.id === this.track.id
+        );
+      }),
+
+      this.actions$
+        .pipe(
+          ofType(PlaylistActions.addTrackToPlaylistSuccess),
+          filter((action) => !!action.playlist) // chỉ nhận khi có playlist trả về
+        )
+        .subscribe(() => {
+          this.openSnackBar('Track added to playlist successfully!');
+        })
     );
   }
 
@@ -94,6 +114,17 @@ export class MusicTabComponent implements OnInit, OnDestroy {
         trackId: this.track.id,
       })
     );
+  }
+
+  private _snackBar = inject(MatSnackBar);
+
+  durationInSeconds = 10;
+
+  openSnackBar(content: string) {
+    this._snackBar.openFromComponent(ShareSnackbarComponent, {
+      data: content,
+      duration: this.durationInSeconds * 1000,
+    });
   }
 
   ngOnDestroy(): void {

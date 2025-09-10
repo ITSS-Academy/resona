@@ -49,9 +49,9 @@ export class QueueSongDetailComponent implements OnInit, OnDestroy {
   }
 
   async removeTrackFromQueue() {
-    this.store.dispatch(QueueActions.removeTrackFromQueue({userId: this.currentUser.uid, trackId: this.queue.track.id}));
+    this.store.dispatch(QueueActions.removeTrackFromQueue({userId: this.currentUser.id, trackId: this.queue.track.id}));
     await new Promise(resolve => setTimeout(resolve, 500));
-    this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.uid}));
+    this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.id}));
   }
 
 }

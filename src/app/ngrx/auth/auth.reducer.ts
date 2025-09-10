@@ -3,6 +3,7 @@ import {createReducer, on} from '@ngrx/store';
 import * as AuthActions from './auth.actions';
 import {ProfileModel} from "../../models/profile.model";
 
+
 export const initialState: AuthState = {
   currentUser: <ProfileModel>{},
   idToken: '',

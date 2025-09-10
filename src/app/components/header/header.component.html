@@ -18,15 +18,19 @@
     </div>
   </div>
 
-  <button mat-stroked-button (click)="openCreateDialog()">
-    <mat-icon>add</mat-icon>
-    <span>Create playlist</span>
-  </button>
+  @if (profile$ | async; as profile) {
+    @if (profile.uid) {
+      <button mat-stroked-button (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        <span>Create playlist</span>
+      </button>
+    }
+  }
 
   @if (profile$|async; as profile) {
-    @if (profile.uid) {
+    @if (profile.id) {
       <div class="user-login" [matMenuTriggerFor]="profileMenu">
-        <img src="{{ profile.photoURL }}" class="user-profile" (error)="onImgError($event)" alt="avatar"/>
+        <img src="{{ profile.photoUrl }}" class="user-profile" (error)="onImgError($event)" alt="avatar"/>
       </div>
       <mat-menu #profileMenu="matMenu">
         <button mat-menu-item (click)="navigateToProfile()">
