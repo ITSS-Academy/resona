@@ -53,4 +53,31 @@ export const profileReducer = createReducer(
       error: error,
     }
   }),
+
+  on(ProfileActions.followProfile, (state, {type, followerId, followingId})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(ProfileActions.followProfileSuccess, (state, {type})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: null,
+    }
+  }),
+
+  on(ProfileActions.followProfileFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
 )

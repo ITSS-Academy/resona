@@ -2,7 +2,6 @@ import {TrackModel} from './track.model';
 import {PlaylistModel} from './playlist.model';
 
 export interface ProfileModel {
-  id?: string;
   uid: string;
   email: string;
   name: string;

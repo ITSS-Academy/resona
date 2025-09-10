@@ -38,3 +38,19 @@ export const getProfileByIdEffect = createEffect(
     ),
   { functional: true }
 );
+
+export const followProfileEffect = createEffect(
+  (actions$ = inject(Actions), profileService = inject(ProfileService)) => {
+    return actions$.pipe(
+      ofType(ProfileActions.followProfile),
+      switchMap(({followerId, followingId}) =>
+        profileService.followProfile(followerId, followingId).pipe(
+          map(() => ProfileActions.followProfileSuccess()),
+          catchError((error: { message: any; }) =>
+            of(ProfileActions.followProfileFailure({error: error.message})))
+        )
+      )
+    )
+  },
+  {functional: true}
+)

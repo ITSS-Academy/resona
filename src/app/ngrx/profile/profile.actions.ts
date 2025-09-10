@@ -27,3 +27,15 @@ export const getProfileByIdFailure = createAction(
   '[Profile] Get Profile By Id Failure',
   props<{ error: any }>()
 );
+
+export const followProfile = createAction(
+  '[Profile] Follow Profile', props<{ followerId: string; followingId: string }>()
+)
+
+export const followProfileSuccess = createAction(
+  '[Profile] Follow Profile Success',
+)
+
+export const followProfileFailure = createAction(
+  '[Profile] Follow Profile Failure', props<{ error: any }>()
+)

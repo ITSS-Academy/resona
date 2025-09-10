@@ -43,9 +43,11 @@
           <p>{{comment.content}}</p>
         </div>
       </div>
+      @if(comment.profile.uid !== this.currentUser.uid) {
         <button mat-icon-button type="submit" aria-label="Example icon button with a delete icon" (click)="onDeleteComment(comment.id,currentUser.uid)">
           <mat-icon >delete</mat-icon>
         </button>
+      }
     </div>
   }
 </div>
