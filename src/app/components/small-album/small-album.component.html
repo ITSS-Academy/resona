@@ -1,16 +1,16 @@
 <div class="container">
-  @if(track){
+  @if(trackDetail){
   <div class="container-top">
     <div class="container-top-image">
-      <img src="{{ this.track.thumbnailPath | imgConverter }}" alt="" />
+      <img src="{{ this.trackDetail.thumbnailPath | imgConverter }}" alt="" />
     </div>
     <div class="container-top-detail">
       <div class="information">
-        <div class="song-name" (click)="navigateToTrackDetail(this.track.id)">
-          <p>{{ this.track.title }}</p>
+        <div class="song-name" (click)="navigateToTrackDetail(trackDetail.id)">
+          <p>{{ this.trackDetail.title }}</p>
         </div>
         <div class="author">
-          <p>{{ this.track.artistName }}</p>
+          <p>{{ this.trackDetail.artistName }}</p>
         </div>
       </div>
     </div>
@@ -30,17 +30,4 @@
     </div>
   </div>
   }
-
-  <!--  <div class="container-bot">-->
-  <!--    <p id="credits">More songs by author</p>-->
-  <!--    <div class="more-songs">-->
-  <!--      <p>Nơi này có anh</p>-->
-  <!--    </div>-->
-  <!--    <div class="more-songs">-->
-  <!--      <p>Gác hết những âu lo</p>-->
-  <!--    </div>-->
-  <!--    <div class="more-songs">-->
-  <!--      <p>Phép màu</p>-->
-  <!--    </div>-->
-  <!--  </div>-->
 </div>

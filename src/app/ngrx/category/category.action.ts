@@ -54,7 +54,7 @@ export const getCategoryDetailByTrackId = createAction(
 
 export const getCategoryDetailByTrackIdSuccess = createAction(
   '[Category] Get Category Detail By Track Id Success',
-  props<{ category: CategoryModel }>() // Replace 'any' with the actual track model if available
+  props<{ category: CategoryModel }>()
 );
 
 export const getCategoryDetailByTrackIdFailure = createAction(

@@ -1,9 +1,7 @@
-import {AfterViewInit, Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {
   MatFormField,
-  MatHint,
   MatInput,
-  MatLabel,
 } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
@@ -16,11 +14,11 @@ import { idToken } from '@angular/fire/auth';
 import { ProfileModel } from '../../models/profile.model';
 import { Observable, Subscription } from 'rxjs';
 import { TrackModel } from '../../models/track.model';
-import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
+import {MatIconButton} from '@angular/material/button';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {DeleteCommentDialogComponent} from '../delete-comment-dialog/delete-comment-dialog.component';
-import {deleteComment} from '../../ngrx/comment/comment.actions';
+import {TrackState} from '../../ngrx/track/track.state';
+import {CategoryModel} from '../../models/category.model';
+import {CategoryState} from '../../ngrx/category/category.state';
 
 @Component({
   selector: 'app-comments',
@@ -43,39 +41,42 @@ export class CommentsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   comments$!: Observable<CommentModel[]>;
   comments!: CommentModel[];
-
-
-  @Input() trackDetail!: TrackModel;
-  @Input() totalComment!: number;
+  trackDetail$!: Observable<TrackModel>;
+  trackDetail!: TrackModel;
+  totalComment: number = 0;
 
   constructor(
     private store: Store<{
       comments: CommentState;
       auth: AuthState;
+      track : TrackState;
     }>
   ) {
+    this.comments$ = this.store.select('comments', 'commentList');
+    this.currentUser$ = this.store.select('auth', 'currentUser');
+    this.trackDetail$ = this.store.select('track', 'trackDetail');
   }
 
   ngOnInit() {
 
-    this.comments$ = this.store.select('comments', 'commentList');
-
-    this.currentUser$ = this.store.select('auth', 'currentUser');
-
     this.subscriptions.push(
       this.currentUser$.subscribe((profile) => {
         if (profile.id) {
-          console.log("==================",profile)
           this.currentUser = profile;
-
         }
       }),
       this.comments$.subscribe((comments) => {
         if (comments && comments.length > 0) {
           console.log(comments);
           this.comments = comments;
+          this.totalComment = this.comments.length;
         }
-      })
+      }),
+      this.trackDetail$.subscribe((track) => {
+        if (track) {
+          this.trackDetail = track;
+        }
+      }),
     );
   }
 
