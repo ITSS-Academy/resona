@@ -142,7 +142,7 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
 
   private _snackBar = inject(MatSnackBar);
 
-  durationInSeconds = 30;
+  durationInSeconds = 10;
 
   openSnackBar(content: string) {
     this._snackBar.openFromComponent(ShareSnackbarComponent, {

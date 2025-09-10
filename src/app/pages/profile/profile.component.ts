@@ -7,7 +7,7 @@ import {
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { TrackService } from '../../services/track/track.service';
 import { TrackModel } from '../../models/track.model';
-import { Observable, Subscription } from 'rxjs';
+import {Observable, Subscription, take} from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MusicTabComponent } from '../../components/music-tab/music-tab.component';
 import { TrackState } from '../../ngrx/track/track.state';
@@ -28,6 +28,9 @@ import { HistoryModel } from '../../models/history.model';
 import {loadHistory} from '../../ngrx/history/history.action';
 import {HistoryState} from '../../ngrx/history/history.state';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
+import {LoginRequiredDialogComponent} from '../../components/login-required-dialog/login-required-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {MaterialModule} from '../../shared/modules/material.module';
 
 @Component({
   selector: 'app-profile',
@@ -43,6 +46,7 @@ import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
     MusicTabComponent,
     MatIconModule,
     ImgConverterPipe,
+    MaterialModule
   ],
   styleUrls: ['./profile.component.scss'],
 })
@@ -74,7 +78,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       playlist: PlaylistState;
       history: HistoryState;
     }>,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -90,6 +95,26 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.currentUser$.subscribe((user) => {
         this.currentUser = user;
         console.log('Current user:', user);
+
+        if (!user || !user.uid) {
+          // 🚨 chưa đăng nhập → show dialog
+          const dialogRef = this.dialog.open(LoginRequiredDialogComponent, {
+            width: '500px',
+            height: '200px',
+            disableClose: true // bắt buộc chọn Cancel hoặc Login
+          });
+
+          dialogRef.afterClosed().subscribe(() => {
+            // kiểm tra lại user
+            this.store.select('auth', 'currentUser').pipe(take(1)).subscribe(u => {
+              if (!u || !u.uid) {
+                // nếu vẫn chưa login → điều hướng ra Home
+                this.router.navigate(['/']);
+              }
+            });
+          });
+          return;
+        }
 
         if (user.uid) {
           this.uploadedTracks$ = this.trackService.getTracksByOwnerId(user.uid);

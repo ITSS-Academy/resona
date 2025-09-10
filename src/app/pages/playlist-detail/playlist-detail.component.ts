@@ -77,16 +77,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
 
   }
 
-  private _snackBar = inject(MatSnackBar);
 
-  durationInSeconds = 30;
-
-  openSnackBar(content: string) {
-    this._snackBar.openFromComponent(ShareSnackbarComponent, {
-      data: content,
-      duration: this.durationInSeconds * 1000,
-    });
-  }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());

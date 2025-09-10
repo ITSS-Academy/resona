@@ -18,10 +18,14 @@
     </div>
   </div>
 
-  <button mat-stroked-button (click)="openCreateDialog()">
-    <mat-icon>add</mat-icon>
-    <span>Create playlist</span>
-  </button>
+  @if (profile$ | async; as profile) {
+    @if (profile.uid) {
+      <button mat-stroked-button (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        <span>Create playlist</span>
+      </button>
+    }
+  }
 
   @if (profile$|async; as profile) {
     @if (profile.uid) {
