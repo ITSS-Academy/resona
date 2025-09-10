@@ -4,6 +4,40 @@ import {TrackService} from '../../services/track/track.service';
 import * as trackActions from './track.action';
 import {catchError, map, of, switchMap} from 'rxjs';
 
+export const getNewReleasedTracksEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getNewReleasedTracks),
+      switchMap(() =>
+        trackService.getNewReleasedTracks().pipe(
+          map((tracks) => trackActions.getNewReleasedTracksSuccess({tracks})),
+          catchError((error) =>
+            of(trackActions.getNewReleasedTracksFailure({error: error.message || 'Get new released tracks failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);
+
+export const getPopularTracksEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getPopularTracks),
+      switchMap(() =>
+        trackService.getPopularTracks().pipe(
+          map((tracks) => trackActions.getPopularTracksSuccess({tracks})),
+          catchError((error) =>
+            of(trackActions.getPopularTracksFailure({error: error.message || 'Get popular tracks failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);
+
 export const createTrackEffect = createEffect(
   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
     return actions$.pipe(
@@ -156,6 +190,40 @@ export const getTrackByOwnerIdEffect = createEffect(
         )
       )
     )
+  },
+  {functional: true}
+);
+
+export const deleteTrackEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.deleteTrack),
+      switchMap(({trackId}) =>
+        trackService.deleteTrack(trackId).pipe(
+          map((trackDetails) => trackActions.deleteTrackSuccess({trackDetails})),
+          catchError((error) =>
+            of(trackActions.deleteTrackFailure({error: error.message || 'Delete track failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);
+
+export const getTracksSameArtistNameEffect = createEffect(
+  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+    return actions$.pipe(
+      ofType(trackActions.getTracksBySameArtist),
+      switchMap(({trackId}) =>
+        trackService.getTracksBySameArtist(trackId).pipe(
+          map((tracks) => trackActions.getTracksBySameArtistSuccess({tracksSameArtist: tracks})),
+          catchError((error) =>
+            of(trackActions.getTracksBySameArtistFailure({error: error.message || 'Get tracks by artist name failed'}))
+          )
+        )
+      )
+    );
   },
   {functional: true}
 )

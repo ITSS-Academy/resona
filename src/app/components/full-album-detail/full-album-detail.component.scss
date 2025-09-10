@@ -44,9 +44,6 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 12px;
-    .detail{
-      color: var(--mat-sys-on-surface);
-    }
     p{
       font-size: 24px;
       color: var(--mat-sys-on-surface);
@@ -55,6 +52,11 @@
       font-size: 52px;
       font-weight: bold;
       color: var(--mat-sys-on-surface);
+    }
+    .author p{
+      font-size: 28px;
+      color: var(--mat-sys-on-surface);
+      cursor: pointer;
     }
   }
   @media (max-width: 894px){

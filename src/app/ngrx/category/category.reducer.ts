@@ -61,4 +61,32 @@ export const categoryReducer = createReducer(
       error: error
     }
   }),
+
+  on(categoryActions.getCategoryDetailByTrackId, (state, {type, trackId})=>{
+    console.log(type)
+    return {
+      ...state,
+      isLoading: true,
+      error: null
+    }
+  }),
+
+  on(categoryActions.getCategoryDetailByTrackIdSuccess, (state, {type, category}) => {
+    console.log(type)
+    return {
+      ...state,
+      isLoading: false,
+      category: category
+    }
+  }),
+
+  on(categoryActions.getCategoryDetailByTrackIdFailure, (state, {type, error}) => {
+    console.log(type)
+    return {
+      ...state,
+      isLoading: false,
+      error: error
+    }
+  }),
+
 )

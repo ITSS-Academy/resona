@@ -176,29 +176,30 @@ export class UploadComponent implements OnInit, OnDestroy {
     console.log('Form submitted', this.form.value);
   }
 
-
-
   // Music
   onMusicDragOver(event: DragEvent) {
     event.preventDefault();
     this.musicDragOver = true;
   }
+
   onMusicDragLeave(event: DragEvent) {
     event.preventDefault();
     this.musicDragOver = false;
   }
+
   onMusicDrop(event: DragEvent) {
     event.preventDefault();
     this.musicDragOver = false;
 
     const file = event.dataTransfer?.files[0];
     if (file && file.type.startsWith('audio/')) {
-      this.form.patchValue({ file });
+      this.form.patchValue({file});
     }
   }
+
   removeMusic(event: Event) {
     event.stopPropagation();
-    this.form.patchValue({ file: null });
+    this.form.patchValue({file: null});
   }
 
 // Image
@@ -206,17 +207,19 @@ export class UploadComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this.imgDragOver = true;
   }
+
   onImgDragLeave(event: DragEvent) {
     event.preventDefault();
     this.imgDragOver = false;
   }
+
   onImgDrop(event: DragEvent) {
     event.preventDefault();
     this.imgDragOver = false;
 
     const file = event.dataTransfer?.files[0];
     if (file && file.type.startsWith('image/')) {
-      this.form.patchValue({ thumbnail: file });
+      this.form.patchValue({thumbnail: file});
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -225,9 +228,10 @@ export class UploadComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
     }
   }
+
   removeImg(event: Event) {
     event.stopPropagation();
-    this.form.patchValue({ thumbnail: null });
+    this.form.patchValue({thumbnail: null});
     this.thumbnailPreview = null;
   }
 
@@ -249,13 +253,13 @@ export class UploadComponent implements OnInit, OnDestroy {
     const file = event.dataTransfer?.files[0];
     if (file) {
       // gán file vào form để hiện chip
-      this.form.patchValue({ lyricsFile: file });
+      this.form.patchValue({lyricsFile: file});
 
       // đọc nội dung text của file đưa vào lyrics
       const reader = new FileReader();
       reader.onload = () => {
         const text = reader.result as string;
-        this.form.patchValue({ lyrics: text });
+        this.form.patchValue({lyrics: text});
       };
       reader.readAsText(file);
     }
@@ -263,7 +267,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   removeLyricsFile(event: Event) {
     event.stopPropagation();
-    this.form.patchValue({ lyricsFile: null, lyrics: '' });
+    this.form.patchValue({lyricsFile: null, lyrics: ''});
   }
 
 

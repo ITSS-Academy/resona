@@ -1,6 +1,28 @@
 import {createAction, props} from '@ngrx/store';
 import {TrackModel} from '../../models/track.model';
 
+// New Released & Popular
+export const getNewReleasedTracks = createAction('[Track] Get New Released Tracks');
+export const getNewReleasedTracksSuccess = createAction(
+  '[Track] Get New Released Tracks Success',
+  props<{ tracks: TrackModel[] }>()
+);
+export const getNewReleasedTracksFailure = createAction(
+  '[Track] Get New Released Tracks Failure',
+  props<{ error: any }>()
+);
+
+export const getPopularTracks = createAction('[Track] Get Popular Tracks');
+export const getPopularTracksSuccess = createAction(
+  '[Track] Get Popular Tracks Success',
+  props<{ tracks: TrackModel[] }>()
+);
+export const getPopularTracksFailure = createAction(
+  '[Track] Get Popular Tracks Failure',
+  props<{ error: any }>()
+);
+
+
 // Upload Track
 export const uploadTrack = createAction(
   '[Track] Upload Track',
@@ -24,7 +46,6 @@ export const uploadTrackFailure = createAction(
   '[Track] Upload Track Failure',
   props<{ error: string }>()
 );
-
 // Favorite Tracks
 export const getFavoriteTracks = createAction(
   '[Track] Get Favorite Tracks',
@@ -88,7 +109,6 @@ export const getTrackByCategoryIdFailure = createAction(
   '[Track] Get Track By Category Id Failure', props<{ error: any }>()
 )
 
-
 export const incrementTrackPlayCount = createAction(
   '[Track] Increment Track Play Count',
   props<{ trackId: string }>()
@@ -104,8 +124,6 @@ export const incrementTrackPlayCountFailure = createAction(
   props<{ error: string }>()
 );
 
-
-
 export const getTrackByOwnerId = createAction(
   '[Track] Get Track By Owner Id',
   props<{ ownerId: string }>()
@@ -119,4 +137,28 @@ export const getTrackByOwnerIdSuccess = createAction(
 export const getTrackByOwnerIdFailure = createAction(
   '[Track] Get Track By Owner Id Failure',
   props<{ error: string }>()
+);
+
+export const deleteTrack = createAction(
+  '[Track] Delete Track', props<{ trackId: string }>()
+);
+
+export const deleteTrackSuccess = createAction(
+  '[Track] Delete Track Success', props<{ trackDetails: TrackModel }>()
+);
+
+export const deleteTrackFailure = createAction(
+  '[Track] Delete Track Failure', props<{ error: any }>()
+);
+
+export const getTracksBySameArtist = createAction(
+  '[Track] Get Tracks Same Artist Name', props<{ trackId: string }>()
+);
+
+export const getTracksBySameArtistSuccess = createAction(
+  '[Track] Get Tracks Same Artist Name Success', props<{ tracksSameArtist: TrackModel[] }>()
+);
+
+export const getTracksBySameArtistFailure = createAction(
+  '[Track] Get Tracks Same Artist Name Failure', props<{ error: any }>()
 );

@@ -67,4 +67,31 @@ export const queueReducer = createReducer(
       error: error,
     }
   }),
+
+  on(QueueActions.removeTrackFromQueue, (state, {type, userId, trackId})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(QueueActions.removeTrackFromQueueSuccess, (state, {type, message})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: null,
+    }
+  }),
+
+  on(QueueActions.removeTrackFromQueueFailure, (state, {type, error})=>{
+    console.error(type, error);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
 )

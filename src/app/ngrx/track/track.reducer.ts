@@ -6,8 +6,11 @@ import {TrackModel} from '../../models/track.model';
 
 export const initialState: TrackState = {
   tracks: <TrackModel[]>[],
+  newReleasedTracks: <TrackModel[]>[],
+  popularTracks: <TrackModel[]>[],
   favoriteTracks: <TrackModel[]>[],
   trackDetails: <TrackModel>{},
+  tracksSameArtist: <TrackModel[]>[],
   thumbnailUrl: '',
   lyrics: '',
   isLoading: false,
@@ -16,6 +19,37 @@ export const initialState: TrackState = {
 
 export const trackReducer = createReducer(
   initialState,
+  // Get New Released
+  on(trackActions.getNewReleasedTracks, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(trackActions.getNewReleasedTracksSuccess, (state, { tracks }) => ({
+    ...state,
+    newReleasedTracks: tracks,
+    isLoading: false,
+  })),
+  on(trackActions.getNewReleasedTracksFailure, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error,
+  })),
+
+  // Get Popular
+  on(trackActions.getPopularTracks, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(trackActions.getPopularTracksSuccess, (state, { tracks }) => ({
+    ...state,
+    popularTracks: tracks,
+    isLoading: false,
+  })),
+  on(trackActions.getPopularTracksFailure, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error,
+  })),
   on(
     trackActions.uploadTrack, (state, {type}) => {
       console.log(type)
@@ -253,5 +287,62 @@ export const trackReducer = createReducer(
       isLoading: false,
       error: error,
     }
-  })
+  }),
+
+  on(trackActions.deleteTrack, (state, {type, trackId})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.deleteTrackSuccess, (state, {type, trackDetails})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      trackDetails: trackDetails,
+      error: null,
+    }
+  }),
+
+  on(trackActions.deleteTrackFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
+  on(trackActions.getTracksBySameArtist, (state, {type, trackId})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTracksBySameArtistSuccess, (state, {type, tracksSameArtist})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      tracksSameArtist: tracksSameArtist,
+      error: null,
+    }
+  }),
+
+  on(trackActions.getTracksBySameArtistFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
 );

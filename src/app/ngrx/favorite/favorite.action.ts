@@ -2,7 +2,7 @@ import {createAction, props} from '@ngrx/store';
 
 export const addToFavorite = createAction(
   '[Favorite] Add To Favorite',
-  props<{ userId: string; songId: string }>()
+  props<{ songId: string }>()
 );
 
 export const addToFavoriteSuccess = createAction(
@@ -11,4 +11,5 @@ export const addToFavoriteSuccess = createAction(
 
 export const addToFavoriteFailure = createAction(
   '[Favorite] Add To Favorite Failure',
+  props<{ error: any }>()
 );
