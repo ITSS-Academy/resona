@@ -86,23 +86,9 @@
   <mat-tab label="History">
     @if (historyTracks$ | async; as history) {
       @if (history.length > 0) {
-        <mat-list>
-          @for (track of history; track track.id) {
-            <mat-list-item>
-              <img
-                [src]="track.track.thumbnailPath | imgConverter"
-                alt="{{ track.track.title}}"
-                width="48"
-                height="48"
-                class="song-cover"
-              />
-              <div class="track-info">
-                <span class="track-title">{{ track.track.title }}</span>
-                <span class="track-artist">{{ track.track.artistName }}</span>
-              </div>
-            </mat-list-item>
-          }
-        </mat-list>
+        @for (item of history; track item.id) {
+          <app-music-tab [track]="item.track"></app-music-tab>
+        }
       } @else {
         <p class="empty">No history tracks yet 🐾</p>
       }
