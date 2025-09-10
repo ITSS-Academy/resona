@@ -1,6 +1,5 @@
 import {ProfileModel} from './profile.model';
 import {PlaylistModel} from './playlist.model';
-import {MusicGenresModel} from './musicGenres.model';
 import {CategoryModel} from './category.model';
 
 export interface TrackModel {

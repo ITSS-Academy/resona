@@ -19,6 +19,7 @@ export class ThreeOptionsButtonComponent{
   @Input() trackDetail!: TrackModel;
   @Input() totalComment!: number;
   @Input() lyrics!: string;
+  @Input() tracksSameArtist!: TrackModel[];
 
   constructor(
   ) {

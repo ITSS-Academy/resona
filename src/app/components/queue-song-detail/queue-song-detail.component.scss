@@ -1,7 +1,7 @@
 .container{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   width: 304px;
   height: 48px;
@@ -22,7 +22,7 @@
     }
   }
   .container-right{
-    width: 80%;
+    width: 60%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -30,12 +30,26 @@
     align-items: flex-start;
     gap:4px;
     p{
+      line-clamp: 1;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      overflow: hidden;
       margin: 0;
     }
     .author{
       color: var(--mat-sys-on-surface);
       font-size: 14px;
     }
+  }
+  .delete-option{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
   }
 }
 

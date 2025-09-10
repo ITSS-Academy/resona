@@ -18,16 +18,46 @@ export const getAllCategoriesFailure = createAction(
 );
 
 export const getCategoryDetails = createAction(
-  '[Category] Get Tracks By Category',
+  '[Category] Get Category Details',
   props<{ categoryId: string }>()
 );
 
 export const getCategoryDetailsSuccess = createAction(
-  '[Category] Get Tracks By Category Success',
-  props<{ category: CategoryModel }>() // Replace 'any' with the actual track model if available
+  '[Category] Get Category Details Success',
+  props<{ category: CategoryModel }>()
 );
 
 export const getCategoryDetailsFailure = createAction(
+  '[Category] Get Category Details Failure',
+  props<{ error: any }>()
+);
+
+export const getTracksByCategory = createAction(
+  '[Category] Get Tracks By Category',
+  props<{ categoryId: string }>()
+);
+
+export const getTracksByCategorySuccess = createAction(
+  '[Category] Get Tracks By Category Success',
+  props<{ tracks: TrackModel[] }>()
+);
+
+export const getTracksByCategoryFailure = createAction(
   '[Category] Get Tracks By Category Failure',
+  props<{ error: any }>()
+);
+
+export const getCategoryDetailByTrackId = createAction(
+  '[Category] Get Category Detail By Track Id',
+  props<{ trackId: string }>()
+);
+
+export const getCategoryDetailByTrackIdSuccess = createAction(
+  '[Category] Get Category Detail By Track Id Success',
+  props<{ category: CategoryModel }>() // Replace 'any' with the actual track model if available
+);
+
+export const getCategoryDetailByTrackIdFailure = createAction(
+  '[Category] Get Category Detail By Track Id Failure',
   props<{ error: any }>()
 );

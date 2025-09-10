@@ -38,3 +38,20 @@ export const getQueueByUserEffect = createEffect(
   },
   {functional: true}
 );
+
+export const removeTrackFromQueueEffect = createEffect(
+  (actions$ = inject(Actions), queueService = inject(QueueService)) => {
+    return actions$.pipe(
+      ofType(QueueActions.removeTrackFromQueue),
+      switchMap(({userId, trackId}) =>
+        queueService.removeTrackFromQueue(userId, trackId).pipe(
+          map((response) => QueueActions.removeTrackFromQueueSuccess({message: response.message})),
+          catchError((error) =>
+            of(QueueActions.removeTrackFromQueueFailure({error: error.message || 'Remove from queue failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);

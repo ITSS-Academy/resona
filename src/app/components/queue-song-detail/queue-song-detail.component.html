@@ -6,4 +6,9 @@
     <p>{{queue.track.title}}</p>
     <p class="author">{{queue.track.artistName}}</p>
   </div>
+  <div class="delete-option">
+    <button mat-icon-button aria-label="Remove from queue" (click)="removeTrackFromQueue()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 </div>

@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import {MusicGenresModel} from '../../models/musicGenres.model';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs';
@@ -48,7 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }>,
     private router: Router
   ) {
-    // this.musicGenres = this.musicGenresService.categories;
+    this.store.dispatch(CategoryActions.getAllCategories());
     this.categories$ = this.store.select(state => state.category.categoryList);
     this.moodPlaylists = this.moodPlaylistService.playlists;
     this.newReleases = this.newReleasesService.songs;
@@ -62,7 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     photoURL: ''
   };
 
-  private defaultGenre: MusicGenresModel = {
+  private defaultGenre: CategoryModel = {
     id: 'default',
     name: 'Unknown',
     image: '',
@@ -92,7 +91,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // ----------------------------------------------------------------------------------------------------------------------
   ngOnInit() {
-    this.store.dispatch(CategoryActions.getAllCategories());
   }
 
   onPlayTrack(track: TrackModel) {

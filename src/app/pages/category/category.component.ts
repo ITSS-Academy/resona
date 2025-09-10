@@ -7,13 +7,15 @@ import {CategoryModel} from '../../models/category.model';
 import {CategoryState} from '../../ngrx/category/category.state';
 import * as CategoryActions from '../../ngrx/category/category.action';
 import { NgStyle } from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   imports: [
     AsyncPipe,
-    NgStyle
+    NgStyle,
+    MatIconModule,
   ],
   styleUrls: ['./category.component.scss'],
 })

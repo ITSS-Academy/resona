@@ -1,19 +1,36 @@
-<div class="background">
-  <div class="profile">
-    <img [src]="currentUser.photoURL" alt="User Avatar" />
+@if (isViewingOwnProfile) {
+  <div class="background" [ngStyle]="{'background-image': 'url(https://www.prsformusic.com/-/media/images/mmagazine/images/2017/04/streaming2017.jpg)'}">
+    @if (currentUser$ | async; as currentUser) {
+      <div class="profile">
+        <img [src]="currentUser.photoURL" alt="User Avatar" />
+      </div>
+      <div class="right">
+        <div class="name">
+          <h3>{{currentUser.name}}</h3>
+          <p>{{currentUser.email}}</p>
+          <p>100 Followers</p>
+          <button mat-flat-button>Follow</button>
+        </div>
+      </div>
+    }
   </div>
-  <div class="right">
-    <div class="name">
-      <h3>{{currentUser.name}}</h3>
-      <p>{{currentUser.email}}</p>
-      <p>100 Followers</p>
-      <button mat-flat-button>Follow</button>
-    </div>
-    <div class="information">
-
-    </div>
+} @else {
+  <div class="background" [ngStyle]="{'background-image': 'url(https://www.prsformusic.com/-/media/images/mmagazine/images/2017/04/streaming2017.jpg)'}">
+    @if (viewedProfile$ | async; as viewedUser) {
+      <div class="profile">
+        <img [src]="viewedUser.photoURL" alt="User Avatar" />
+      </div>
+      <div class="right">
+        <div class="name">
+          <h3>{{viewedUser.name}}</h3>
+          <p>{{viewedUser.email}}</p>
+          <p>100 Followers</p>
+          <button mat-flat-button>Follow</button>
+        </div>
+      </div>
+    }
   </div>
-</div>
+}
 
 <mat-tab-group>
   <mat-tab label="Uploaded">
@@ -24,7 +41,7 @@
 
   <mat-tab label="Your Playlist">
     <div class="horizontal-scroll">
-    @for (playlist of playlist; track playlist.id) {
+    @for (playlist of playlists; track playlist.id) {
       <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
         <img [src]="playlist.thumbnailPath"
              [alt]="playlist.title"
@@ -41,10 +58,10 @@
 
 
   <mat-tab label="Favourite">
-    @if (favoriteTracks$ | async; as favs) {
-      @if (favs.length > 0) {
+    @if (favoriteTracks) {
+      @if (favoriteTracks.length > 0) {
         <mat-list>
-          @for (track of favs; track track.id) {
+          @for (track of favoriteTracks; track track.id) {
             <mat-list-item>
               <img
                 [src]="track.thumbnailPath || 'assets/default-cover.png'"

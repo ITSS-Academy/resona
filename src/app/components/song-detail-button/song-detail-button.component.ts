@@ -9,6 +9,11 @@ import * as QueueActions from '../../ngrx/queue/queue.actions';
 import {Observable, Subscription} from 'rxjs';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {ProfileModel} from '../../models/profile.model';
+import {TrackState} from '../../ngrx/track/track.state';
+import {Router} from '@angular/router';
+import {CategoryModel} from '../../models/category.model';
+import {CategoryState} from '../../ngrx/category/category.state';
+import * as TrackActions from '../../ngrx/track/track.action'
 
 @Component({
   selector: 'app-song-detail-button',
@@ -24,14 +29,24 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
   currentUser!: ProfileModel;
   subscription: Subscription[] = [];
 
+  categoryDetail$!: Observable<CategoryModel>;
+  categoryDetail!: CategoryModel;
+
+  isPlaying$!: Observable<boolean>;
+
   constructor(
+    private router: Router,
     private store: Store<{
       play: PlayState,
       queue: QueueState,
       auth: AuthState,
+      track: TrackState,
+      category: CategoryState,
     }>
   ) {
     this.currentUser$ = this.store.select('auth', 'currentUser');
+    this.categoryDetail$ = this.store.select('category', 'category');
+    this.isPlaying$ = this.store.select(state => state.play.isPlaying);
   }
 
   onPlayTrack(track: TrackModel) {
@@ -43,7 +58,10 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.currentUser$.subscribe(profile => {
         this.currentUser = profile;
-      })
+      }),
+      this.categoryDetail$.subscribe(category => {
+        this.categoryDetail = category;
+      }),
     )
   }
 
@@ -51,8 +69,15 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
     this.subscription.forEach(sub => sub.unsubscribe());
   }
 
-  addTrackToQueue() {
+  async addTrackToQueue() {
     this.store.dispatch(QueueActions.addTrackToQueue({userId: this.currentUser.uid, trackId: this.trackDetail.id}));
+    await new Promise(resolve => setTimeout(resolve, 500));
     this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.uid}));
+  }
+
+  removeTrack(){
+    this.store.dispatch(TrackActions.deleteTrack({trackId: this.trackDetail.id}) );
+    this.store.dispatch(TrackActions.getTrackByCategoryId({categoryId: this.categoryDetail.id}));
+    this.router.navigate([`/category-detail/${this.categoryDetail.id}`]).then();
   }
 }

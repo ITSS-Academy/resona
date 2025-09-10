@@ -5,15 +5,6 @@
   <div class="album-detail">
       <p>Song</p>
       <p class="song-title">{{trackDetail.title}}</p>
-      <div class="detail">
-        <span>{{trackDetail.createdAt | date:'dd/MM/yyyy'}}</span>
-        <span> | </span>
-        <span>{{trackDetail.duration}}</span>
-        <span> | </span>
-        <span>{{trackDetail.viewCount}}</span>
-      </div>
-      <mat-list>
-        <mat-list-item class="author">Author: {{trackDetail.artistName}}</mat-list-item>
-      </mat-list>
+        <p class="author">Author: {{trackDetail.artistName}}</p>
   </div>
 </div>
