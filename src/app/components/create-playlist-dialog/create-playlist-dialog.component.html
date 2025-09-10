@@ -23,6 +23,7 @@
         hidden
         accept="image/*"
         (change)="onFileSelected($event)"
+
       />
     </div>
 
@@ -34,6 +35,7 @@
           matInput
           placeholder="Add your playlist name"
           formControlName="title"
+          (keydown.enter)="createPlaylist()"
         />
       </mat-form-field>
 

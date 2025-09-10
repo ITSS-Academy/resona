@@ -50,7 +50,7 @@
         <div class="overlay">
         </div>
         <p class="label">{{ playlist.title }}</p>
-        <p class="tracks">{{ playlist.tracks?.length || 0 }} tracks</p>
+        <p class="tracks">{{ getTrackCount(playlist.id) }} tracks</p>
       </div>
     }
     </div>

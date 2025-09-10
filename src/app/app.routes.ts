@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import {PlaylistDetailComponent} from './pages/playlist-detail/playlist-detail.component';
+import {AuthGuard} from './guards/auth.guard';
 
 
 export const routes: Routes = [
@@ -29,6 +30,7 @@ export const routes: Routes = [
   },
   {
     path: 'upload',
+    canActivate: [AuthGuard],
     loadComponent() {
       return import('../app/pages/upload/upload.component').then(
         (m) => m.UploadComponent,
@@ -67,6 +69,7 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
+    canActivate: [AuthGuard],
     loadComponent() {
       return import('../app/pages/profile/profile.component').then(
         (m) => m.ProfileComponent,
