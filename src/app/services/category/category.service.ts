@@ -26,4 +26,8 @@ export class CategoryService {
       `${environment.apiUrl}/category/all-tracks/${categoryId}`
     );
   }
+
+  getCategoryDetailByTrackId(trackId: string): Observable<CategoryModel> {
+    return this.http.get<CategoryModel>(`${environment.apiUrl}/category/detail-by-track/${trackId}`);
+  }
 }

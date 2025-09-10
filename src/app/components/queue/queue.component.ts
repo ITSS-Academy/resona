@@ -13,4 +13,14 @@ import {QueueModel} from '../../models/queue.model';
 export class QueueComponent{
   @Input() queueList: QueueModel[] = [];
 
+  constructor(
+
+  ) {
+  }
+
+  ngOnInit() {
+
+  }
+
+  ngOnDestroy() {}
 }

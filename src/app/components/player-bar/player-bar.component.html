@@ -98,7 +98,7 @@
 
         <mat-drawer-container>
           <mat-drawer #smallAlbum mode="over" position="end" class="drawer" autoFocus="false">
-            <app-small-album  [track]="currentTrack" [categoryDetail]="categoryDetail"></app-small-album>
+            <app-small-album></app-small-album>
           </mat-drawer>
         </mat-drawer-container>
 
@@ -111,7 +111,7 @@
 
         <mat-drawer-container class="lyric-container" autosize>
           <mat-drawer #lyric mode="over" position="end" class="drawer" autoFocus="false">
-            <app-lyric [lyrics]="lyrics"></app-lyric>
+            <app-lyric ></app-lyric>
           </mat-drawer>
         </mat-drawer-container>
       </div>

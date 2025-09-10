@@ -5,7 +5,7 @@ export interface TrackState {
   newReleasedTracks: TrackModel[];
   popularTracks: TrackModel[];
   favoriteTracks: TrackModel[];
-  trackDetails: TrackModel
+  trackDetail: TrackModel
   tracksSameArtist: TrackModel[];
   thumbnailUrl: string;
   lyrics: string;
