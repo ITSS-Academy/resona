@@ -16,6 +16,7 @@ import {TrackState} from '../../ngrx/track/track.state';
 import {Router} from '@angular/router';
 import {CategoryModel} from '../../models/category.model';
 import {CategoryState} from '../../ngrx/category/category.state';
+import {QueueModel} from '../../models/queue.model';
 
 @Component({
   selector: 'app-song-detail-button',
@@ -33,6 +34,9 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
   currentUser$!: Observable<ProfileModel>;
   currentUser!: ProfileModel;
   subscription: Subscription[]=[];
+  queueList$!: Observable<QueueModel[]>;
+  queueList!: QueueModel[];
+  isAdding = false;
 
   categoryDetail$!: Observable<CategoryModel>;
   categoryDetail!: CategoryModel;
@@ -49,6 +53,11 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
       category: CategoryState,
     }>
   ) {
+    this.currentUser$ = this.store.select('auth', 'currentUser');
+    this.categoryDetail$ = this.store.select('category', 'category');
+    this.isPlaying$ = this.store.select(state => state.play.isPlaying);
+    this.trackDetail$ = this.store.select('track','trackDetail');
+    this.queueList$ = this.store.select('queue','queueList')
   }
 
   onPlayTrack(track: TrackModel) {
@@ -57,10 +66,6 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.currentUser$ = this.store.select('auth', 'currentUser');
-    this.categoryDetail$ = this.store.select('category', 'category');
-    this.isPlaying$ = this.store.select(state => state.play.isPlaying);
-    this.trackDetail$ = this.store.select('track','trackDetail');
 
     this.subscription.push(
       this.currentUser$.subscribe(profile => {
@@ -77,6 +82,11 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
         if(trackDetail) {
           this.trackDetail = trackDetail;
         }
+      }),
+      this.queueList$.subscribe(queueList => {
+        if(queueList) {
+          this.queueList = queueList;
+        }
       })
     )
   }
@@ -85,14 +95,23 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
     this.subscription.forEach(sub => sub.unsubscribe());
   }
 
-  async addTrackToQueue() {
-    this.store.dispatch(QueueActions.addTrackToQueue({userId: this.currentUser.id, trackId: this.trackDetail.id}));
-    await new Promise(resolve => setTimeout(resolve, 500));
+
+  async addTrackToQueue(trackId: string) {
+    if (this.isAdding) return;
+    console.log(this.queueList)
+    const isExist = this.queueList.findIndex(track => track.track.id === this.trackDetail.id);
+    if (isExist !== -1) return;
+    this.isAdding = true;
+    await new Promise(resolve => setTimeout(resolve, 200));
+    this.store.dispatch(QueueActions.addTrackToQueue({userId: this.currentUser.id, trackId}));
+    await new Promise(resolve => setTimeout(resolve, 200));
     this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.id}));
+    this.isAdding = false;
   }
 
-  removeTrack(){
+  async removeTrack(){
     this.store.dispatch(TrackActions.deleteTrack({trackId: this.trackDetail.id}) );
+    await new Promise(resolve => setTimeout(resolve, 200));
     this.store.dispatch(TrackActions.getTrackByCategoryId({categoryId: this.categoryDetail.id}));
     this.router.navigate([`/category-detail/${this.categoryDetail.id}`]).then();
   }

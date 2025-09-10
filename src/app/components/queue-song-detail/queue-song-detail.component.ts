@@ -25,21 +25,21 @@ export class QueueSongDetailComponent implements OnInit, OnDestroy {
   currentUser$!: Observable<ProfileModel>;
   currentUser!: ProfileModel;
   subscription: Subscription[]=[];
-
   constructor(
     private store:Store<{
       queue: QueueState,
       auth: AuthState,
     }>
   ) {
-
+    this.currentUser$ = this.store.select('auth', 'currentUser');
   }
 
   ngOnInit() {
-    this.currentUser$ = this.store.select('auth', 'currentUser');
     this.subscription.push(
       this.currentUser$.subscribe(profile => {
-        this.currentUser = profile;
+        if (profile) {
+          this.currentUser = profile;
+        }
       }),
     )
   }
@@ -50,7 +50,7 @@ export class QueueSongDetailComponent implements OnInit, OnDestroy {
 
   async removeTrackFromQueue() {
     this.store.dispatch(QueueActions.removeTrackFromQueue({userId: this.currentUser.id, trackId: this.queue.track.id}));
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 100));
     this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.id}));
   }
 
