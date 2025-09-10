@@ -1,6 +1,28 @@
 import {createAction, props} from '@ngrx/store';
 import {TrackModel} from '../../models/track.model';
 
+// New Released & Popular
+export const getNewReleasedTracks = createAction('[Track] Get New Released Tracks');
+export const getNewReleasedTracksSuccess = createAction(
+  '[Track] Get New Released Tracks Success',
+  props<{ tracks: TrackModel[] }>()
+);
+export const getNewReleasedTracksFailure = createAction(
+  '[Track] Get New Released Tracks Failure',
+  props<{ error: any }>()
+);
+
+export const getPopularTracks = createAction('[Track] Get Popular Tracks');
+export const getPopularTracksSuccess = createAction(
+  '[Track] Get Popular Tracks Success',
+  props<{ tracks: TrackModel[] }>()
+);
+export const getPopularTracksFailure = createAction(
+  '[Track] Get Popular Tracks Failure',
+  props<{ error: any }>()
+);
+
+
 // Upload Track
 export const uploadTrack = createAction(
   '[Track] Upload Track',

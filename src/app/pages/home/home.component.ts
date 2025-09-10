@@ -103,6 +103,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
+  navigateToPlaylistDetail(id: string) {
+    this.router.navigate(['/playlist-detail', id]).then();
+  }
+
   navigateToCategoryDetail(id: string) {
     this.router.navigate(['/category-detail', id]).then();
   }

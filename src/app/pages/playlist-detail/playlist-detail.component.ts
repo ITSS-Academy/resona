@@ -1,23 +1,18 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {HeaderComponent} from "../../components/header/header.component";
-import {PlayerBarComponent} from "../../components/player-bar/player-bar.component";
-import {SidebarComponent} from "../../components/sidebar/sidebar.component";
 import {MaterialModule} from '../../shared/modules/material.module';
 import {MatDialog} from '@angular/material/dialog';
 import {CreatePlaylistDialogComponent} from '../../components/create-playlist-dialog/create-playlist-dialog.component';
-import {Observable, Subscription} from 'rxjs';
+import {map, Observable, Subscription} from 'rxjs';
 import {PlaylistModel} from '../../models/playlist.model';
 import {ActivatedRoute} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {PlaylistState} from '../../ngrx/playlist/playlist.state';
 import * as playlistActions from '../../ngrx/playlist/playlist.action';
+import * as trackActions from '../../ngrx/track/track.action';
 import {TrackModel} from '../../models/track.model';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {TrackState} from '../../ngrx/track/track.state';
 import {AsyncPipe} from '@angular/common';
-import {ThreeOptionsButtonComponent} from '../../components/three-options-button/three-options-button.component';
-import {SongDetailButtonComponent} from '../../components/song-detail-button/song-detail-button.component';
-import {MusicTabComponent} from '../../components/music-tab/music-tab.component';
 import {PlaylistMusicTabComponent} from '../../components/playlist-music-tab/playlist-music-tab.component';
 import {PlaylistDetailButtonComponent} from '../../components/playlist-detail-button/playlist-detail-button.component';
 import {ShareSnackbarComponent} from '../../components/share-snackbar/share-snackbar.component';
@@ -38,8 +33,9 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   loading$!: Observable<boolean>
   error$!: Observable<string | null>
   playlistId!: string;
-  playlistDetail$!: Observable<PlaylistModel[]>
-  getPlaylistById$!: Observable<PlaylistModel>;
+  playlistDetail$!: Observable<PlaylistModel | undefined>;
+  tracks$!: Observable<TrackModel[] | null | undefined>;
+  playlistName: string = '';
 
   subscriptions: Subscription[] = [];
 
@@ -63,18 +59,26 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loading$ = this.store.select(state => state.track.isLoading);
     this.error$ = this.store.select(state => state.track.error);
-    this.getPlaylistById$ = this.store.select('playlist', 'playlist');
 
     this.subscriptions.push(
       this.route.params.subscribe(params => {
         this.playlistId = params['id'];
-        this.store.dispatch(playlistActions.getPlaylistById({playlistId: this.playlistId}));
-      }),
-      this.getPlaylistById$.subscribe(playlists => {
-        console.log(playlists);
+        if (this.playlistId === 'popular') {
+          this.playlistName = 'Happy Vibes';
+          this.store.dispatch(trackActions.getPopularTracks());
+          this.tracks$ = this.store.select(state => state.track.popularTracks);
+        } else if (this.playlistId === 'new-released') {
+          this.playlistName = 'Chill Out';
+          this.store.dispatch(trackActions.getNewReleasedTracks());
+          this.tracks$ = this.store.select(state => state.track.newReleasedTracks);
+        } else {
+          this.store.dispatch(playlistActions.getPlaylistById({playlistId: this.playlistId}));
+          this.playlistDetail$ = this.store.select('playlist', 'playlist');
+          this.tracks$ = this.playlistDetail$.pipe(map(p => p?.tracks));
+          this.playlistDetail$.subscribe(p => this.playlistName = p?.title || '');
+        }
       })
-    )
-
+    );
   }
 
   private _snackBar = inject(MatSnackBar);
@@ -90,8 +94,5 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
-
   }
-
-
 }
