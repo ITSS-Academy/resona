@@ -24,6 +24,8 @@ import {queueReducer} from './ngrx/queue/queue.reducer';
 import * as QueueEffects from './ngrx/queue/queue.effects'
 import {historyReducer} from './ngrx/history/history.reducer';
 import * as HistoryEffects from './ngrx/history/history.effect';
+import {profileReducer} from './ngrx/profile/profile.reducer';
+import * as ProfileEffects from './ngrx/profile/profile.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -40,6 +42,7 @@ export const appConfig: ApplicationConfig = {
       search: searchReducer,
       queue: queueReducer,
       history: historyReducer,
+      profile: profileReducer,
     }),
     provideEffects(
       AuthEffects,
@@ -50,6 +53,7 @@ export const appConfig: ApplicationConfig = {
       SearchEffects,
       QueueEffects,
       HistoryEffects,
+      ProfileEffects,
     ),
     provideFirebaseApp(() => initializeApp({
       projectId: "resona-77317",
