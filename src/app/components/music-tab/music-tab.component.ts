@@ -52,9 +52,9 @@ export class MusicTabComponent implements OnInit, OnDestroy {
   }
 
   onFavoriteTrack(track: TrackModel) {
-    if (track.id) {
+    if (track.id && this.currentUserId) {
       this.store.dispatch(
-        FavoriteActions.addToFavorite({ songId: track.id })
+        FavoriteActions.addToFavorite({ songId: track.id, userId: this.currentUserId })
       );
       // Optimistic update for instant feedback
       this.isFavorite = true;

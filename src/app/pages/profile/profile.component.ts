@@ -26,6 +26,8 @@ import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 import {ProfileState} from "../../ngrx/profile/profile.state";
 import * as ProfileActions from "../../ngrx/profile/profile.actions";
 import {HistoryModel} from "../../models/history.model";
+import { FavoriteState } from '../../ngrx/favorite/favorite.state';
+import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
 
 @Component({
   selector: 'app-profile',
@@ -51,7 +53,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   uploadedTracks: TrackModel[] = [];
   playlists: PlaylistModel[] = [];
-  favoriteTracks: TrackModel[] = [];
+  favoritePlaylist$!: Observable<PlaylistModel | null>;
   historyTracks$!: Observable<HistoryModel[]>;
 
   subscriptions: Subscription[] = [];
@@ -64,6 +66,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       playlist: PlaylistState;
       history: HistoryState;
       profile: ProfileState;
+      favorite: FavoriteState;
     }>,
     private router: Router,
     private route: ActivatedRoute
@@ -100,12 +103,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
 
     this.historyTracks$ = this.store.select((state) => state.history.history);
+    this.favoritePlaylist$ = this.store.select(state => state.favorite.playlist);
+
     this.subscriptions.push(
       this.store.select('playlist', 'playlists').subscribe((playlists) => {
         this.playlists = playlists;
-      }),
-      this.store.select('track', 'favoriteTracks').subscribe((tracks: TrackModel[]) => {
-        this.favoriteTracks = tracks;
       }),
       this.store.select('track', 'tracks').subscribe((tracks: TrackModel[]) => {
         this.uploadedTracks = tracks;
@@ -118,7 +120,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.uploadedTracks = tracks;
     });
     this.store.dispatch(playlistActions.getPlaylists({ userId }));
-    this.store.dispatch(trackActions.getFavoriteTracks({ userId }));
+    this.store.dispatch(FavoriteActions.getFavoritePlaylist({ userId }));
     this.store.dispatch(trackActions.getTrackByOwnerId({ ownerId: userId }));
     this.store.dispatch(loadHistory({ userId }));
   }
