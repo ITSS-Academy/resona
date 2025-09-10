@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     uid: 'default',
     email: 'unknown@email.com',
     name: 'Unknown',
-    photoURL: ''
+    photoUrl: ''
   };
 
   private defaultGenre: CategoryModel = {

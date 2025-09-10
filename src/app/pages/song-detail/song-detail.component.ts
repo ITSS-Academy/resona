@@ -32,7 +32,7 @@ export class SongDetailComponent implements OnInit , OnDestroy{
   trackDetail$!: Observable<TrackModel>;
   trackDetail!: TrackModel;
   comments$!: Observable<CommentModel[]>;
-  comments: CommentModel[] = [];
+  // comments: CommentModel[] = [];
   totalComment!:number;
   isLoadingTrack$!: Observable<boolean>;
   thumbnailUrl$!: Observable<string>;
@@ -58,7 +58,7 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
     this.store.dispatch(TrackActions.getTracksBySameArtist({trackId:id}))
 
-    this.comments$ = this.store.select('comments', 'commentList');
+    // this.comments$ = this.store.select('comments', 'commentList');
     this.trackDetail$ = this.store.select('track', 'trackDetails');
     this.isLoadingTrack$ = this.store.select('track', 'isLoading');
     this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
@@ -78,10 +78,10 @@ export class SongDetailComponent implements OnInit , OnDestroy{
           console.log('No track detail loaded yet');
         }
       }),
-      this.comments$.subscribe(comments=>{
-        this.comments = comments;
-        this.totalComment = this.comments.length;
-      }),
+      // this.comments$.subscribe(comments=>{
+      //   this.comments = comments;
+      //   this.totalComment = this.comments.length;
+      // }),
       this.thumbnailUrl$.subscribe(thumbnailUrl=>{
         this.thumbnailUrl = thumbnailUrl;
       }),

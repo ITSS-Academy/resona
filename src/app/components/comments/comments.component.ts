@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {AfterViewInit, Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {
   MatFormField,
   MatHint,
@@ -16,8 +16,11 @@ import { idToken } from '@angular/fire/auth';
 import { ProfileModel } from '../../models/profile.model';
 import { Observable, Subscription } from 'rxjs';
 import { TrackModel } from '../../models/track.model';
-import { MatFabButton, MatIconButton } from '@angular/material/button';
+import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
 import { AsyncPipe, DatePipe } from '@angular/common';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {DeleteCommentDialogComponent} from '../delete-comment-dialog/delete-comment-dialog.component';
+import {deleteComment} from '../../ngrx/comment/comment.actions';
 
 @Component({
   selector: 'app-comments',
@@ -29,6 +32,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
     ReactiveFormsModule,
     MatIconButton,
     DatePipe,
+    AsyncPipe,
   ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss',
@@ -37,30 +41,36 @@ export class CommentsComponent implements OnInit, OnDestroy {
   currentUser$!: Observable<ProfileModel>;
   currentUser!: ProfileModel;
   subscriptions: Subscription[] = [];
-  comment$!: Observable<CommentModel>;
-  comment!: CommentModel;
+  comments$!: Observable<CommentModel[]>;
+  comments!: CommentModel[];
 
-  @Input() commentList!: CommentModel[];
+
   @Input() trackDetail!: TrackModel;
   @Input() totalComment!: number;
 
   constructor(
     private store: Store<{
-      comment: CommentState;
+      comments: CommentState;
       auth: AuthState;
     }>
   ) {
-    this.comment$ = this.store.select('comment', 'comment');
-    this.currentUser$ = this.store.select('auth', 'currentUser');
   }
 
   ngOnInit() {
+
+    this.comments$ = this.store.select('comments', 'commentList');
+
+    this.currentUser$ = this.store.select('auth', 'currentUser');
+
     this.subscriptions.push(
       this.currentUser$.subscribe((profile) => {
         this.currentUser = profile;
       }),
-      this.comment$.subscribe((comments) => {
-        this.comment = comments;
+      this.comments$.subscribe((comments) => {
+        if (comments && comments.length > 0) {
+          console.log(comments);
+          this.comments = comments;
+        }
       })
     );
   }
@@ -73,19 +83,15 @@ export class CommentsComponent implements OnInit, OnDestroy {
     content: new FormControl(''),
   });
 
-  async createComment() {
+  createComment() {
     if (this.commentForm.valid) {
       const newComment = {
-        // trackId: id,
         trackId: this.trackDetail.id,
         userId: this.currentUser.uid,
         content: this.commentForm.value.content || '',
       };
       this.store.dispatch(CommentActions.createComment(newComment));
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      this.store.dispatch(
-        CommentActions.getComments({ trackId: this.trackDetail.id })
-      );
+      this.store.dispatch(CommentActions.getComments({ trackId: this.trackDetail.id }));
       this.commentForm.reset();
     }
   }
