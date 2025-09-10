@@ -19,7 +19,7 @@
   </div>
 
   @if (profile$ | async; as profile) {
-    @if (profile.uid) {
+    @if (profile.id) {
       <button mat-stroked-button (click)="openCreateDialog()">
         <mat-icon>add</mat-icon>
         <span>Create playlist</span>

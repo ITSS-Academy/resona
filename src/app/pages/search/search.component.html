@@ -58,7 +58,7 @@
         <div class="search-profile">
           @for (profile of profiles$ | async; track $index) {
             <div class="artist" (click)="navigateToProfile(profile.id)">
-              <img [src]="profile.photoURL" alt="{{ profile.name}}"/>
+              <img [src]="profile.photoUrl" alt="{{ profile.name}}"/>
               <p class="artist-name">{{ profile.name}}</p>
               <p class="artist-role">Profile</p>
             </div>
@@ -125,7 +125,7 @@
         <div class="search-profile">
           @for (profile of profiles$ | async; track $index) {
             <div class="artist" (click)="navigateToProfile(profile.id)">
-              <img [src]="profile.photoURL" alt="{{ profile.name }}"/>
+              <img [src]="profile.photoUrl" alt="{{ profile.name }}"/>
               <p class="artist-name">{{ profile.name }}</p>
               <p class="artist-role">Profile</p>
             </div>

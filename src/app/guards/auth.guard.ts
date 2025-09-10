@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     return this.store.select('auth', 'currentUser').pipe(
       take(1),
       map(user => {
-        if (user && user.uid) {
+        if (user && user.id) {
           // ✅ Đã login → cho vào route
           return true;
         } else {

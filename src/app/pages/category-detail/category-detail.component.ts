@@ -10,23 +10,14 @@ import { AsyncPipe } from '@angular/common';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { PlaylistMusicTabComponent } from '../../components/playlist-music-tab/playlist-music-tab.component';
 import { PlaylistDetailButtonComponent } from '../../components/playlist-detail-button/playlist-detail-button.component';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { TrackModel } from '../../models/track.model';
 import { TrackState } from '../../ngrx/track/track.state';
 import * as TrackActions from '../../ngrx/track/track.action';
-import { CategoryModel } from '../../models/category.model';
-import { CategoryState } from '../../ngrx/category/category.state';
-import * as CategoryActions from '../../ngrx/category/category.action';
 import { MusicTabComponent } from '../../components/music-tab/music-tab.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-category-detail',
   templateUrl: './category-detail.component.html',
-  imports: [MusicTabComponent, MatIconModule],
   styleUrls: ['./category-detail.component.scss'],
   standalone: true,
   imports: [
