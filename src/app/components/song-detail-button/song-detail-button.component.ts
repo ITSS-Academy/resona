@@ -14,11 +14,13 @@ import {Router} from '@angular/router';
 import {CategoryModel} from '../../models/category.model';
 import {CategoryState} from '../../ngrx/category/category.state';
 import * as TrackActions from '../../ngrx/track/track.action'
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-song-detail-button',
   imports: [
     MaterialModule,
+    AsyncPipe,
   ],
   templateUrl: './song-detail-button.component.html',
   styleUrl: './song-detail-button.component.scss'
@@ -75,8 +77,8 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
     this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.uid}));
   }
 
-  removeTrack(){
-    this.store.dispatch(TrackActions.deleteTrack({trackId: this.trackDetail.id}) );
+  removeTrack() {
+    this.store.dispatch(TrackActions.deleteTrack({trackId: this.trackDetail.id}));
     this.store.dispatch(TrackActions.getTrackByCategoryId({categoryId: this.categoryDetail.id}));
     this.router.navigate([`/category-detail/${this.categoryDetail.id}`]).then();
   }

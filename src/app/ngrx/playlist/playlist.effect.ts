@@ -9,8 +9,8 @@ export const createPlaylistEffect = createEffect(
   (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
     return actions$.pipe(
       ofType(playlistActions.createPlaylist),
-      switchMap(({title, description, thumbnail, userId}) =>
-        playlistService.createPlaylist(title, description, thumbnail, userId).pipe(
+      switchMap(({title, description, thumbnail, userId, isPublic}) =>
+        playlistService.createPlaylist(title, description, thumbnail, userId, isPublic).pipe(
           map((playlist) => {
             console.log(playlist);
             return playlistActions.createPlaylistSuccess({playlist: playlist});
@@ -87,32 +87,32 @@ export const deletePlaylistEffect = createEffect(
   (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
     return actions$.pipe(
       ofType(playlistActions.deletePlaylist),
-      switchMap(({ id }) =>
+      switchMap(({id}) =>
         playlistService.deletePlaylist(id).pipe(
-          map(() => playlistActions.deletePlaylistSuccess({ id })),
+          map(() => playlistActions.deletePlaylistSuccess({id})),
           catchError((error) =>
-            of(playlistActions.deletePlaylistFailure({ error }))
+            of(playlistActions.deletePlaylistFailure({error}))
           )
         )
       )
     );
   },
-  { functional: true }
+  {functional: true}
 );
 
 export const removeTrackFromPlaylistEffect = createEffect(
   (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
     return actions$.pipe(
       ofType(playlistActions.removeTrackFromPlaylist),
-      switchMap(({ playlistId, trackId }) =>
+      switchMap(({playlistId, trackId}) =>
         playlistService.removeTrackFromPlaylist(playlistId, trackId).pipe(
-          map((playlist) => playlistActions.removeTrackFromPlaylistSuccess({ playlist })),
+          map((playlist) => playlistActions.removeTrackFromPlaylistSuccess({playlist})),
           catchError((error) =>
-            of(playlistActions.removeTrackFromPlaylistFailure({ error }))
+            of(playlistActions.removeTrackFromPlaylistFailure({error}))
           )
         )
       )
     );
   },
-  { functional: true }
+  {functional: true}
 );

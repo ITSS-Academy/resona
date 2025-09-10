@@ -26,7 +26,6 @@ import {ShareSnackbarComponent} from '../share-snackbar/share-snackbar.component
   ],
   templateUrl: './create-playlist-dialog.component.html',
   styleUrl: './create-playlist-dialog.component.scss',
-  // styleUrls: ['./create-playlist-dialog.component.scss'],
 
 })
 export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
@@ -38,7 +37,7 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
   previewUrl: string | null = null;
 
   constructor(
-    private router:Router,
+    private router: Router,
     private dialogRef: MatDialogRef<CreatePlaylistDialogComponent>,
     private actions$: Actions,
     private zone: NgZone,
@@ -70,6 +69,7 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
     title: new FormControl('', [Validators.required, Validators.maxLength(100)]),
     description: new FormControl(''),
     file: new FormControl<File | null>(null, Validators.required),
+    isPublic: new FormControl(true)
   });
 
   onFileSelected(event: Event): void {
@@ -100,6 +100,7 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
         description: description ?? '',
         thumbnail: file!,
         userId: userId,
+        isPublic: this.form.value.isPublic ?? true
       })
     );
 
@@ -128,7 +129,7 @@ export class CreatePlaylistDialogComponent implements OnInit, OnDestroy {
 
 
   handleFile(file: File) {
-    this.form.patchValue({ file: file });
+    this.form.patchValue({file: file});
     this.form.get('file')?.updateValueAndValidity();
 
     const reader = new FileReader();

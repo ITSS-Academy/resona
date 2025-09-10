@@ -9,11 +9,11 @@
          (click)="fileInput.click()">
 
       @if (previewUrl) {
-        <img [src]="previewUrl" alt="Preview" class="preview-img" />
+        <img [src]="previewUrl" alt="Preview" class="preview-img"/>
       } @else {
         <mat-icon>image</mat-icon>
         <p class="hint">Drag & drop or choose file</p>
-        <label  class="upload-btn">Choose Picture</label>
+        <label class="upload-btn">Choose Picture</label>
       }
 
       <input
@@ -25,7 +25,6 @@
         (change)="onFileSelected($event)"
       />
     </div>
-
 
 
     <div class="input-box">
@@ -46,6 +45,14 @@
           formControlName="description"
         ></textarea>
       </mat-form-field>
+
+      <div class="visibility">
+        <label class="block mb-2 font-medium">Visibility:</label>
+        <mat-radio-group formControlName="isPublic">
+          <mat-radio-button [value]="true">Public</mat-radio-button>
+          <mat-radio-button [value]="false">Private</mat-radio-button>
+        </mat-radio-group>
+      </div>
     </div>
   </div>
 </form>
