@@ -18,7 +18,7 @@ import {MatIconModule} from '@angular/material/icon';
   selector: 'app-category-detail',
   standalone: true,
   templateUrl: './category-detail.component.html',
-  imports: [AsyncPipe, ImgConverterPipe, MusicTabComponent, DatePipe, DurationPipe, DecimalPipe, MatIconModule],
+  imports: [ MusicTabComponent, MatIconModule],
   styleUrls: ['./category-detail.component.scss'],
 })
 export class CategoryDetailComponent implements OnInit, OnDestroy {

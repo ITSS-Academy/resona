@@ -104,7 +104,6 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
           this.filePath = this.buildStreamUrl(track);
           this.hasIncremented = false;
           this.store.dispatch(TrackActions.getLyricsByTrackId({id: track.id}))
-          this.store.dispatch(CategoryActions.getCategoryDetails({categoryId: track.id}));
 
           audio.src = this.filePath;
           audio.load();

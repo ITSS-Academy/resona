@@ -1,33 +1,47 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {MaterialModule} from './shared/modules/material.module';
-import {SidebarComponent} from './components/sidebar/sidebar.component';
-import {HeaderComponent} from './components/header/header.component';
-import {PlayerBarComponent} from './components/player-bar/player-bar.component';
-import {AsyncPipe, NgClass, NgStyle} from '@angular/common';
-import {Auth} from '@angular/fire/auth';
-import {Store} from '@ngrx/store';
-import {AuthState} from './ngrx/auth/auth.state';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
+import { MaterialModule } from './shared/modules/material.module';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { HeaderComponent } from './components/header/header.component';
+import { PlayerBarComponent } from './components/player-bar/player-bar.component';
+import { AsyncPipe, NgClass, NgStyle } from '@angular/common';
+import { Auth } from '@angular/fire/auth';
+import { Store } from '@ngrx/store';
+import { AuthState } from './ngrx/auth/auth.state';
 import * as AuthActions from './ngrx/auth/auth.actions';
-import {Observable, Subscription} from 'rxjs';
-import {PlaylistModel} from './models/playlist.model';
-import {PlaylistState} from './ngrx/playlist/playlist.state';
-import {ImgConverterPipe} from './shared/pipes/img-converter.pipe';
-import {PlaylistImgConverterPipe} from './shared/pipes/playlist-img-converter.pipe';
-import {TrackModel} from './models/track.model';
+import { Observable, Subscription } from 'rxjs';
+import { PlaylistModel } from './models/playlist.model';
+import { PlaylistState } from './ngrx/playlist/playlist.state';
+import { ImgConverterPipe } from './shared/pipes/img-converter.pipe';
+import { PlaylistImgConverterPipe } from './shared/pipes/playlist-img-converter.pipe';
+import { TrackModel } from './models/track.model';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MaterialModule, HeaderComponent, PlayerBarComponent, NgClass, RouterLink, RouterLinkActive, NgStyle, AsyncPipe, ImgConverterPipe, PlaylistImgConverterPipe],
+  imports: [
+    RouterOutlet,
+    MaterialModule,
+    HeaderComponent,
+    PlayerBarComponent,
+    RouterLink,
+    RouterLinkActive,
+    NgStyle,
+    PlaylistImgConverterPipe,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'resona';
   activeLink = '';
 
   subscriptions: Subscription[] = [];
-  idToken$ !: Observable<string>
+  idToken$!: Observable<string>;
   idToken: string = '';
   playlists$!: Observable<PlaylistModel[]>;
   playlists: PlaylistModel[] = [];
@@ -36,35 +50,37 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private auth: Auth,
     private store: Store<{
-      auth: AuthState,
-      playlist: PlaylistState,
-    }>) {
-    this.idToken$ = this.store.select('auth', 'idToken')
+      auth: AuthState;
+      playlist: PlaylistState;
+    }>
+  ) {
+    this.idToken$ = this.store.select('auth', 'idToken');
 
     this.auth.onAuthStateChanged(async (auth: any) => {
       if (auth) {
-
-        let idToken = await auth.getIdToken()
+        let idToken = await auth.getIdToken();
         const user = {
           uid: auth.uid,
           name: auth.name,
           email: auth.email,
-          photoURL: auth.photoURL
-        }
-        this.store.dispatch(AuthActions.storeAuth({currentUser: user, idToken: idToken}))
+          photoURL: auth.photoURL,
+        };
+        this.store.dispatch(
+          AuthActions.storeAuth({ currentUser: user, idToken: idToken })
+        );
       } else {
         console.log('No user is signed in.');
       }
-    })
+    });
   }
 
   isCollapsed = false;
 
   menuItems = [
-    {icon: 'home', title: 'Home', route: 'home'},
-    {icon: 'category', title: 'Category', route: 'category'},
-    {icon: 'cloud_upload', title: 'Upload', route: 'upload'},
-    {icon: 'account_circle', title: 'Profile', route: 'profile'},
+    { icon: 'home', title: 'Home', route: 'home' },
+    { icon: 'category', title: 'Category', route: 'category' },
+    { icon: 'cloud_upload', title: 'Upload', route: 'upload' },
+    { icon: 'account_circle', title: 'Profile', route: 'profile' },
   ];
 
   ngOnInit() {
@@ -88,7 +104,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.playlists = playlists;
         console.log(this.playlists);
       })
-    )
+    );
   }
 
   onMenuClick(route: string) {
