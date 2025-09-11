@@ -66,7 +66,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
         }
       }),
       this.comments$.subscribe((comments) => {
-        if (comments && comments.length > 0) {
+        if (comments) {
           console.log(comments);
           this.comments = comments;
           this.totalComment = this.comments.length;
@@ -88,7 +88,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
     content: new FormControl(''),
   });
 
-  createComment() {
+  async createComment() {
     if (this.commentForm.valid) {
       const newComment = {
         trackId: this.trackDetail.id,
@@ -96,14 +96,17 @@ export class CommentsComponent implements OnInit, OnDestroy {
         content: this.commentForm.value.content || '',
       };
       this.store.dispatch(CommentActions.createComment(newComment));
-      this.store.dispatch(CommentActions.getComments({ trackId: this.trackDetail.id }));
       this.commentForm.reset();
     }
+    await new Promise(resolve => setTimeout(resolve, 300));
+    this.store.dispatch(CommentActions.getComments({ trackId: this.trackDetail.id }));
   }
 
-  onDeleteComment(commentId: string, userId: string) {
+  async onDeleteComment(commentId: string, userId: string) {
     this.store.dispatch(
       CommentActions.deleteComment({ commentId: commentId, userId: userId })
     );
+    await new Promise(resolve => setTimeout(resolve, 300));
+    this.store.dispatch(CommentActions.getComments({ trackId: this.trackDetail.id }));
   }
 }

@@ -39,3 +39,16 @@ export const followProfileSuccess = createAction(
 export const followProfileFailure = createAction(
   '[Profile] Follow Profile Failure', props<{ error: any }>()
 )
+
+export const getProfileByTrackId = createAction(
+  '[Profile] Get Profile By Track Id', props<{ trackId: string }>()
+);
+
+export const getProfileByTrackIdSuccess = createAction(
+  '[Profile] Get Profile By Track Id Success', props<{ profile: ProfileModel }>()
+)
+
+export const getProfileByTrackIdFailure = createAction(
+  '[Profile] Get Profile By Track Id Failure', props<{ error: any }>()
+)
+

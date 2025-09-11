@@ -161,11 +161,15 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
       }),
 
       this.lyrics$.subscribe(lyrics => {
-        this.lyrics = lyrics;
+        if (lyrics) {
+          this.lyrics = lyrics;
+        }
       }),
 
       this.categoryDetail$.subscribe(detail => {
-        this.categoryDetail = detail;
+        if (detail) {
+          this.categoryDetail = detail;
+        }
       }),
 
       this.currentUser$.subscribe(currentUser => {
@@ -177,6 +181,10 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
 
       this.queueList$.subscribe(queueList => {
         this.queueList = queueList;
+        this.queueList = queueList.filter(
+          (track, index, self) =>
+            index === self.findIndex(t => t.track.id === track.track.id)
+        );
         console.log('Queue: ', this.queueList);
       }),
 

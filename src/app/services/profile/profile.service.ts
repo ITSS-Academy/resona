@@ -24,4 +24,8 @@ export class ProfileService {
     return this.http.get<ProfileModel[]>(`${environment.apiUrl}/profile/followers/${profileId}`);
   }
 
+  getProfileByTrackId(trackId: string): Observable<ProfileModel> {
+    return this.http.get<ProfileModel>(`${environment.apiUrl}/profile/by-track/${trackId}`);
+  }
+
 }
