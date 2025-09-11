@@ -19,6 +19,7 @@ import {PlaylistState} from './ngrx/playlist/playlist.state';
 import {PlaylistImgConverterPipe} from './shared/pipes/playlist-img-converter.pipe';
 import {ProfileModel} from './models/profile.model';
 import * as playlistActions from './ngrx/playlist/playlist.action';
+import {getProfile} from './ngrx/auth/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -58,14 +59,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.auth.onAuthStateChanged(async (auth: any) => {
       if (auth) {
         let idToken = await auth.getIdToken();
-        const user: ProfileModel = {
-          id: auth.uid,
-          name: auth.name,
-          email: auth.email,
-          photoUrl: auth.photoURL,
-        };
+        // const user: ProfileModel = {
+        //   id: auth.uid,
+        //   name: auth.name,
+        //   email: auth.email,
+        //   photoUrl: auth.photoURL,
+        // };
         this.store.dispatch(
-          AuthActions.storeAuth({currentUser: user, idToken: idToken})
+          AuthActions.getProfile({id: auth.uid})
         );
       } else {
         console.log('No user is signed in.');
@@ -133,6 +134,22 @@ export class AppComponent implements OnInit, OnDestroy {
   navigateToPlaylistDetail(playlistId: string) {
     this.router.navigate(['/playlist-detail', playlistId]);
   }
+
+  showCount = 4;
+  expanded = false;
+
+  togglePlaylists() {
+    if (this.expanded) {
+      // đang mở → thu lại
+      this.showCount = 4;
+      this.expanded = false;
+    } else {
+      // đang thu gọn → mở hết
+      this.showCount = this.playlists.length;
+      this.expanded = true;
+    }
+  }
+
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());

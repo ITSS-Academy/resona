@@ -232,7 +232,11 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     const input = event.target as HTMLInputElement;
     const audio = this.audio.nativeElement;
 
-    audio.currentTime = +input.value; // chỉ tua
+    console.log('Seeking to:', +input.value);
+    console.log('Audio before seek:', audio, 'currentTime:', audio.currentTime);
+    console.log('Audio duration:', audio.duration);
+
+    audio.currentTime = Number(input.value); // chỉ tua
     if (this.isPlaying) {
       audio.play(); // đảm bảo vẫn chạy tiếp
     }
@@ -270,6 +274,9 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   buildStreamUrl(track: TrackModel) {
+    if (track.filePath.startsWith('https://')) {
+      return track.filePath;
+    }
     return `https://cynhadjnrnyzycvxcpln.supabase.co/storage/v1/object/public/tracks/${track.filePath}`;
   }
 

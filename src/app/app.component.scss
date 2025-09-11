@@ -14,15 +14,24 @@
   font-weight: 500;
   gap: 4px;
   padding-bottom: 16px;
-  background: linear-gradient(90deg, #9d01ec, var(--mat-sys-primary)); /* tím → hồng */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background-color: var(--mat-sys-background);
   cursor: pointer;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 
   .logo-img {
     width: 70px;
     height: auto;
     object-fit: cover;
+  }
+
+  .logo-text {
+    font-size: 36px;
+    font-weight: 500;
+    background: linear-gradient(90deg, #9d01ec, var(--mat-sys-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 
