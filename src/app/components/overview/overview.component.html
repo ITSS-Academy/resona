@@ -6,7 +6,9 @@
     </div>
     <div class="overview-left-bot">
       @for (item of tracksSameArtist;track $index){
-          <app-album-card [track]="item"></app-album-card>
+          @if(item.id !== trackDetail.id) {
+            <app-album-card [track]="item"></app-album-card>
+          }
       }
     </div>
   </div>

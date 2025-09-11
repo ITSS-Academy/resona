@@ -30,6 +30,6 @@ export class AuthService {
   }
 
   getProfile(id: string): Observable<ProfileModel> {
-    return this.httpClient.get<ProfileModel>(`${environment.apiUrl}/auth/detail/${id}`);
+    return this.httpClient.get<ProfileModel>(`${environment.apiUrl}/auth/${id}`);
   }
 }

@@ -14,15 +14,24 @@
   font-weight: 500;
   gap: 4px;
   padding-bottom: 16px;
-  background: linear-gradient(90deg, #9d01ec, var(--mat-sys-primary)); /* tím → hồng */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background-color: var(--mat-sys-background);
   cursor: pointer;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 
   .logo-img {
     width: 70px;
     height: auto;
     object-fit: cover;
+  }
+
+  .logo-text {
+    font-size: 36px;
+    font-weight: 500;
+    background: linear-gradient(90deg, #9d01ec, var(--mat-sys-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 
@@ -33,9 +42,8 @@
   justify-content: center; /* Căn giữa theo chiều dọc */
   padding: 16px 0;
   border-radius: 8px;
-  transition:
-    background-color 0.3s ease,
-    padding 0.3s ease-in-out;
+  transition: background-color 0.3s ease,
+  padding 0.3s ease-in-out;
   gap: 8px;
 }
 
@@ -56,9 +64,8 @@
   margin-left: 12px;
   opacity: 1;
   transform: translateX(0); /* Chữ ở vị trí bình thường */
-  transition:
-    opacity 0.3s ease-in-out,
-    transform 0.3s ease-in-out; /* Thêm transform */
+  transition: opacity 0.3s ease-in-out,
+  transform 0.3s ease-in-out; /* Thêm transform */
 }
 
 /* Khi Sidebar thu nhỏ */
@@ -80,6 +87,7 @@
 .mdc-list-item {
   padding: 14px 18px;
 }
+
 .mdc-list-item.mdc-list-item--with-one-line {
   height: fit-content;
 }
@@ -100,6 +108,7 @@
   justify-content: center; /* Logo căn giữa theo chiều ngang */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .btn-menu-text {
   margin: 0 0 0 16px;
 }
@@ -108,9 +117,8 @@
   margin-left: 16px;
   font-size: 18px;
   opacity: 1;
-  transition:
-    opacity 0.3s ease-in-out,
-    transform 0.3s ease-in-out; /* Hiệu ứng opacity và transform */
+  transition: opacity 0.3s ease-in-out,
+  transform 0.3s ease-in-out; /* Hiệu ứng opacity và transform */
 }
 
 /* Khi Sidebar thu nhỏ, ẩn logo chữ */
@@ -263,7 +271,7 @@ mat-drawer.mat-drawer-closed {
 }
 
 .example-sidenav {
-  padding: 20px;
+  padding: 20px 20px 70px 20px;
 }
 
 ::ng-deep.mat-drawer-container {

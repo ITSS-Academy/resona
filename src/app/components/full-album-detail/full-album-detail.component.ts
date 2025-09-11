@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MatDivider, MatList, MatListItem} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {DatePipe, NgStyle} from '@angular/common';
@@ -19,7 +19,7 @@ import {Observable, Subscription} from 'rxjs';
   templateUrl: './full-album-detail.component.html',
   styleUrl: './full-album-detail.component.scss'
 })
-export class FullAlbumDetailComponent {
+export class FullAlbumDetailComponent  implements OnInit, OnDestroy {
 
   trackDetail$!: Observable<TrackModel>;
   trackDetail!: TrackModel;
@@ -38,7 +38,6 @@ export class FullAlbumDetailComponent {
       this.trackDetail$.subscribe(trackDetail => {
         if(trackDetail) {
           this.trackDetail = trackDetail;
-          console.log(trackDetail);
         }
       }),
     )

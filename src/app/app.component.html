@@ -4,7 +4,7 @@
     <mat-drawer #drawer class="example-sidenav" mode="side" opened>
       <div class="logo">
         <img class="logo-img" src="./assets/images/logo.png" alt="">
-        <span>Resona</span>
+        <span class="logo-text">Resona</span>
       </div>
       <mat-nav-list class="nav-list">
         @for (item of menuItems; track $index) {
@@ -23,22 +23,24 @@
 
       <p class="section-title">Your Playlists</p>
       <mat-nav-list class="nav-list">
-        @for (item of playlists; track $index) {
+        @for (item of playlists.slice(0, showCount); track $index) {
           <a
             mat-list-item
-            [routerLink]="['/playlist-detail']"
+            [routerLink]="['/playlist-detail', item.id]"
             routerLinkActive="active"
           >
             <img
-              [src]="item.thumbnailPath | playlistImgConverter"
+              [src]="item.thumbnailPath"
               alt=""
               class="background">
             <span class="menu-title">{{ item.title }}</span>
           </a>
-
         }
+
         @if (playlists.length > 4) {
-          <p class="see-more-btn">See more...</p>
+          <p class="see-more-btn" (click)="togglePlaylists()">
+            {{ expanded ? 'Show less' : 'Show more...' }}
+          </p>
         }
       </mat-nav-list>
     </mat-drawer>

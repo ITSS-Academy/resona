@@ -80,4 +80,32 @@ export const profileReducer = createReducer(
       error: error,
     }
   }),
+
+  on(ProfileActions.getProfileByTrackId, (state, {type, trackId})=>{
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(ProfileActions.getProfileByTrackIdSuccess, (state, {type, profile})=>{
+    console.log(type);
+    return {
+      ...state,
+      profile: profile,
+      isLoading: false,
+      error: null,
+    }
+  }),
+
+  on(ProfileActions.getProfileByTrackIdFailure, (state, {type, error})=>{
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
 )
