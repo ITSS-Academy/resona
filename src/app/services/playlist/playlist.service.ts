@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {PlaylistModel} from '../../models/playlist.model';
+import {PlaylistModel, PopularPlaylistModel} from '../../models/playlist.model';
 import {environment} from '../../../environments/environment.development';
 import {TrackModel} from '../../models/track.model';
 
@@ -69,5 +69,8 @@ export class PlaylistService {
     return this.http.get<PlaylistModel>(`${environment.apiUrl}/playlist/detail/${userId}`);
   }
 
+  getPopularPlaylists(): Observable<PopularPlaylistModel[]> {
+    return this.http.get<PopularPlaylistModel[]>(`${environment.apiUrl}/playlist/top-playlists`);
+  }
 
 }

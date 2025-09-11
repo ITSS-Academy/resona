@@ -13,7 +13,8 @@
         (keyup.enter)="navigateToSearch()"
       />
       <mat-icon class="material-symbols-rounded" (click)="navigateToSearch()"
-        >search</mat-icon
+      >search
+      </mat-icon
       >
     </div>
   </div>
@@ -43,9 +44,11 @@
         </button>
       </mat-menu>
     } @else {
-      <button mat-flat-button (click)="openLoginDialog()">
-        Login
-      </button>
+      @if (isLogging) {
+        <button mat-flat-button (click)="openLoginDialog()">
+          Login
+        </button>
+      }
     }
   }
 

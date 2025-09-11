@@ -1,10 +1,9 @@
-
 .playlist-header {
   position: relative;
   height: 320px;
   border-radius: 12px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .playlist-bg {
@@ -109,15 +108,16 @@
 /* ===== HEADER ===== */
 .playlist-table-header {
   display: grid;
-  grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;/* 6 cột bằng nhau */
+  grid-template-columns:2fr 1fr 1fr 1fr 1fr; /* 6 cột bằng nhau */
   align-items: center;
   padding: 10px 20px;
-  border-top: 1px solid #666;
-  border-bottom: 1px solid #666;
+  //border-top: 1px solid #666;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
   color: #e0e0e0;
   font-size: 16px;
   text-align: center;
   gap: 0;
+  margin-bottom: 8px;
 }
 
 .col-name {
@@ -126,21 +126,25 @@
   font-size: 19px;
   max-width: 100px;
 }
+
 .col-artist {
   display: flex;
   align-items: center;
   font-size: 19px;
 }
+
 .col-time {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .col-actions {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .col-list {
   margin-left: auto;
   display: flex;
@@ -155,6 +159,7 @@
   height: 28px;
   color: #d8a9b0;
 }
+
 .playlist-table-header mat-icon:hover {
   color: #ee10b0;
 }
@@ -198,7 +203,7 @@
     font-size: 12px;
   }
 
-  .col-time{
+  .col-time {
     padding: 0 5px 0 0;
 
   }
@@ -251,7 +256,6 @@
   }
 
 
-
   .song-title {
     font-size: 12px;
   }
@@ -264,8 +268,6 @@
   .playlist-table-body {
     font-size: 12px;
   }
-
-
 
 
 }

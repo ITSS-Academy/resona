@@ -1,4 +1,3 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
@@ -17,8 +16,14 @@
 //}
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* Ẩn scrollbar cho Chrome, Safari, Edge */
 ::-webkit-scrollbar {
@@ -29,4 +34,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 * {
   scrollbar-width: none; /* tắt thanh cuộn */
   -ms-overflow-style: none; /* dành cho IE, Edge cũ */
+}
+
+.loading-container {
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

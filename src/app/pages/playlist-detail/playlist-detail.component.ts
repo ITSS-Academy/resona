@@ -30,10 +30,12 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./playlist-detail.component.scss']
 })
 export class PlaylistDetailComponent implements OnInit, OnDestroy {
-  loading$!: Observable<boolean>
+  isLoading$!: Observable<boolean>
+  isLoading!: boolean;
   error$!: Observable<string | null>
   playlistId!: string;
-  playlistDetail$!: Observable<PlaylistModel | undefined>;
+  playlistDetail$!: Observable<PlaylistModel>;
+  playlistDetail!: PlaylistModel;
   tracks$!: Observable<TrackModel[] | null | undefined>;
   playlistName: string = '';
   totalMinutes$!: Observable<string>;
@@ -46,9 +48,9 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
     private store: Store<{
       playlist: PlaylistState,
       auth: AuthState,
-      track: TrackState,
     }>
-  ) {}
+  ) {
+  }
 
   openEditDialog() {
     this.dialog.open(CreatePlaylistDialogComponent, {
@@ -58,54 +60,89 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loading$ = this.store.select(state => state.track.isLoading);
-    this.error$ = this.store.select(state => state.track.error);
+    this.isLoading$ = this.store.select('playlist', 'isLoading');
+    this.playlistDetail$ = this.store.select('playlist', 'playlist');
 
     this.subscriptions.push(
-      this.route.params.subscribe(params => {
-        this.playlistId = params['id'];
-        if (this.playlistId === 'popular') {
-          this.playlistName = 'popular';
-          this.store.dispatch(trackActions.getPopularTracks());
-          this.tracks$ = this.store.select(state => state.track.popularTracks);
-        } else if (this.playlistId === 'new-released') {
-          this.playlistName = 'new released';
-          this.store.dispatch(trackActions.getNewReleasedTracks());
-          this.tracks$ = this.store.select(state => state.track.newReleasedTracks);
+      // this.route.params.subscribe(params => {
+      //   this.playlistId = params['id'];
+      //   if (this.playlistId === 'popular') {
+      //     this.playlistName = 'popular';
+      //     this.store.dispatch(trackActions.getPopularTracks());
+      //     this.tracks$ = this.store.select(state => state.track.popularTracks);
+      //   } else if (this.playlistId === 'new-released') {
+      //     this.playlistName = 'new released';
+      //     this.store.dispatch(trackActions.getNewReleasedTracks());
+      //     this.tracks$ = this.store.select(state => state.track.newReleasedTracks);
+      //   } else {
+      //     this.store.dispatch(playlistActions.getPlaylistById({playlistId: this.playlistId}));
+      //     this.playlistDetail$ = this.store.select('playlist', 'playlist');
+      //     this.tracks$ = this.playlistDetail$.pipe(map(p => p?.tracks));
+      //     this.playlistDetail$.subscribe(p => this.playlistName = p?.title || '');
+      //   }
+      //   this.totalMinutes$ = this.tracks$.pipe(
+      //     map(tracks => {
+      //       if (!tracks || tracks.length === 0) return '0 seconds';
+      //
+      //       const totalSeconds = tracks.reduce((sum, t) => {
+      //         const duration = Number(t.duration);
+      //         return sum + (isNaN(duration) ? 0 : Math.floor(duration));
+      //       }, 0);
+      //
+      //       const hours = Math.floor(totalSeconds / 3600);
+      //       const minutes = Math.floor((totalSeconds % 3600) / 60);
+      //       const seconds = totalSeconds % 60;
+      //
+      //       if (hours > 0) {
+      //         return `${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+      //       } else if (minutes > 0) {
+      //         return `${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
+      //       } else {
+      //         return `${seconds} second${seconds > 1 ? 's' : ''}`;
+      //       }
+      //     })
+      //   );
+      // })
+
+      this.playlistDetail$.subscribe(playlist => {
+        this.playlistDetail = playlist;
+      }),
+
+      this.isLoading$.subscribe(isLoading => {
+        this.isLoading = isLoading;
+      })
+    );
+
+    this.route.params.subscribe(params => {
+      this.playlistId = params['id'];
+      this.store.dispatch(playlistActions.getPlaylistById({playlistId: this.playlistId}));
+
+    });
+
+    this.totalMinutes$ = this.playlistDetail$.pipe(
+      map(p => p?.tracks),
+      map(tracks => {
+        if (!tracks || tracks.length === 0) return '0 seconds';
+
+        const totalSeconds = tracks.reduce((sum, t) => {
+          const duration = Number(t.duration);
+          return sum + (isNaN(duration) ? 0 : Math.floor(duration));
+        }, 0);
+
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        if (hours > 0) {
+          return `${hours}h ${minutes}m ${seconds}s`;
+        } else if (minutes > 0) {
+          return `${minutes}m ${seconds}s`;
         } else {
-          this.store.dispatch(playlistActions.getPlaylistById({playlistId: this.playlistId}));
-          this.playlistDetail$ = this.store.select('playlist', 'playlist');
-          this.tracks$ = this.playlistDetail$.pipe(map(p => p?.tracks));
-          this.playlistDetail$.subscribe(p => this.playlistName = p?.title || '');
+          return `${seconds}s`;
         }
-        this.totalMinutes$ = this.tracks$.pipe(
-          map(tracks => {
-            if (!tracks || tracks.length === 0) return '0 seconds';
-
-            const totalSeconds = tracks.reduce((sum, t) => {
-              const duration = Number(t.duration);
-              return sum + (isNaN(duration) ? 0 : Math.floor(duration));
-            }, 0);
-
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-
-            if (hours > 0) {
-              return `${hours} hour${hours > 1 ? 's' : ''} ${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
-            } else if (minutes > 0) {
-              return `${minutes} minute${minutes > 1 ? 's' : ''} ${seconds} second${seconds > 1 ? 's' : ''}`;
-            } else {
-              return `${seconds} second${seconds > 1 ? 's' : ''}`;
-            }
-          })
-        );
-
-
       })
     );
   }
-
 
 
   ngOnDestroy() {

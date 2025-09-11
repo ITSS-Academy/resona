@@ -128,7 +128,7 @@ export class TrackService {
   }
 
   getTrackById(id: string) {
-    return this.http.get<TrackModel>(`http://localhost:3000/track/detail/${id}`);
+    return this.http.get<TrackModel>(`${environment.apiUrl}/track/detail/${id}`);
   }
 
   getTracksByOwnerId(ownerId: string): Observable<TrackModel[]> {
@@ -167,7 +167,7 @@ export class TrackService {
     return this.http.delete<TrackModel>(`${environment.apiUrl}/track/${trackId}`);
   }
 
-  getTracksBySameArtist(trackId:string): Observable<TrackModel[]> {
+  getTracksBySameArtist(trackId: string): Observable<TrackModel[]> {
     return this.http.get<TrackModel[]>(`${environment.apiUrl}/track/same-artist/${trackId}`);
   }
 

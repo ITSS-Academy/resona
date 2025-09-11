@@ -4,5 +4,6 @@ export interface AuthState {
   currentUser: ProfileModel;
   idToken: string;
   isLogging: boolean;
+  isLoggedIn: boolean;
   error: any;
 }

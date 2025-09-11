@@ -1,6 +1,6 @@
 .song-item {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   align-items: center;
   color: #9ca3af;
   border: 2px solid transparent;
@@ -63,7 +63,8 @@
   text-align: center;
   color: #9ca3af;
 }
-.song-delete{
+
+.song-delete {
   display: flex;
   font-size: 12px;
   text-align: center;
@@ -83,8 +84,10 @@
     cursor: pointer;
 
     mat-icon {
+      width: 20px;
+      height: 20px;
       font-size: 20px;
-      transition: color 0.2s ease;
+      //transition: color 0.2s ease;
     }
 
     &:hover mat-icon {

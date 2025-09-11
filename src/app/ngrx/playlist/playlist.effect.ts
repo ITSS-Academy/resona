@@ -116,3 +116,19 @@ export const removeTrackFromPlaylistEffect = createEffect(
   },
   {functional: true}
 );
+
+export const getPopularPlaylistsEffect = createEffect(
+  (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
+    return actions$.pipe(
+      ofType(playlistActions.getPopularPlaylists),
+      switchMap(() =>
+        playlistService.getPopularPlaylists().pipe(
+          map((popular) => playlistActions.getPopularPlaylistsSuccess({popular})),
+          catchError((error: { message: any; }) =>
+            of(playlistActions.getPopularPlaylistsFailure({error: error.message})))
+        )
+      )
+    )
+  },
+  {functional: true}
+)

@@ -50,8 +50,8 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
       playlist: PlaylistState,
     }>,
     private actions$: Actions,
-  ) {}
-
+  ) {
+  }
 
 
   ngOnInit(): void {
@@ -67,7 +67,6 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
       ).subscribe(() => {
         this.openSnackBar('Track added to playlist successfully!');
       })
-
     );
   }
 
@@ -80,7 +79,7 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
   onOpenAddToPlaylist() {
     if (this.currentUserId) {
       this.store.dispatch(
-        PlaylistActions.getPlaylists({ userId: this.currentUserId })
+        PlaylistActions.getPlaylists({userId: this.currentUserId})
       );
     }
   }
@@ -118,7 +117,7 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
     const sub = this.store
       .select('playlist')
       .subscribe(state => {
-        if (!state.loading && !state.error) {
+        if (!state.isLoading && !state.error) {
           // Reload lại trang sau khi xóa
           window.location.reload();
         }

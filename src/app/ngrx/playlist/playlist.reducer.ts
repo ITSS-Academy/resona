@@ -1,10 +1,11 @@
 import {createReducer, on} from '@ngrx/store';
 import * as playlistActions from './playlist.action';
-import {PlaylistModel} from '../../models/playlist.model';
+import {PlaylistModel, PopularPlaylistModel} from '../../models/playlist.model';
 
 export const initialState = {
   playlists: <PlaylistModel[]>[],
   playlist: <PlaylistModel>{},
+  popular: <PopularPlaylistModel[]>[],
   isLoading: false,
   error: null,
 }
@@ -40,7 +41,6 @@ export const playlistReducer = createReducer(
   }),
 
 
-
   on(playlistActions.getPlaylists, (state, {type}) => {
     console.log(type)
     return {
@@ -69,7 +69,6 @@ export const playlistReducer = createReducer(
   }),
 
 
-
   on(playlistActions.getPlaylistById, (state, {type}) => {
     console.log(type)
     return {
@@ -96,7 +95,6 @@ export const playlistReducer = createReducer(
       error: error,
     };
   }),
-
 
 
   on(playlistActions.addTrackToPlaylist, (state, {type}) => {
@@ -187,6 +185,31 @@ export const playlistReducer = createReducer(
       isLoading: false,
       error: error,
     };
-  })
+  }),
+  on(playlistActions.getPopularPlaylists, (state, {type}) => {
+    console.log(type)
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+  on(playlistActions.getPopularPlaylistsSuccess, (state, {type, popular}) => {
+    console.log(type)
+    return {
+      ...state,
+      popular: popular,
+      isLoading: false,
+      error: null,
+    }
+  }),
+  on(playlistActions.getPopularPlaylistsFailure, (state, {type, error}) => {
+    console.log(type)
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
 )
 
