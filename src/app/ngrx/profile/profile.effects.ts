@@ -53,4 +53,20 @@ export const followProfileEffect = createEffect(
     )
   },
   {functional: true}
+);
+
+export const getProfileByTrackIdEffect = createEffect(
+  (actions$ = inject(Actions), profileService = inject(ProfileService)) => {
+    return actions$.pipe(
+      ofType(ProfileActions.getProfileByTrackId),
+      switchMap(({trackId}) =>
+        profileService.getProfileByTrackId(trackId).pipe(
+          map((profile) => ProfileActions.getProfileByTrackIdSuccess({profile})),
+          catchError((error: { message: any; }) =>
+            of(ProfileActions.getProfileByTrackIdFailure({error: error.message})))
+        )
+      )
+    )
+  },
+  {functional: true}
 )
