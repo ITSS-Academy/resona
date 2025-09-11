@@ -311,3 +311,8 @@
   overflow-y: auto;
   padding-bottom: 40px; /* tránh dính sát cuối */
 }
+
+
+::ng-deep .mat-mdc-tab-body-content {
+  height: 100vh !important;
+}

@@ -10,9 +10,21 @@
     <button class="buttons" mat-fab aria-label="Example icon button with a delete icon">
       <mat-icon fontSet="material-icons-outlined">download</mat-icon>
     </button>
-    <button class="buttons" mat-fab aria-label="Example icon button with a delete icon">
-      <mat-icon fontSet="material-icons-outlined">add_box</mat-icon>
-    </button>
+  <button class="buttons" mat-fab [matMenuTriggerFor]="addToPlaylistMenu" (click)="onOpenAddToPlaylist()">
+    <mat-icon fontSet="material-icons-outlined">add_box</mat-icon>
+  </button>
+
+  <mat-menu #addToPlaylistMenu="matMenu">
+    @if (playlists$ | async; as playlists) {
+      @for (playlist of playlists; track playlist.id) {
+        <button mat-menu-item (click)="onAddTrackToPlaylist(playlist.id)">
+          {{ playlist.title }}
+        </button>
+      }
+    } @else {
+      <button mat-menu-item disabled>No playlists found</button>
+    }
+  </mat-menu>
     <button class="buttons" mat-fab aria-label="Example icon button with a delete icon" (click)="addTrackToQueue()">
       <mat-icon >playlist_add</mat-icon>
     </button>

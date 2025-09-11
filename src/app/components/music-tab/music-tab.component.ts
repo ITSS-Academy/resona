@@ -78,7 +78,6 @@ export class MusicTabComponent implements OnInit, OnDestroy {
       ).subscribe(() => {
         this.openSnackBar('Track added to playlist successfully!');
       })
-
     );
   }
 

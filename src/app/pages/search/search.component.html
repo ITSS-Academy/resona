@@ -1,77 +1,7 @@
 <div class="search-pages">
   <mat-tab-group class="search-tabs">
     <!-- ALL TAB -->
-    <mat-tab label="All">
-      <div class="tab-content">
 
-        <!-- Category -->
-        <h2>Genres</h2>
-        <div class="category-container">
-          @for (category of categories$ | async; track $index) {
-            <div class="category-card" [style.background]="category.color" (click)="navigateToCategoryDetail(category.id)">
-              <div class="category-content">
-                <h3>{{ category.name }}</h3>
-              </div>
-              <img [src]="category.image" alt="{{ category.name }}"/>
-              <div class="play-btn">
-                <mat-icon>play_arrow</mat-icon>
-              </div>
-            </div>
-          }
-        </div>
-        <button mat-button>See more...</button>
-
-        <!-- Song -->
-        <h2>Songs</h2>
-        @for (track of tracks$ | async; track $index) {
-          <div class="song-info" (click)="onPlayTrack(track)">
-            <div class="song-title">
-              <img
-                [src]="track.thumbnailPath | imgConverter"
-                [alt]="'Song cover art for ' + track.title"
-              />
-              <span>{{ track.title }}</span>
-            </div>
-            <div class="song-artist">{{ track.artistName}}</div>
-            <div class="song-duration">{{ track.duration }}</div>
-          </div>
-        }
-        <button mat-button>See more...</button>
-
-        <!-- Playlist -->
-        <h2>Playlist</h2>
-        <div class="search-playlist">
-          @for (playlist of playlists$ | async; track $index) {
-            <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
-              <img
-                [src]="playlist.thumbnailPath"
-                [alt]="'Song cover art for ' + playlist.title"
-              />
-              <div class="play-btn">
-                <mat-icon>play_arrow</mat-icon>
-              </div>
-              <p class="label">{{ playlist.title}}</p>
-<!--              <p class="tracks">{{ playlist.trackCount }} tracks</p>-->
-            </div>
-          }
-        </div>
-        <button mat-button>See more...</button>
-
-        <!-- Profile -->
-        <h2>Profile</h2>
-        <div class="search-profile">
-          @for (profile of profiles$ | async; track $index) {
-            <div class="artist" (click)="navigateToProfile(profile.id)">
-              <img [src]="profile.photoURL" alt="{{ profile.name}}"/>
-              <p class="artist-name">{{ profile.name}}</p>
-              <p class="artist-role">Profile</p>
-            </div>
-          }
-        </div>
-        <button mat-button>See more...</button>
-
-      </div>
-    </mat-tab>
 
     <!-- Songs TAB -->
     <mat-tab label="Songs">
@@ -131,7 +61,7 @@
         <div class="search-profile">
           @for (profile of profiles$ | async; track $index) {
             <div class="artist" (click)="navigateToProfile(profile.id)">
-              <img [src]="profile.photoURL" alt="{{ profile.name }}"/>
+              <img [src]="profile.photoUrl" alt="{{ profile.name }}"/>
               <p class="artist-name">{{ profile.name }}</p>
               <p class="artist-role">Profile</p>
             </div>

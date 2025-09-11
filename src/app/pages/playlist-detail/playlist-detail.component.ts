@@ -53,7 +53,12 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   openEditDialog() {
     this.dialog.open(CreatePlaylistDialogComponent, {
       width: '700px',
-      panelClass: 'custom-dialog-container'
+      panelClass: 'custom-dialog-container',
+      data: {
+        playlistId: this.playlistId,
+        playlist: this.playlistDetail$  // truyền observable hoặc giá trị playlist
+      }
+
     });
   }
 
@@ -105,8 +110,6 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       })
     );
   }
-
-
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());

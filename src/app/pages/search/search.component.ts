@@ -34,6 +34,8 @@ export class SearchComponent {
   playlists$!: Observable<PlaylistModel[]>;
   profiles$!: Observable<ProfileModel[]>;
 
+  hasTracks: boolean = true;
+
   constructor(
     private router: Router,
     private store: Store<{
@@ -45,6 +47,10 @@ export class SearchComponent {
     this.tracks$ = this.store.select(state => state.search.searchTracks);
     this.playlists$ = this.store.select(state => state.search.searchPlaylists);
     this.profiles$ = this.store.select(state => state.search.searchProfiles);
+
+    this.tracks$.subscribe(tracks => {
+      this.hasTracks = tracks && tracks.length > 0;
+    });
   }
 
   navigateToCategoryDetail(id: string) {
