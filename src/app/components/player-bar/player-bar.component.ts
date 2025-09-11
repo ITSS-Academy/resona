@@ -70,6 +70,9 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   hasIncremented = false;
   repeatMode: 'none' | 'infinite' | 'once' = 'none';
+  volume = 0.5;
+  volumeIcon = 'volume_up';
+  private lastVolume = 0.5;
 
   constructor(
     private router: Router,
@@ -149,6 +152,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
           this.filePath = this.buildStreamUrl(track);
           this.hasIncremented = false;
           this.store.dispatch(TrackActions.getLyricsByTrackId({id: track.id}))
+          this.store.dispatch(CategoryActions.getCategoryDetailByTrackId({trackId: track.id}));
 
           audio.src = this.filePath;
           audio.load();
@@ -186,6 +190,8 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
         }
       })
     );
+
+    this.audio.nativeElement.volume = this.volume;
 
     // cập nhật progress khi audio chạy
     audio.ontimeupdate = async () => {
@@ -235,6 +241,33 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     input.style.setProperty('--progress', `${percent}%`);
   }
 
+  onVolumeChange(event: any) {
+    const input = event.target as HTMLInputElement;
+    this.volume = +input.value;
+    this.audio.nativeElement.volume = this.volume;
+    this.updateVolumeIcon();
+  }
+
+  toggleMute() {
+    if (this.volume > 0) {
+      this.lastVolume = this.volume;
+      this.volume = 0;
+    } else {
+      this.volume = this.lastVolume;
+    }
+    this.audio.nativeElement.volume = this.volume;
+    this.updateVolumeIcon();
+  }
+
+  updateVolumeIcon() {
+    if (this.volume === 0) {
+      this.volumeIcon = 'volume_off';
+    } else if (this.volume <= 0.5) {
+      this.volumeIcon = 'volume_down';
+    } else {
+      this.volumeIcon = 'volume_up';
+    }
+  }
 
   buildStreamUrl(track: TrackModel) {
     return `https://cynhadjnrnyzycvxcpln.supabase.co/storage/v1/object/public/tracks/${track.filePath}`;

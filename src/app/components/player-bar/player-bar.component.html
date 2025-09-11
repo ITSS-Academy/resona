@@ -98,7 +98,7 @@
 
         <mat-drawer-container>
           <mat-drawer #smallAlbum mode="over" position="end" class="drawer" autoFocus="false">
-            <app-small-album  [track]="currentTrack" [categoryDetail]="categoryDetail"></app-small-album>
+            <app-small-album></app-small-album>
           </mat-drawer>
         </mat-drawer-container>
 
@@ -111,7 +111,7 @@
 
         <mat-drawer-container class="lyric-container" autosize>
           <mat-drawer #lyric mode="over" position="end" class="drawer" autoFocus="false">
-            <app-lyric [lyrics]="lyrics"></app-lyric>
+            <app-lyric ></app-lyric>
           </mat-drawer>
         </mat-drawer-container>
       </div>
@@ -129,16 +129,21 @@
 
       </div>
 
-      <button aria-label="Volume" style="display: flex; align-items: center; gap: 4px">
-        <mat-icon class="icon">volume_up</mat-icon>
+      <div class="volume-control">
+        <button mat-icon-button (click)="toggleMute()">
+          <mat-icon class="icon">{{ volumeIcon }}</mat-icon>
+        </button>
         <input
           type="range"
           min="0"
-          max="100"
-          value="70"
+          max="1"
+          step="0.01"
+          [value]="volume"
+          (input)="onVolumeChange($event)"
           aria-label="Volume control"
+          [style.--progress]="volume * 100 + '%'"
         />
-      </button>
+      </div>
 
       <div class="queue">
         <button mat-icon-button aria-label="Queue" (click)="navigateToSongDetail(this.currentTrack.id)">

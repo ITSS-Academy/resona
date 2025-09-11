@@ -13,7 +13,7 @@ import {TrackState} from '../../ngrx/track/track.state';
 import {Router} from '@angular/router';
 import {CategoryModel} from '../../models/category.model';
 import {CategoryState} from '../../ngrx/category/category.state';
-import * as TrackActions from '../../ngrx/track/track.action'
+import {QueueModel} from '../../models/queue.model';
 import {AsyncPipe} from '@angular/common';
 import {PlaylistModel} from '../../models/playlist.model';
 import {PlaylistState} from '../../ngrx/playlist/playlist.state';
@@ -21,21 +21,28 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
 import {ShareSnackbarComponent} from '../share-snackbar/share-snackbar.component';
 import {Actions, ofType} from '@ngrx/effects';
+import * as TrackActions from '../../ngrx/track/track.action'
 
 @Component({
   selector: 'app-song-detail-button',
   imports: [
     MaterialModule,
     AsyncPipe,
+    AsyncPipe,
   ],
   templateUrl: './song-detail-button.component.html',
   styleUrl: './song-detail-button.component.scss'
 })
 export class SongDetailButtonComponent implements OnInit, OnDestroy {
-  @Input() trackDetail!: TrackModel;
+
+  trackDetail$!: Observable<TrackModel>;
+  trackDetail!: TrackModel;
   currentUser$!: Observable<ProfileModel>;
   currentUser!: ProfileModel;
-  subscription: Subscription[] = [];
+  subscription: Subscription[]=[];
+  queueList$!: Observable<QueueModel[]>;
+  queueList!: QueueModel[];
+  isAdding = false;
 
   categoryDetail$!: Observable<CategoryModel>;
   categoryDetail!: CategoryModel;
@@ -60,6 +67,8 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
     this.categoryDetail$ = this.store.select('category', 'category');
     this.isPlaying$ = this.store.select(state => state.play.isPlaying);
     this.playlists$ = this.store.select('playlist', 'playlists');
+    this.trackDetail$ = this.store.select('track','trackDetail');
+    this.queueList$ = this.store.select('queue','queueList')
   }
 
   onPlayTrack(track: TrackModel) {
@@ -68,21 +77,37 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     this.subscription.push(
       this.currentUser$.subscribe(profile => {
         this.currentUser = profile;
         this.currentUserId = profile.id;
+        if(profile) {
+          this.currentUser = profile;
+        }
       }),
       this.categoryDetail$.subscribe(category => {
-        this.categoryDetail = category;
+        if (category) {
+          this.categoryDetail = category;
+        }
       }),
       this.actions$.pipe(
         ofType(PlaylistActions.addTrackToPlaylistSuccess),
         filter(action => !!action.playlist) // chỉ nhận khi có playlist trả về
       ).subscribe(() => {
         this.openSnackBar('Track added to playlist successfully!');
+      }),
+      this.trackDetail$.subscribe(trackDetail => {
+        if(trackDetail) {
+          this.trackDetail = trackDetail;
+        }
+      }),
+      this.queueList$.subscribe(queueList => {
+        if(queueList) {
+          this.queueList = queueList;
+        }
       })
-    )
+    );
   }
   ngOnDestroy() {
     this.subscription.forEach(sub => sub.unsubscribe());
@@ -90,14 +115,25 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
 
 
 
-  async addTrackToQueue() {
+    
+  async addTrackToQueue(trackId: string) {
     this.store.dispatch(QueueActions.addTrackToQueue({userId: this.currentUser.id, trackId: this.trackDetail.id}));
     await new Promise(resolve => setTimeout(resolve, 500));
+    if (this.isAdding) return;
+    console.log(this.queueList)
+    const isExist = this.queueList.findIndex(track => track.track.id === this.trackDetail.id);
+    if (isExist !== -1) return;
+    this.isAdding = true;
+    await new Promise(resolve => setTimeout(resolve, 200));
+    this.store.dispatch(QueueActions.addTrackToQueue({userId: this.currentUser.id, trackId}));
+    await new Promise(resolve => setTimeout(resolve, 200));
     this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.id}));
+    this.isAdding = false;
   }
 
-  removeTrack() {
-    this.store.dispatch(TrackActions.deleteTrack({trackId: this.trackDetail.id}));
+  async removeTrack(){
+    this.store.dispatch(TrackActions.deleteTrack({trackId: this.trackDetail.id}) );
+    await new Promise(resolve => setTimeout(resolve, 200));
     this.store.dispatch(TrackActions.getTrackByCategoryId({categoryId: this.categoryDetail.id}));
     this.router.navigate([`/category-detail/${this.categoryDetail.id}`]).then();
   }

@@ -3,6 +3,8 @@ import {inject} from '@angular/core';
 import {TrackService} from '../../services/track/track.service';
 import * as trackActions from './track.action';
 import {catchError, map, of, switchMap} from 'rxjs';
+import {PlaylistService} from '../../services/playlist/playlist.service';
+import {PlaylistModel} from '../../models/playlist.model';
 
 export const getNewReleasedTracksEffect = createEffect(
   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
@@ -71,13 +73,13 @@ export const createTrackEffect = createEffect(
 );
 
 export const getFavoriteTracksEffect = createEffect(
-  (actions$ = inject(Actions), trackService = inject(TrackService)) => {
+  (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
     return actions$.pipe(
       ofType(trackActions.getFavoriteTracks),
       switchMap(({userId}) =>
-        trackService.getFavouriteTracks(userId).pipe(
-          map((tracks) => {
-            console.log(tracks);
+        playlistService.getFavoritePlaylistByUserId(userId).pipe(
+          map((playlist: PlaylistModel) => {
+            const tracks = playlist.tracks || [];
             return trackActions.getFavoriteTracksSuccess({tracks});
           }),
           catchError((error: { message: any; }) =>

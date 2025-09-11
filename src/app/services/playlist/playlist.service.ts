@@ -76,7 +76,11 @@ export class PlaylistService {
 
     return this.http.patch<PlaylistModel>(
       `${environment.apiUrl}/playlist/${playlistId}`, formData);
+    }
+  getFavoritePlaylistByUserId(userId: string): Observable<PlaylistModel> {
+    return this.http.get<PlaylistModel>(`${environment.apiUrl}/playlist/detail/${userId}`);
   }
 
 
 }
+

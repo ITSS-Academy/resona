@@ -21,7 +21,6 @@ import * as CategoryActions from '../../ngrx/category/category.action';
     FullAlbumDetailComponent,
     SongDetailButtonComponent,
     ThreeOptionsButtonComponent,
-    AsyncPipe,
     MatProgressSpinnerModule,
   ],
   templateUrl: './song-detail.component.html',
@@ -29,18 +28,8 @@ import * as CategoryActions from '../../ngrx/category/category.action';
 })
 export class SongDetailComponent implements OnInit , OnDestroy{
   subscription: Subscription[]=[];
-  trackDetail$!: Observable<TrackModel>;
-  trackDetail!: TrackModel;
-  comments$!: Observable<CommentModel[]>;
-  // comments: CommentModel[] = [];
-  totalComment!:number;
   isLoadingTrack$!: Observable<boolean>;
-  thumbnailUrl$!: Observable<string>;
-  thumbnailUrl!: string;
-  lyric$!: Observable<string>;
-  lyric!: string;
-  tracksSameArtist$!: Observable<TrackModel[]>;
-  tracksSameArtist!: TrackModel[];
+  isLoadingTrack!: boolean
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -57,40 +46,18 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     this.store.dispatch(TrackActions.getThumbnailBasedOnTrackId({id: id}));
     this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
     this.store.dispatch(TrackActions.getTracksBySameArtist({trackId:id}))
+    this.store.dispatch(CategoryActions.getCategoryDetailByTrackId({trackId: id}));
 
-    // this.comments$ = this.store.select('comments', 'commentList');
-    this.trackDetail$ = this.store.select('track', 'trackDetails');
     this.isLoadingTrack$ = this.store.select('track', 'isLoading');
-    this.thumbnailUrl$ = this.store.select('track', 'thumbnailUrl');
-    this.lyric$ = this.store.select('track', 'lyrics');
-    this.tracksSameArtist$ = this.store.select('track','tracksSameArtist')
 
   }
 
   ngOnInit(): void {
     this.subscription.push(
-      this.trackDetail$.subscribe(track=>{
-        if (track) {
-          this.trackDetail = track;
-          console.log(this.trackDetail);
-          this.store.dispatch(CategoryActions.getCategoryDetailByTrackId({trackId: this.trackDetail.id}));
-        } else {
-          console.log('No track detail loaded yet');
+      this.isLoadingTrack$.subscribe(isLoadingTrack$ => {
+        if (isLoadingTrack$) {
+          this.isLoadingTrack = false;
         }
-      }),
-      // this.comments$.subscribe(comments=>{
-      //   this.comments = comments;
-      //   this.totalComment = this.comments.length;
-      // }),
-      this.thumbnailUrl$.subscribe(thumbnailUrl=>{
-        this.thumbnailUrl = thumbnailUrl;
-      }),
-      this.lyric$.subscribe(lyric=>{
-        this.lyric = lyric;
-      }),
-      this.tracksSameArtist$.subscribe(tracksSameArtist=>{
-        this.tracksSameArtist = tracksSameArtist;
-        console.log(this.tracksSameArtist);
       })
     )
   }

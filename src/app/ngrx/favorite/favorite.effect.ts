@@ -1,55 +1,44 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as FavoriteActions from './favorite.action';
+import { catchError, map, of, switchMap } from 'rxjs';
 import { PlaylistService } from '../../services/playlist/playlist.service';
-import {
-  catchError,
-  filter,
-  map,
-  of,
-  switchMap,
-  withLatestFrom,
-} from 'rxjs';
-import { Store } from '@ngrx/store';
-import { AuthState } from '../auth/auth.state';
+import * as FavoriteActions from './favorite.action';
 
-export const addToFavoriteEffect = createEffect(
-  (
-    actions$ = inject(Actions),
-    playlistService = inject(PlaylistService),
-    store = inject(Store<{ auth: AuthState }>)
-  ) => {
+export const getFavoritePlaylist$ = createEffect(
+  (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
     return actions$.pipe(
-      ofType(FavoriteActions.addToFavorite),
-      withLatestFrom(store.select((state) => state.auth.currentUser)),
-      switchMap(([{ songId }, user]) => {
-        console.log('Add to favorite effect triggered.');
-        console.log('Song ID:', songId);
-        console.log('Current User:', user);
-
-        if (!user) {
-          console.error('User not logged in. Cannot add to favorites.');
-          return of(
-            FavoriteActions.addToFavoriteFailure({
-              error: 'User not logged in',
-            })
-          );
-        }
-
-        return playlistService.addToFavorite(user.uid, songId).pipe(
-          map(() => {
-            console.log('Successfully added to favorites.');
-            return FavoriteActions.addToFavoriteSuccess();
+      ofType(FavoriteActions.getFavoritePlaylist),
+      switchMap((action) =>
+        playlistService.getFavoritePlaylistByUserId(action.userId).pipe(
+          map((playlist: any) => {
+            const mappedPlaylist = { ...playlist, tracks: playlist.track };
+            delete mappedPlaylist.track;
+            return FavoriteActions.getFavoritePlaylistSuccess({ playlist: mappedPlaylist });
           }),
-          catchError((error: any) => {
-            console.error('Error adding to favorites:', error);
-            return of(
-              FavoriteActions.addToFavoriteFailure({ error: error.message })
-            );
-          })
-        );
-      })
+          catchError((error) =>
+            of(FavoriteActions.getFavoritePlaylistFailure({ error })),
+          ),
+        ),
+      ),
     );
   },
-  { functional: true }
+  { functional: true },
+);
+
+export const addToFavorite$ = createEffect(
+  (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
+    return actions$.pipe(
+      ofType(FavoriteActions.addToFavorite),
+      switchMap(action =>
+        playlistService.addToFavorite(action.userId, action.songId).pipe(
+          switchMap(() => [
+            FavoriteActions.addToFavoriteSuccess(),
+            FavoriteActions.getFavoritePlaylist({ userId: action.userId })
+          ]),
+          catchError(error => of(FavoriteActions.addToFavoriteFailure({ error })))
+        )
+      )
+    );
+  },
+  { functional: true },
 );

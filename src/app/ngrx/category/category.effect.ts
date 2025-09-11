@@ -68,3 +68,21 @@ export const getTracksByCategoryEffect = createEffect(
   },
   { functional: true }
 );
+
+export const getCategoryDetailByTrackIdEffect = createEffect(
+  (actions$ = inject(Actions), categoryService = inject(CategoryService)) => {
+    return actions$.pipe(
+      ofType(categoryActions.getCategoryDetailByTrackId),
+      switchMap((action) => categoryService.getCategoryDetailByTrackId(action.trackId).pipe(
+          map((category) => {
+            console.log(category);
+            return categoryActions.getCategoryDetailByTrackIdSuccess({category: category,});
+          }),
+          catchError((error: { message: any; }) =>
+            of(categoryActions.getCategoryDetailByTrackIdFailure({error})))
+        )
+      )
+    )
+  },
+  {functional: true}
+);

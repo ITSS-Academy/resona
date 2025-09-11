@@ -70,11 +70,11 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(params => {
         this.playlistId = params['id'];
         if (this.playlistId === 'popular') {
-          this.playlistName = 'Happy Vibes';
+          this.playlistName = 'popular';
           this.store.dispatch(trackActions.getPopularTracks());
           this.tracks$ = this.store.select(state => state.track.popularTracks);
         } else if (this.playlistId === 'new-released') {
-          this.playlistName = 'Chill Out';
+          this.playlistName = 'new released';
           this.store.dispatch(trackActions.getNewReleasedTracks());
           this.tracks$ = this.store.select(state => state.track.newReleasedTracks);
         } else {

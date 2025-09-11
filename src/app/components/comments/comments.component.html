@@ -2,30 +2,35 @@
   <div class="total-comments">
     <p>{{ totalComment }} Comments</p>
   </div>
-  <form
-    class="comment-input"
-    [formGroup]="commentForm"
-    (ngSubmit)="createComment()"
-  >
-    @if (this.currentUser$ | async; as profile) {
-      <div class="image">
-        <img src="{{profile.photoUrl}}" alt="" referrerpolicy="no-referrer">
-      </div>
+  @if (this.currentUser$ | async; as profile) {
+    @if (profile.id) {
+      <form
+        class="comment-input"
+        [formGroup]="commentForm"
+        (ngSubmit)="createComment()"
+      >
+        <div class="image">
+          <img src="{{profile.photoUrl}}" alt="" referrerpolicy="no-referrer">
+        </div>
+
+        <div class="form-fill">
+          <mat-form-field appearance="fill" class="input">
+            <input
+              formControlName="content"
+              matInput
+              placeholder="Add a public comment..."
+            />
+          </mat-form-field>
+          <button mat-icon-button type="submit" aria-label="Send comment">
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+      </form>
     }
 
-    <div class="form-fill">
-      <mat-form-field appearance="fill" class="input">
-        <input
-          formControlName="content"
-          matInput
-          placeholder="Add a public comment..."
-        />
-      </mat-form-field>
-      <button mat-icon-button type="submit" aria-label="Send comment">
-        <mat-icon>send</mat-icon>
-      </button>
-    </div>
-  </form>
+
+  }
+
   @for(comment of this.comments; track $index) {
     <div class="comments">
       @if(comment.profile.photoUrl) {
@@ -46,11 +51,15 @@
           <p>{{comment.content}}</p>
         </div>
       </div>
+
+
       @if(comment.profile.id === currentUser.id) {
         <button mat-icon-button (click)="onDeleteComment(comment.id,currentUser.id)">
           <mat-icon >delete</mat-icon>
         </button>
+
       }
     </div>
   }
+
 </div>
