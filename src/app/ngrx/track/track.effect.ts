@@ -5,6 +5,7 @@ import * as trackActions from './track.action';
 import {catchError, map, of, switchMap} from 'rxjs';
 import {PlaylistService} from '../../services/playlist/playlist.service';
 import {PlaylistModel} from '../../models/playlist.model';
+import {TrackModel} from '../../models/track.model';
 
 export const getNewReleasedTracksEffect = createEffect(
   (actions$ = inject(Actions), trackService = inject(TrackService)) => {
@@ -78,8 +79,7 @@ export const getFavoriteTracksEffect = createEffect(
       ofType(trackActions.getFavoriteTracks),
       switchMap(({userId}) =>
         playlistService.getFavoritePlaylistByUserId(userId).pipe(
-          map((playlist: PlaylistModel) => {
-            const tracks = playlist.tracks || [];
+          map((tracks: TrackModel[]) => {
             return trackActions.getFavoriteTracksSuccess({tracks});
           }),
           catchError((error: { message: any; }) =>
