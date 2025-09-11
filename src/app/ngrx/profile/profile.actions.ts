@@ -51,3 +51,15 @@ export const getPopularProfilesSuccess = createAction(
 export const getPopularProfilesFailure = createAction(
   '[Profile] Get Popular Profiles Failure', props<{ error: any }>()
 )
+export const getProfileByTrackId = createAction(
+  '[Profile] Get Profile By Track Id', props<{ trackId: string }>()
+);
+
+export const getProfileByTrackIdSuccess = createAction(
+  '[Profile] Get Profile By Track Id Success', props<{ profile: ProfileModel }>()
+)
+
+export const getProfileByTrackIdFailure = createAction(
+  '[Profile] Get Profile By Track Id Failure', props<{ error: any }>()
+)
+

@@ -13,7 +13,7 @@ export class ProfileService {
   }
 
   getProfileById(userId: string): Observable<ProfileModel> {
-    return this.http.get<ProfileModel>(`${environment.apiUrl}/profile/${userId}`);
+    return this.http.get<ProfileModel>(`${environment.apiUrl}/profile/detail/${userId}`);
   }
 
   followProfile(followerId: string, followingId: string) {
@@ -26,6 +26,10 @@ export class ProfileService {
 
   getPopularProfiles(): Observable<ProfileModel[]> {
     return this.http.get<ProfileModel[]>(`${environment.apiUrl}/profile/popular`);
+  }
+
+  getProfileByTrackId(trackId: string): Observable<ProfileModel> {
+    return this.http.get<ProfileModel>(`${environment.apiUrl}/profile/by-track/${trackId}`);
   }
 
 }

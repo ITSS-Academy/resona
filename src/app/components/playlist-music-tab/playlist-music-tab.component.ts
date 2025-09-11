@@ -127,7 +127,7 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
 
   private _snackBar = inject(MatSnackBar);
 
-  durationInSeconds = 20;
+  durationInSeconds = 3;
 
   openSnackBar(content: string) {
     this._snackBar.openFromComponent(ShareSnackbarComponent, {
