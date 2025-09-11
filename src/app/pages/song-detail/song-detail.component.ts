@@ -14,6 +14,8 @@ import * as TrackActions from '../../ngrx/track/track.action'
 import {AsyncPipe} from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import * as CategoryActions from '../../ngrx/category/category.action';
+import {ProfileState} from '../../ngrx/profile/profile.state';
+import * as ProfileActions from '../../ngrx/profile/profile.actions';
 
 @Component({
   selector: 'app-song-detail',
@@ -36,6 +38,7 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     private store: Store<{
       comments: CommentState,
       track: TrackState,
+      profile: ProfileState,
     }>
   ) {
     let {id} = this.activatedRoute.snapshot.params;
@@ -47,6 +50,7 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
     this.store.dispatch(TrackActions.getTracksBySameArtist({trackId:id}))
     this.store.dispatch(CategoryActions.getCategoryDetailByTrackId({trackId: id}));
+    this.store.dispatch(ProfileActions.getProfileByTrackId({trackId: id}))
 
     this.isLoadingTrack$ = this.store.select('track', 'isLoading');
 
