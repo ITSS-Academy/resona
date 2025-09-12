@@ -15,7 +15,7 @@
       </div>
     </div>
   </div>
-  <div class="container-middle">
+  <div class="container-middle" (click)="navigateToCategoryDetail(this.category.id)">
     <div
       class="container-middle-image"
       [ngStyle]="{ 'background-image': 'url(' + this.category.image + ')' }"
@@ -23,7 +23,7 @@
     <div class="container-middle-information">
       <div class="container-middle-information-author">
         <p>About Genre:</p>
-        <span (click)="navigateToCategoryDetail(this.category.id)">{{
+        <span>{{
           this.category.name
         }}</span>
       </div>

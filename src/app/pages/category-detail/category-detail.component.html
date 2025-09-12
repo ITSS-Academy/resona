@@ -58,13 +58,13 @@
 
     <!-- Phần Body của bảng -->
     <div class="playlist-table-body">
-      @for (track of tracks$ | async; track track.id; let i = $index) {
-        <app-playlist-music-tab
-          [track]="track"
-          [playlistId]="categoryId"
-          [playlistTitle]="categoryName"
-        >
-        </app-playlist-music-tab>
+      @for (track of tracks$ | async; track $index) {
+      <app-playlist-music-tab
+        [track]="track"
+        [playlistId]="categoryId"
+        [playlistTitle]="categoryName"
+      >
+      </app-playlist-music-tab>
       }
     </div>
   </div>

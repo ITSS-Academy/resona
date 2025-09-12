@@ -43,6 +43,8 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   totalMinutes$!: Observable<string>;
   userId!: string;
 
+  playlistOwnerId!: string;
+
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -139,6 +141,8 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
 
       this.playlistDetail$.subscribe((playlist) => {
         this.playlistDetail = playlist;
+        this.playlistOwnerId = playlist.profile.id;
+        console.log('Playlist detail:', this.playlistOwnerId);
       }),
 
       this.isLoading$.subscribe((isLoading) => {

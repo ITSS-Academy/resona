@@ -41,11 +41,9 @@ import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
     MatTab,
     MatTabsModule,
     MatList,
-    MatListItem,
     MatButton,
     MusicTabComponent,
     MatIconModule,
-    ImgConverterPipe,
     MaterialModule
   ],
   styleUrls: ['./profile.component.scss'],
@@ -59,15 +57,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
   // isViewingOwnProfile: boolean = true;
 
   uploadedTracks$!: Observable<TrackModel[]>;
-  uploadedTracks: TrackModel[] = [];
-  playlists$!: Observable<PlaylistModel[]>;
-  playlists: PlaylistModel[] = [];
+  uploadedTracks: TrackModel[] = []
   favoritePlaylist$!: Observable<PlaylistModel | null>;
   favoritePlaylist!: PlaylistModel | null;
   historyTracks$!: Observable<HistoryModel[]>;
   historyTracks: HistoryModel[] = [];
-  playlistDetail$!: Observable<PlaylistModel>;
-  playlistDetail!: PlaylistModel;
+  playlists$!: Observable<PlaylistModel[]>;
+  playlists!: PlaylistModel[];
   playlistDetailMap: Record<string, PlaylistModel | undefined> = {};
 
   subscriptions: Subscription[] = [];
@@ -100,15 +96,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.viewedProfile$ = this.store.select('profile', 'profile');
     this.currentUser$ = this.store.select('auth', 'currentUser');
-    this.followers$ = this.store.select('profile', 'profileList');
-    this.playlistDetail$ = this.store.select('playlist', 'playlist');
-    this.favoritePlaylist$ = this.store.select('favorite', 'playlist');
-    this.uploadedTracks$ = this.store.select('track', 'tracks');
-    this.historyTracks$ = this.store.select('history', 'history');
+    this.followers$ = this.store.select('profile','profileList');
     this.playlists$ = this.store.select('playlist', 'playlists');
+    this.favoritePlaylist$ = this.store.select('favorite','playlist');
+    this.uploadedTracks$ = this.store.select('track','tracks');
+    this.historyTracks$ = this.store.select('history','history');
 
   }
-
 
   ngOnInit() {
     this.subscriptions.push(
@@ -124,11 +118,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
           console.log(this.followers);
         }
       }),
-      this.playlistDetail$.subscribe(playlist => {
-        if (playlist.id) {
-          this.playlistDetail = playlist;
-          // this.playlistDetailMap[playlist.id] = playlist;
-          console.log(this.playlistDetail);
+      this.playlists$.subscribe(playlist => {
+        if (playlist.length > 0) {
+          this.playlists = playlist;
+          console.log(this.playlists);
         }
       }),
       this.favoritePlaylist$.subscribe(playlist => {
@@ -138,13 +131,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
       }),
       this.uploadedTracks$.subscribe(uploadedTracks => {
-        if (uploadedTracks.length > 0) {
+        if (uploadedTracks.length>0) {
           this.uploadedTracks = uploadedTracks;
           console.log(this.uploadedTracks);
         }
       }),
       this.historyTracks$.subscribe(historyTracks => {
-        if (historyTracks.length > 0) {
+        if (historyTracks.length>0) {
           this.historyTracks = historyTracks;
           console.log(this.historyTracks);
         }
@@ -153,7 +146,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         if (playlists.length > 0) {
           this.playlists = playlists;
         }
-      })
+      }),
 
 
       //   this.route.params.subscribe(params => {
@@ -235,6 +228,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       //   })
       // );
 
+      this.currentUser$.subscribe(user => {
+        if (user.id) {
+          this.currentUser = user;
+        }
+      }),
     )
   }
 
@@ -242,18 +240,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return this.playlistDetailMap[playlistId]?.tracks?.length || 0;
   }
 
-  // loadProfileData(userId: string) {
-  //   this.trackService.getTracksByOwnerId(userId).subscribe((tracks: TrackModel[]) => {
-  //     this.uploadedTracks = tracks;
-  //   });
-  //   this.store.dispatch(playlistActions.getPlaylists({ userId }));
-  //   this.store.dispatch(FavoriteActions.getFavoritePlaylist({ userId }));
-  //   this.store.dispatch(trackActions.getTrackByOwnerId({ ownerId: userId }));
-  //   this.store.dispatch(loadHistory({ userId }));
-  // }
-
   navigateToPlaylistDetail(playlistId: string) {
-    this.router.navigate(['/playlist-detail', playlistId]);
+    this.router.navigate(['/playlist-detail', playlistId]).then();
   }
 
   ngOnDestroy() {
@@ -270,6 +258,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.store.dispatch(ProfileActions.getFollowers({profileId: this.viewedProfile.id}));
   }
 
-
+  isFollowing(): boolean {
+    if (!this.currentUser || !this.followers) return false;
+    return this.followers.some(follower => follower.id === this.currentUser.id);
+  }
 }
 

@@ -8,6 +8,7 @@ import {DurationPipe} from '../../shared/pipes/duration.pipe';
 import {TrackState} from '../../ngrx/track/track.state';
 import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs';
+import {SongDetailButtonComponent} from '../song-detail-button/song-detail-button.component';
 
 @Component({
   selector: 'app-full-album-detail',
@@ -15,6 +16,7 @@ import {Observable, Subscription} from 'rxjs';
     MatIconModule,
     NgStyle,
     ImgConverterPipe,
+    SongDetailButtonComponent,
   ],
   templateUrl: './full-album-detail.component.html',
   styleUrl: './full-album-detail.component.scss'

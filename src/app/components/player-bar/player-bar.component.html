@@ -3,7 +3,7 @@
 @if (currentTrack$ | async; as track) {
   <footer>
     @if(track.thumbnailPath) {
-      <div class="player-left">
+      <div class="player-left" (click)="navigateToSongDetail(track.id)" style="cursor: pointer;">
         <img
           [src]="track.thumbnailPath | imgConverter"
           alt="Current playing song cover art"
@@ -18,7 +18,7 @@
         </div>
       </div>
     }@else{
-      <div class="player-left">
+      <div class="player-left" (click)="navigateToSongDetail(track.id)" style="cursor: pointer;">
         <img
           src="https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg"
           alt="Current playing song cover art"
@@ -43,7 +43,7 @@
 <!--        <button mat-icon-button aria-label="Shuffle">-->
 <!--          <mat-icon class="icon">shuffle</mat-icon>-->
 <!--        </button>-->
-        <button mat-icon-button aria-label="Previous">
+        <button mat-icon-button aria-label="Previous" (click)="previousTrack()">
           <mat-icon class="icon">skip_previous</mat-icon>
         </button>
         <div class="play-button">
@@ -104,21 +104,21 @@
 
       </div>
 
-      <div class="lyric">
-        <button mat-icon-button aria-label="lyric-frame" (click)="toggleLyric()">
-          <mat-icon class="icon">music_note</mat-icon>
-        </button>
+<!--      <div class="lyric">-->
+<!--        <button mat-icon-button aria-label="lyric-frame" (click)="toggleLyric()">-->
+<!--          <mat-icon class="icon">music_note</mat-icon>-->
+<!--        </button>-->
 
-        <mat-drawer-container class="lyric-container" autosize>
-          <mat-drawer #lyric mode="over" position="end" class="drawer" autoFocus="false">
-            <app-lyric ></app-lyric>
-          </mat-drawer>
-        </mat-drawer-container>
-      </div>
+<!--        <mat-drawer-container class="lyric-container" autosize>-->
+<!--          <mat-drawer #lyric mode="over" position="end" class="drawer" autoFocus="false">-->
+<!--            <app-lyric ></app-lyric>-->
+<!--          </mat-drawer>-->
+<!--        </mat-drawer-container>-->
+<!--      </div>-->
 
       <div class="queue">
         <button mat-icon-button aria-label="Queue" (click)="toggleQueue()">
-          <mat-icon class="icon">playlist_play</mat-icon>
+          <mat-icon class="icon">queue_music</mat-icon>
         </button>
 
         <mat-drawer-container>
@@ -147,7 +147,7 @@
 
       <div class="queue">
         <button mat-icon-button aria-label="Queue" (click)="navigateToSongDetail(this.currentTrack.id)">
-          <mat-icon class="icon">check_box_outline_blank</mat-icon>
+          <mat-icon class="icon">fullscreen</mat-icon>
         </button>
 
       </div>

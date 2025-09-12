@@ -33,8 +33,12 @@
 <!--}-->
 
 @if (viewedProfile$ | async; as viewedProfile) {
-  <div class="background" [ngStyle]="{'background-image': 'url(' + (viewedProfile.photoUrl) + '))'}">
-      <div class="profile">
+  <div class="background"
+       [ngStyle]="{
+       'background-image':
+         'linear-gradient(to bottom, var(--mat-sys-primary) 25%, #000000 100%), url(' + viewedProfile.photoUrl + ')'
+     }">
+    <div class="profile">
         <img [src]="viewedProfile.photoUrl" alt="User Avatar" />
       </div>
       <div class="right">
@@ -42,15 +46,19 @@
           <div class="name">
             <h3>{{viewedProfile.name}}</h3>
             <p>{{viewedProfile.email}}</p>
-            @if ( followers && followers.length > 0) {
+<!--            @if ( followers && followers.length > 0) {-->
 
-            <p>{{followers.length}} Followers</p>
-            } @else {
-              <p>0 Followers</p>
+<!--            <p>{{followers.length}} Followers</p>-->
+<!--            } @else {-->
+<!--              <p>0 Followers</p>-->
+<!--            }-->
 
+            @if (currentUser$ | async; as profile) {
+              @if(profile.id && viewedProfile.id && profile.id !== viewedProfile.id && !isFollowing()) {
+                <button mat-flat-button (click)="followProfile()">Follow</button>
+              }
             }
 
-            <button mat-flat-button (click)="followProfile()">Follow</button>
           </div>
 
       </div>

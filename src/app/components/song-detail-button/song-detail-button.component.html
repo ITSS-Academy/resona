@@ -1,20 +1,16 @@
 <div class="container">
   @if (this.currentUser$ | async; as profile) {
     @if (profile.id) {
-      <button id="play-button" mat-fab aria-label="Example icon button with a delete icon" (click)="onPlayTrack(trackDetail)">
-        <mat-icon>
-          {{ (isPlaying) ? 'pause' : 'play_arrow' }}
-        </mat-icon>
-      </button>
+<!--      <button id="play-button" mat-fab aria-label="Example icon button with a delete icon" (click)="onPlayTrack(trackDetail)">-->
+<!--        <mat-icon>-->
+<!--          {{ (isPlaying) ? 'pause' : 'play_arrow' }}-->
+<!--        </mat-icon>-->
+<!--      </button>-->
 
       <button class="buttons" mat-fab aria-label="Favorite" (click)="onFavoriteTrack(trackDetail)">
         <mat-icon fontSet="material-icons-outlined" [class.is-favorite]="isFavorite">
           {{ isFavorite ? 'favorite' : 'favorite_outline' }}
         </mat-icon>
-      </button>
-
-      <button class="buttons" mat-fab aria-label="Example icon button with a delete icon">
-        <mat-icon fontSet="material-icons-outlined">download</mat-icon>
       </button>
 
       <div class="song-actions">
@@ -44,9 +40,6 @@
 
       <button class="buttons" mat-fab aria-label="Example icon button with a delete icon" (click)="addTrackToQueue(trackDetail.id)">
         <mat-icon >playlist_add</mat-icon>
-      </button>
-      <button class="buttons" mat-fab aria-label="Example icon button with a delete icon">
-        <mat-icon >ios_share</mat-icon>
       </button>
 
       @if (this.currentUser.id === this.owner.id) {

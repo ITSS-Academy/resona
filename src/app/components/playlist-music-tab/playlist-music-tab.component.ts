@@ -18,6 +18,7 @@ import {MaterialModule} from '../../shared/modules/material.module';
 import {Actions, ofType} from '@ngrx/effects';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ShareSnackbarComponent} from '../share-snackbar/share-snackbar.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-playlist-music-tab',
@@ -44,6 +45,7 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
 
 
   constructor(
+    private router: Router,
     private store: Store<{
       play: PlayState,
       auth: AuthState,
@@ -139,6 +141,12 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  navigateToSongDetail(id: string) {
+    if (id) {
+      this.router.navigate([`/song-detail/${id}`]).then();
+    }
   }
 
 
