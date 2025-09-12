@@ -40,7 +40,9 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   tracks$!: Observable<TrackModel[] | null | undefined>;
   playlistName: string = '';
   totalMinutes$!: Observable<string>;
-  userId: string | null = null;
+  userId!: string;
+
+  playlistOwnerId!: string;
 
   subscriptions: Subscription[] = [];
 
@@ -84,7 +86,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       this.store
         .select((state) => state.auth.currentUser)
         .subscribe((user) => {
-          this.userId = user?.id || null;
+          this.userId = user?.id;
         }),
 
       // this.route.params.subscribe(params => {
@@ -129,6 +131,8 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
 
       this.playlistDetail$.subscribe((playlist) => {
         this.playlistDetail = playlist;
+        this.playlistOwnerId = playlist.profile.id;
+        console.log('Playlist detail:', this.playlistOwnerId);
       }),
 
       this.isLoading$.subscribe((isLoading) => {
