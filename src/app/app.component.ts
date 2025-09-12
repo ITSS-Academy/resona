@@ -45,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
   playlists$!: Observable<PlaylistModel[]>;
   playlists: PlaylistModel[] = [];
   currentUser$!: Observable<ProfileModel>;
+  uid: string = '';
 
   constructor(
     private router: Router,
@@ -65,13 +66,27 @@ export class AppComponent implements OnInit, OnDestroy {
         //   email: auth.email,
         //   photoUrl: auth.photoURL,
         // };
-        this.store.dispatch(
-          AuthActions.getProfile({id: auth.uid})
-        );
+        this.idToken = idToken;
+        this.uid = auth.uid
+        this.store.dispatch(AuthActions.storeAuth({
+          idToken: idToken,
+          currentUser: null as any
+        }))
+        this.store.dispatch(getProfile({
+          id: this.uid
+        }));
+
       } else {
         console.log('No user is signed in.');
       }
     });
+    this.store.select(state => state.auth.isLoggedIn).subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.store.dispatch(getProfile({
+          id: this.uid
+        }));
+      }
+    })
   }
 
   isCollapsed = false;

@@ -10,6 +10,31 @@ h3 {
   border-radius: 12px;
 }
 
+.upload-container.disabled {
+  pointer-events: none; // chặn click
+  opacity: 0.5; // làm mờ
+  filter: blur(1px); // optional
+  transition: opacity 0.3s ease;
+}
+
+.upload-wrapper {
+  position: relative;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2); // lớp mờ đè lên
+    z-index: 10;
+  }
+}
+
+
 .left-col {
   display: flex;
   flex-direction: column;
@@ -18,7 +43,7 @@ h3 {
   height: 100%;
 }
 
-.upload-picture{
+.upload-picture {
   height: 30%;
 }
 
@@ -30,7 +55,7 @@ h3 {
 }
 
 
-.upload-music-box{
+.upload-music-box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,7 +83,7 @@ h3 {
   max-width: 170px;
 }
 
-.upload-music-box img{
+.upload-music-box img {
   max-width: 170px;
 }
 
@@ -71,7 +96,7 @@ p {
 .picture-label {
   font-size: 16px;
   font-weight: 500;
-    margin-bottom: 8px;
+  margin-bottom: 8px;
   color: #fff;
   text-align: left;
 }
@@ -141,10 +166,10 @@ mat-tab-group {
   width: 100%;
   height: 100%;
 
- ::ng-deep.mdc-line-ripple::after,
- ::ng-deep.mdc-line-ripple::before {
+  ::ng-deep.mdc-line-ripple::after,
+  ::ng-deep.mdc-line-ripple::before {
     border-bottom-style: unset !important;
- }
+  }
 }
 
 .lyrics-upload:hover {
@@ -178,14 +203,13 @@ mat-tab-group {
   display: none !important;
 }
 
-.upload-tab{
+.upload-tab {
   height: 100%;
 }
 
-.upload-tab p{
+.upload-tab p {
   margin: 0
 }
-
 
 
 .upload-tab .lyrics-upload {
@@ -306,7 +330,7 @@ mat-tab-group {
     gap: 16px;
   }
 
-  .upload-music-box{
+  .upload-music-box {
     margin-bottom: 10px;
   }
 
@@ -314,7 +338,6 @@ mat-tab-group {
   .upload-picture img {
     max-width: 120px;
   }
-
 
 
   p {
@@ -330,7 +353,7 @@ mat-tab-group {
 /* Mobile nhỏ (dưới 480px) */
 @media screen and (max-width: 480px) {
 
-  .left-col{
+  .left-col {
     margin-right: 5px;
   }
   .song-info {
@@ -359,7 +382,7 @@ mat-tab-group {
   position: absolute;
   top: 4px;
   right: 4px;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   z-index: 2;
 }

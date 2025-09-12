@@ -55,3 +55,20 @@ export const removeTrackFromQueueEffect = createEffect(
   },
   {functional: true}
 );
+
+export const playSongNowEffect = createEffect(
+  (actions$ = inject(Actions), queueService = inject(QueueService)) => {
+    return actions$.pipe(
+      ofType(QueueActions.playSongNow),
+      switchMap(({userId, trackId}) =>
+        queueService.playSongNow(userId, trackId).pipe(
+          map((response) => QueueActions.playSongNowSuccess({message: response.message})),
+          catchError((error) =>
+            of(QueueActions.playSongNowFailure({error: error.message || 'Play song now failed'}))
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
+);

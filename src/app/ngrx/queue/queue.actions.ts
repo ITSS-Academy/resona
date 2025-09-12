@@ -41,3 +41,15 @@ export const removeTrackFromQueueSuccess = createAction(
 export const removeTrackFromQueueFailure = createAction(
   '[Queue] Remove Track From Queue Failure', props<{ error: any }>()
 )
+
+export const playSongNow = createAction(
+  '[Queue] Play Song Now', props<{ userId: string, trackId: string }>()
+)
+
+export const playSongNowSuccess = createAction(
+  '[Queue] Play Song Now Success', props<{ message: string }>()
+)
+
+export const playSongNowFailure = createAction(
+  '[Queue] Play Song Now Failure', props<{ error: any }>()
+)

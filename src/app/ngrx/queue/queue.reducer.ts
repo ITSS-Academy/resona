@@ -104,4 +104,31 @@ export const queueReducer = createReducer(
       error: error,
     }
   }),
+
+  on(QueueActions.playSongNow, (state, {type, userId, trackId}) => {
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(QueueActions.playSongNowSuccess, (state, {type, message}) => {
+    console.log(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: null,
+    }
+  }),
+
+  on(QueueActions.playSongNowFailure, (state, {type, error}) => {
+    console.error(type, error);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  })
 )

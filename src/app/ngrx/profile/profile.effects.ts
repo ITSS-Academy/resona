@@ -27,16 +27,16 @@ export const getProfileByIdEffect = createEffect(
   (actions$ = inject(Actions), profileService = inject(ProfileService)) =>
     actions$.pipe(
       ofType(ProfileActions.getProfileById),
-      switchMap(({ userId }) =>
+      switchMap(({userId}) =>
         profileService.getProfileById(userId).pipe(
-          map((profile) => ProfileActions.getProfileByIdSuccess({ profile })),
+          map((profile) => ProfileActions.getProfileByIdSuccess({profile})),
           catchError((error) =>
-            of(ProfileActions.getProfileByIdFailure({ error }))
+            of(ProfileActions.getProfileByIdFailure({error}))
           )
         )
       )
     ),
-  { functional: true }
+  {functional: true}
 );
 
 export const followProfileEffect = createEffect(
@@ -64,6 +64,22 @@ export const getProfileByTrackIdEffect = createEffect(
           map((profile) => ProfileActions.getProfileByTrackIdSuccess({profile})),
           catchError((error: { message: any; }) =>
             of(ProfileActions.getProfileByTrackIdFailure({error: error.message})))
+        )
+      )
+    )
+  },
+  {functional: true}
+)
+
+export const getPopularProfilesEffect = createEffect(
+  (actions$ = inject(Actions), profileService = inject(ProfileService)) => {
+    return actions$.pipe(
+      ofType(ProfileActions.getPopularProfiles),
+      switchMap(() =>
+        profileService.getPopularProfiles().pipe(
+          map((profileList) => ProfileActions.getPopularProfilesSuccess({profileList})),
+          catchError((error: { message: any; }) =>
+            of(ProfileActions.getPopularProfilesFailure({error: error.message})))
         )
       )
     )

@@ -1,8 +1,9 @@
-import {PlaylistModel} from '../../models/playlist.model';
+import {PlaylistModel, PopularPlaylistModel} from '../../models/playlist.model';
 
 export interface PlaylistState {
   playlists: PlaylistModel[];
   playlist: PlaylistModel;
-  loading: boolean;
+  popular: PopularPlaylistModel[];
+  isLoading: boolean;
   error: any;
 }

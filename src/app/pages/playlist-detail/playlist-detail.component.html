@@ -1,62 +1,64 @@
-<div class="playlist-detail-container">
-  <div class="playlist-header">
-    <div class="playlist-bg">
-      @if (playlistDetail$ | async; as playlist) {
-      <img [src]="playlist.thumbnailPath" alt="background"/>
-      }
-    </div>
+@if (isLoading$ | async) {
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+} @else {
+  <div class="playlist-detail-container">
+    <div class="playlist-header">
+      <div class="playlist-bg">
+        @if (playlistDetail) {
+          <img [src]="playlistDetail.thumbnailPath" alt="background"/>
+        }
+      </div>
 
-    <div class="playlist-info">
-      @if (playlistDetail$ | async; as playlist) {
-      <img class="playlist-cover" [src]="playlist.thumbnailPath" alt="Playlist Cover"/>
-      }
+      <div class="playlist-info">
+        @if (playlistDetail) {
+          <img class="playlist-cover" [src]="playlistDetail.thumbnailPath" alt="Playlist Cover"/>
+        }
 
-      <div class="playlist-text">
-        <div class="name-and-time">
-          <h2 class="playlist-title">
-            {{ playlistName }}
-            @if (playlistId !== 'happy-vibes' && playlistId !== 'chill-out') {
-            <button mat-icon-button (click)="openEditDialog()">
-              <mat-icon>edit</mat-icon>
-            </button>
+        <div class="playlist-text">
+          <div class="name-and-time">
+            <h2 class="playlist-title">
+              {{ playlistDetail.title }}
+              <!--              @if (playlistId !== 'happy-vibes' && playlistId !== 'chill-out') {-->
+              <!--                <button mat-icon-button (click)="openEditDialog()">-->
+              <!--                  <mat-icon>edit</mat-icon>-->
+              <!--                </button>-->
+              <!--              }-->
+            </h2>
+
+            @if (playlistDetail) {
+              <p class="playlist-meta">
+                {{ playlistDetail.tracks?.length || 0 }} songs • {{ totalMinutes$ | async }}
+              </p>
             }
-          </h2>
+          </div>
 
-          @if (playlistDetail$ | async; as playlist) {
-          <p class="playlist-meta">
-            {{ playlist.tracks?.length || 0 }} songs • {{ totalMinutes$ | async }}
-          </p>
-          }
-        </div>
-
-        <div class="playlist-actions">
-          <app-playlist-detail-button [playlistId]="playlistId"></app-playlist-detail-button>
+          <div class="playlist-actions">
+            <app-playlist-detail-button [playlistId]="playlistId"></app-playlist-detail-button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="playlist-table-header">
-    <span class="col-name"># Name</span>
-    <span class="col-artist"># Date</span>
-    <span class="col-time"><mat-icon>schedule</mat-icon></span>
-    <span class="col-views"><mat-icon>visibility</mat-icon></span>
-    <span class="col-actions">
-      <mat-icon>delete</mat-icon>
-      <mat-checkbox></mat-checkbox>
-    </span>
-    <span class="col-list">
-      <span>#List</span><mat-icon>list</mat-icon>
-    </span>
-  </div>
+    <div class="playlist-table-header">
+      <span class="col-name"># Name</span>
+      <span class="col-artist"># Date</span>
+      <span class="col-time"><mat-icon>schedule</mat-icon></span>
+      <span class="col-views"><mat-icon>visibility</mat-icon></span>
+      <span class="col-list">
+          <span>#List</span><mat-icon>list</mat-icon>
+        </span>
+    </div>
 
-  <div class="playlist-table-body">
-    @for (track of tracks$ | async; track track.id; let i = $index) {
-    <app-playlist-music-tab
-      [track]="track"
-      [playlistId]="playlistId"
-      [playlistTitle]="playlistName">
-    </app-playlist-music-tab>
-    }
+    <div class="playlist-table-body">
+      @for (track of playlistDetail.tracks; track $index) {
+        <app-playlist-music-tab
+          [track]="track"
+          [playlistId]="playlistDetail.id"
+          [playlistTitle]="playlistDetail.title">
+        </app-playlist-music-tab>
+      }
+    </div>
   </div>
-</div>
+}

@@ -2,44 +2,44 @@
   <div>
     <div class="logo" [ngClass]="{ 'collapsed': collapsed }">
       <img src="./assets/images/logo.png" alt="Logo"/>
-        @if (!collapsed) {
-          <span>Resona</span>
-        }
+      @if (!collapsed) {
+        <span>Resona</span>
+      }
     </div>
     <mat-nav-list>
-        @if (collapsed) {
+      @if (collapsed) {
 
-          @for (route of routes; track route) {
-            <a
-              [ngClass]="{ 'collapsed': collapsed }"
-              mat-list-item [routerLink]="route.route" routerLinkActive #rla="routerLinkActive"
-              [activated]="rla.isActive">
-              <mat-icon matListItemIcon>{{ route.icon }}</mat-icon>
-              @if (!collapsed) {
-                <span matListItemTitle
-                      [style.display]="collapsed ? 'none' : ''"
-                > {{ route.title }} </span>
-              }
-            </a>
+        @for (route of routes; track route) {
+          <a
+            [ngClass]="{ 'collapsed': collapsed }"
+            mat-list-item [routerLink]="route.route" routerLinkActive #rla="routerLinkActive"
+            [activated]="rla.isActive">
+            <mat-icon matListItemIcon>{{ route.icon }}</mat-icon>
+            @if (!collapsed) {
+              <span matListItemTitle
+                    [style.display]="collapsed ? 'none' : ''"
+              > {{ route.title }} </span>
+            }
+          </a>
 
-          }
         }
+      }
 
-        @if (!collapsed) {
-          @for (route of routes; track route) {
-            <a
-              [ngClass]="{ 'collapsed': collapsed }"
-              mat-list-item [routerLink]="route.route" routerLinkActive #rla="routerLinkActive"
-              [activated]="rla.isActive">
-              <mat-icon matListItemIcon>{{ route.icon }}</mat-icon>
-              @if (!collapsed) {
-                <span matListItemTitle
-                      [style.display]="collapsed ? 'none' : ''"
-                > {{ route.title }} </span>
-              }
-            </a>
-          }
+      @if (!collapsed) {
+        @for (route of routes; track route) {
+          <a
+            [ngClass]="{ 'collapsed': collapsed }"
+            mat-list-item [routerLink]="route.route" routerLinkActive #rla="routerLinkActive"
+            [activated]="rla.isActive">
+            <mat-icon matListItemIcon>{{ route.icon }}</mat-icon>
+            @if (!collapsed) {
+              <span matListItemTitle
+                    [style.display]="collapsed ? 'none' : ''"
+              > {{ route.title }} </span>
+            }
+          </a>
         }
+      }
 
     </mat-nav-list>
   </div>

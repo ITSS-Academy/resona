@@ -16,6 +16,7 @@ import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 import {Router} from '@angular/router';
 import {PlayState} from "../../ngrx/play/play.state";
 import * as PlayActions from "../../ngrx/play/play.action";
+import {MusicTabComponent} from '../../components/music-tab/music-tab.component';
 
 @Component({
   selector: 'app-search',
@@ -23,7 +24,8 @@ import * as PlayActions from "../../ngrx/play/play.action";
     MaterialModule,
     CategoryComponent,
     AsyncPipe,
-    ImgConverterPipe
+    ImgConverterPipe,
+    MusicTabComponent
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'

@@ -10,23 +10,23 @@ export const initialProfileState = {
 
 export const profileReducer = createReducer(
   initialProfileState,
-  on(ProfileActions.getProfileById, (state , {type, userId}) => ({
+  on(ProfileActions.getProfileById, (state, {type, userId}) => ({
     ...state,
     loading: true,
     error: null,
   })),
-  on(ProfileActions.getProfileByIdSuccess, (state, {type, profile }) => ({
+  on(ProfileActions.getProfileByIdSuccess, (state, {type, profile}) => ({
     ...state,
     profile: profile,
     loading: false,
   })),
-  on(ProfileActions.getProfileByIdFailure, (state, {type, error }) => ({
+  on(ProfileActions.getProfileByIdFailure, (state, {type, error}) => ({
     ...state,
     error: error,
     loading: false,
   })),
 
-  on(ProfileActions.getFollowers, (state, {type, profileId})=>{
+  on(ProfileActions.getFollowers, (state, {type, profileId}) => {
     console.log(type);
     return {
       ...state,
@@ -35,7 +35,7 @@ export const profileReducer = createReducer(
     }
   }),
 
-  on(ProfileActions.getFollowersSuccess, (state, {type, profileList})=>{
+  on(ProfileActions.getFollowersSuccess, (state, {type, profileList}) => {
     console.log(type);
     return {
       ...state,
@@ -45,7 +45,7 @@ export const profileReducer = createReducer(
     }
   }),
 
-  on(ProfileActions.getFollowersFailure, (state, {type, error})=>{
+  on(ProfileActions.getFollowersFailure, (state, {type, error}) => {
     console.error(type);
     return {
       ...state,
@@ -54,7 +54,7 @@ export const profileReducer = createReducer(
     }
   }),
 
-  on(ProfileActions.followProfile, (state, {type, followerId, followingId})=>{
+  on(ProfileActions.followProfile, (state, {type, followerId, followingId}) => {
     console.log(type);
     return {
       ...state,
@@ -63,7 +63,7 @@ export const profileReducer = createReducer(
     }
   }),
 
-  on(ProfileActions.followProfileSuccess, (state, {type})=>{
+  on(ProfileActions.followProfileSuccess, (state, {type}) => {
     console.log(type);
     return {
       ...state,
@@ -72,7 +72,35 @@ export const profileReducer = createReducer(
     }
   }),
 
-  on(ProfileActions.followProfileFailure, (state, {type, error})=>{
+  on(ProfileActions.followProfileFailure, (state, {type, error}) => {
+    console.error(type);
+    return {
+      ...state,
+      isLoading: false,
+      error: error,
+    }
+  }),
+
+  on(ProfileActions.getPopularProfiles, (state, {type}) => {
+    console.log(type);
+    return {
+      ...state,
+      isLoading: true,
+      error: null,
+    }
+  }),
+
+  on(ProfileActions.getPopularProfilesSuccess, (state, {type, profileList}) => {
+    console.log(type);
+    return {
+      ...state,
+      profileList: profileList,
+      isLoading: false,
+      error: null,
+    }
+  }),
+
+  on(ProfileActions.getPopularProfilesFailure, (state, {type, error}) => {
     console.error(type);
     return {
       ...state,

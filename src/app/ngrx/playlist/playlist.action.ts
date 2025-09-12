@@ -1,5 +1,5 @@
 import {createAction, props} from '@ngrx/store';
-import {PlaylistModel} from '../../models/playlist.model';
+import {PlaylistModel, PopularPlaylistModel} from '../../models/playlist.model';
 
 export const createPlaylist = createAction(
   '[Playlist] Create Playlist',
@@ -86,5 +86,19 @@ export const removeTrackFromPlaylistSuccess = createAction(
 
 export const removeTrackFromPlaylistFailure = createAction(
   '[Playlist] Remove Track From Playlist Failure',
+  props<{ error: any }>()
+);
+
+export const getPopularPlaylists = createAction(
+  '[Playlist] Get Popular Playlists'
+);
+
+export const getPopularPlaylistsSuccess = createAction(
+  '[Playlist] Get Popular Playlists Success',
+  props<{ popular: PopularPlaylistModel[] }>()
+);
+
+export const getPopularPlaylistsFailure = createAction(
+  '[Playlist] Get Popular Playlists Failure',
   props<{ error: any }>()
 );

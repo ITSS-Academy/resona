@@ -9,3 +9,8 @@ export interface PlaylistModel {
   tracks?: TrackModel[];
   description?: string;
 }
+
+export interface PopularPlaylistModel extends PlaylistModel {
+  totalViews: number;
+  trackCount: number;
+}

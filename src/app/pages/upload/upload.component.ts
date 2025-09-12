@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {MaterialModule} from '../../shared/modules/material.module';
 import {Observable, Subscription, take} from 'rxjs';
 import {CategoryModel} from '../../models/category.model';
@@ -13,6 +13,9 @@ import {AuthState} from '../../ngrx/auth/auth.state';
 import {MatDialog} from '@angular/material/dialog';
 import {LoginRequiredDialogComponent} from '../../components/login-required-dialog/login-required-dialog.component';
 import {ProfileModel} from '../../models/profile.model';
+import {Actions, ofType} from '@ngrx/effects';
+import {ShareSnackbarComponent} from '../../components/share-snackbar/share-snackbar.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-upload',
@@ -25,7 +28,7 @@ import {ProfileModel} from '../../models/profile.model';
   styleUrl: './upload.component.scss'
 })
 export class UploadComponent implements OnInit, OnDestroy {
-  loading$!: Observable<boolean>
+  isLoading$!: Observable<boolean>
   progress$!: Observable<number>
   error$!: Observable<string | null>
   lastTrack$!: Observable<any>
@@ -42,31 +45,37 @@ export class UploadComponent implements OnInit, OnDestroy {
   private profile: ProfileModel | null = null;
 
 
-  constructor(private store: Store<{
-    track: TrackState,
-    category: CategoryState,
-    auth: AuthState,
-  }>, private dialog: MatDialog
+  constructor(
+    private store: Store<{
+      track: TrackState,
+      category: CategoryState,
+      auth: AuthState,
+    }>,
+    private dialog: MatDialog,
+    private actions$: Actions
   ) {
 
   }
 
   ngOnInit() {
 
-    this.loading$ = this.store.select(state => state.track.isLoading);
+    this.isLoading$ = this.store.select(state => state.track.isLoading);
     this.error$ = this.store.select(state => state.track.error);
     this.categories$ = this.store.select('category', 'categoryList');
 
-
     this.store.dispatch(categoryActions.getAllCategories());
-
-
 
     this.subscriptions.push(
       this.categories$.subscribe(categories => {
         this.categories = categories;
         console.log(this.categories);
-      })
+      }),
+      this.actions$
+        .pipe(ofType(trackActions.uploadTrackSuccess))
+        .subscribe(() => {
+          this.resetForm();
+          this.openSnackBar('Upload track successfully!');
+        })
     );
   }
 
@@ -251,6 +260,22 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.form.patchValue({lyricsFile: null, lyrics: ''});
   }
 
+  resetForm() {
+    this.form.reset();
+    this.thumbnailPreview = null;
+    this.currentTrackId = null;
+    this.originalFileName = null;
+  }
+
+  private _snackBar = inject(MatSnackBar);
+  durationInSeconds = 3;
+
+  openSnackBar(content: string) {
+    this._snackBar.openFromComponent(ShareSnackbarComponent, {
+      data: content,
+      duration: this.durationInSeconds * 1000,
+    });
+  }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
