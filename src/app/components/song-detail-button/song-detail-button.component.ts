@@ -71,8 +71,7 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
       profile: ProfileState,
     }>,
     private actions$: Actions,
-      profile: ProfileState,
-      playlist: PlaylistState,
+
 
   ) {
     this.currentUser$ = this.store.select('auth', 'currentUser');
@@ -133,11 +132,11 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
           this.owner = owner;
         }
       }),
-      this.playlist$.subscribe(playlist => {
-        if(playlist) {
-          this.playlist = playlist;
-        }
-      }),
+      // this.playlist$.subscribe(playlist => {
+      //   if(playlist) {
+      //     this.playlist = playlist;
+      //   }
+      // }),
       this.favoriteTrack$.subscribe(track => {
         if(track) {
           this.favoriteTrack = track;
@@ -151,7 +150,7 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
 
 
 
-    
+
   async addTrackToQueue(trackId: string) {
     this.store.dispatch(QueueActions.addTrackToQueue({userId: this.currentUser.id, trackId: this.trackDetail.id}));
     await new Promise(resolve => setTimeout(resolve, 500));

@@ -11,7 +11,6 @@ import * as CommentActions from '../../ngrx/comment/comment.actions';
 import {TrackModel} from '../../models/track.model';
 import {TrackState} from '../../ngrx/track/track.state';
 import * as TrackActions from '../../ngrx/track/track.action'
-import {AsyncPipe} from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import * as CategoryActions from '../../ngrx/category/category.action';
 import {ProfileState} from '../../ngrx/profile/profile.state';

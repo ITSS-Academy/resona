@@ -111,10 +111,18 @@ export class UploadComponent implements OnInit, OnDestroy {
     const file = input.files?.[0];
     if (!file) return;
 
+    if (!(file.name.endsWith('.txt') || file.name.endsWith('.lrc'))) {
+      console.warn('Only .txt or .lrc files are allowed');
+      return;
+    }
+
+    this.form.patchValue({ lyricsFile: file });
+
     const reader = new FileReader();
     reader.onload = () => {
       const text = reader.result as string;
-      this.form.patchValue({lyrics: text});
+      this.form.patchValue({ lyrics: text });
+      this.form.get('lyrics')?.updateValueAndValidity();
     };
     reader.readAsText(file);
   }
@@ -219,18 +227,23 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.lyricsDragOver = false;
 
     const file = event.dataTransfer?.files[0];
-    if (file) {
-      // gán file vào form để hiện chip
-      this.form.patchValue({lyricsFile: file});
+    if (!file) return;
 
-      // đọc nội dung text của file đưa vào lyrics
-      const reader = new FileReader();
-      reader.onload = () => {
-        const text = reader.result as string;
-        this.form.patchValue({lyrics: text});
-      };
-      reader.readAsText(file);
+    // Chỉ chấp nhận txt hoặc lrc
+    if (!(file.name.endsWith('.txt') || file.name.endsWith('.lrc'))) {
+      console.warn('Only .txt or .lrc files are allowed');
+      return;
     }
+
+    this.form.patchValue({ lyricsFile: file });
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = reader.result as string;
+      this.form.patchValue({ lyrics: text });
+      this.form.get('lyrics')?.updateValueAndValidity();
+    };
+    reader.readAsText(file);
   }
 
   removeLyricsFile(event: Event) {
