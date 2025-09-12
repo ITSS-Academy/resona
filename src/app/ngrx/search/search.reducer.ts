@@ -32,16 +32,19 @@ export const searchReducer = createReducer(
     categories,
     loading: false,
   })),
+
   on(searchActions.searchProfilesSuccess, (state, { profiles }) => ({
     ...state,
     profiles,
     loading: false,
   })),
+
   on(searchActions.searchPlaylistsSuccess, (state, { playlists }) => ({
     ...state,
     playlists,
     loading: false,
   })),
+
   on(searchActions.searchTracksSuccess, (state, { tracks }) => ({
     ...state,
     tracks,
