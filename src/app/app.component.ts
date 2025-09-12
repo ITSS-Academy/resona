@@ -45,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
   playlists$!: Observable<PlaylistModel[]>;
   playlists: PlaylistModel[] = [];
   currentUser$!: Observable<ProfileModel>;
+  currentUser!: ProfileModel;
   uid: string = '';
 
   constructor(
@@ -87,6 +88,11 @@ export class AppComponent implements OnInit, OnDestroy {
         }));
       }
     })
+
+    this.playlists$ = this.store.select('playlist', 'playlists');
+    this.currentUser$ = this.store.select('auth', 'currentUser');
+
+
   }
 
   isCollapsed = false;
@@ -95,7 +101,7 @@ export class AppComponent implements OnInit, OnDestroy {
     {icon: 'home', title: 'Home', route: 'home'},
     {icon: 'category', title: 'Genres', route: 'category'},
     {icon: 'cloud_upload', title: 'Upload', route: 'upload'},
-    {icon: 'account_circle', title: 'Profile', route: 'profile'},
+    {icon: 'account_circle', title: 'Profile', route: `profile`},
   ];
 
   ngOnInit() {
@@ -105,9 +111,6 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('Active link set to:', this.activeLink);
       }
     }
-
-    this.playlists$ = this.store.select('playlist', 'playlists');
-    this.currentUser$ = this.store.select('auth', 'currentUser');
 
     this.subscriptions.push(
       this.idToken$.subscribe((idToken: string) => {
@@ -122,6 +125,8 @@ export class AppComponent implements OnInit, OnDestroy {
       }),
       this.currentUser$.subscribe((user: ProfileModel) => {
         if (user && user.id) {
+          console.log('Current user:======================', user);
+          this.currentUser = user;
           this.store.dispatch(playlistActions.getPlaylists({userId: user.id}));
         }
       })
@@ -129,7 +134,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onMenuClick(route: string) {
-    this.router.navigate([route]);
+    console.log(route);
+    if (route.includes('profile') && this.currentUser && this.currentUser.id) {
+      console.log('Current user:', this.currentUser);
+      this.router.navigate([`/profile/${this.currentUser.id}`]).then();
+
+    } else {
+      this.router.navigate([route]);
+    }
   }
 
   setActiveLink(): void {
@@ -139,7 +151,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.activeLink = this.menuItems[1].route;
     } else if (this.router.url.includes('/upload')) {
       this.activeLink = this.menuItems[2].route;
-    } else if (this.router.url.includes('/profile')) {
+    } else if (
+      this.router.url.includes(`/profile`)
+    ) {
       this.activeLink = this.menuItems[3].route;
     } else {
       this.activeLink = '';

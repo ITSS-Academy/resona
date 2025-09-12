@@ -13,7 +13,7 @@ export class HistoryService {
 
   getHistory(userId: string, limit: number = 50): Observable<HistoryModel[]> {
     return this.http.get<HistoryModel[]>(
-      `${environment.apiUrl}/${userId}?limit=${limit}`
+      `${environment.apiUrl}/history/${userId}?limit=${limit}`
     );
   }
 

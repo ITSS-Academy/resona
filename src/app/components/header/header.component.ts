@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   profile!: ProfileModel;
   isLogging$!: Observable<boolean>;
   isLogging = false;
+  isGettingProfile$!: Observable<boolean>;
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -54,6 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.profile$ = this.store.select('auth', 'currentUser');
     this.isLogging$ = this.store.select('auth', 'isLogging');
+    this.isGettingProfile$ = this.store.select('auth', 'isGettingProfile');
 
     this.subscriptions.push(
       this.profile$.subscribe(profile => {
@@ -80,8 +82,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  navigateToProfile() {
-    this.router.navigate(['/profile']);
+  navigateToProfile(id: string) {
+    this.router.navigate([`/profile/${id}`]).then();
   }
 
   logout() {

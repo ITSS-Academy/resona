@@ -97,6 +97,7 @@ export const authReducer = createReducer(
   }),
   on(AuthActions.getProfileSuccess, (state, {currentUser, type}) => {
     console.log(type);
+    console.log("current user",currentUser)
     return {
       ...state,
       currentUser: currentUser,
