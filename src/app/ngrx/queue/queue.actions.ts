@@ -41,3 +41,15 @@ export const removeTrackFromQueueSuccess = createAction(
 export const removeTrackFromQueueFailure = createAction(
   '[Queue] Remove Track From Queue Failure', props<{ error: any }>()
 )
+
+export const addPlaylistToQueue = createAction(
+  '[Queue] Add Playlist To Queue', props<{ userId: string, playlistId: string }>()
+);
+
+export const addPlaylistToQueueSuccess = createAction(
+  '[Queue] Add Playlist To Queue Success', props<{ queueList: QueueModel[] }>()
+);
+
+export const addPlaylistToQueueFailure = createAction(
+  '[Queue] Add Playlist To Queue Failure', props<{ error: any }>()
+);

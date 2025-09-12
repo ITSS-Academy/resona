@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MatFabButton} from "@angular/material/button";
 import {MaterialModule} from '../../shared/modules/material.module';
 import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
@@ -22,6 +22,7 @@ import {PlaylistModel} from '../../models/playlist.model';
 })
 export class PlaylistDetailButtonComponent implements OnInit, OnDestroy {
   @Input() playlistId!: string;
+  @Output() addAllToQueue = new EventEmitter<void>();
 
   playlists$!: Observable<PlaylistModel[]>;
   playlists: PlaylistModel[] = [];
@@ -48,6 +49,10 @@ export class PlaylistDetailButtonComponent implements OnInit, OnDestroy {
         console.log('Playlists:', playlists);
       })
     );
+  }
+
+  onAddAllToQueue() {
+    this.addAllToQueue.emit();
   }
 
   deletePlaylist() {

@@ -9,6 +9,7 @@ import {Store} from '@ngrx/store';
 import {PlaylistState} from '../../ngrx/playlist/playlist.state';
 import * as playlistActions from '../../ngrx/playlist/playlist.action';
 import * as trackActions from '../../ngrx/track/track.action';
+import * as QueueActions from '../../ngrx/queue/queue.actions';
 import {TrackModel} from '../../models/track.model';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {TrackState} from '../../ngrx/track/track.state';
@@ -37,6 +38,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   tracks$!: Observable<TrackModel[] | null | undefined>;
   playlistName: string = '';
   totalMinutes$!: Observable<string>;
+  userId: string | null = null;
 
   subscriptions: Subscription[] = [];
 
@@ -57,9 +59,21 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
     });
   }
 
+  addAllToQueue() {
+    if (this.userId && this.playlistId) {
+      this.store.dispatch(QueueActions.addPlaylistToQueue({ userId: this.userId, playlistId: this.playlistId }));
+    }
+  }
+
   ngOnInit() {
     this.loading$ = this.store.select(state => state.track.isLoading);
     this.error$ = this.store.select(state => state.track.error);
+
+    this.subscriptions.push(
+      this.store.select(state => state.auth.currentUser).subscribe(user => {
+        this.userId = user?.id || null;
+      })
+    );
 
     this.subscriptions.push(
       this.route.params.subscribe(params => {

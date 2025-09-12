@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment.development';
 import {QueueModel} from '../../models/queue.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,12 @@ export class QueueService {
     return this.http.get<QueueModel[]>(`${environment.apiUrl}/queue/${userId}`);
   }
 
-  removeTrackFromQueue(userId: string, trackId: string) {
-    return this.http.delete<{ message: string }>(`${environment.apiUrl}/queue`, {params: {userId, trackId}});
+  removeTrackFromQueue(userId: string, trackId: string): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${environment.apiUrl}/queue?userId=${userId}&trackId=${trackId}`);
+  }
+
+  addPlaylistToQueue(userId: string, playlistId: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/queue/add-playlist/${userId}`, { playlistId });
   }
 
 }

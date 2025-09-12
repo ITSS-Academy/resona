@@ -51,7 +51,7 @@
 
         <div class="category-actions">
           <!-- Truyền categoryId vào component con -->
-          <app-playlist-detail-button [playlistId]="categoryId"></app-playlist-detail-button>
+          <app-playlist-detail-button [playlistId]="categoryId" (addAllToQueue)="addAllToQueue()"></app-playlist-detail-button>
         </div>
       </div>
     </div>

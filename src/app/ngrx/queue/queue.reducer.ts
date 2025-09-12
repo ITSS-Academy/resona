@@ -23,8 +23,10 @@ export const queueReducer = createReducer(
 
   on(QueueActions.addTrackToQueueSuccess, (state, {type, queue}) => {
     console.log(type);
+    // const updatedQueueList = [...(state.queueList || []), queue];
     return {
       ...state,
+      // queueList: updatedQueueList,
       queue: queue,
       isLoading: false,
       error: null,
@@ -104,4 +106,23 @@ export const queueReducer = createReducer(
       error: error,
     }
   }),
+
+  on(QueueActions.addPlaylistToQueue, (state) => ({
+    ...state,
+    isLoading: true,
+    error: null,
+  })),
+
+  on(QueueActions.addPlaylistToQueueSuccess, (state, { queueList }) => ({
+    ...state,
+    queueList: queueList,
+    isLoading: false,
+    error: null,
+  })),
+
+  on(QueueActions.addPlaylistToQueueFailure, (state, { error }) => ({
+    ...state,
+    isLoading: false,
+    error: error,
+  })),
 )

@@ -45,7 +45,7 @@ export const removeTrackFromQueueEffect = createEffect(
       ofType(QueueActions.removeTrackFromQueue),
       switchMap(({userId, trackId}) =>
         queueService.removeTrackFromQueue(userId, trackId).pipe(
-          map((response) => QueueActions.removeTrackFromQueueSuccess({message: response.message})),
+          map((response: { message: string }) => QueueActions.removeTrackFromQueueSuccess({message: response.message})),
           catchError((error) =>
             of(QueueActions.removeTrackFromQueueFailure({error: error.message || 'Remove from queue failed'}))
           )
@@ -54,4 +54,25 @@ export const removeTrackFromQueueEffect = createEffect(
     );
   },
   {functional: true}
+);
+
+export const addPlaylistToQueueEffect = createEffect(
+  (actions$ = inject(Actions), queueService = inject(QueueService)) => {
+    return actions$.pipe(
+      ofType(QueueActions.addPlaylistToQueue),
+      switchMap(({ userId, playlistId }) =>
+        queueService.addPlaylistToQueue(userId, playlistId).pipe(
+          switchMap((response: any) => [
+            // Sau khi thêm playlist thành công, ta tải lại toàn bộ queue
+            // để đảm bảo dữ liệu ở frontend được đồng bộ và đầy đủ.
+            QueueActions.getQueueByUser({ userId: userId })
+          ]),
+          catchError((error) =>
+            of(QueueActions.addPlaylistToQueueFailure({ error: error.message || 'Add playlist to queue failed' }))
+          )
+        )
+      )
+    );
+  },
+  { functional: true }
 );

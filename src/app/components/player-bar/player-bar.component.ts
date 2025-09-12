@@ -180,11 +180,13 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
       }),
 
       this.queueList$.subscribe(queueList => {
-        this.queueList = queueList;
-        this.queueList = queueList.filter(
-          (track, index, self) =>
-            index === self.findIndex(t => t.track.id === track.track.id)
-        );
+        //this.queueList = queueList;
+        if (Array.isArray(queueList)) {
+          this.queueList = queueList.filter(
+            (track, index, self) =>
+              index === self.findIndex(t => t.track.id === track.track.id)
+          );
+        }
         console.log('Queue: ', this.queueList);
       }),
 
