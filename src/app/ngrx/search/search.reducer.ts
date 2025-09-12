@@ -1,75 +1,63 @@
-// src/app/ngrx/search/search.reducer.ts
-import {createReducer, on} from '@ngrx/store';
-import * as SearchActions from './search.actions';
-import {initialSearchState} from './search.state';
+import { createReducer, on } from '@ngrx/store';
+import { SearchState } from './search.state';
+import * as searchActions from './search.actions';
+
+export const initialSearchState: SearchState = {
+  tracks: [],
+  playlists: [],
+  profiles: [],
+  categories: [],
+  loading: false,
+  error: null,
+};
 
 export const searchReducer = createReducer(
   initialSearchState,
-  on(SearchActions.searchCategories, (state) => ({
+
+  // Loading state for all search actions
+  on(
+    searchActions.searchCategories,
+    searchActions.searchProfiles,
+    searchActions.searchPlaylists,
+    searchActions.searchTracks,
+    state => ({
+      ...state,
+      loading: true,
+    })
+  ),
+
+  // Success actions
+  on(searchActions.searchCategoriesSuccess, (state, { categories }) => ({
     ...state,
-    isLoading: true,
-    error: null,
-    searchCategories: [],
+    categories,
+    loading: false,
   })),
-  on(SearchActions.searchCategoriesSuccess, (state, {categories}) => ({
+  on(searchActions.searchProfilesSuccess, (state, { profiles }) => ({
     ...state,
-    isLoading: false,
-    searchCategories: categories,
+    profiles,
+    loading: false,
   })),
-  on(SearchActions.searchCategoriesFailure, (state, {error}) => ({
+  on(searchActions.searchPlaylistsSuccess, (state, { playlists }) => ({
     ...state,
-    isLoading: false,
-    error,
+    playlists,
+    loading: false,
+  })),
+  on(searchActions.searchTracksSuccess, (state, { tracks }) => ({
+    ...state,
+    tracks,
+    loading: false,
   })),
 
-  on(SearchActions.searchProfiles, (state) => ({
-    ...state,
-    isLoading: true,
-    error: null,
-    searchProfiles: [],
-  })),
-  on(SearchActions.searchProfilesSuccess, (state, {profiles}) => ({
-    ...state,
-    isLoading: false,
-    searchProfiles: profiles,
-  })),
-  on(SearchActions.searchProfilesFailure, (state, {error}) => ({
-    ...state,
-    isLoading: false,
-    error,
-  })),
-
-  on(SearchActions.searchPlaylists, (state) => ({
-    ...state,
-    isLoading: true,
-    error: null,
-    searchPlaylists: [],
-  })),
-  on(SearchActions.searchPlaylistsSuccess, (state, {playlists}) => ({
-    ...state,
-    isLoading: false,
-    searchPlaylists: playlists,
-  })),
-  on(SearchActions.searchPlaylistsFailure, (state, {error}) => ({
-    ...state,
-    isLoading: false,
-    error,
-  })),
-
-  on(SearchActions.searchTracks, (state) => ({
-    ...state,
-    isLoading: true,
-    error: null,
-    searchTracks: [],
-  })),
-  on(SearchActions.searchTracksSuccess, (state, {tracks}) => ({
-    ...state,
-    isLoading: false,
-    searchTracks: tracks,
-  })),
-  on(SearchActions.searchTracksFailure, (state, {error}) => ({
-    ...state,
-    isLoading: false,
-    error,
-  })),
+  // Failure actions
+  on(
+    searchActions.searchCategoriesFailure,
+    searchActions.searchProfilesFailure,
+    searchActions.searchPlaylistsFailure,
+    searchActions.searchTracksFailure,
+    (state, { error }) => ({
+      ...state,
+      error,
+      loading: false,
+    })
+  )
 );
