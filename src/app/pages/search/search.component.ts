@@ -45,10 +45,10 @@ export class SearchComponent {
       play: PlayState
     }>)
   {
-    this.categories$ = this.store.select(state => state.search.searchCategories);
-    this.tracks$ = this.store.select(state => state.search.searchTracks);
-    this.playlists$ = this.store.select(state => state.search.searchPlaylists);
-    this.profiles$ = this.store.select(state => state.search.searchProfiles);
+    this.categories$ = this.store.select(state => state.search.categories);
+    this.tracks$ = this.store.select(state => state.search.tracks);
+    this.playlists$ = this.store.select(state => state.search.playlists);
+    this.profiles$ = this.store.select(state => state.search.profiles);
 
     this.tracks$.subscribe(tracks => {
       this.hasTracks = tracks && tracks.length > 0;

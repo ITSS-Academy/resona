@@ -14,4 +14,5 @@ export interface TrackModel {
   owner: ProfileModel;
   playlists?: PlaylistModel[];
   category: CategoryModel;
+  isFavorite?: boolean; // Thêm thuộc tính isFavorite
 }

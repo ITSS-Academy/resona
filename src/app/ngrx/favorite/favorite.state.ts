@@ -5,9 +5,3 @@ export interface FavoriteState {
   loading: boolean;
   error: any;
 }
-
-export const initialFavoriteState: FavoriteState = {
-  playlist: null,
-  loading: false,
-  error: null,
-};
