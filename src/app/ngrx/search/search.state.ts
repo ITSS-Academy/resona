@@ -1,22 +1,13 @@
-import {CategoryModel} from '../../models/category.model';
-import {ProfileModel} from '../../models/profile.model';
-import {PlaylistModel} from '../../models/playlist.model';
-import {TrackModel} from '../../models/track.model';
+import { PlaylistModel } from '../../models/playlist.model';
+import { TrackModel } from '../../models/track.model';
+import { ProfileModel } from '../../models/profile.model';
+import { CategoryModel } from '../../models/category.model';
 
 export interface SearchState {
-  searchCategories: CategoryModel[];
-  searchProfiles: ProfileModel[];
-  searchPlaylists: PlaylistModel[];
-  searchTracks: TrackModel[];
-  isLoading: boolean;
+  tracks: TrackModel[];
+  playlists: PlaylistModel[];
+  profiles: ProfileModel[];
+  categories: CategoryModel[];
+  loading: boolean;
   error: any;
 }
-
-export const initialSearchState: SearchState = {
-  searchCategories: [],
-  searchProfiles: [],
-  searchPlaylists: [],
-  searchTracks: [],
-  isLoading: false,
-  error: null,
-};

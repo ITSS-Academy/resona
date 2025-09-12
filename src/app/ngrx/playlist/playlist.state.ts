@@ -4,6 +4,7 @@ export interface PlaylistState {
   playlists: PlaylistModel[];
   playlist: PlaylistModel;
   popular: PopularPlaylistModel[];
+  isSelectLoading: boolean;
   isLoading: boolean;
   error: any;
 }

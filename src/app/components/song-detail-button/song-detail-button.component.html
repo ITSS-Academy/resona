@@ -19,7 +19,8 @@
 
       <div class="song-actions">
         <button class="buttons" mat-fab [matMenuTriggerFor]="menu"
-                (click)="$event.stopPropagation(); onOpenAddToPlaylist()">
+                (menuOpened)="onOpenAddToPlaylist()"
+                (click)="$event.stopPropagation()">
           <mat-icon fontSet="material-icons-outlined">add_box</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
@@ -30,10 +31,10 @@
         </mat-menu>
 
         <mat-menu #addToPlaylistMenu="matMenu">
-          @if (playlist) {
-            @for (playlist of playlist; track playlist.id) {
-              <button mat-menu-item (click)="onAddTrackToPlaylist(playlist.id)">
-                {{ playlist.title }}
+          @if (playlists$ | async; as playlists) {
+            @for (pl of playlists; track pl.id) {
+              <button mat-menu-item (click)="onAddTrackToPlaylist(pl.id)">
+                {{ pl.title }}
               </button>
             } } @else {
             <button mat-menu-item disabled>No playlists found</button>

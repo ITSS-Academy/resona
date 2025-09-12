@@ -1,4 +1,4 @@
-  import {Component, inject, NgZone, OnDestroy, OnInit} from '@angular/core';
+  import {Component, Inject, inject, NgZone, OnDestroy, OnInit} from '@angular/core';
   import {MaterialModule} from '../../shared/modules/material.module';
   import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
   import {PlaylistService} from '../../services/playlist/playlist.service';
@@ -12,7 +12,7 @@
   import {loginFailure} from '../../ngrx/auth/auth.actions';
   import {PlaylistModel} from '../../models/playlist.model';
   import {Router} from '@angular/router';
-  import {MatDialogRef} from '@angular/material/dialog';
+  import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   import {Actions, ofType} from '@ngrx/effects';
   import {MatSnackBar} from '@angular/material/snack-bar';
   import {ShareSnackbarComponent} from '../share-snackbar/share-snackbar.component';
@@ -44,7 +44,8 @@
       private store: Store<{
         auth: AuthState,
         playlist: PlaylistState
-      }>
+      }>,
+      @Inject(MAT_DIALOG_DATA) public data: any
     ) {
       this.currentUser$ = this.store.select('auth', 'currentUser')
     }
@@ -63,6 +64,16 @@
           this.dialogRef.close();
         }),
       );
+      if (this.data && this.data.playlist) {
+        const playlist = this.data.playlist;
+        this.form.patchValue({
+          title: playlist.title,
+          description: playlist.description,
+          isPublic: playlist.isPublic
+          // file: không gán trực tiếp, dùng previewUrl để hiển thị ảnh
+        });
+        this.previewUrl = playlist.thumbnailPath;
+      }
     }
 
     form = new FormGroup({

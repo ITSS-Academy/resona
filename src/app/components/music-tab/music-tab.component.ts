@@ -1,24 +1,27 @@
-import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { MaterialModule } from '../../shared/modules/material.module';
-import { TrackModel } from '../../models/track.model';
-import { Store } from '@ngrx/store';
-import { PlayState } from '../../ngrx/play/play.state';
+import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {MaterialModule} from '../../shared/modules/material.module';
+import {TrackModel} from '../../models/track.model';
+import {Store} from '@ngrx/store';
+import {PlayState} from '../../ngrx/play/play.state';
 import * as PlayActions from '../../ngrx/play/play.action';
-import { DurationPipe } from '../../shared/pipes/duration.pipe';
-import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
-import { ImgConverterPipe } from '../../shared/pipes/img-converter.pipe';
+import {DurationPipe} from '../../shared/pipes/duration.pipe';
+import {AsyncPipe, DatePipe, DecimalPipe} from '@angular/common';
+import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
-import { PlaylistModel } from '../../models/playlist.model';
-import { filter, Observable, Subscription } from 'rxjs';
-import { AuthState } from '../../ngrx/auth/auth.state';
-import { PlaylistState } from '../../ngrx/playlist/playlist.state';
+import {PlaylistModel} from '../../models/playlist.model';
+import {filter, Observable, Subscription} from 'rxjs';
+import {AuthState} from '../../ngrx/auth/auth.state';
+import {PlaylistState} from '../../ngrx/playlist/playlist.state';
 import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
-import { TrackState } from '../../ngrx/track/track.state';
-import { addTrackToPlaylist } from '../../ngrx/playlist/playlist.action';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ShareSnackbarComponent } from '../share-snackbar/share-snackbar.component';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Actions, ofType } from '@ngrx/effects';
+import {TrackState} from '../../ngrx/track/track.state';
+import {addTrackToPlaylist} from '../../ngrx/playlist/playlist.action';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ShareSnackbarComponent} from '../share-snackbar/share-snackbar.component';
+import {MatDialogRef} from '@angular/material/dialog';
+import {Actions, ofType} from '@ngrx/effects';
+import {QueueState} from '../../ngrx/queue/queue.state';
+import * as QueueActions from '../../ngrx/queue/queue.actions';
+import {FavoriteState} from '../../ngrx/favorite/favorite.state';
 
 @Component({
   selector: 'app-music-tab',
@@ -38,9 +41,10 @@ export class MusicTabComponent implements OnInit, OnDestroy {
 
   playlists$!: Observable<PlaylistModel[]>;
   favoriteTracks$!: Observable<TrackModel[]>;
-  isFavorite = false;
+  @Input() isFavorite = false;
   subscriptions: Subscription[] = [];
   currentUserId!: string;
+  favoriteTracks: TrackModel[] = [];
 
   constructor(
     private store: Store<{
@@ -48,13 +52,23 @@ export class MusicTabComponent implements OnInit, OnDestroy {
       auth: AuthState;
       playlist: PlaylistState;
       track: TrackState;
+      queue: QueueState;
+      favorite: FavoriteState
     }>,
     private actions$: Actions
-  ) {}
+  ) {
+
+  }
 
   onPlayTrack(track: TrackModel) {
     console.log('Playing track:', track);
-    this.store.dispatch(PlayActions.setTrack({ track }));
+    this.store.dispatch(PlayActions.setTrack({track}));
+    this.store.dispatch(
+      QueueActions.playSongNow({
+        userId: this.currentUserId,
+        trackId: track.id
+      })
+    );
   }
 
   onFavoriteTrack(track: TrackModel) {
@@ -86,6 +100,12 @@ export class MusicTabComponent implements OnInit, OnDestroy {
         );
       }),
 
+      this.actions$.pipe(
+        ofType(PlaylistActions.addTrackToPlaylistSuccess),
+        filter(action => !!action.playlist) // chỉ nhận khi có playlist trả về
+      ).subscribe(() => {
+        this.openSnackBar('Track added to playlist successfully!');
+      }),
       this.actions$
         .pipe(
           ofType(PlaylistActions.addTrackToPlaylistSuccess),
@@ -93,14 +113,15 @@ export class MusicTabComponent implements OnInit, OnDestroy {
         )
         .subscribe(() => {
           this.openSnackBar('Track added to playlist successfully!');
-        })
+        }),
     );
+
   }
 
   onOpenAddToPlaylist() {
     if (this.currentUserId) {
       this.store.dispatch(
-        PlaylistActions.getPlaylists({ userId: this.currentUserId })
+        PlaylistActions.getPlaylistForSelect({userId: this.currentUserId})
       );
     }
   }

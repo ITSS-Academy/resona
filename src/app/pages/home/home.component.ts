@@ -23,6 +23,9 @@ import {PlaylistModel, PopularPlaylistModel} from '../../models/playlist.model';
 import {PlaylistState} from '../../ngrx/playlist/playlist.state';
 import {ProfileModel} from '../../models/profile.model';
 import {MaterialModule} from '../../shared/modules/material.module';
+import {FavoriteState} from '../../ngrx/favorite/favorite.state';
+import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
+import {AuthState} from '../../ngrx/auth/auth.state';
 
 @Component({
   selector: 'app-home',
@@ -44,6 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isCategoriesLoading$!: Observable<boolean>;
   isProfilesLoading$!: Observable<boolean>;
   isPlaylistsLoading$!: Observable<boolean>
+  favoriteTracks: TrackModel[] = [];
 
   categories$: Observable<CategoryModel[]>;
 
@@ -56,6 +60,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       play: PlayState;
       profile: ProfileState;
       playlist: PlaylistState;
+      favorite: FavoriteState;
+      auth: AuthState
     }>,
     private router: Router
   ) {
@@ -88,6 +94,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     // }
 
     this.subscriptions.push(
+      this.store.select(state => state.auth.currentUser).subscribe(
+        user => {
+          if (user && user.id) {
+            console.log('Current user in home', user);
+            this.store.dispatch(FavoriteActions.getFavoritePlaylist({userId: user.id}));
+          }
+        }
+      ),
       this.popularProfiles$.subscribe((profiles: ProfileModel[]) => {
         this.popularProfiles = profiles;
         console.log(this.popularProfiles);
@@ -95,7 +109,23 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.popularPlaylists$.subscribe((playlists: PopularPlaylistModel[]) => {
         this.popularPlaylists = playlists;
         console.log('Popularrrrrrr', this.popularPlaylists);
-      })
+      }),
+      this.store.select(state => state.favorite.playlist?.tracks).subscribe(
+        tracks => {
+          if (tracks) {
+            this.favoriteTracks = tracks;
+            this.newReleaseTracks = this.newReleaseTracks.map(
+              (track) => ({
+                  ...track, isFavorite:
+                    this.favoriteTracks.some(fav => fav.id === track.id)
+                }
+              )
+            )
+            console.log('Fav tracks in home', this.favoriteTracks);
+            console.log('New release tracks in home', this.newReleaseTracks);
+          }
+        }
+      )
     )
 
     this.store.dispatch(ProfileActions.getPopularProfiles());
@@ -104,7 +134,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     const newReleaseSub = this.newReleasesService
       .getNewReleasedTracks()
       .subscribe((tracks) => {
-        this.newReleaseTracks = tracks.slice(0, 5);
+        this.newReleaseTracks = tracks.slice(0, 5).map(
+          (track) => ({
+            ...track, isFavorite:
+              this.favoriteTracks.some(fav => fav.id === track.id)
+          })
+        )
       });
     // this.subscriptions.add(newReleaseSub);
   }

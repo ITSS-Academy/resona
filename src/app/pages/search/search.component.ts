@@ -16,6 +16,7 @@ import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 import {Router} from '@angular/router';
 import {PlayState} from "../../ngrx/play/play.state";
 import * as PlayActions from "../../ngrx/play/play.action";
+import {MusicTabComponent} from '../../components/music-tab/music-tab.component';
 
 @Component({
   selector: 'app-search',
@@ -23,7 +24,8 @@ import * as PlayActions from "../../ngrx/play/play.action";
     MaterialModule,
     CategoryComponent,
     AsyncPipe,
-    ImgConverterPipe
+    ImgConverterPipe,
+    MusicTabComponent
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
@@ -34,6 +36,8 @@ export class SearchComponent {
   playlists$!: Observable<PlaylistModel[]>;
   profiles$!: Observable<ProfileModel[]>;
 
+  hasTracks: boolean = true;
+
   constructor(
     private router: Router,
     private store: Store<{
@@ -41,10 +45,14 @@ export class SearchComponent {
       play: PlayState
     }>)
   {
-    this.categories$ = this.store.select(state => state.search.searchCategories);
-    this.tracks$ = this.store.select(state => state.search.searchTracks);
-    this.playlists$ = this.store.select(state => state.search.searchPlaylists);
-    this.profiles$ = this.store.select(state => state.search.searchProfiles);
+    this.categories$ = this.store.select(state => state.search.categories);
+    this.tracks$ = this.store.select(state => state.search.tracks);
+    this.playlists$ = this.store.select(state => state.search.playlists);
+    this.profiles$ = this.store.select(state => state.search.profiles);
+
+    this.tracks$.subscribe(tracks => {
+      this.hasTracks = tracks && tracks.length > 0;
+    });
   }
 
   navigateToCategoryDetail(id: string) {

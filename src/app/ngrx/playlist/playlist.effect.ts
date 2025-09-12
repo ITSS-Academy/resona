@@ -132,3 +132,22 @@ export const getPopularPlaylistsEffect = createEffect(
   },
   {functional: true}
 )
+
+export const getPlaylistForSelectEffect = createEffect(
+  (actions$ = inject(Actions), playlistService = inject(PlaylistService)) => {
+    return actions$.pipe(
+      ofType(playlistActions.getPlaylistForSelect),
+      switchMap(({userId}) =>
+        playlistService.getPlaylists(userId).pipe(
+          map((playlists) => {
+            console.log(playlists);
+            return playlistActions.getPlaylistForSelectSuccess({playlists});
+          }),
+          catchError((error: { message: any; }) =>
+            of(playlistActions.getPlaylistForSelectFailure({error})))
+        )
+      )
+    )
+  },
+  {functional: true}
+)

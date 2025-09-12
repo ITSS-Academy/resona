@@ -117,7 +117,7 @@
       <section aria-labelledby="release-title">
         <h2 class="section-title">New Release <span>Songs</span></h2>
         @for (track of newReleaseTracks; track $index) {
-          <app-music-tab [track]="track"></app-music-tab>
+          <app-music-tab [isFavorite]="track.isFavorite || false" [track]="track"></app-music-tab>
         }
       </section>
 
