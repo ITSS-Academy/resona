@@ -33,7 +33,7 @@
         <img src="{{ profile.photoUrl }}" class="user-profile" (error)="onImgError($event)" alt="avatar"/>
       </div>
       <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item (click)="navigateToProfile()">
+        <button mat-menu-item (click)="navigateToProfile(profile.id)">
           <mat-icon>person</mat-icon>
           <span>Profile</span>
         </button>
@@ -43,13 +43,11 @@
         </button>
       </mat-menu>
     } @else {
-      @if (isLogging) {
+      @if (isLogging$ | async) {
         <button mat-flat-button (click)="openLoginDialog()">
           Login
         </button>
       }
     }
   }
-
-
 </mat-toolbar>
