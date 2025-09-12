@@ -13,10 +13,6 @@
         </mat-icon>
       </button>
 
-      <button class="buttons" mat-fab aria-label="Example icon button with a delete icon">
-        <mat-icon fontSet="material-icons-outlined">download</mat-icon>
-      </button>
-
       <div class="song-actions">
         <button class="buttons" mat-fab [matMenuTriggerFor]="menu"
                 (menuOpened)="onOpenAddToPlaylist()"
@@ -44,9 +40,6 @@
 
       <button class="buttons" mat-fab aria-label="Example icon button with a delete icon" (click)="addTrackToQueue(trackDetail.id)">
         <mat-icon >playlist_add</mat-icon>
-      </button>
-      <button class="buttons" mat-fab aria-label="Example icon button with a delete icon">
-        <mat-icon >ios_share</mat-icon>
       </button>
 
       @if (this.currentUser.id === this.owner.id) {

@@ -1,40 +1,42 @@
 @if (isLoading$ | async) {
-<div class="loading-container">
-  <mat-spinner></mat-spinner>
-</div>
+  <!-- Hiển thị loading -->
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
 } @else {
-<div class="category-detail-container">
-  <!-- Phần Header -->
-  <div class="category-header">
-    <div class="category-bg">
-      @if (categoryDetail$ | async; as category) {
-        <img [src]="category.image" alt="background" />
-      }
-    </div>
+  <div class="category-detail-container">
+    <!-- Phần Header -->
+    <div class="category-header">
+      <div class="category-bg">
+        @if (categoryDetail$ | async; as category) {
+          <img [src]="category.image" alt="background" />
+        }
+      </div>
 
-    <div class="category-info">
-      @if (categoryDetail$ | async; as category) {
-        <img class="category-cover" [src]="category.image" alt="Category Cover" />
-      }
+      <div class="category-info">
+        @if (categoryDetail$ | async; as category) {
+          <img class="category-cover" [src]="category.image" alt="Category Cover" />
+        }
 
-      <div class="category-text">
-        <div class="name-and-time">
-          <h2 class="category-title">
-            {{ categoryName }}
-          </h2>
+        <div class="category-text">
+          <div class="name-and-time">
+            <h2 class="category-title">
+              {{ categoryName }}
+            </h2>
 
-          @if (tracks$ | async; as tracks) {
-          <p class="category-meta">
-            {{ tracks?.length || 0 }} songs
-          </p>
-          }
-        </div>
+            @if (tracks$ | async; as tracks) {
+              <p class="category-meta">
+                {{ tracks?.length || 0 }} songs
+              </p>
+            }
+          </div>
 
-        <div class="category-actions">
-          <app-playlist-detail-button
-            [playlistId]="categoryId"
-            (addAllToQueue)="addAllToQueue()"
-          ></app-playlist-detail-button>
+          <div class="category-actions">
+            <app-playlist-detail-button
+              [playlistId]="categoryId"
+              (addAllToQueue)="addAllToQueue()"
+            ></app-playlist-detail-button>
+          </div>
         </div>
       </div>
     </div>
@@ -45,6 +47,10 @@
       <span class="col-artist"># Date</span>
       <span class="col-time"><mat-icon>schedule</mat-icon></span>
       <span class="col-views"><mat-icon>visibility</mat-icon></span>
+<!--      <span class="col-actions">-->
+<!--        <mat-icon>delete</mat-icon>-->
+<!--        <mat-checkbox></mat-checkbox>-->
+<!--      </span>-->
       <span class="col-list">
         <span>#List</span><mat-icon>list</mat-icon>
       </span>
@@ -62,5 +68,4 @@
       }
     </div>
   </div>
-</div>
 }
