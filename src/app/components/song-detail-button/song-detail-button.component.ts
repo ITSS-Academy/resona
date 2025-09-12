@@ -148,9 +148,6 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
     this.subscription.forEach(sub => sub.unsubscribe());
   }
 
-
-
-
   async addTrackToQueue(trackId: string) {
     this.store.dispatch(QueueActions.addTrackToQueue({userId: this.currentUser.id, trackId: this.trackDetail.id}));
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -201,8 +198,6 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
       duration: this.durationInSeconds * 1000,
     });
   }
-
-
 
   onFavoriteTrack(track: TrackModel) {
     if (track.id && this.currentUser.id) {

@@ -41,11 +41,9 @@ import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
     MatTab,
     MatTabsModule,
     MatList,
-    MatListItem,
     MatButton,
     MusicTabComponent,
     MatIconModule,
-    ImgConverterPipe,
     MaterialModule
   ],
   styleUrls: ['./profile.component.scss'],
@@ -59,14 +57,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
   // isViewingOwnProfile: boolean = true;
 
   uploadedTracks$!: Observable<TrackModel[]>;
-  uploadedTracks: TrackModel[] = [];
-  playlists: PlaylistModel[] = [];
+  uploadedTracks: TrackModel[] = []
   favoritePlaylist$!: Observable<PlaylistModel | null>;
   favoritePlaylist!: PlaylistModel | null;
   historyTracks$!: Observable<HistoryModel[]>;
   historyTracks: HistoryModel[] = [];
-  playlistDetail$!: Observable<PlaylistModel>;
-  playlistDetail!: PlaylistModel;
+  playlists$!: Observable<PlaylistModel[]>;
+  playlists!: PlaylistModel[];
   playlistDetailMap: Record<string, PlaylistModel | undefined> = {};
 
   subscriptions: Subscription[] = [];
@@ -90,7 +87,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     let {id} = this.route.snapshot.params;
-    console.log('iddddddddddddd', id);
+    console.log(id);
     this.store.dispatch(ProfileActions.getProfileById({userId: id}));
     this.store.dispatch(ProfileActions.getFollowers({profileId: id}));
     this.store.dispatch(playlistActions.getPlaylists({userId: id}));
@@ -100,14 +97,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     this.viewedProfile$ = this.store.select('profile', 'profile');
     this.currentUser$ = this.store.select('auth', 'currentUser');
-    this.followers$ = this.store.select('profile', 'profileList');
-    this.playlistDetail$ = this.store.select('playlist', 'playlist');
-    this.favoritePlaylist$ = this.store.select('favorite', 'playlist');
-    this.uploadedTracks$ = this.store.select('track', 'tracks');
-    this.historyTracks$ = this.store.select('history', 'history');
+    this.followers$ = this.store.select('profile','profileList');
+    this.playlists$ = this.store.select('playlist', 'playlists');
+    this.favoritePlaylist$ = this.store.select('favorite','playlist');
+    this.uploadedTracks$ = this.store.select('track','tracks');
+    this.historyTracks$ = this.store.select('history','history');
 
   }
-
 
   ngOnInit() {
     this.subscriptions.push(
@@ -123,11 +119,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
           console.log(this.followers);
         }
       }),
-      this.playlistDetail$.subscribe(playlist => {
-        if (playlist.id) {
-          this.playlistDetail = playlist;
-          // this.playlistDetailMap[playlist.id] = playlist;
-          console.log(this.playlistDetail);
+      this.playlists$.subscribe(playlist => {
+        if (playlist.length > 0) {
+          this.playlists = playlist;
+          console.log(this.playlists);
         }
       }),
       this.favoritePlaylist$.subscribe(playlist => {
@@ -137,98 +132,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
       }),
       this.uploadedTracks$.subscribe(uploadedTracks => {
-        if (uploadedTracks.length > 0) {
+        if (uploadedTracks.length>0) {
           this.uploadedTracks = uploadedTracks;
           console.log(this.uploadedTracks);
         }
       }),
       this.historyTracks$.subscribe(historyTracks => {
-        if (historyTracks.length > 0) {
+        if (historyTracks.length>0) {
           this.historyTracks = historyTracks;
           console.log(this.historyTracks);
         }
       }),
-
-
-      //   this.route.params.subscribe(params => {
-      //     const userId = params['id'];
-      //     this.viewedProfileId = userId;
-      //     if (userId) {
-      //       this.isViewingOwnProfile = false;
-      //       this.store.dispatch(ProfileActions.getProfileById({ userId }));
-      //       this.store.dispatch(ProfileActions.getFollowers({ profileId: userId }));
-      //       this.viewedProfile$ = this.store.select(state => state.profile.profile);
-      //
-      //       this.subscriptions.push(
-      //         this.viewedProfile$.subscribe(profile => {
-      //           this.viewedProfile = profile;
-      //           if (profile) {
-      //             this.loadProfileData(profile.id);
-      //           }
-      //         })
-      //       );
-      //     } else {
-      //       this.isViewingOwnProfile = true;
-      //       this.currentUser$ = this.store.select(state => state.auth.currentUser);
-      //       this.subscriptions.push(
-      //         this.currentUser$.subscribe(user => {
-      //           if (user) {
-      //             this.loadProfileData(user.id);
-      //             this.uploadedTracks$ = this.trackService.getTracksByOwnerId(user.id);
-      //
-      //             this.uploadedTracks$.subscribe((tracks: TrackModel[]) => {
-      //               this.uploadedTracks = tracks;
-      //               console.log('Uploaded tracks:', tracks);
-      //             });
-      //
-      //             this.store.dispatch(
-      //               playlistActions.getPlaylists({ userId: user.id })
-      //             );
-      //           }
-      //
-      //         })
-      //       );
-      //     }
-      //   })
-      // );
-      //
-      // this.historyTracks$ = this.store.select((state) => state.history.history);
-      // this.favoritePlaylist$ = this.store.select(state => state.favorite.playlist);
-      //
-      // this.subscriptions.push(
-      //   this.store.select('playlist', 'playlists').subscribe((playlists) => {
-      //     this.playlists = playlists;
-      //
-      //     playlists.forEach(pl => {
-      //       this.store.dispatch(playlistActions.getPlaylistById({ playlistId: pl.id }));
-      //
-      //       const sub = this.store.select('playlist', 'playlist').subscribe(detail => {
-      //         if (detail && detail.id === pl.id) {
-      //           this.playlistDetailMap[pl.id] = detail;
-      //         }
-      //       });
-      //       this.subscriptions.push(sub);
-      //     });
-      //   }),
-      //   this.store.select('playlist', 'playlist').subscribe((playlist) => {
-      //     this.playlistDetail = playlist;
-      //   }),
-      //   this.store.select('track', 'tracks').subscribe((tracks: TrackModel[]) => {
-      //     this.uploadedTracks = tracks;
-      //   }),
-      // );
-      //
-      // this.followers$ = this.store.select('profile', 'profileList');
-      // this.currentUser$ = this.store.select('auth', 'currentUser');
-      // this.subscriptions.push(
-      //   this.followers$.subscribe(followers => {
-      //     this.followers = followers;
-      //   }),
-      //   this.currentUser$.subscribe(currentUser => {
-      //     this.currentUser = currentUser;
-      //   })
-      // );
-
+      this.currentUser$.subscribe(user => {
+        if (user.id) {
+          this.currentUser = user;
+        }
+      }),
     )
   }
 
@@ -236,18 +155,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return this.playlistDetailMap[playlistId]?.tracks?.length || 0;
   }
 
-  // loadProfileData(userId: string) {
-  //   this.trackService.getTracksByOwnerId(userId).subscribe((tracks: TrackModel[]) => {
-  //     this.uploadedTracks = tracks;
-  //   });
-  //   this.store.dispatch(playlistActions.getPlaylists({ userId }));
-  //   this.store.dispatch(FavoriteActions.getFavoritePlaylist({ userId }));
-  //   this.store.dispatch(trackActions.getTrackByOwnerId({ ownerId: userId }));
-  //   this.store.dispatch(loadHistory({ userId }));
-  // }
-
   navigateToPlaylistDetail(playlistId: string) {
-    this.router.navigate(['/playlist-detail', playlistId]);
+    this.router.navigate(['/playlist-detail', playlistId]).then();
   }
 
   ngOnDestroy() {
@@ -264,6 +173,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.store.dispatch(ProfileActions.getFollowers({profileId: this.viewedProfile.id}));
   }
 
-
+  isFollowing(): boolean {
+    if (!this.currentUser || !this.followers) return false;
+    return this.followers.some(follower => follower.id === this.currentUser.id);
+  }
 }
 

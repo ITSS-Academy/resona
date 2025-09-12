@@ -84,6 +84,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateToProfile(id: string) {
     this.router.navigate([`/profile/${id}`]).then();
+    window.location.reload();
   }
 
   logout() {

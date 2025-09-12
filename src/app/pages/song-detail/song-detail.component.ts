@@ -41,8 +41,6 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     }>
   ) {
     let {id} = this.activatedRoute.snapshot.params;
-    console.log(id);
-
     this.store.dispatch(CommentActions.getComments({trackId: id}));
     this.store.dispatch(TrackActions.getTrackById({id: id}));
     this.store.dispatch(TrackActions.getThumbnailBasedOnTrackId({id: id}));

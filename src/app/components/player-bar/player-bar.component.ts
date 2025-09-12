@@ -31,7 +31,6 @@ import {getTrackById} from '../../ngrx/track/track.action';
   templateUrl: './player-bar.component.html',
   imports: [
     MatIconModule,
-    LyricComponent,
     MatDrawerContainer,
     MatIconButton,
     MatDrawer,
@@ -45,7 +44,7 @@ import {getTrackById} from '../../ngrx/track/track.action';
 })
 export class PlayerBarComponent implements OnInit, OnDestroy {
 
-  @ViewChild('lyric') lyricDrawer!: MatDrawer;
+  // @ViewChild('lyric') lyricDrawer!: MatDrawer;
   @ViewChild('queue') queueDrawer!: MatDrawer;
   @ViewChild('smallAlbum') smallAlbumDrawer!: MatDrawer;
   @ViewChild('audio', {static: true}) audio!: ElementRef<HTMLAudioElement>;
@@ -53,8 +52,6 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   currentTrack$!: Observable<TrackModel>;
   currentTrack!: TrackModel;
   isPlaying$!: Observable<boolean>;
-  lyrics$!: Observable<string>;
-  lyrics!: string;
   categoryDetail$!: Observable<CategoryModel>;
   categoryDetail!: CategoryModel;
   currentUser$!: Observable<ProfileModel>;
@@ -139,7 +136,6 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
 
     this.currentTrack$ = this.store.select(state => state.play.currentTrack);
     this.isPlaying$ = this.store.select(state => state.play.isPlaying);
-    this.lyrics$ = this.store.select('track', 'lyrics');
     this.categoryDetail$ = this.store.select('category', 'category');
 
     // lắng nghe track thay đổi
@@ -151,18 +147,13 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
           this.currentTrack = track;
           this.filePath = this.buildStreamUrl(track);
           this.hasIncremented = false;
-          this.store.dispatch(TrackActions.getLyricsByTrackId({id: track.id}))
+          // this.store.dispatch(TrackActions.getLyricsByTrackId({id: track.id}))
+          this.store.dispatch(TrackActions.getTrackById({id: this.currentTrack.id}));
           this.store.dispatch(CategoryActions.getCategoryDetailByTrackId({trackId: track.id}));
 
           audio.src = this.filePath;
           audio.load();
           audio.play();
-        }
-      }),
-
-      this.lyrics$.subscribe(lyrics => {
-        if (lyrics) {
-          this.lyrics = lyrics;
         }
       }),
 
@@ -309,23 +300,8 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleLyric() {
-    if (this.lyrics) {
-      if (this.queueDrawer.opened) {
-        this.queueDrawer.close().then();
-      }
-      if (this.smallAlbumDrawer.opened) {
-        this.smallAlbumDrawer.close().then();
-      }
-      this.lyricDrawer.toggle().then();
-    }
-  }
-
   toggleQueue() {
     if (this.queueList.length > 0) {
-      if (this.lyricDrawer.opened) {
-        this.lyricDrawer.close().then();
-      }
       if (this.smallAlbumDrawer.opened) {
         this.smallAlbumDrawer.close().then();
       }
@@ -337,9 +313,6 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
 
   toggleSmallAlbum() {
     if (this.currentTrack.id) {
-      if (this.lyricDrawer.opened) {
-        this.lyricDrawer.close().then();
-      }
       if (this.queueDrawer.opened) {
         this.queueDrawer.close().then();
       }

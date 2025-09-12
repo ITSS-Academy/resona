@@ -89,6 +89,8 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     })
 
+    // this.store.dispatch(playlistActions.)
+
     this.playlists$ = this.store.select('playlist', 'playlists');
     this.currentUser$ = this.store.select('auth', 'currentUser');
 
@@ -120,12 +122,13 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       }),
       this.playlists$.subscribe((playlists) => {
-        this.playlists = playlists;
-        console.log(this.playlists);
+        if( playlists.length > 0) {
+          this.playlists = playlists;
+          console.log('Playlists in sidebar:', this.playlists);
+        }
       }),
       this.currentUser$.subscribe((user: ProfileModel) => {
         if (user && user.id) {
-          console.log('Current user:======================', user);
           this.currentUser = user;
           this.store.dispatch(playlistActions.getPlaylists({userId: user.id}));
         }
