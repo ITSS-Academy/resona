@@ -27,6 +27,6 @@ export class QueueService {
   }
 
   playSongNow(userId: string, trackId: string) {
-    return this.http.post<{ message: string }>(`${environment.apiUrl}/queue/play-now/${userId}`, {userId, trackId});
+    return this.http.post<{ message: string }>(`${environment.apiUrl}/queue/play-now/${userId}`, {trackId});
   }
 }

@@ -102,3 +102,18 @@ export const getPopularPlaylistsFailure = createAction(
   '[Playlist] Get Popular Playlists Failure',
   props<{ error: any }>()
 );
+
+export const getPlaylistForSelect = createAction(
+  '[Playlist] Get Playlist For Select',
+  props<{ userId: string }>()
+);
+
+export const getPlaylistForSelectSuccess = createAction(
+  '[Playlist] Get Playlist For Select Success',
+  props<{ playlists: PlaylistModel[] }>()
+);
+
+export const getPlaylistForSelectFailure = createAction(
+  '[Playlist] Get Playlist For Select Failure',
+  props<{ error: any }>()
+);
