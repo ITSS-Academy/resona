@@ -1,11 +1,11 @@
 <div class="container">
   @if (this.currentUser$ | async; as profile) {
     @if (profile.id) {
-      <button id="play-button" mat-fab aria-label="Example icon button with a delete icon" (click)="onPlayTrack(trackDetail)">
-        <mat-icon>
-          {{ (isPlaying) ? 'pause' : 'play_arrow' }}
-        </mat-icon>
-      </button>
+<!--      <button id="play-button" mat-fab aria-label="Example icon button with a delete icon" (click)="onPlayTrack(trackDetail)">-->
+<!--        <mat-icon>-->
+<!--          {{ (isPlaying) ? 'pause' : 'play_arrow' }}-->
+<!--        </mat-icon>-->
+<!--      </button>-->
 
       <button class="buttons" mat-fab aria-label="Favorite" (click)="onFavoriteTrack(trackDetail)">
         <mat-icon fontSet="material-icons-outlined" [class.is-favorite]="isFavorite">
