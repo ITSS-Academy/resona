@@ -231,7 +231,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
         audio.currentTime = 0;
         audio.play();
       } else {
-        console.log('track ended') // nếu bạn có danh sách nhạc
+        this.nextTrack();
       }
 
       this.savePlayerState()
@@ -344,6 +344,56 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
         this.queueDrawer.close().then();
       }
       this.smallAlbumDrawer.toggle().then();
+    }
+  }
+
+  nextTrack() {
+    if (!this.queueList || this.queueList.length === 0) {
+      return;
+    }
+
+    const currentTrackId = this.currentTrack?.id;
+    const currentIndex = this.queueList.findIndex(queueItem => queueItem.track.id === currentTrackId);
+
+    if (currentIndex === -1) {
+      // Not in queue, play the first song of the queue
+      const firstTrack = this.queueList[0]?.track;
+      if (firstTrack) {
+        this.store.dispatch(PlayActions.setTrack({ track: firstTrack }));
+      }
+      return;
+    }
+
+    const nextIndex = (currentIndex + 1) % this.queueList.length; // Loop back to the beginning
+    const nextTrack = this.queueList[nextIndex]?.track;
+
+    if (nextTrack) {
+      this.store.dispatch(PlayActions.setTrack({ track: nextTrack }));
+    }
+  }
+
+  previousTrack() {
+    if (!this.queueList || this.queueList.length === 0) {
+      return;
+    }
+
+    const currentTrackId = this.currentTrack?.id;
+    const currentIndex = this.queueList.findIndex(queueItem => queueItem.track.id === currentTrackId);
+
+    if (currentIndex === -1) {
+      // Not in queue, play the last song of the queue
+      const lastTrack = this.queueList[this.queueList.length - 1]?.track;
+      if (lastTrack) {
+        this.store.dispatch(PlayActions.setTrack({ track: lastTrack }));
+      }
+      return;
+    }
+
+    const prevIndex = (currentIndex - 1 + this.queueList.length) % this.queueList.length; // Loop to the end
+    const prevTrack = this.queueList[prevIndex]?.track;
+
+    if (prevTrack) {
+      this.store.dispatch(PlayActions.setTrack({ track: prevTrack }));
     }
   }
 
