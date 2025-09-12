@@ -43,7 +43,7 @@
         </button>
       </mat-menu>
     } @else {
-      @if (isLogging$ | async) {
+      @if (!(isLogging$ | async) && !(isGettingProfile$ | async)) {
         <button mat-flat-button (click)="openLoginDialog()">
           Login
         </button>
