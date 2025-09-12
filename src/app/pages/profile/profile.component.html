@@ -47,10 +47,15 @@
             <p>{{followers.length}} Followers</p>
             } @else {
               <p>0 Followers</p>
-
             }
 
-            <button mat-flat-button (click)="followProfile()">Follow</button>
+            @if (currentUser$ | async; as profile) {
+
+              @if( profile.id && this.viewedProfile.id && profile.id !== this.viewedProfile.id){
+                <button mat-flat-button (click)="followProfile()">Follow</button>
+              }
+            }
+
           </div>
 
       </div>

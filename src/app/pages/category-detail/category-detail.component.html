@@ -52,7 +52,7 @@
 
     <!-- Phần Body của bảng -->
     <div class="playlist-table-body">
-      @for (track of tracks$ | async; track track.id; let i = $index) {
+      @for (track of tracks$ | async; track $index) {
       <app-playlist-music-tab
         [track]="track"
         [playlistId]="categoryId"
