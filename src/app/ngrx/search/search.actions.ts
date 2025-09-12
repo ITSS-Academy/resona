@@ -1,4 +1,3 @@
-// src/app/ngrx/search/search.actions.ts
 import {createAction, props} from '@ngrx/store';
 import {CategoryModel} from '../../models/category.model';
 import {ProfileModel} from '../../models/profile.model';
@@ -35,10 +34,12 @@ export const searchPlaylists = createAction(
   '[Search] Search Playlists',
   props<{ query: string }>()
 );
+
 export const searchPlaylistsSuccess = createAction(
   '[Search] Search Playlists Success',
   props<{ playlists: PlaylistModel[] }>()
 );
+
 export const searchPlaylistsFailure = createAction(
   '[Search] Search Playlists Failure',
   props<{ error: any }>()
@@ -48,10 +49,12 @@ export const searchTracks = createAction(
   '[Search] Search Tracks',
   props<{ query: string }>()
 );
+
 export const searchTracksSuccess = createAction(
   '[Search] Search Tracks Success',
   props<{ tracks: TrackModel[] }>()
 );
+
 export const searchTracksFailure = createAction(
   '[Search] Search Tracks Failure',
   props<{ error: any }>()

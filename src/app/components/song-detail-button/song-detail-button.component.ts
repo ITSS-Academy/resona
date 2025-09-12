@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {MaterialModule} from '../../shared/modules/material.module';
 import {TrackModel} from '../../models/track.model';
 import {Store} from '@ngrx/store';
@@ -6,7 +6,7 @@ import {PlayState} from '../../ngrx/play/play.state';
 import * as PlayActions from '../../ngrx/play/play.action';
 import {QueueState} from '../../ngrx/queue/queue.state';
 import * as QueueActions from '../../ngrx/queue/queue.actions';
-import {Observable, Subscription, take} from 'rxjs';
+import {filter, Observable, Subscription, take} from 'rxjs';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {ProfileModel} from '../../models/profile.model';
 import {TrackState} from '../../ngrx/track/track.state';
@@ -15,12 +15,15 @@ import {CategoryModel} from '../../models/category.model';
 import {CategoryState} from '../../ngrx/category/category.state';
 import {QueueModel} from '../../models/queue.model';
 import {AsyncPipe} from '@angular/common';
+import {PlaylistModel} from '../../models/playlist.model';
+import {PlaylistState} from '../../ngrx/playlist/playlist.state';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
+import {ShareSnackbarComponent} from '../share-snackbar/share-snackbar.component';
+import {Actions, ofType} from '@ngrx/effects';
 import * as TrackActions from '../../ngrx/track/track.action'
 import {ProfileState} from '../../ngrx/profile/profile.state';
 import * as ProfileActions from '../../ngrx/profile/profile.actions';
-import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
-import {PlaylistState} from '../../ngrx/playlist/playlist.state';
-import {PlaylistModel} from '../../models/playlist.model';
 import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
 
 @Component({
@@ -51,6 +54,8 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
   playlist$!: Observable<PlaylistModel[]>;
   playlist!: PlaylistModel[];
   isPlaying$!: Observable<boolean>;
+  currentUserId!: string;
+  playlists$!: Observable<PlaylistModel[]>;
   isPlaying!: boolean;
   isFavorite = false;
 
@@ -62,13 +67,17 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
       auth: AuthState,
       track: TrackState,
       category: CategoryState,
-      profile: ProfileState,
       playlist: PlaylistState,
-    }>
+      profile: ProfileState,
+    }>,
+    private actions$: Actions,
+
+
   ) {
     this.currentUser$ = this.store.select('auth', 'currentUser');
     this.categoryDetail$ = this.store.select('category', 'category');
     this.isPlaying$ = this.store.select(state => state.play.isPlaying);
+    this.playlists$ = this.store.select('playlist', 'playlists');
     this.trackDetail$ = this.store.select('track','trackDetail');
     this.queueList$ = this.store.select('queue','queueList');
     this.owner$ = this.store.select('profile','profile');
@@ -85,14 +94,23 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
 
     this.subscription.push(
       this.currentUser$.subscribe(profile => {
+        this.currentUser = profile;
+        this.currentUserId = profile.id;
+        if(profile) {
         if(profile.id) {
           this.currentUser = profile;
         }
-      }),
+      }}),
       this.categoryDetail$.subscribe(category => {
         if (category) {
           this.categoryDetail = category;
         }
+      }),
+      this.actions$.pipe(
+        ofType(PlaylistActions.addTrackToPlaylistSuccess),
+        filter(action => !!action.playlist) // chỉ nhận khi có playlist trả về
+      ).subscribe(() => {
+        this.openSnackBar('Track added to playlist successfully!');
       }),
       this.trackDetail$.subscribe(trackDetail => {
         if(trackDetail) {
@@ -114,25 +132,28 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
           this.owner = owner;
         }
       }),
-      this.playlist$.subscribe(playlist => {
-        if(playlist) {
-          this.playlist = playlist;
-        }
-      }),
+      // this.playlist$.subscribe(playlist => {
+      //   if(playlist) {
+      //     this.playlist = playlist;
+      //   }
+      // }),
       this.favoriteTrack$.subscribe(track => {
         if(track) {
           this.favoriteTrack = track;
         }
       })
-    )
+    );
   }
-
   ngOnDestroy() {
     this.subscription.forEach(sub => sub.unsubscribe());
   }
 
 
+
+
   async addTrackToQueue(trackId: string) {
+    this.store.dispatch(QueueActions.addTrackToQueue({userId: this.currentUser.id, trackId: this.trackDetail.id}));
+    await new Promise(resolve => setTimeout(resolve, 500));
     if (this.isAdding) return;
     console.log(this.queueList)
     const isExist = this.queueList.findIndex(track => track.track.id === this.trackDetail.id);
@@ -170,6 +191,18 @@ export class SongDetailButtonComponent implements OnInit, OnDestroy {
       })
     );
   }
+  private _snackBar = inject(MatSnackBar);
+
+  durationInSeconds = 10;
+
+  openSnackBar(content: string) {
+    this._snackBar.openFromComponent(ShareSnackbarComponent, {
+      data: content,
+      duration: this.durationInSeconds * 1000,
+    });
+  }
+
+
 
   onFavoriteTrack(track: TrackModel) {
     if (track.id && this.currentUser.id) {

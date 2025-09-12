@@ -1,35 +1,36 @@
 import { createReducer, on } from '@ngrx/store';
-import * as HistoryActions from './history.action';
-import { initialHistoryState } from './history.state';
+import { HistoryState } from './history.state';
+import * as historyActions from './history.action';
 
+export const initialHistoryState: HistoryState = {
+  history: [],
+  loading: false,
+  error: null,
+};
 
 export const historyReducer = createReducer(
   initialHistoryState,
-  on(HistoryActions.loadHistory, state => ({
+  on(historyActions.loadHistory, state => ({
     ...state,
     loading: true,
-    error: null,
   })),
-  on(HistoryActions.loadHistorySuccess, (state, { history }) => ({
+  on(historyActions.loadHistorySuccess, (state, { history }) => ({
     ...state,
     history,
     loading: false,
   })),
-  on(HistoryActions.loadHistoryFailure, (state, { error }) => ({
+  on(historyActions.loadHistoryFailure, (state, { error }) => ({
+    ...state,
+    error,
+    loading: false,
+  })),
+  on(historyActions.addToHistorySuccess, state => ({
     ...state,
     loading: false,
+  })),
+  on(historyActions.addToHistoryFailure, (state, { error }) => ({
+    ...state,
     error,
-  })),
-
-// === HANDLERS MỚI ===
-// Không cần làm gì khi success, vì nó không thay đổi state ở client
-on(HistoryActions.addToHistorySuccess, state => ({
-  ...state,
-  error: null, // Xóa lỗi cũ nếu có
-  })),
-on(HistoryActions.addToHistoryFailure, (state, { error }) => ({
-  ...state,
-  error: error, // Lưu lỗi lại để debug
+    loading: false,
   }))
-
 );

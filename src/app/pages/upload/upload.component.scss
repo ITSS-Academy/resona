@@ -389,4 +389,43 @@ mat-tab-group {
 
 
 
+.file-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #3a3a3a;
+  border-radius: 20px;
+  margin-top: 12px;
+  color: #fff;
+  font-size: 14px;
+  max-width: 250px;
+  overflow: hidden;
+}
 
+.file-chip .file-icon {
+  color: #ee10b0;
+}
+
+.file-chip .file-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.file-chip .remove-file {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #bbb;
+  padding: 10px 0;
+}
+
+.file-chip .remove-file mat-icon {
+  font-size: 18px;
+  height: 20px;
+}

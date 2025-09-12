@@ -1,29 +1,9 @@
-// import {Actions, createEffect, ofType} from '@ngrx/effects';
-// import {inject} from '@angular/core';
-// import {catchError, map, of, switchMap} from 'rxjs';
-// import {SearchService} from '../../services/search/search.service';
-// import * as SearchActions from './search.actions';
-//
-// export const searchCategoriesEffect = createEffect(
-//   (actions$ = inject(Actions), searchService = inject(SearchService)) => actions$.pipe(
-//     ofType(SearchActions.searchCategories),
-//     switchMap(({query}) =>
-//       searchService.searchCategories(query).pipe(
-//         map(categories => SearchActions.searchCategoriesSuccess({categories})),
-//         catchError(error => of(SearchActions.searchCategoriesFailure({error})))
-//       )
-//     )
-//   ),
-//   {functional: true}
-// );
-
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {inject} from '@angular/core';
 import {catchError, map, of, switchMap} from 'rxjs';
 import {SearchService} from '../../services/search/search.service';
 import * as SearchActions from './search.actions';
 
-// Category Search
 export const searchCategoriesEffect = createEffect(
   (actions$ = inject(Actions), searchService = inject(SearchService)) => actions$.pipe(
     ofType(SearchActions.searchCategories),
