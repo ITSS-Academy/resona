@@ -92,6 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.playlists$ = this.store.select('playlist', 'playlists');
     this.currentUser$ = this.store.select('auth', 'currentUser');
 
+
   }
 
   isCollapsed = false;
@@ -134,12 +135,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onMenuClick(route: string) {
     console.log(route);
-    if (route.includes('profile')   && this.currentUser && this.currentUser.id) {
+    if (route.includes('profile') && this.currentUser && this.currentUser.id) {
       console.log('Current user:', this.currentUser);
       this.router.navigate([`/profile/${this.currentUser.id}`]).then();
 
-    }
-    else {
+    } else {
       this.router.navigate([route]);
     }
   }
@@ -152,7 +152,7 @@ export class AppComponent implements OnInit, OnDestroy {
     } else if (this.router.url.includes('/upload')) {
       this.activeLink = this.menuItems[2].route;
     } else if (
-       this.router.url.includes(`/profile`)
+      this.router.url.includes(`/profile`)
     ) {
       this.activeLink = this.menuItems[3].route;
     } else {
