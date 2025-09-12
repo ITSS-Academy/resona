@@ -27,6 +27,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searchControl = new FormControl('');
   profile$!: Observable<ProfileModel>;
   profile!: ProfileModel;
+  isLogging$!: Observable<boolean>;
+  isLogging = false;
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -51,6 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.profile$ = this.store.select('auth', 'currentUser');
+    this.isLogging$ = this.store.select('auth', 'isLogging');
 
     this.subscriptions.push(
       this.profile$.subscribe(profile => {
@@ -58,6 +61,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.profile = profile;
           console.log('Current user:', profile);
         }
+      }),
+      this.isLogging$.subscribe(isLogging => {
+        this.isLogging = isLogging;
       })
     )
   }

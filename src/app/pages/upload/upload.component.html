@@ -1,4 +1,5 @@
-  <form [formGroup]="form" class="upload-container">
+<div class="upload-wrapper" [class.loading]="isLoading$ | async">
+  <form [formGroup]="form" class="upload-container" [class.disabled]="isLoading$ | async">
 
     <div class="left-col">
       <div class="upload-music-box"
@@ -7,7 +8,7 @@
            (drop)="onMusicDrop($event)"
            [class.drag-over]="musicDragOver"
            (click)="fileInput.click()">
-              <img mat-card-image src="./assets/images/cloud-upload_icon-icons.com_54314.png" class="" alt="">
+        <img mat-card-image src="./assets/images/cloud-upload_icon-icons.com_54314.png" class="" alt="">
         <p>Drag music here or click to select file</p>
         <button mat-flat-button type="button" class="upload-btn">
           <mat-icon>upload</mat-icon>
@@ -137,7 +138,19 @@
       </mat-form-field>
 
       <div class="upload-submit">
-        <button mat-flat-button (click)="submit()">Upload</button>
+        <button mat-flat-button (click)="submit()" [disabled]="form.invalid || (isLoading$ | async)">
+          @if (isLoading$ | async) {
+            <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+          } @else {
+            Upload
+          }
+        </button>
       </div>
     </div>
   </form>
+  @if (isLoading$ | async) {
+    <div class="overlay">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
+</div>

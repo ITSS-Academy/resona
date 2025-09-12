@@ -13,10 +13,10 @@ import {PlaylistModel} from '../../models/playlist.model';
 
 @Component({
   selector: 'app-playlist-detail-button',
-    imports: [
-        MatFabButton,
-        MaterialModule
-    ],
+  imports: [
+    MatFabButton,
+    MaterialModule
+  ],
   templateUrl: './playlist-detail-button.component.html',
   styleUrl: './playlist-detail-button.component.scss'
 })
@@ -35,12 +35,13 @@ export class PlaylistDetailButtonComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<{ playlist: PlaylistState }>,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
 
     this.playlists$ = this.store.select('playlist', 'playlists');
-    this.isLoading$ = this.store.select((state) => state.playlist.loading);
+    this.isLoading$ = this.store.select((state) => state.playlist.isLoading);
     this.error$ = this.store.select((state) => state.playlist.error);
 
     this.subscriptions.push(
@@ -59,7 +60,7 @@ export class PlaylistDetailButtonComponent implements OnInit, OnDestroy {
     console.log('Playlist ID to delete:', this.playlistId);
     if (!this.playlistId) return;
 
-    this.store.dispatch(playlistActions.deletePlaylist({ id: this.playlistId }));
+    this.store.dispatch(playlistActions.deletePlaylist({id: this.playlistId}));
     console.log('Dispatch deletePlaylist with ID:', this.playlistId);
     this.router.navigate(['/profile']);
   }

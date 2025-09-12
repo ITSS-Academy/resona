@@ -40,6 +40,17 @@ export const followProfileFailure = createAction(
   '[Profile] Follow Profile Failure', props<{ error: any }>()
 )
 
+export const getPopularProfiles = createAction(
+  '[Profile] Get Popular Profiles'
+)
+
+export const getPopularProfilesSuccess = createAction(
+  '[Profile] Get Popular Profiles Success', props<{ profileList: ProfileModel[] }>()
+)
+
+export const getPopularProfilesFailure = createAction(
+  '[Profile] Get Popular Profiles Failure', props<{ error: any }>()
+)
 export const getProfileByTrackId = createAction(
   '[Profile] Get Profile By Track Id', props<{ trackId: string }>()
 );

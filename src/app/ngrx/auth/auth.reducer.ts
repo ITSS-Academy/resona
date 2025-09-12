@@ -8,6 +8,8 @@ export const initialState: AuthState = {
   currentUser: <ProfileModel>{},
   idToken: '',
   isLogging: false,
+  isGettingProfile: false,
+  isLoggedIn: false,
   error: null,
 }
 
@@ -20,6 +22,7 @@ export const authReducer = createReducer(
         ...state,
         isLogging: true,
         error: null,
+        isLoggedIn: false
       }
     }
   ),
@@ -30,6 +33,7 @@ export const authReducer = createReducer(
         ...state,
         isLogging: false,
         error: null,
+        isLoggedIn: true
       }
     }
   ),
@@ -40,6 +44,7 @@ export const authReducer = createReducer(
         ...state,
         isLogging: false,
         error: error,
+        isLoggedIn: false
       }
     }
   ),
@@ -86,7 +91,7 @@ export const authReducer = createReducer(
     console.log(type);
     return {
       ...state,
-      isLoading: true,
+      isGettingProfile: true,
       error: null
     }
   }),
@@ -95,7 +100,7 @@ export const authReducer = createReducer(
     return {
       ...state,
       currentUser: currentUser,
-      isLoading: false,
+      isGettingProfile: false,
       error: null
     }
   }),
@@ -103,7 +108,7 @@ export const authReducer = createReducer(
     console.log(type);
     return {
       ...state,
-      isLoading: false,
+      isGettingProfile: false,
       error: error
     }
   })

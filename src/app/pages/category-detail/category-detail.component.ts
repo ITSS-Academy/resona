@@ -12,6 +12,10 @@ import { PlaylistMusicTabComponent } from '../../components/playlist-music-tab/p
 import { PlaylistDetailButtonComponent } from '../../components/playlist-detail-button/playlist-detail-button.component';
 import { AuthState } from '../../ngrx/auth/auth.state';
 import * as QueueActions from '../../ngrx/queue/queue.actions';
+import { TrackState } from '../../ngrx/track/track.state';
+import * as TrackActions from '../../ngrx/track/track.action';
+import { MusicTabComponent } from '../../components/music-tab/music-tab.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-category-detail',
@@ -31,6 +35,7 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
   tracks$!: Observable<TrackModel[] | undefined>;
   categoryName: string = '';
   userId: string | null = null;
+  isLoading$!: Observable<boolean>;
 
   private subscriptions = new Subscription();
 
@@ -40,9 +45,11 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const authSub = this.store.select(state => state.auth.currentUser).subscribe(user => {
-      this.userId = user?.id || null;
-    });
+    const authSub = this.store
+      .select((state) => state.auth.currentUser)
+      .subscribe((user) => {
+        this.userId = user?.id || null;
+      });
     this.subscriptions.add(authSub);
 
     const routeSub = this.route.params.subscribe((params) => {
@@ -54,6 +61,10 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
 
         this.categoryDetail$ = this.store.select(
           (state) => state.category.category
+        );
+
+        this.isLoading$ = this.store.select(
+          (state) => state.category.isLoading
         );
 
         this.tracks$ = this.categoryDetail$.pipe(map((c) => c?.tracks));
@@ -70,10 +81,15 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
   addAllToQueue() {
     if (!this.userId) return;
 
-    this.tracks$.pipe(take(1)).subscribe(tracks => {
+    this.tracks$.pipe(take(1)).subscribe((tracks) => {
       if (tracks) {
-        tracks.forEach(track => {
-          this.store.dispatch(QueueActions.addTrackToQueue({ userId: this.userId as string, trackId: track.id }));
+        tracks.forEach((track) => {
+          this.store.dispatch(
+            QueueActions.addTrackToQueue({
+              userId: this.userId as string,
+              trackId: track.id,
+            })
+          );
         });
       }
     });
