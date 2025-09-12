@@ -67,15 +67,15 @@ export const routes: Routes = [
       );
     }
   },
-  {
-    path: 'profile',
-    canActivate: [AuthGuard],
-    loadComponent() {
-      return import('../app/pages/profile/profile.component').then(
-        (m) => m.ProfileComponent,
-      );
-    }
-  },
+  // {
+  //   path: 'profile',
+  //   canActivate: [AuthGuard],
+  //   loadComponent() {
+  //     return import('../app/pages/profile/profile.component').then(
+  //       (m) => m.ProfileComponent,
+  //     );
+  //   }
+  // },
   {
     path: 'profile/:id',
     loadComponent() {

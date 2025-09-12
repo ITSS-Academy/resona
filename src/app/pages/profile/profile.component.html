@@ -1,34 +1,59 @@
-@if (isViewingOwnProfile) {
-  <div class="background" [ngStyle]="{'background-image': 'url(' + (currentUser.photoUrl) + '))'}">
-    @if (currentUser$ | async; as currentUser) {
-      <div class="profile">
-        <img [src]="currentUser.photoUrl" alt="User Avatar" />
-      </div>
-      <div class="right">
-        <div class="name">
-          <h3>{{currentUser.name}}</h3>
-          <p>{{currentUser.email}}</p>
-          <p>{{followers.length}} Followers</p>
+<!--@if (isViewingOwnProfile) {-->
+<!--  <div class="background" [ngStyle]="{'background-image': 'url(' + (currentUser.photoUrl) + '))'}">-->
+<!--    @if (currentUser$ | async; as currentUser) {-->
+<!--      <div class="profile">-->
+<!--        <img [src]="currentUser.photoUrl" alt="User Avatar" />-->
+<!--      </div>-->
+<!--      <div class="right">-->
+<!--        <div class="name">-->
+<!--          <h3>{{currentUser.name}}</h3>-->
+<!--          <p>{{currentUser.email}}</p>-->
+<!--          <p>{{followers.length}} Followers</p>-->
+<!--&lt;!&ndash;          <button mat-flat-button (click)="followProfile()">Follow</button>&ndash;&gt;-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    }-->
+<!--  </div>-->
+<!--} @else {-->
+<!--  <div class="background" [ngStyle]="{'background-image': 'url(' + (viewedProfile.photoUrl) + '))'}">-->
+<!--    @if (viewedProfile$ | async; as viewedUser) {-->
+<!--      <div class="profile">-->
+<!--        <img [src]="viewedUser.photoUrl" alt="User Avatar" />-->
+<!--      </div>-->
+<!--      <div class="right">-->
+<!--        <div class="name">-->
+<!--          <h3>{{viewedUser.name}}</h3>-->
+<!--          <p>{{viewedUser.email}}</p>-->
+<!--          <p>{{followers.length}} Followers</p>-->
 <!--          <button mat-flat-button (click)="followProfile()">Follow</button>-->
-        </div>
-      </div>
-    }
-  </div>
-} @else {
+<!--        </div>-->
+<!--      </div>-->
+<!--    }-->
+<!--  </div>-->
+<!--}-->
+
+@if (viewedProfile$ | async; as viewedProfile) {
   <div class="background" [ngStyle]="{'background-image': 'url(' + (viewedProfile.photoUrl) + '))'}">
-    @if (viewedProfile$ | async; as viewedUser) {
       <div class="profile">
-        <img [src]="viewedUser.photoUrl" alt="User Avatar" />
+        <img [src]="viewedProfile.photoUrl" alt="User Avatar" />
       </div>
       <div class="right">
-        <div class="name">
-          <h3>{{viewedUser.name}}</h3>
-          <p>{{viewedUser.email}}</p>
-          <p>{{followers.length}} Followers</p>
-          <button mat-flat-button (click)="followProfile()">Follow</button>
-        </div>
+
+          <div class="name">
+            <h3>{{viewedProfile.name}}</h3>
+            <p>{{viewedProfile.email}}</p>
+            @if ( followers && followers.length > 0) {
+
+            <p>{{followers.length}} Followers</p>
+            } @else {
+              <p>0 Followers</p>
+
+            }
+
+            <button mat-flat-button (click)="followProfile()">Follow</button>
+          </div>
+
       </div>
-    }
   </div>
 }
 
@@ -41,7 +66,7 @@
 
   <mat-tab label="Your Playlist">
     <div class="horizontal-scroll">
-    @for (playlist of playlists; track playlist.id) {
+    @for (playlist of playlists; track $index) {
       <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
         <img [src]="playlist.thumbnailPath"
              [alt]="playlist.title"

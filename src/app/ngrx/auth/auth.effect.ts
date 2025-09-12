@@ -44,7 +44,10 @@ export const getProfileEffects = createEffect(
       ofType(AuthActions.getProfile),
       switchMap(({id}) =>
         from(authService.getProfile(id)).pipe(
-          map((currentUser) => AuthActions.getProfileSuccess({currentUser})),
+          map((currentUser) => {
+            console.log("current user",currentUser)
+            return AuthActions.getProfileSuccess({currentUser})
+          }),
           catchError((error) => of(AuthActions.getProfileFailure({error: error.message})))
         )
       )
