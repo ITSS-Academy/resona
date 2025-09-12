@@ -44,6 +44,10 @@
         <mat-icon>playlist_add</mat-icon>
         <span>Add to playlist</span>
       </button>
+      <button mat-menu-item (click)="navigateToSongDetail(track.id)">
+        <mat-icon>queue_music</mat-icon>
+        <span>See song detail</span>
+      </button>
     </mat-menu>
 
     <!-- Menu con: danh sách playlist -->

@@ -22,6 +22,7 @@ import {Actions, ofType} from '@ngrx/effects';
 import {QueueState} from '../../ngrx/queue/queue.state';
 import * as QueueActions from '../../ngrx/queue/queue.actions';
 import {FavoriteState} from '../../ngrx/favorite/favorite.state';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-music-tab',
@@ -47,6 +48,7 @@ export class MusicTabComponent implements OnInit, OnDestroy {
   favoriteTracks: TrackModel[] = [];
 
   constructor(
+    private router: Router,
     private store: Store<{
       play: PlayState;
       auth: AuthState;
@@ -150,5 +152,11 @@ export class MusicTabComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  navigateToSongDetail(id: string) {
+    if (id) {
+      this.router.navigate([`/song-detail/${id}`]).then();
+    }
   }
 }

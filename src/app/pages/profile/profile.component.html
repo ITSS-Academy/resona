@@ -50,8 +50,7 @@
             }
 
             @if (currentUser$ | async; as profile) {
-
-              @if( profile.id && this.viewedProfile.id && profile.id !== this.viewedProfile.id){
+              @if(profile.id && viewedProfile.id && profile.id !== viewedProfile.id && !isFollowing()) {
                 <button mat-flat-button (click)="followProfile()">Follow</button>
               }
             }
