@@ -77,7 +77,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isLoading$ = this.store.select('playlist', 'isLoading');
+    this.isLoading$ = this.store.select('playlist', 'isSelectLoading');
     this.playlistDetail$ = this.store.select('playlist', 'playlist');
 
     this.subscriptions.push(
