@@ -152,7 +152,7 @@ export class AppComponent implements OnInit, OnDestroy {
     } else if (this.router.url.includes('/upload')) {
       this.activeLink = this.menuItems[2].route;
     } else if (
-      this.router.url.includes(`/profile`)
+      this.router.url.includes(`/profile/${this.currentUser?.id}`)
     ) {
       this.activeLink = this.menuItems[3].route;
     } else {

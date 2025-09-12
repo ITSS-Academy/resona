@@ -9,7 +9,7 @@ import {AsyncPipe, DatePipe, DecimalPipe} from '@angular/common';
 import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
 import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
 import {PlaylistModel} from '../../models/playlist.model';
-import {filter, Observable, Subscription} from 'rxjs';
+import {filter, Observable, Subscription, take} from 'rxjs';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {PlaylistState} from '../../ngrx/playlist/playlist.state';
 import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
@@ -69,6 +69,13 @@ export class MusicTabComponent implements OnInit, OnDestroy {
         trackId: track.id
       })
     );
+
+    this.actions$.pipe(
+      ofType(QueueActions.playSongNowSuccess),
+      take(1)
+    ).subscribe(() => {
+      this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUserId}));
+    });
   }
 
   onFavoriteTrack(track: TrackModel) {

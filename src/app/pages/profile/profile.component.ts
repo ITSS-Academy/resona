@@ -60,6 +60,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   uploadedTracks$!: Observable<TrackModel[]>;
   uploadedTracks: TrackModel[] = [];
+  playlists$!: Observable<PlaylistModel[]>;
   playlists: PlaylistModel[] = [];
   favoritePlaylist$!: Observable<PlaylistModel | null>;
   favoritePlaylist!: PlaylistModel | null;
@@ -90,7 +91,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     let {id} = this.route.snapshot.params;
-    console.log('iddddddddddddd', id);
     this.store.dispatch(ProfileActions.getProfileById({userId: id}));
     this.store.dispatch(ProfileActions.getFollowers({profileId: id}));
     this.store.dispatch(playlistActions.getPlaylists({userId: id}));
@@ -105,6 +105,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.favoritePlaylist$ = this.store.select('favorite', 'playlist');
     this.uploadedTracks$ = this.store.select('track', 'tracks');
     this.historyTracks$ = this.store.select('history', 'history');
+    this.playlists$ = this.store.select('playlist', 'playlists');
 
   }
 
@@ -148,6 +149,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
           console.log(this.historyTracks);
         }
       }),
+      this.playlists$.subscribe(playlists => {
+        if (playlists.length > 0) {
+          this.playlists = playlists;
+        }
+      })
 
 
       //   this.route.params.subscribe(params => {
