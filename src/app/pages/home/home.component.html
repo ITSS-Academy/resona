@@ -68,7 +68,7 @@
               </div>
             }
 
-            <!-- Giữ cả popularPlaylists (đoạn 1) -->
+            <!-- Giữ cả popularPlaylists-->
             @for (playlist of popularPlaylists; track $index) {
               <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
                 <img
@@ -89,7 +89,6 @@
       <section aria-labelledby="release-title">
         <h2 class="section-title">New Release <span>Songs</span></h2>
         @for (track of newReleaseTracks; track $index) {
-          <!-- giữ logic đoạn 1: có isFavorite -->
           <app-music-tab [isFavorite]="track.isFavorite || false" [track]="track"></app-music-tab>
         }
       </section>
