@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.store.dispatch(SearchActions.searchPlaylists({query}));
           this.store.dispatch(SearchActions.searchProfiles({query}));
         }
-      });
+    });
   }
 
   ngOnInit() {
@@ -80,8 +80,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  navigateToProfile() {
-    this.router.navigate(['/profile']);
+  navigateToProfile(id:string) {
+    this.router.navigate([`/profile/${id}`]).then();
   }
 
   logout() {
