@@ -1,70 +1,5 @@
 <div class="search-pages">
   <mat-tab-group class="search-tabs">
-
-        <!-- Category -->
-        <h2>Genres</h2>
-        <div class="category-container">
-          @for (category of categories$ | async; track $index) {
-            <div class="category-card" [style.background]="category.color" (click)="navigateToCategoryDetail(category.id)">
-              <div class="category-content">
-                <h3>{{ category.name }}</h3>
-              </div>
-              <img [src]="category.image" alt="{{ category.name }}"/>
-
-            </div>
-          }
-        </div>
-        <button mat-button>See more...</button>
-
-        <!-- Song -->
-        <h2>Songs</h2>
-        @for (track of tracks$ | async; track $index) {
-<!--          <div class="song-info" (click)="onPlayTrack(track)">-->
-<!--            <div class="song-title">-->
-<!--              <img-->
-<!--                [src]="track.thumbnailPath | imgConverter"-->
-<!--                [alt]="'Song cover art for ' + track.title"-->
-<!--              />-->
-<!--              <span>{{ track.title }}</span>-->
-<!--            </div>-->
-<!--            <div class="song-artist">{{ track.artistName}}</div>-->
-<!--            <div class="song-duration">{{ track.duration }}</div>-->
-<!--          </div>-->
-          <app-music-tab [track]="track"></app-music-tab>
-        }
-        <button mat-button>See more...</button>
-
-        <!-- Playlist -->
-        <h2>Playlist</h2>
-        <div class="search-playlist">
-          @for (playlist of playlists$ | async; track $index) {
-            <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
-              <img
-                [src]="playlist.thumbnailPath"
-                [alt]="'Song cover art for ' + playlist.title"
-              />
-
-              <p class="label">{{ playlist.title}}</p>
-<!--              <p class="tracks">{{ playlist.trackCount }} tracks</p>-->
-            </div>
-          }
-        </div>
-        <button mat-button>See more...</button>
-
-        <!-- Profile -->
-        <h2>Profile</h2>
-        <div class="search-profile">
-          @for (profile of profiles$ | async; track $index) {
-            <div class="artist" (click)="navigateToProfile(profile.id)">
-              <img [src]="profile.photoUrl" alt="{{ profile.name}}"/>
-              <p class="artist-name">{{ profile.name}}</p>
-              <p class="artist-role">Profile</p>
-            </div>
-          }
-        </div>
-        <button mat-button>See more...</button>
-
-
     <!-- Songs TAB -->
     <mat-tab label="Songs">
       <div class="tab-content">
@@ -77,8 +12,14 @@
           <span>#List</span><mat-icon>list</mat-icon>
         </span>
         </div>
-        @for (track of tracks$ | async; track $index) {
-          <app-music-tab [track]="track"></app-music-tab>
+        @if (tracks$ | async; as tracks) {
+          @if (tracks.length > 0) {
+            @for (track of tracks; track $index) {
+              <app-music-tab [track]="track"></app-music-tab>
+            }
+          } @else {
+            <p class="no-data">No songs found.</p>
+          }
         }
       </div>
     </mat-tab>
@@ -86,41 +27,64 @@
     <!-- Genres TAB -->
     <mat-tab label="Genres">
       <div class="tab-content">
-        <app-category></app-category>
+        @if (categories$ | async; as categories) {
+          @if (categories.length > 0) {
+            <div class="search-playlist">
+              @for (category of categories; track $index) {
+                <div class="card" (click)="navigateToCategoryDetail(category.id)">
+                  <img
+                    [src]="category.image"
+                    [alt]="'Genre image for ' + category.name"
+                  />
+                  <p class="label">{{ category.name }}</p>
+                </div>
+              }
+            </div>
+          } @else {
+            <p class="no-data">No genres found.</p>
+          }
+        }
       </div>
     </mat-tab>
 
     <!-- Playlist TAB -->
     <mat-tab label="Playlist">
       <div class="tab-content">
-        <div class="search-playlist">
-          @for (playlist of playlists$ | async; track $index) {
-            <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
-              <img
-                [src]="playlist.thumbnailPath"
-                [alt]="'Song cover art for ' + playlist.title"
-              />
-
-              <p class="label">{{ playlist.title}}</p>
-<!--              <p class="tracks">{{ playlist.trackCount }} tracks</p>-->
+        @if (playlists$ | async; as playlists) {
+          @if (playlists.length > 0) {
+            <div class="search-playlist">
+              @for (playlist of playlists; track $index) {
+                <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
+                  <img [src]="playlist.thumbnailPath" [alt]="playlist.title"/>
+                  <p class="label">{{ playlist.title }}</p>
+                </div>
+              }
             </div>
+          } @else {
+            <p class="no-data">No playlists found.</p>
           }
-        </div>
+        }
       </div>
     </mat-tab>
 
     <!-- Profile TAB -->
     <mat-tab label="Profile">
       <div class="tab-content">
-        <div class="search-profile">
-          @for (profile of profiles$ | async; track $index) {
-            <div class="artist" (click)="navigateToProfile(profile.id)">
-              <img [src]="profile.photoUrl" alt="{{ profile.name }}"/>
-              <p class="artist-name">{{ profile.name }}</p>
-              <p class="artist-role">Profile</p>
+        @if (profiles$ | async; as profiles) {
+          @if (profiles.length > 0) {
+            <div class="search-profile">
+              @for (profile of profiles; track $index) {
+                <div class="artist" (click)="navigateToProfile(profile.id)">
+                  <img [src]="profile.photoUrl" alt="{{ profile.name }}"/>
+                  <p class="artist-name">{{ profile.name }}</p>
+                  <p class="artist-role">Profile</p>
+                </div>
+              }
             </div>
+          } @else {
+            <p class="no-data">No profiles found.</p>
           }
-        </div>
+        }
       </div>
     </mat-tab>
   </mat-tab-group>
