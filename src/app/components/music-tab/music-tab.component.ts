@@ -100,6 +100,12 @@ export class MusicTabComponent implements OnInit, OnDestroy {
         );
       }),
 
+      this.actions$.pipe(
+        ofType(PlaylistActions.addTrackToPlaylistSuccess),
+        filter(action => !!action.playlist) // chỉ nhận khi có playlist trả về
+      ).subscribe(() => {
+        this.openSnackBar('Track added to playlist successfully!');
+      }),
       this.actions$
         .pipe(
           ofType(PlaylistActions.addTrackToPlaylistSuccess),

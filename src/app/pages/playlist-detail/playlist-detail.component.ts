@@ -57,6 +57,11 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
     this.dialog.open(CreatePlaylistDialogComponent, {
       width: '700px',
       panelClass: 'custom-dialog-container',
+      data: {
+        playlistId: this.playlistId,
+        playlist: this.playlistDetail$  // truyền observable hoặc giá trị playlist
+      }
+
     });
   }
 
@@ -72,7 +77,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isLoading$ = this.store.select('playlist', 'isLoading');
+    this.isLoading$ = this.store.select('playlist', 'isSelectLoading');
     this.playlistDetail$ = this.store.select('playlist', 'playlist');
 
     this.subscriptions.push(

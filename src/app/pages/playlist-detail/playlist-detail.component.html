@@ -20,37 +20,33 @@
       />
       }
 
-      <div class="playlist-text">
-        <div class="name-and-time">
-          <h2 class="playlist-title">
-            {{ playlistDetail.title }}
-            <!--              @if (playlistId !== 'happy-vibes' && playlistId !== 'chill-out') {-->
-            <!--                <button mat-icon-button (click)="openEditDialog()">-->
-            <!--                  <mat-icon>edit</mat-icon>-->
-            <!--                </button>-->
-            <!--              }-->
-          </h2>
+      <div class="right">
+        <div class="playlist-text">
+          <div class="name-and-time">
+            <h2 class="playlist-title">
+              {{ playlistDetail.title }}
+              <!--              @if (playlistId !== 'happy-vibes' && playlistId !== 'chill-out') {-->
+              <!--                <button mat-icon-button (click)="openEditDialog()">-->
+              <!--                  <mat-icon>edit</mat-icon>-->
+              <!--                </button>-->
+              <!--              }-->
+            </h2>
 
-          @if (playlistDetail) {
-          <p class="playlist-meta">
-            {{ playlistDetail.tracks?.length || 0 }} songs •
-            {{ totalMinutes$ | async }}
-          </p>
-          }
+            @if (playlistDetail) {
+              <p class="playlist-meta">
+                {{ playlistDetail.tracks?.length || 0 }} songs •
+                {{ totalMinutes$ | async }}
+              </p>
+            }
+          </div>
         </div>
 
-        @if (playlistDetail$ | async; as playlist) {
-        <p class="playlist-meta">
-          {{ playlist.tracks?.length || 0 }} songs • {{ totalMinutes$ | async }}
-        </p>
-        }
-      </div>
-
-      <div class="playlist-actions">
-        <app-playlist-detail-button
-          [playlistId]="playlistId"
-          (addAllToQueue)="addAllToQueue()"
-        ></app-playlist-detail-button>
+        <div class="playlist-actions">
+          <app-playlist-detail-button
+            [playlistId]="playlistId"
+            (addAllToQueue)="addAllToQueue()"
+          ></app-playlist-detail-button>
+        </div>
       </div>
     </div>
   </div>

@@ -104,6 +104,7 @@
                    (click)="lyricsFileInput.click()">
                 <p>
                   Drag & drop files or click to select<br/>
+                  (Supported formats: .txt)
                 </p>
                 <input
                   #lyricsFileInput
@@ -114,9 +115,9 @@
 
                 @if (form.value.lyricsFile) {
                   <div class="file-chip">
-                    <mat-icon>attach_file</mat-icon>
-                    <span>{{ form.value.lyricsFile.name }}</span>
-                    <button mat-icon-button type="button" (click)="removeLyricsFile($event)">
+                    <mat-icon class="file-icon">description</mat-icon>
+                    <span class="file-name">{{ form.value.lyricsFile.name }}</span>
+                    <button mat-icon-button type="button" class="remove-file" (click)="removeLyricsFile($event)">
                       <mat-icon>close</mat-icon>
                     </button>
                   </div>

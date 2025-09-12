@@ -57,7 +57,7 @@ export const appConfig: ApplicationConfig = {
       QueueEffects,
       HistoryEffects,
       FavoriteEffects,
-      ProfileEffects
+      ProfileEffects,
     ),
     provideFirebaseApp(() =>
       initializeApp({

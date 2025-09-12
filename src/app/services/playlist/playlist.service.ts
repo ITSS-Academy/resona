@@ -65,6 +65,22 @@ export class PlaylistService {
     return this.http.delete(`${environment.apiUrl}/playlist/remove-track`, {body: {playlistId, trackId}});
   }
 
+  updatePlaylist(playlistId: string, title: string, description: string, isPublic: boolean, thumbnail?: File): Observable<PlaylistModel> {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('isPublic', String(isPublic));
+    if (thumbnail) {
+      formData.append('thumbnail', thumbnail);
+    }
+
+    return this.http.patch<PlaylistModel>(
+      `${environment.apiUrl}/playlist/${playlistId}`, formData);
+    }
+  // getFavoritePlaylistByUserId(userId: string): Observable<PlaylistModel> {
+  //   return this.http.get<PlaylistModel>(`${environment.apiUrl}/playlist/detail/${userId}`);
+  // }
+
   getFavoritePlaylistByUserId(userId: string): Observable<TrackModel[]> {
     return this.http.get<TrackModel[]>(`${environment.apiUrl}/playlist/favorite/${userId}`);
   }
@@ -74,3 +90,4 @@ export class PlaylistService {
   }
 
 }
+
