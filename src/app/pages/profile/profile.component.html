@@ -33,8 +33,12 @@
 <!--}-->
 
 @if (viewedProfile$ | async; as viewedProfile) {
-  <div class="background" [ngStyle]="{'background-image': 'url(' + (viewedProfile.photoUrl) + '))'}">
-      <div class="profile">
+  <div class="background"
+       [ngStyle]="{
+       'background-image':
+         'linear-gradient(to bottom, var(--mat-sys-primary) 25%, #000000 100%), url(' + viewedProfile.photoUrl + ')'
+     }">
+    <div class="profile">
         <img [src]="viewedProfile.photoUrl" alt="User Avatar" />
       </div>
       <div class="right">
