@@ -1,35 +1,27 @@
 import { createReducer, on } from '@ngrx/store';
-import { initialFavoriteState } from './favorite.state';
-import * as FavoriteActions from './favorite.action';
+import { FavoriteState } from './favorite.state';
+import * as favoriteActions from './favorite.action';
+
+export const initialFavoriteState: FavoriteState = {
+  playlist: null,
+  loading: false,
+  error: null,
+};
 
 export const favoriteReducer = createReducer(
   initialFavoriteState,
-  on(FavoriteActions.getFavoritePlaylist, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-  on(FavoriteActions.getFavoritePlaylistSuccess, (state, { playlist }) => ({
-    ...state,
-    playlist: playlist,
-    loading: false,
-  })),
-  on(FavoriteActions.getFavoritePlaylistFailure, (state, { error }) => ({
-    ...state,
-    error: error,
-    loading: false,
-  })),
-  on(FavoriteActions.addToFavorite, (state) => ({
+  on(favoriteActions.getFavoritePlaylist, state => ({
     ...state,
     loading: true,
   })),
-  on(FavoriteActions.addToFavoriteSuccess, (state) => ({
+  on(favoriteActions.getFavoritePlaylistSuccess, (state, { playlist }) => ({
     ...state,
+    playlist,
     loading: false,
   })),
-  on(FavoriteActions.addToFavoriteFailure, (state, { error }) => ({
+  on(favoriteActions.getFavoritePlaylistFailure, (state, { error }) => ({
     ...state,
-    loading: false,
     error,
+    loading: false,
   }))
 );
