@@ -19,45 +19,56 @@
 <!--</div>-->
 
 @if (isLoading$ | async) {
-  <div class="loading-container">
-    <mat-spinner></mat-spinner>
-  </div>
+<div class="loading-container">
+  <mat-spinner></mat-spinner>
+</div>
 } @else {
-  <div class="category-detail-container">
-    <!-- Phần Header (đã sao chép và biến tấu) -->
-    <div class="category-header">
-      <div class="category-bg">
-        <!-- Dùng categoryDetail$ thay vì playlistDetail$ -->
-        @if (categoryDetail$ | async; as category) {
-          <!-- Dùng category.image thay vì playlist.thumbnailPath -->
-          <img [src]="category.image" alt="background"/>
-        }
-      </div>
+<div class="category-detail-container">
+  <!-- Phần Header (đã sao chép và biến tấu) -->
+  <div class="category-header">
+    <div class="category-bg">
+      <!-- Dùng categoryDetail$ thay vì playlistDetail$ -->
+      @if (categoryDetail$ | async; as category) {
+      <!-- Dùng category.image thay vì playlist.thumbnailPath -->
+      <img [src]="category.image" alt="background" />
+      }
+    </div>
 
-      <div class="category-info">
-        @if (categoryDetail$ | async; as category) {
-          <img class="category-cover" [src]="category.image" alt="Category Cover"/>
-        }
+    <div class="category-info">
+      @if (categoryDetail$ | async; as category) {
+      <img class="category-cover" [src]="category.image" alt="Category Cover" />
+      }
 
-        <div class="category-text">
-          <div class="name-and-time">
-            <h2 class="category-title">
-              <!-- Dùng biến categoryName -->
-              {{ categoryName }}
-            </h2>
+      <div class="category-text">
+        <div class="name-and-time">
+          <h2 class="category-title">
+            <!-- Dùng biến categoryName -->
+            {{ categoryName }}
+          </h2>
 
-            @if (tracks$ | async; as tracks) {
-              <p class="category-meta">
-                <!-- Dùng tracks$ để đếm số bài hát -->
-                {{ tracks?.length || 0 }} songs
-              </p>
-            }
-          </div>
+          @if (tracks$ | async; as tracks) {
+          <p class="category-meta">
+            <!-- Dùng tracks$ để đếm số bài hát -->
+            {{ tracks?.length || 0 }} songs
+          </p>
+          }
+        </div>
 
+        <<<<<<< HEAD
+        <div class="category-actions">
+          <!-- Truyền categoryId vào component con -->
+          <app-playlist-detail-button
+            [playlistId]="categoryId"
+            (addAllToQueue)="addAllToQueue()"
+          ></app-playlist-detail-button>
+          =======
           <div class="category-actions">
             <!-- Truyền categoryId vào component con -->
-            <app-playlist-detail-button [playlistId]="categoryId"></app-playlist-detail-button>
+            <app-playlist-detail-button
+              [playlistId]="categoryId"
+            ></app-playlist-detail-button>
           </div>
+          >>>>>>> d55ddabde7a0a4273a849db6f919e4d96b619d6d
         </div>
       </div>
     </div>
@@ -73,19 +84,21 @@
       <!--      <mat-checkbox></mat-checkbox>-->
       <!--    </span>-->
       <span class="col-list">
-      <span>#List</span><mat-icon>list</mat-icon>
-    </span>
+        <span>#List</span><mat-icon>list</mat-icon>
+      </span>
     </div>
 
     <!-- Phần Body của bảng (đã có sẵn) -->
     <div class="playlist-table-body">
       @for (track of tracks$ | async; track track.id; let i = $index) {
-        <app-playlist-music-tab
-          [track]="track"
-          [playlistId]="categoryId"
-          [playlistTitle]="categoryName">
-        </app-playlist-music-tab>
+      <app-playlist-music-tab
+        [track]="track"
+        [playlistId]="categoryId"
+        [playlistTitle]="categoryName"
+      >
+      </app-playlist-music-tab>
       }
     </div>
   </div>
-}
+  }
+</div>
