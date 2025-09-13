@@ -36,32 +36,32 @@
   <div class="background"
        [ngStyle]="{
        'background-image':
-         'linear-gradient(to bottom, var(--mat-sys-primary) 25%, #000000 100%), url(' + viewedProfile.photoUrl + ')'
+         'linear-gradient(to bottom, var(--mat-sys-primary) 25%, #000000 100%)'
      }">
     <div class="profile">
-        <img [src]="viewedProfile.photoUrl" alt="User Avatar" />
-      </div>
-      <div class="right">
+      <img [src]="viewedProfile.photoUrl" alt="User Avatar" referrerpolicy="no-referrer"/>
+    </div>
+    <div class="right">
 
-          <div class="name">
-            <h3>{{viewedProfile.name}}</h3>
-            <p>{{viewedProfile.email}}</p>
-<!--            @if ( followers && followers.length > 0) {-->
+      <div class="name">
+        <h3>{{ viewedProfile.name }}</h3>
+        <p>{{ viewedProfile.email }}</p>
+        <!--            @if ( followers && followers.length > 0) {-->
 
-<!--            <p>{{followers.length}} Followers</p>-->
-<!--            } @else {-->
-<!--              <p>0 Followers</p>-->
-<!--            }-->
+        <!--            <p>{{followers.length}} Followers</p>-->
+        <!--            } @else {-->
+        <!--              <p>0 Followers</p>-->
+        <!--            }-->
 
-            @if (currentUser$ | async; as profile) {
-              @if(profile.id && viewedProfile.id && profile.id !== viewedProfile.id && !isFollowing()) {
-                <button mat-flat-button (click)="followProfile()">Follow</button>
-              }
-            }
-
-          </div>
+        @if (currentUser$ | async; as profile) {
+          @if (profile.id && viewedProfile.id && profile.id !== viewedProfile.id && !isFollowing()) {
+            <button mat-flat-button (click)="followProfile()">Follow</button>
+          }
+        }
 
       </div>
+
+    </div>
   </div>
 }
 
@@ -74,18 +74,18 @@
 
   <mat-tab label="Your Playlist">
     <div class="horizontal-scroll">
-    @for (playlist of playlists; track $index) {
-      <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
-        <img [src]="playlist.thumbnailPath"
-             [alt]="playlist.title"
-             width="100"
-             height="96" />
-        <div class="overlay">
+      @for (playlist of playlists; track $index) {
+        <div class="card" (click)="navigateToPlaylistDetail(playlist.id)">
+          <img [src]="playlist.thumbnailPath"
+               [alt]="playlist.title"
+               width="100"
+               height="96"/>
+          <div class="overlay">
+          </div>
+          <p class="label">{{ playlist.title }}</p>
+          <p class="tracks">{{ getTrackCount(playlist.id) }} tracks</p>
         </div>
-        <p class="label">{{ playlist.title }}</p>
-        <p class="tracks">{{ getTrackCount(playlist.id) }} tracks</p>
-      </div>
-    }
+      }
     </div>
   </mat-tab>
 
@@ -106,16 +106,16 @@
     }
   </mat-tab>
 
-  <mat-tab label="History">
-    @if (historyTracks$ | async; as history) {
-      @if (history.length > 0) {
-        @for (item of history; track item.id) {
-          <app-music-tab [track]="item.track"></app-music-tab>
-        }
-      } @else {
-        <p class="empty">No history tracks yet 🐾</p>
-      }
-    }
-  </mat-tab>
+  <!--  <mat-tab label="History">-->
+  <!--    @if (historyTracks$ | async; as history) {-->
+  <!--      @if (history.length > 0) {-->
+  <!--        @for (item of history; track item.id) {-->
+  <!--          <app-music-tab [track]="item.track"></app-music-tab>-->
+  <!--        }-->
+  <!--      } @else {-->
+  <!--        <p class="empty">No history tracks yet 🐾</p>-->
+  <!--      }-->
+  <!--    }-->
+  <!--  </mat-tab>-->
 
 </mat-tab-group>

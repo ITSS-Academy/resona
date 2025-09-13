@@ -1,17 +1,17 @@
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as QueueActions from './queue.actions';
-import { inject } from '@angular/core';
-import { QueueService } from '../../services/queue/queue.service';
-import { catchError, map, of, switchMap } from 'rxjs';
-import { QueueModel } from '../../models/queue.model';
+import {inject} from '@angular/core';
+import {QueueService} from '../../services/queue/queue.service';
+import {catchError, map, of, switchMap} from 'rxjs';
+import {QueueModel} from '../../models/queue.model';
 
 export const addTrackToQueueEffect = createEffect(
   (actions$ = inject(Actions), queueService = inject(QueueService)) => {
     return actions$.pipe(
       ofType(QueueActions.addTrackToQueue),
-      switchMap(({ userId, trackId }) =>
+      switchMap(({userId, trackId}) =>
         queueService.addTrackToQueue(userId, trackId).pipe(
-          map((queue) => QueueActions.addTrackToQueueSuccess({ queue: queue })),
+          map((queue) => QueueActions.addTrackToQueueSuccess({queue: queue})),
           catchError((error) =>
             of(
               QueueActions.addTrackToQueueFailure({
@@ -23,17 +23,17 @@ export const addTrackToQueueEffect = createEffect(
       )
     );
   },
-  { functional: true }
+  {functional: true}
 );
 
 export const getQueueByUserEffect = createEffect(
   (actions$ = inject(Actions), queueService = inject(QueueService)) => {
     return actions$.pipe(
       ofType(QueueActions.getQueueByUser),
-      switchMap(({ userId }) =>
+      switchMap(({userId}) =>
         queueService.getTrackByUser(userId).pipe(
           map((queueList) =>
-            QueueActions.getQueueByUserSuccess({ queueList: queueList })
+            QueueActions.getQueueByUserSuccess({queueList: queueList})
           ),
           catchError((error) =>
             of(
@@ -46,14 +46,14 @@ export const getQueueByUserEffect = createEffect(
       )
     );
   },
-  { functional: true }
+  {functional: true}
 );
 
 export const removeTrackFromQueueEffect = createEffect(
   (actions$ = inject(Actions), queueService = inject(QueueService)) => {
     return actions$.pipe(
       ofType(QueueActions.removeTrackFromQueue),
-      switchMap(({ userId, trackId }) =>
+      switchMap(({userId, trackId}) =>
         queueService.removeTrackFromQueue(userId, trackId).pipe(
           map((response: { message: string }) =>
             QueueActions.removeTrackFromQueueSuccess({
@@ -71,19 +71,19 @@ export const removeTrackFromQueueEffect = createEffect(
       )
     );
   },
-  { functional: true }
+  {functional: true}
 );
 
 export const addPlaylistToQueueEffect = createEffect(
   (actions$ = inject(Actions), queueService = inject(QueueService)) => {
     return actions$.pipe(
       ofType(QueueActions.addPlaylistToQueue),
-      switchMap(({ userId, playlistId }) =>
+      switchMap(({userId, playlistId}) =>
         queueService.addPlaylistToQueue(userId, playlistId).pipe(
           switchMap((response: any) => [
             // Sau khi thêm playlist thành công, ta tải lại toàn bộ queue
             // để đảm bảo dữ liệu ở frontend được đồng bộ và đầy đủ.
-            QueueActions.getQueueByUser({ userId: userId }),
+            QueueActions.getQueueByUser({userId: userId}),
           ]),
           catchError((error) =>
             of(
@@ -96,17 +96,17 @@ export const addPlaylistToQueueEffect = createEffect(
       )
     );
   },
-  { functional: true }
+  {functional: true}
 );
 
 export const playSongNowEffect = createEffect(
   (actions$ = inject(Actions), queueService = inject(QueueService)) => {
     return actions$.pipe(
       ofType(QueueActions.playSongNow),
-      switchMap(({ userId, trackId }) =>
+      switchMap(({userId, trackId}) =>
         queueService.playSongNow(userId, trackId).pipe(
           map((response) =>
-            QueueActions.playSongNowSuccess({ message: response.message })
+            QueueActions.playSongNowSuccess({message: response.message})
           ),
           catchError((error) =>
             of(
@@ -119,5 +119,30 @@ export const playSongNowEffect = createEffect(
       )
     );
   },
-  { functional: true }
+  {functional: true}
+);
+
+export const addCategoryToQueueEffect = createEffect(
+  (actions$ = inject(Actions), queueService = inject(QueueService)) => {
+    return actions$.pipe(
+      ofType(QueueActions.addCategoryToQueue),
+      switchMap(({userId, categoryId}) =>
+        queueService.addCategoryToQueue(userId, categoryId).pipe(
+          switchMap((response: any) => [
+            // Sau khi thêm playlist thành công, ta tải lại toàn bộ queue
+            // để đảm bảo dữ liệu ở frontend được đồng bộ và đầy đủ.
+            QueueActions.getQueueByUser({userId: userId}),
+          ]),
+          catchError((error) =>
+            of(
+              QueueActions.addCategoryToQueueFailure({
+                error: error.message || 'Add playlist to queue failed',
+              })
+            )
+          )
+        )
+      )
+    );
+  },
+  {functional: true}
 );

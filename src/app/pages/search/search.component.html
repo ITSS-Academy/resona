@@ -3,15 +3,15 @@
     <!-- Songs TAB -->
     <mat-tab label="Songs">
       <div class="tab-content">
-        <div class="playlist-table-header">
-          <span class="col-name"># Name</span>
-          <span class="col-artist"># Date</span>
-          <span class="col-time"><mat-icon>schedule</mat-icon></span>
-          <span class="col-views"><mat-icon>visibility</mat-icon></span>
-          <span class="col-list">
-          <span>#List</span><mat-icon>list</mat-icon>
-        </span>
-        </div>
+        <!--        <div class="playlist-table-header">-->
+        <!--          <span class="col-name"># Name</span>-->
+        <!--          <span class="col-artist"># Date</span>-->
+        <!--          <span class="col-time"><mat-icon>schedule</mat-icon></span>-->
+        <!--          <span class="col-views"><mat-icon>visibility</mat-icon></span>-->
+        <!--          <span class="col-list">-->
+        <!--          <span>#List</span><mat-icon>list</mat-icon>-->
+        <!--        </span>-->
+        <!--        </div>-->
         @if (tracks$ | async; as tracks) {
           @if (tracks.length > 0) {
             @for (track of tracks; track $index) {
@@ -68,24 +68,24 @@
     </mat-tab>
 
     <!-- Profile TAB -->
-    <mat-tab label="Profile">
-      <div class="tab-content">
-        @if (profiles$ | async; as profiles) {
-          @if (profiles.length > 0) {
-            <div class="search-profile">
-              @for (profile of profiles; track $index) {
-                <div class="artist" (click)="navigateToProfile(profile.id)">
-                  <img [src]="profile.photoUrl" alt="{{ profile.name }}"/>
-                  <p class="artist-name">{{ profile.name }}</p>
-                  <p class="artist-role">Profile</p>
-                </div>
-              }
-            </div>
-          } @else {
-            <p class="no-data">No profiles found.</p>
-          }
-        }
-      </div>
-    </mat-tab>
+    <!--    <mat-tab label="Profile">-->
+    <!--      <div class="tab-content">-->
+    <!--        @if (profiles$ | async; as profiles) {-->
+    <!--          @if (profiles.length > 0) {-->
+    <!--            <div class="search-profile">-->
+    <!--              @for (profile of profiles; track $index) {-->
+    <!--                <div class="artist" (click)="navigateToProfile(profile.id)">-->
+    <!--                  <img [src]="profile.photoUrl" alt="{{ profile.name }}"/>-->
+    <!--                  <p class="artist-name">{{ profile.name }}</p>-->
+    <!--                  <p class="artist-role">Profile</p>-->
+    <!--                </div>-->
+    <!--              }-->
+    <!--            </div>-->
+    <!--          } @else {-->
+    <!--            <p class="no-data">No profiles found.</p>-->
+    <!--          }-->
+    <!--        }-->
+    <!--      </div>-->
+    <!--    </mat-tab>-->
   </mat-tab-group>
 </div>

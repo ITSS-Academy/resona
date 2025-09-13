@@ -27,8 +27,8 @@ import * as ProfileActions from '../../ngrx/profile/profile.actions';
   templateUrl: './song-detail.component.html',
   styleUrl: './song-detail.component.scss'
 })
-export class SongDetailComponent implements OnInit , OnDestroy{
-  subscription: Subscription[]=[];
+export class SongDetailComponent implements OnInit, OnDestroy {
+  subscription: Subscription[] = [];
   isLoadingTrack$!: Observable<boolean>;
   isLoadingTrack!: boolean
 
@@ -44,8 +44,8 @@ export class SongDetailComponent implements OnInit , OnDestroy{
     this.store.dispatch(CommentActions.getComments({trackId: id}));
     this.store.dispatch(TrackActions.getTrackById({id: id}));
     this.store.dispatch(TrackActions.getThumbnailBasedOnTrackId({id: id}));
-    this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
-    this.store.dispatch(TrackActions.getTracksBySameArtist({trackId:id}))
+    // this.store.dispatch(TrackActions.getLyricsByTrackId({id: id}));
+    this.store.dispatch(TrackActions.getTracksBySameArtist({trackId: id}))
     this.store.dispatch(CategoryActions.getCategoryDetailByTrackId({trackId: id}));
     this.store.dispatch(ProfileActions.getProfileByTrackId({trackId: id}))
 

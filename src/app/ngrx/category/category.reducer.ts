@@ -7,6 +7,7 @@ import {TrackModel} from '../../models/track.model';
 export const initialState: CategoryState = {
   categoryList: <CategoryModel[]>[],
   isLoading: false,
+  isGetCategoriesLoading: false,
   error: null,
   category: <CategoryModel>{}
 }
@@ -17,7 +18,7 @@ export const categoryReducer = createReducer(
     console.log(type)
     return {
       ...state,
-      isLoading: true,
+      isGetCategoriesLoading: true,
       error: null
     }
   }),
@@ -26,14 +27,14 @@ export const categoryReducer = createReducer(
     return {
       ...state,
       categoryList: categories,
-      isLoading: false
+      isGetCategoriesLoading: false
     }
   }),
   on(categoryActions.getAllCategoriesFailure, (state, {type, error}) => {
     console.log(type)
     return {
       ...state,
-      isLoading: false,
+      isGetCategoriesLoading: false,
       error: error
     }
   }),
@@ -62,7 +63,7 @@ export const categoryReducer = createReducer(
     }
   }),
 
-  on(categoryActions.getCategoryDetailByTrackId, (state, {type, trackId})=>{
+  on(categoryActions.getCategoryDetailByTrackId, (state, {type, trackId}) => {
     console.log(type)
     return {
       ...state,
@@ -88,5 +89,4 @@ export const categoryReducer = createReducer(
       error: error
     }
   }),
-
 )

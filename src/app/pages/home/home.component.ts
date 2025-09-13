@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isCategoriesLoading$!: Observable<boolean>;
   isProfilesLoading$!: Observable<boolean>;
   isPlaylistsLoading$!: Observable<boolean>
+  isTrackLoading$!: Observable<boolean>;
   favoriteTracks: TrackModel[] = [];
 
   categories$: Observable<CategoryModel[]>;
@@ -76,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.popularProfiles$ = this.store.select('profile', 'profileList')
     this.popularPlaylists$ = this.store.select('playlist', 'popular')
-    this.isCategoriesLoading$ = this.store.select('category', 'isLoading');
+    this.isCategoriesLoading$ = this.store.select('category', 'isGetCategoriesLoading');
     this.isProfilesLoading$ = this.store.select('profile', 'isLoading');
     this.isPlaylistsLoading$ = this.store.select('playlist', 'isLoading');
 
@@ -121,8 +122,6 @@ export class HomeComponent implements OnInit, OnDestroy {
                 }
               )
             )
-            console.log('Fav tracks in home', this.favoriteTracks);
-            console.log('New release tracks in home', this.newReleaseTracks);
           }
         }
       )

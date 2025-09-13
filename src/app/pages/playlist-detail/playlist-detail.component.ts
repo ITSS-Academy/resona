@@ -2,9 +2,9 @@ import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {MaterialModule} from '../../shared/modules/material.module';
 import {MatDialog} from '@angular/material/dialog';
 import {CreatePlaylistDialogComponent} from '../../components/create-playlist-dialog/create-playlist-dialog.component';
-import {map, Observable, Subscription, take} from 'rxjs';
+import {combineLatest, map, Observable, Subscription, take} from 'rxjs';
 import {PlaylistModel} from '../../models/playlist.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {PlaylistState} from '../../ngrx/playlist/playlist.state';
 import * as playlistActions from '../../ngrx/playlist/playlist.action';
@@ -19,6 +19,8 @@ import {PlaylistDetailButtonComponent} from '../../components/playlist-detail-bu
 import {ShareSnackbarComponent} from '../../components/share-snackbar/share-snackbar.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Actions, ofType} from '@ngrx/effects';
+import {ProfileModel} from '../../models/profile.model';
+import {FavoriteState} from '../../ngrx/favorite/favorite.state';
 
 @Component({
   selector: 'app-playlist-detail',
@@ -38,9 +40,10 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   playlistId!: string;
   playlistDetail$!: Observable<PlaylistModel>;
   playlistDetail!: PlaylistModel;
-  tracks$!: Observable<TrackModel[] | null | undefined>;
+  tracks$!: Observable<TrackModel[]>;
   playlistName: string = '';
   totalMinutes$!: Observable<string>;
+  currentUser$!: Observable<ProfileModel>;
   userId!: string;
 
   playlistOwnerId!: string;
@@ -53,8 +56,10 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
     private store: Store<{
       playlist: PlaylistState;
       auth: AuthState;
+      favorite: FavoriteState
     }>,
-    private actions$: Actions
+    private actions$: Actions,
+    private router: Router,
   ) {
   }
 
@@ -91,13 +96,16 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading$ = this.store.select('playlist', 'isSelectLoading');
     this.playlistDetail$ = this.store.select('playlist', 'playlist');
+    this.currentUser$ = this.store.select('auth', 'currentUser');
 
     this.subscriptions.push(
-      this.store
-        .select((state) => state.auth.currentUser)
-        .subscribe((user) => {
-          this.userId = user?.id;
-        }),
+      this.currentUser$.subscribe(
+        (user) => {
+          if (user.id) {
+            this.userId = user.id;
+          }
+        }
+      ),
 
       // this.route.params.subscribe(params => {
       //   this.playlistId = params['id'];
@@ -141,8 +149,8 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
 
       this.playlistDetail$.subscribe((playlist) => {
         this.playlistDetail = playlist;
-        this.playlistOwnerId = playlist.profile.id;
-        console.log('Playlist detail:', this.playlistOwnerId);
+        // this.playlistOwnerId = playlist.profile.id;
+        // console.log('Playlist detail:', this.playlistOwnerId);
       }),
 
       this.isLoading$.subscribe((isLoading) => {
@@ -156,6 +164,18 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
         playlistActions.getPlaylistById({playlistId: this.playlistId})
       );
     });
+
+    this.tracks$ = combineLatest([
+      this.playlistDetail$.pipe(map((p) => p?.tracks || [])),
+      this.store.select((state) => state.favorite.playlist?.tracks || []),
+    ]).pipe(
+      map(([tracks, favoriteTracks]) =>
+        tracks.map((track) => ({
+          ...track,
+          isFavorite: favoriteTracks.some((fav) => fav.id === track.id),
+        }))
+      )
+    );
 
     this.totalMinutes$ = this.playlistDetail$.pipe(
       map((p) => p?.tracks),
@@ -180,6 +200,15 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  deletePlaylist() {
+    console.log('Playlist ID to delete:', this.playlistId);
+    if (!this.playlistId) return;
+
+    this.store.dispatch(playlistActions.deletePlaylist({id: this.playlistId}));
+    console.log('Dispatch deletePlaylist with ID:', this.playlistId);
+    this.router.navigate(['/profile']);
   }
 
   ngOnDestroy() {

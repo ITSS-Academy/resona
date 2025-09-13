@@ -4,12 +4,13 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment.development';
 import {Observable} from "rxjs";
 import {ProfileModel} from "../../models/profile.model";
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private auth: Auth, private httpClient: HttpClient) {
+  constructor(private auth: Auth, private httpClient: HttpClient, private router: Router) {
   }
 
   async login() {
@@ -27,6 +28,7 @@ export class AuthService {
 
   async logout() {
     await this.auth.signOut();
+    window.location.href = '/home';
   }
 
   getProfile(id: string): Observable<ProfileModel> {

@@ -1,27 +1,27 @@
 <div class="container">
-  <div class="overview-left">
-    <div class="overview-left-middle">
-      <h2>More by <span>author</span></h2>
+  <!--  <div class="overview-left">-->
+  <!--    <div class="overview-left-middle">-->
+  <!--      <h2>More by <span>author</span></h2>-->
 
-    </div>
-    <div class="overview-left-bot">
-      @for (item of tracksSameArtist;track $index){
-          @if(item.id !== trackDetail.id) {
-            <app-album-card [track]="item"></app-album-card>
-          }
-      }
-    </div>
-  </div>
+  <!--    </div>-->
+  <!--    <div class="overview-left-bot">-->
+  <!--      @for (item of tracksSameArtist;track $index){-->
+  <!--          @if(item.id !== trackDetail.id) {-->
+  <!--            <app-album-card [track]="item"></app-album-card>-->
+  <!--          }-->
+  <!--      }-->
+  <!--    </div>-->
+  <!--  </div>-->
   <div class="overview-right">
     <div class="statistics">
-      <h2>Statistics</h2>
+      <!--      <h2>Statistics</h2>-->
       <div class="statistics-tabs">
         <div class="statistics-tabs-left">
           <mat-icon>publish</mat-icon>
           <p>Release Date</p>
         </div>
         <div class="statistics-tabs-right">
-          <p>{{trackDetail.createdAt | date:'dd/MM/yyyy'}}</p>
+          <p>{{ trackDetail.createdAt | date:'dd/MM/yyyy' }}</p>
         </div>
       </div>
       <div class="statistics-tabs">
@@ -30,7 +30,7 @@
           <p>Views</p>
         </div>
         <div class="statistics-tabs-right">
-          <p>{{trackDetail.viewCount}}</p>
+          <p>{{ trackDetail.viewCount }}</p>
         </div>
       </div>
       <div class="statistics-tabs">
@@ -39,7 +39,7 @@
           <p>Duration</p>
         </div>
         <div class="statistics-tabs-right">
-          <p>{{trackDetail.duration | duration}}</p>
+          <p>{{ trackDetail.duration | duration }}</p>
         </div>
       </div>
       <div class="statistics-tabs">
@@ -48,7 +48,7 @@
           <p>Comments</p>
         </div>
         <div class="statistics-tabs-right">
-          <p>{{totalComment}}</p>
+          <p>{{ totalComment }}</p>
         </div>
       </div>
     </div>

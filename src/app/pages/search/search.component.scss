@@ -7,10 +7,9 @@
   padding: 10px 30px;
 }
 
-.search-tabs h2{
+.search-tabs h2 {
   color: #EE10B0;
 }
-
 
 
 /* Song row */
@@ -59,7 +58,7 @@
   margin-left: auto;
 }
 
-.search-playlist{
+.search-playlist {
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
@@ -173,7 +172,6 @@
   }
 
 
-
   h3 {
     font-size: 18px;
     font-weight: bold;
@@ -199,7 +197,7 @@
 }
 
 @media (max-width: 375px) {
-  .col-artist,.song-artist {
+  .col-artist, .song-artist {
     display: none !important;
   }
 
@@ -247,6 +245,7 @@
   height: 100%;
   overflow-y: auto;
   padding-bottom: 40px; /* tránh dính sát cuối */
+  margin-top: 8px;
 }
 
 
@@ -309,10 +308,9 @@
   color: #d8a9b0;
 }
 
-.playlist-table-header mat-icon:hover {
-  color: #ee10b0;
-}
-
+//.playlist-table-header mat-icon:hover {
+//  color: #ee10b0;
+//}
 
 
 .search-playlist .card {

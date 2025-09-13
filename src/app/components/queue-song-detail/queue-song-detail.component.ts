@@ -7,8 +7,12 @@ import {QueueState} from '../../ngrx/queue/queue.state';
 import * as QueueActions from '../../ngrx/queue/queue.actions';
 import {Store} from '@ngrx/store';
 import {AuthState} from '../../ngrx/auth/auth.state';
-import {Observable, Subscription} from 'rxjs';
+import {Observable, Subscription, take} from 'rxjs';
 import {ProfileModel} from '../../models/profile.model';
+import {TrackModel} from '../../models/track.model';
+import * as PlayActions from '../../ngrx/play/play.action';
+import {Actions, ofType} from '@ngrx/effects';
+
 @Component({
   selector: 'app-queue-song-detail',
   imports: [
@@ -24,12 +28,14 @@ export class QueueSongDetailComponent implements OnInit, OnDestroy {
 
   currentUser$!: Observable<ProfileModel>;
   currentUser!: ProfileModel;
-  subscription: Subscription[]=[];
+  subscription: Subscription[] = [];
+
   constructor(
-    private store:Store<{
+    private store: Store<{
       queue: QueueState,
       auth: AuthState,
-    }>
+    }>,
+    private actions$: Actions,
   ) {
     this.currentUser$ = this.store.select('auth', 'currentUser');
   }
@@ -42,6 +48,24 @@ export class QueueSongDetailComponent implements OnInit, OnDestroy {
         }
       }),
     )
+  }
+
+  onPlayTrack(track: TrackModel) {
+    console.log('Playing track:', track);
+    this.store.dispatch(PlayActions.setTrack({track}));
+    this.store.dispatch(
+      QueueActions.playSongNow({
+        userId: this.currentUser.id,
+        trackId: track.id
+      })
+    );
+
+    this.actions$.pipe(
+      ofType(QueueActions.playSongNowSuccess),
+      take(1)
+    ).subscribe(() => {
+      this.store.dispatch(QueueActions.getQueueByUser({userId: this.currentUser.id}));
+    });
   }
 
   ngOnDestroy() {

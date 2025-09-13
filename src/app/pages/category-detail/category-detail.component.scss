@@ -110,9 +110,10 @@
   display: grid;
   grid-template-columns:2fr 1fr 1fr 1fr 1fr;
   align-items: center;
-  padding: 10px 20px;
-  border-top: 1px solid #666;
+  padding: 0 20px 12px 20px;
+  //border-top: 1px solid #666;
   border-bottom: 1px solid #666;
+  margin-bottom: 8px;
   color: #e0e0e0;
   font-size: 16px;
   text-align: center;
@@ -159,9 +160,9 @@
   color: #d8a9b0;
 }
 
-.playlist-table-header mat-icon:hover {
-  color: #ee10b0;
-}
+//.playlist-table-header mat-icon:hover {
+//  color: #ee10b0;
+//}
 
 /* ===== BODY ===== */
 .playlist-table-body {
@@ -204,7 +205,6 @@
 
   .col-time {
     padding: 0 5px 0 0;
-
   }
 
   .col-actions,

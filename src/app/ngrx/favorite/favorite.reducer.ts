@@ -1,5 +1,5 @@
-import { createReducer, on } from '@ngrx/store';
-import { FavoriteState } from './favorite.state';
+import {createReducer, on} from '@ngrx/store';
+import {FavoriteState} from './favorite.state';
 import * as favoriteActions from './favorite.action';
 
 export const initialFavoriteState: FavoriteState = {
@@ -14,14 +14,14 @@ export const favoriteReducer = createReducer(
     ...state,
     loading: true,
   })),
-  on(favoriteActions.getFavoritePlaylistSuccess, (state, { playlist }) => ({
+  on(favoriteActions.getFavoritePlaylistSuccess, (state, {playlist}) => ({
     ...state,
     playlist,
     loading: false,
   })),
-  on(favoriteActions.getFavoritePlaylistFailure, (state, { error }) => ({
+  on(favoriteActions.getFavoritePlaylistFailure, (state, {error}) => ({
     ...state,
     error,
     loading: false,
-  }))
+  })),
 );

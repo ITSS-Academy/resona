@@ -76,7 +76,8 @@ export class PlaylistService {
 
     return this.http.patch<PlaylistModel>(
       `${environment.apiUrl}/playlist/${playlistId}`, formData);
-    }
+  }
+
   // getFavoritePlaylistByUserId(userId: string): Observable<PlaylistModel> {
   //   return this.http.get<PlaylistModel>(`${environment.apiUrl}/playlist/detail/${userId}`);
   // }
@@ -87,6 +88,12 @@ export class PlaylistService {
 
   getPopularPlaylists(): Observable<PopularPlaylistModel[]> {
     return this.http.get<PopularPlaylistModel[]>(`${environment.apiUrl}/playlist/top-playlists`);
+  }
+
+  removeFromFavorite(userId: string, songId: string) {
+    return this.http.delete(
+      `${environment.apiUrl}/playlist/favorite/${userId}/${songId}`
+    );
   }
 
 }

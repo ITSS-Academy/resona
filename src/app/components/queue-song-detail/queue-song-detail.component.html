@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container" (click)="onPlayTrack(queue.track)">
   <div class="container-left">
     <img src="{{queue.track.thumbnailPath | imgConverter}}" alt="">
   </div>
   <div class="container-right">
-    <p>{{queue.track.title}}</p>
-    <p class="author">{{queue.track.artistName}}</p>
+    <p>{{ queue.track.title }}</p>
+    <p class="author">{{ queue.track.artistName }}</p>
   </div>
   <div class="delete-option">
     <button mat-icon-button aria-label="Remove from queue" (click)="removeTrackFromQueue()">

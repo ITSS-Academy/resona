@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Store} from '@ngrx/store';
-import {map, Observable, Subscription, take} from 'rxjs';
+import {combineLatest, map, Observable, Subscription, take} from 'rxjs';
 import {CategoryModel} from '../../models/category.model';
 import {TrackModel} from '../../models/track.model';
 import {CategoryState} from '../../ngrx/category/category.state';
@@ -17,6 +17,8 @@ import * as TrackActions from '../../ngrx/track/track.action';
 import {MusicTabComponent} from '../../components/music-tab/music-tab.component';
 import {MatIconModule} from '@angular/material/icon';
 import {Actions, ofType} from '@ngrx/effects';
+import {CategoryMusicTabComponent} from '../../components/category-music-tab/category-music-tab.component';
+import {FavoriteState} from '../../ngrx/favorite/favorite.state';
 
 @Component({
   selector: 'app-category-detail',
@@ -26,8 +28,9 @@ import {Actions, ofType} from '@ngrx/effects';
   imports: [
     AsyncPipe,
     MaterialModule,
-    PlaylistMusicTabComponent,
     PlaylistDetailButtonComponent,
+    CategoryMusicTabComponent,
+    MusicTabComponent,
   ],
 })
 export class CategoryDetailComponent implements OnInit, OnDestroy {
@@ -42,7 +45,7 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<{ category: CategoryState; auth: AuthState }>,
+    private store: Store<{ category: CategoryState; auth: AuthState, favorite: FavoriteState }>,
     private actions$: Actions
   ) {
   }
@@ -67,42 +70,46 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
         );
 
         this.isLoading$ = this.store.select(
-          (state) => state.category.isLoading
+          (state) => state.category.isGetCategoriesLoading
         );
 
-        this.tracks$ = this.categoryDetail$.pipe(map((c) => c?.tracks));
-
+        this.tracks$ = combineLatest([
+          this.categoryDetail$.pipe(map((c) => c?.tracks || [])),
+          this.store.select((state) => state.favorite.playlist?.tracks || []),
+        ]).pipe(
+          map(([tracks, favoriteTracks]) =>
+            tracks.map((track) => ({
+              ...track,
+              isFavorite: favoriteTracks.some((fav) => fav.id === track.id),
+            }))
+          )
+        );
         const categoryNameSub = this.categoryDetail$.subscribe((c) => {
           this.categoryName = c?.name || '';
         });
         this.subscriptions.add(categoryNameSub);
       }
     });
+
     this.subscriptions.add(routeSub);
   }
 
   addAllToQueue() {
-    if (!this.userId) return;
+    if (this.userId && this.categoryId) {
+      this.store.dispatch(
+        QueueActions.addCategoryToQueue({
+          userId: this.userId,
+          categoryId: this.categoryId,
+        })
+      );
 
-    this.tracks$.pipe(take(1)).subscribe((tracks) => {
-      if (tracks) {
-        tracks.forEach((track) => {
-          this.store.dispatch(
-            QueueActions.addTrackToQueue({
-              userId: this.userId as string,
-              trackId: track.id,
-            })
-          );
-          this.actions$.pipe(
-            ofType(QueueActions.addTrackToQueueSuccess),
-            take(1)
-          ).subscribe(() => {
-            this.store.dispatch(QueueActions.getQueueByUser({userId: this.userId}));
-          });
-        });
-      }
-    });
-
+      this.actions$.pipe(
+        ofType(QueueActions.addCategoryToQueueSuccess),
+        take(1)
+      ).subscribe(() => {
+        this.store.dispatch(QueueActions.getQueueByUser({userId: this.userId}));
+      });
+    }
   }
 
   ngOnDestroy() {

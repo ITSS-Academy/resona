@@ -20,6 +20,8 @@ import {PlaylistImgConverterPipe} from './shared/pipes/playlist-img-converter.pi
 import {ProfileModel} from './models/profile.model';
 import * as playlistActions from './ngrx/playlist/playlist.action';
 import {getProfile} from './ngrx/auth/auth.actions';
+import {MatDialog} from '@angular/material/dialog';
+import {LoginRequiredDialogComponent} from './components/login-required-dialog/login-required-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -51,6 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private auth: Auth,
+    private dialog: MatDialog,
     private store: Store<{
       auth: AuthState;
       playlist: PlaylistState;
@@ -108,23 +111,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setActiveLink();
-    for (let item of this.menuItems) {
-      if (item.route == this.activeLink) {
-        console.log('Active link set to:', this.activeLink);
-      }
-    }
 
     this.subscriptions.push(
       this.idToken$.subscribe((idToken: string) => {
         if (idToken) {
-          console.log('ID Token:', idToken);
           this.idToken = idToken;
         }
       }),
       this.playlists$.subscribe((playlists) => {
-        if( playlists.length > 0) {
+        if (playlists.length > 0) {
           this.playlists = playlists;
-          console.log('Playlists in sidebar:', this.playlists);
         }
       }),
       this.currentUser$.subscribe((user: ProfileModel) => {
@@ -138,8 +134,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onMenuClick(route: string) {
     console.log(route);
+    if ((route === 'upload' || route.includes('profile')) && !this.currentUser) {
+      // Chưa login → đẩy về home
+      this.router.navigate(['/home']).then();
+      // Mở dialog login
+      this.dialog.open(LoginRequiredDialogComponent);
+      return;
+    }
+
     if (route.includes('profile') && this.currentUser && this.currentUser.id) {
-      console.log('Current user:', this.currentUser);
       this.router.navigate([`/profile/${this.currentUser.id}`]).then();
 
     } else {

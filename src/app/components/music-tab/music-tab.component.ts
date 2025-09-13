@@ -82,14 +82,25 @@ export class MusicTabComponent implements OnInit, OnDestroy {
 
   onFavoriteTrack(track: TrackModel) {
     if (track.id && this.currentUserId) {
-      this.store.dispatch(
-        FavoriteActions.addToFavorite({
-          songId: track.id,
-          userId: this.currentUserId,
-        })
-      );
-      // Optimistic update for instant feedback
-      this.isFavorite = true;
+      if (this.isFavorite) {
+        // Nếu đã favorite rồi thì remove
+        this.store.dispatch(
+          FavoriteActions.removeFromFavorite({
+            songId: track.id,
+            userId: this.currentUserId,
+          })
+        );
+        this.isFavorite = false; // cập nhật lại UI
+      } else {
+        // Nếu chưa thì add
+        this.store.dispatch(
+          FavoriteActions.addToFavorite({
+            songId: track.id,
+            userId: this.currentUserId,
+          })
+        );
+        this.isFavorite = true; // cập nhật lại UI
+      }
     }
   }
 

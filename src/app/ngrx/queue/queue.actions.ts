@@ -1,6 +1,6 @@
-import { createAction, props } from '@ngrx/store';
-import { TrackModel } from '../../models/track.model';
-import { QueueModel } from '../../models/queue.model';
+import {createAction, props} from '@ngrx/store';
+import {TrackModel} from '../../models/track.model';
+import {QueueModel} from '../../models/queue.model';
 
 export const addTrackToQueue = createAction(
   '[Queue] Add Track To Queue',
@@ -78,5 +78,20 @@ export const playSongNowSuccess = createAction(
 
 export const playSongNowFailure = createAction(
   '[Queue] Play Song Now Failure',
+  props<{ error: any }>()
+);
+
+export const addCategoryToQueue = createAction(
+  '[Queue] Add Category To Queue',
+  props<{ userId: string; categoryId: string }>()
+);
+
+export const addCategoryToQueueSuccess = createAction(
+  '[Queue] Add Category To Queue Success',
+  props<{ queueList: QueueModel[] }>()
+);
+
+export const addCategoryToQueueFailure = createAction(
+  '[Queue] Add Category To Queue Failure',
   props<{ error: any }>()
 );

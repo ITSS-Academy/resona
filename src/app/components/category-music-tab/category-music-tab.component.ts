@@ -1,29 +1,27 @@
 import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
-import {AsyncPipe, DatePipe, DecimalPipe} from '@angular/common';
-import {DurationPipe} from '../../shared/pipes/duration.pipe';
-import {ImgConverterPipe} from '../../shared/pipes/img-converter.pipe';
-import {MatIconButton} from '@angular/material/button';
-import {MatMenu, MatMenuItem} from '@angular/material/menu';
+import {AsyncPipe, DatePipe, DecimalPipe} from "@angular/common";
+import {DurationPipe} from "../../shared/pipes/duration.pipe";
+import {ImgConverterPipe} from "../../shared/pipes/img-converter.pipe";
 import {TrackModel} from '../../models/track.model';
 import {filter, Observable, Subscription, take} from 'rxjs';
 import {PlaylistModel} from '../../models/playlist.model';
+import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {PlayState} from '../../ngrx/play/play.state';
 import {AuthState} from '../../ngrx/auth/auth.state';
 import {PlaylistState} from '../../ngrx/playlist/playlist.state';
-import * as PlayActions from '../../ngrx/play/play.action';
-import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
-import {MatIcon} from '@angular/material/icon';
-import {MaterialModule} from '../../shared/modules/material.module';
 import {Actions, ofType} from '@ngrx/effects';
+import * as PlaylistActions from '../../ngrx/playlist/playlist.action';
+import * as PlayActions from '../../ngrx/play/play.action';
+import * as QueueActions from '../../ngrx/queue/queue.actions';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ShareSnackbarComponent} from '../share-snackbar/share-snackbar.component';
-import {Router} from '@angular/router';
-import * as QueueActions from '../../ngrx/queue/queue.actions';
+import {MaterialModule} from '../../shared/modules/material.module';
 import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
+import {PlaylistService} from '../../services/playlist/playlist.service';
 
 @Component({
-  selector: 'app-playlist-music-tab',
+  selector: 'app-category-music-tab',
   imports: [
     AsyncPipe,
     DatePipe,
@@ -32,14 +30,15 @@ import * as FavoriteActions from '../../ngrx/favorite/favorite.action';
     ImgConverterPipe,
     MaterialModule
   ],
-  templateUrl: './playlist-music-tab.component.html',
-  styleUrl: './playlist-music-tab.component.scss'
+  templateUrl: './category-music-tab.component.html',
+  styleUrl: './category-music-tab.component.scss'
 })
-export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
+export class CategoryMusicTabComponent implements OnInit, OnDestroy {
   @Input() track!: TrackModel;
   @Input() playlistId!: string;
   @Input() playlistTitle!: string;
   @Input() isFavorite = false;
+
 
   playlists$!: Observable<PlaylistModel[]>;
   subscriptions: Subscription[] = [];
@@ -54,6 +53,7 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
       playlist: PlaylistState,
     }>,
     private actions$: Actions,
+    private playlistService: PlaylistService
   ) {
   }
 
@@ -63,9 +63,7 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.store.select(state => state.auth.currentUser).subscribe(user => {
-        if (user.id) {
-          this.currentUserId = user.id;
-        }
+        this.currentUserId = user ? user.id : '';
       }),
       this.actions$.pipe(
         ofType(PlaylistActions.addTrackToPlaylistSuccess),
@@ -101,6 +99,30 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
       this.store.dispatch(
         PlaylistActions.getPlaylists({userId: this.currentUserId})
       );
+    }
+  }
+
+  onFavoriteTrack(track: TrackModel) {
+    if (track.id && this.currentUserId) {
+      if (this.isFavorite) {
+        // Nếu đã favorite rồi thì remove
+        this.store.dispatch(
+          FavoriteActions.removeFromFavorite({
+            songId: track.id,
+            userId: this.currentUserId,
+          })
+        );
+        this.isFavorite = false; // cập nhật lại UI
+      } else {
+        // Nếu chưa thì add
+        this.store.dispatch(
+          FavoriteActions.addToFavorite({
+            songId: track.id,
+            userId: this.currentUserId,
+          })
+        );
+        this.isFavorite = true; // cập nhật lại UI
+      }
     }
   }
 
@@ -143,19 +165,6 @@ export class PlaylistMusicTabComponent implements OnInit, OnDestroy {
         }
       });
     this.subscriptions.push(sub);
-  }
-
-  onFavoriteTrack(track: TrackModel) {
-    if (track.id && this.currentUserId) {
-      this.store.dispatch(
-        FavoriteActions.addToFavorite({
-          songId: track.id,
-          userId: this.currentUserId,
-        })
-      );
-      // Optimistic update for instant feedback
-      this.isFavorite = true;
-    }
   }
 
   private _snackBar = inject(MatSnackBar);

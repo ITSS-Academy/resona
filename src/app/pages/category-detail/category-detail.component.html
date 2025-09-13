@@ -52,19 +52,20 @@
       <!--        <mat-checkbox></mat-checkbox>-->
       <!--      </span>-->
       <span class="col-list">
-        <span>#List</span><mat-icon>list</mat-icon>
+        <span>#Action</span>
       </span>
     </div>
 
     <!-- Phần Body của bảng -->
     <div class="playlist-table-body">
       @for (track of tracks$ | async; track $index) {
-      <app-playlist-music-tab
-        [track]="track"
-        [playlistId]="categoryId"
-        [playlistTitle]="categoryName"
-      >
-      </app-playlist-music-tab>
+        <app-category-music-tab
+          [track]="track"
+          [playlistId]="categoryId"
+          [playlistTitle]="categoryName"
+          [isFavorite]="track.isFavorite || false"
+        >
+        </app-category-music-tab>
       }
     </div>
   </div>

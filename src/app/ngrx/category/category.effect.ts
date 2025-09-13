@@ -1,8 +1,8 @@
-import { inject } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { CategoryService } from '../../services/category/category.service';
+import {inject} from '@angular/core';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {CategoryService} from '../../services/category/category.service';
 import * as categoryActions from './category.action';
-import { catchError, map, of, switchMap } from 'rxjs';
+import {catchError, map, of, switchMap} from 'rxjs';
 
 export const getAllCategoriesEffect = createEffect(
   (actions$ = inject(Actions), categoryService = inject(CategoryService)) => {
@@ -11,19 +11,19 @@ export const getAllCategoriesEffect = createEffect(
       switchMap(() =>
         categoryService.getAllCategories().pipe(
           map((categories) => {
-            console.log('API returned categories:', categories); // DEBUGGING LINE
+            console.log('API returned categories:', categories);
             return categoryActions.getAllCategoriesSuccess({
               categories: categories,
             });
           }),
           catchError((error: { message: any }) =>
-            of(categoryActions.getAllCategoriesFailure({ error }))
+            of(categoryActions.getAllCategoriesFailure({error}))
           )
         )
       )
     );
   },
-  { functional: true }
+  {functional: true}
 );
 
 export const getCategoryDetailsEffect = createEffect(
@@ -39,13 +39,13 @@ export const getCategoryDetailsEffect = createEffect(
             });
           }),
           catchError((error: { message: any }) =>
-            of(categoryActions.getCategoryDetailsFailure({ error }))
+            of(categoryActions.getCategoryDetailsFailure({error}))
           )
         )
       )
     );
   },
-  { functional: true }
+  {functional: true}
 );
 
 export const getTracksByCategoryEffect = createEffect(
@@ -60,13 +60,13 @@ export const getTracksByCategoryEffect = createEffect(
             });
           }),
           catchError((error: { message: any }) =>
-            of(categoryActions.getTracksByCategoryFailure({ error }))
+            of(categoryActions.getTracksByCategoryFailure({error}))
           )
         )
       )
     );
   },
-  { functional: true }
+  {functional: true}
 );
 
 export const getCategoryDetailByTrackIdEffect = createEffect(

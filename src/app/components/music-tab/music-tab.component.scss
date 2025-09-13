@@ -36,8 +36,9 @@
       font-weight: 600;
       color: #ffffff;
       font-size: 16px;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .song-artist {

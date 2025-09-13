@@ -41,7 +41,7 @@ export class PlaylistDetailButtonComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.playlists$ = this.store.select('playlist', 'playlists');
-    this.isLoading$ = this.store.select((state) => state.playlist.isLoading);
+    this.isLoading$ = this.store.select((state) => state.playlist.isSelectLoading);
     this.error$ = this.store.select((state) => state.playlist.error);
 
     this.subscriptions.push(
@@ -54,19 +54,6 @@ export class PlaylistDetailButtonComponent implements OnInit, OnDestroy {
 
   onAddAllToQueue() {
     this.addAllToQueue.emit();
-  }
-
-  deletePlaylist() {
-    console.log('Playlist ID to delete:', this.playlistId);
-    if (!this.playlistId) return;
-
-    this.store.dispatch(playlistActions.deletePlaylist({id: this.playlistId}));
-    console.log('Dispatch deletePlaylist with ID:', this.playlistId);
-    this.router.navigate(['/profile']);
-  }
-
-  navigateToProfile() {
-
   }
 
 

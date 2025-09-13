@@ -1,5 +1,5 @@
-import { createAction, props } from '@ngrx/store';
-import { PlaylistModel } from '../../models/playlist.model';
+import {createAction, props} from '@ngrx/store';
+import {PlaylistModel} from '../../models/playlist.model';
 
 export const getFavoritePlaylist = createAction(
   '[Favorite] Get Favorite Playlist',
@@ -17,15 +17,29 @@ export const getFavoritePlaylistFailure = createAction(
 );
 
 export const addToFavorite = createAction(
-    '[Favorite] Add To Favorite',
-    props<{ userId: string, songId: string }>()
+  '[Favorite] Add To Favorite',
+  props<{ userId: string, songId: string }>()
 );
 
 export const addToFavoriteSuccess = createAction(
-    '[Favorite] Add To Favorite Success'
+  '[Favorite] Add To Favorite Success'
 );
 
 export const addToFavoriteFailure = createAction(
-    '[Favorite] Add To Favorite Failure',
-    props<{ error: any }>()
+  '[Favorite] Add To Favorite Failure',
+  props<{ error: any }>()
+);
+
+export const removeFromFavorite = createAction(
+  '[Favorite] Remove From Favorite',
+  props<{ userId: string, songId: string }>()
+);
+
+export const removeFromFavoriteSuccess = createAction(
+  '[Favorite] Remove From Favorite Success'
+);
+
+export const removeFromFavoriteFailure = createAction(
+  '[Favorite] Remove From Favorite Failure',
+  props<{ error: any }>()
 );
